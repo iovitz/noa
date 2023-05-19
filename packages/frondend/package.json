@@ -1,5 +1,5 @@
 {
-  "name": "uniapp-community-client",
+  "name": "@hahachat/frondend",
   "version": "0.0.0",
   "scripts": {
     "dev": "uni",

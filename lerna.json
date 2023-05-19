@@ -1,0 +1,13 @@
+{
+  "packages": [
+    "packages/*"
+  ],
+  "npmClient": "pnpm",
+  "useWorkspaces": true,
+  "command": {
+    "publish": {},
+    "bootstrap": {}
+  },
+  "useNx": false,
+  "version": "0.0.0"
+}

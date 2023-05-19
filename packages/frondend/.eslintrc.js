@@ -4,6 +4,7 @@ module.exports = {
 		es2021: true,
 		node: true,
 	},
+	root: true,
 	parser: 'vue-eslint-parser',
 	extends: [
 		'eslint-config-prettier',

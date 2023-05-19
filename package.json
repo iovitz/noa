@@ -1,0 +1,28 @@
+{
+  "name": "hahachat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iovitz/mini_chat.git"
+  },
+  "author": "iovitz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iovitz/mini_chat/issues"
+  },
+  "homepage": "https://github.com/iovitz/mini_chat#readme",
+  "devDependencies": {
+    "lerna": "^5.1.7"
+  },
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
