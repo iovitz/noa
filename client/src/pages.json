@@ -1,0 +1,214 @@
+{
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+		}
+	},
+	"pages": [
+		{
+			"path": "pages/entry/entry",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			"path": "pages/find/find",
+			"style": {
+				"navigationBarTitleText": "查找",
+				"animationType": "slide-in-right",
+				"animationDuration": 500
+			}
+		},
+		{
+			"path": "pages/discover/discover",
+			"style": {
+				"navigationBarTitleText": "空间",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [
+							{
+								"text": " \ue741 ",
+								"fontSrc": "/static/icon/iconfont.ttf",
+								"fontSize": "20px"
+							}
+						]
+					}
+				},
+				"h5": {
+					"titleNView": {
+						"buttons": [
+							{
+								"text": " \ue741 ",
+								"fontSrc": "/static/icon/iconfont.ttf",
+								"fontSize": "20px"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/chat/chat",
+			"style": {
+				"navigationBarTitleText": "聊天",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [
+							{
+								"text": " \ue78b ",
+								"fontSrc": "/static/icon/iconfont.ttf",
+								"fontSize": "20px"
+							}
+						],
+						"autoBackButton": true
+					}
+				},
+				"h5": {
+					"titleNView": {
+						"buttons": [
+							{
+								"text": " \ue78b ",
+								"fontSrc": "/static/icon/iconfont.ttf",
+								"fontSize": "20px"
+							}
+						],
+						"autoBackButton": true
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
+			"path": "pages/space/space",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/friends/friends",
+			"style": {
+				"navigationBarTitleText": "好友列表",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [
+							{
+								"text": " \ue624 ",
+								"fontSrc": "/static/icon/iconfont.ttf",
+								"fontSize": "20px"
+							}
+						]
+					}
+				},
+				"h5": {
+					"titleNView": {
+						"buttons": [
+							{
+								"text": " \ue624 ",
+								"fontSrc": "/static/icon/iconfont.ttf",
+								"fontSize": "20px"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/publish/publish",
+			"style": {
+				"navigationBarTitleText": "发布",
+				"animationType": "slide-in-right",
+				"animationDuration": 500,
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/message/message",
+			"style": {
+				"navigationBarTitleText": "消息",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [
+							{
+								"text": " \ue604 ",
+								"fontSrc": "/static/icon/iconfont.ttf",
+								"fontSize": "20px"
+							},
+              {  
+                  "text" : "北京市",  
+                  "fontSize" : "14",  
+                  "select" : true,  
+                  "width" : "auto"  
+              },
+							{
+								"text": " \ue624 ",
+								"fontSrc": "/static/icon/iconfont.ttf",
+								"fontSize": "20px"
+							}
+						]
+					}
+				},
+				"h5": {
+					"titleNView": {
+						"buttons": [
+							{
+								"text": " \ue604 ",
+								"fontSrc": "/static/icon/iconfont.ttf",
+								"fontSize": "20px"
+							},
+							{
+								"text": " \ue624 ",
+								"fontSrc": "/static/icon/iconfont.ttf",
+								"fontSize": "20px"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/unknown/unknown",
+			"style": {
+				"navigationBarTitleText": "404"
+			}
+		}
+	],
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#ec7436",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [
+			{
+				"pagePath": "pages/message/message",
+				"iconPath": "static/tabbar-icons/discover.png",
+				"selectedIconPath": "static/tabbar-icons/discover_fill.png",
+				"text": "消息"
+			},
+			{
+				"pagePath": "pages/discover/discover",
+				"iconPath": "static/tabbar-icons/discover.png",
+				"selectedIconPath": "static/tabbar-icons/discover_fill.png",
+				"text": "发现"
+			},
+			{
+				"pagePath": "pages/mine/mine",
+				"iconPath": "static/tabbar-icons/my.png",
+				"selectedIconPath": "static/tabbar-icons/my_fill.png",
+				"text": "个人中心"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "Uniapp社区",
+		"navigationBarBackgroundColor": "#328CFF",
+		"backgroundColor": "#328CFF",
+		"bounce": "none"
+	}
+}

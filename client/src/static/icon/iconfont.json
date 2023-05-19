@@ -1,0 +1,121 @@
+{
+  "id": "3937974",
+  "name": "uniapp社区项目",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1164626",
+      "name": "many",
+      "font_class": "friends",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "13727082",
+      "name": "add",
+      "font_class": "add",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "7165030",
+      "name": "topic",
+      "font_class": "topic",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "10168412",
+      "name": "share",
+      "font_class": "share",
+      "unicode": "e63d",
+      "unicode_decimal": 58941
+    },
+    {
+      "icon_id": "34023430",
+      "name": "classify_1_line",
+      "font_class": "classify_1_line",
+      "unicode": "e72c",
+      "unicode_decimal": 59180
+    },
+    {
+      "icon_id": "34023608",
+      "name": "comment_2_line",
+      "font_class": "comment_2_line",
+      "unicode": "e737",
+      "unicode_decimal": 59191
+    },
+    {
+      "icon_id": "34023669",
+      "name": "edit_line",
+      "font_class": "edit_line",
+      "unicode": "e741",
+      "unicode_decimal": 59201
+    },
+    {
+      "icon_id": "34024239",
+      "name": "pic_line",
+      "font_class": "pic_line",
+      "unicode": "e787",
+      "unicode_decimal": 59271
+    },
+    {
+      "icon_id": "34024475",
+      "name": "thumb_down_line",
+      "font_class": "thumb_down_line",
+      "unicode": "e7bd",
+      "unicode_decimal": 59325
+    },
+    {
+      "icon_id": "34024476",
+      "name": "thumb_up_line",
+      "font_class": "thumb_up_line",
+      "unicode": "e7be",
+      "unicode_decimal": 59326
+    },
+    {
+      "icon_id": "33516",
+      "name": "home",
+      "font_class": "home",
+      "unicode": "e6b8",
+      "unicode_decimal": 59064
+    },
+    {
+      "icon_id": "33518",
+      "name": "discover_fill",
+      "font_class": "discoverfill",
+      "unicode": "e6ba",
+      "unicode_decimal": 59066
+    },
+    {
+      "icon_id": "33519",
+      "name": "home_fill",
+      "font_class": "homefill",
+      "unicode": "e6bb",
+      "unicode_decimal": 59067
+    },
+    {
+      "icon_id": "330201",
+      "name": "my",
+      "font_class": "my",
+      "unicode": "e78b",
+      "unicode_decimal": 59275
+    },
+    {
+      "icon_id": "330204",
+      "name": "my_fill",
+      "font_class": "myfill",
+      "unicode": "e78c",
+      "unicode_decimal": 59276
+    },
+    {
+      "icon_id": "30446",
+      "name": "discover",
+      "font_class": "discover",
+      "unicode": "e67e",
+      "unicode_decimal": 59006
+    }
+  ]
+}
