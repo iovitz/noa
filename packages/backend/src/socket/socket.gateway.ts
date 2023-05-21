@@ -1,34 +1,36 @@
 import {
-  MessageBody,
+  OnGatewayConnection,
+  OnGatewayDisconnect,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { NestGateway } from '@nestjs/websockets/interfaces/nest-gateway.interface';
+import type { Socket, Server } from 'socket.io';
 
 @WebSocketGateway({
-  port: 28258,
+  // 域名
+  namespace: '/ws',
+  // 解决跨域
+  // allowEIO3: true,
   cors: {
-    origin: [],
+    origin: /.*/,
+    credentials: true,
   },
-  transports: ['websocket'],
 })
-export class SocketGateway implements NestGateway {
+export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server;
+  users = 0;
 
-  private clientsArr: any[] = [];
-
-  handleConnection(client: any) {
-    console.log('有人链接了' + client.id);
+  async handleConnection(client, paylaod: string) {
+    console.log(client.id, '链接');
   }
 
-  handleDisconnect(client: any) {
-    console.log('取消连接诶');
+  async handleDisconnect(client: any) {
+    console.log(client.id, '取消链接');
   }
-
-  @SubscribeMessage('events')
-  handleEvent(@MessageBody('id') id: number): number {
-    // id === messageBody.id
-    return id;
+  @SubscribeMessage('hello')
+  handleMessage(client: Socket, payload: string): void {
+    console.log(client.id, '说hello', payload);
+    client.emit('hello', 'server hello paylaod');
   }
 }

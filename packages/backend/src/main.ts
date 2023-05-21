@@ -9,6 +9,9 @@ const prisma = new PrismaClient();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
+  app.enableCors({
+    origin: ['localhost:5173'],
+  });
   await prisma.$disconnect();
   console.log(Number(process.env.APP_PORT) || 28257);
   await app.listen(Number(process.env.APP_PORT) || 28257);

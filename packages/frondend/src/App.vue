@@ -2,7 +2,18 @@
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app';
 
 onLaunch(() => {
-	// console.log('App Launch')
+	// uni.closeSocket(); // 确保已经关闭后再重新打开
+	uni.connectSocket({
+		// 【非常重要】必须确保你的服务器是成功的
+		url: ' wss://192.168.1.106:28258/',
+		success(data) {
+			console.log(data);
+			console.log('websocket正在连接...');
+		},
+		fail(data) {
+			console.log('fail....', data);
+		},
+	});
 });
 onShow(() => {
 	// console.log('App Show')

@@ -15,29 +15,23 @@
 </html>
 
 <script type="text/javascript">
-
-    const l = console.log
-    let socket = io('http://localhost:28258');
+    
+    var socket = io('http://127.0.0.1:28257/ws');
     socket.on('connect', function () {
       console.log('链接成功');
-
       // 发射
-      socket.emit('events', {
-        name: 'ajanuw'
-      });
-
+      socket.emit('hello', 'client hello payload');
       // 发射
       socket.emit('events', {
         name: 'alone'
       });
-
       // 发射
       // socket.emit('identity', 0, (response) => console.log('Identity:', response));
     });
     
     // 监听
-    socket.on('events', (data) => {
-      l(data.msg)
+    socket.on('hello', (data) => {
+      console.log('收到服务端hello', data)
     });
 </script>
     
