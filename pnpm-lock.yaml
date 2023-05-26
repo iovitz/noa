@@ -173,6 +173,9 @@ importers:
       '@dcloudio/uni-ui':
         specifier: ^1.4.27
         version: 1.4.27
+      '@hyoga/uni-socket.io':
+        specifier: ^3.0.4
+        version: registry.npmmirror.com/@hyoga/uni-socket.io@3.0.4
       classnames:
         specifier: ^2.3.2
         version: 2.3.2
@@ -12503,6 +12506,12 @@ packages:
     os: [win32]
     requiresBuild: true
     optional: true
+
+  registry.npmmirror.com/@hyoga/uni-socket.io@3.0.4:
+    resolution: {integrity: sha512-m04M/ALXpTWcKoJGPDMzJosmzuopyAXF51DFN/qxLyXnbCFeQwsWOXT/XNLl4aWoBVGwQ7IptECFFRCA6z5C8A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@hyoga/uni-socket.io/-/uni-socket.io-3.0.4.tgz}
+    name: '@hyoga/uni-socket.io'
+    version: 3.0.4
+    dev: false
 
   registry.npmmirror.com/@istanbuljs/load-nyc-config@1.1.0:
     resolution: {integrity: sha512-VjeHSlIzpv/NyD3N0YuHfXOPDIixcA1q2ZV98wsMqcYlPmv2n3Yb2lYP9XMElnaFVXg5A7YLTeLu6V84uQDjmQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz}

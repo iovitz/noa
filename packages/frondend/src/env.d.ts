@@ -14,3 +14,7 @@ interface Uni {
 interface ButtonHTMLAttributes {
   type?: string
 }
+
+declare module '@hyoga/uni-socket.io' {
+  export default any
+}

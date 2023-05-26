@@ -1,23 +1,34 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app';
+import io from '@hyoga/uni-socket.io';
 
 onLaunch(() => {
-	// uni.closeSocket(); // 确保已经关闭后再重新打开
-	uni.connectSocket({
-		// 【非常重要】必须确保你的服务器是成功的
-		url: ' wss://192.168.1.106:28258/',
-		success(data) {
-			console.log(data);
-			console.log('websocket正在连接...');
-		},
-		fail(data) {
-			console.log('fail....', data);
-		},
+	const socket = io('http://127.0.0.1:28257/ws', {
+		query: {},
+		transports: ['websocket', 'polling'],
+		timeout: 5000,
+	});
+
+	socket.on('connect', () => {
+		const { id } = socket;
+
+		console.log('链接成功', id);
+		// 发射
+		socket.emit('hello', 'client hello payload');
+		// 发射
+		socket.emit('events', {
+			name: 'alone',
+		});
+	});
+
+	socket.on('error', (msg: any) => {
+		console.log('ws error', msg);
 	});
 });
 onShow(() => {
 	// console.log('App Show')
 });
+
 onHide(() => {
 	// console.log('App Hide')
 });
