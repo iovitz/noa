@@ -5,7 +5,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import type { Socket, Server } from 'socket.io';
+import type { Socket } from 'socket.io';
 
 @WebSocketGateway({
   // 域名
