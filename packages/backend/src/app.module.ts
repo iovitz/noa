@@ -8,15 +8,15 @@ import { join } from 'path';
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
-      renderPath: '/index.html',
-      exclude: ['/api/(.*)'],
-    }),
     ConfigModule.forRoot({
       isGlobal: true,
       // 环境变量配置
       envFilePath: ['.env', `.env.${process.env.NODE_ENV}`],
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+      renderPath: '/index.html',
+      exclude: ['/api/(.*)'],
     }),
     PrismaModule,
     UserModule,
