@@ -2,7 +2,6 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { PrismaClient } from '@prisma/client';
 import { ConfigService } from '@nestjs/config';
-import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
 const prisma = new PrismaClient();
