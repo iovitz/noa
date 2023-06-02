@@ -1,26 +1,28 @@
-import { ConfigService } from '@nestjs/config';
 import { UserService } from './user.service';
-import { Controller, Get, Post } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { Body, Controller, Post } from '@nestjs/common';
+import { UtilsService } from 'src/common/utils/utils.service';
 
 @Controller('user')
 export class UserController {
   constructor(
     private userService: UserService,
-    private configService: ConfigService,
-    private prisma: PrismaService,
+    private utilsService: UtilsService,
   ) {}
 
   @Post('/login')
-  async login(params: any) {
-    const res = await this.prisma.user.findMany();
-    console.log(res);
+  async login(@Body() body: { name?: string; password?: string }) {
+    this.userService.zUsername.parse(body.name);
+    this.userService.zPassword.parse(body.name);
     return 'login';
   }
 
   @Post('/register')
-  register(params: any) {
-    console.log(this.userService, this.configService.get('age'));
+  register(
+    @Body() body: { nickname: string; username: string; password: string },
+  ) {
+    this.userService.zUsername.parse(body.nickname);
+    this.userService.zUsername.parse(body.username);
+    this.userService.zPassword.parse(body.password);
     return 'hello';
   }
 }

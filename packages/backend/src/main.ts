@@ -15,6 +15,9 @@ async function bootstrap() {
   });
   const configService = app.get(ConfigService);
 
+  // DEVELOP情况下允许跨院
+  app.enableCors();
+
   app.enableCors({
     origin: ['localhost:5173'],
   });

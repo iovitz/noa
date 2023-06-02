@@ -1,13 +1,14 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
-import { PrismaModule } from './prisma/prisma.module';
 import { SocketGateway } from './socket/socket.gateway';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
+    CommonModule,
     ConfigModule.forRoot({
       isGlobal: true,
       // 环境变量配置
@@ -18,9 +19,9 @@ import { join } from 'path';
       renderPath: '/index.html',
       exclude: ['/api/(.*)'],
     }),
-    PrismaModule,
     UserModule,
   ],
-  providers: [SocketGateway, PrismaModule],
+  providers: [SocketGateway],
 })
 export class AppModule {}
+// UEd5G3aY9c1fp61XxI

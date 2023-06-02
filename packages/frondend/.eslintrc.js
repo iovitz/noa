@@ -12,6 +12,7 @@ module.exports = {
 		'standard-with-typescript',
 		'plugin:prettier/recommended',
 	],
+	ignorePatterns: ['.eslintrc.js', 'index.html'],
 	overrides: [],
 	parserOptions: {
 		parser: '@typescript-eslint/parser',

@@ -56,6 +56,9 @@ importers:
       socket.io:
         specifier: ^4.6.1
         version: registry.npmmirror.com/socket.io@4.6.1
+      zod:
+        specifier: ^3.21.4
+        version: registry.npmmirror.com/zod@3.21.4
     devDependencies:
       '@nestjs/cli':
         specifier: ^9.0.0
@@ -16720,3 +16723,9 @@ packages:
       y18n: registry.npmmirror.com/y18n@5.0.8
       yargs-parser: registry.npmmirror.com/yargs-parser@20.2.9
     dev: true
+
+  registry.npmmirror.com/zod@3.21.4:
+    resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/zod/-/zod-3.21.4.tgz}
+    name: zod
+    version: 3.21.4
+    dev: false

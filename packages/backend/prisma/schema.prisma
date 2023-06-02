@@ -19,8 +19,8 @@ model Post {
 }
 
 model UserProfile {
-  id        Int      @id @default(autoincrement())
-  uid       Int      @unique
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt()
+  uid       Int      @unique @db.UnsignedInt()
   user      User     @relation(fields: [uid], references: [id])
   gender    Boolean?
   address   String
@@ -29,12 +29,12 @@ model UserProfile {
 }
 
 model User {
-  id        Int          @id @default(autoincrement())
-  userId    Int          @unique
-  username  String       @unique
-  password  String
-  email     String
-  phone     String
+  id        Int          @id @default(autoincrement()) @db.UnsignedInt()
+  userId    String       @unique @db.Char(30)
+  username  String       @unique @db.Char(20)
+  password  String       @db.Char(70)
+  email     String       @db.Char(30)
+  phone     String       @db.Char(20)
   posts     Post[]
   profile   UserProfile?
   createdAt DateTime     @default(now())
