@@ -16,5 +16,6 @@ interface ButtonHTMLAttributes {
 }
 
 declare module '@hyoga/uni-socket.io' {
-  export default any
+  const io: any
+  export default io
 }

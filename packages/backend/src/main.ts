@@ -3,6 +3,10 @@ import { AppModule } from './app.module';
 import { PrismaClient } from '@prisma/client';
 import { ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { AllErrorExceptionFilter } from './exceptors/all.exceptor';
+import { ResponseInterceptor } from './interceptor/response.interceptor';
+import { ZodExceptionFilter } from './exceptors/zod.exceptor';
+import { HttpExceptionFilter } from './exceptors/http.exceptor';
 
 const prisma = new PrismaClient();
 
@@ -14,6 +18,11 @@ async function bootstrap() {
     prefix: '/public',
   });
   const configService = app.get(ConfigService);
+
+  app.useGlobalFilters(new AllErrorExceptionFilter());
+  app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalFilters(new ZodExceptionFilter());
+  app.useGlobalInterceptors(new ResponseInterceptor());
 
   // DEVELOP情况下允许跨院
   app.enableCors();
