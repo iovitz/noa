@@ -10,9 +10,9 @@ export class UserController {
   ) {}
 
   @Post('/login')
-  async login(@Body() body: { name?: string; password?: string }) {
-    this.userService.zUsername.parse(body.name);
-    this.userService.zPassword.parse(body.name);
+  async login(@Body() body: { username?: string; password?: string }) {
+    this.userService.zUsername.parse(body.username);
+    this.userService.zPassword.parse(body.password);
     return 'login';
   }
 

@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"npm run dev -w packages/backend\" \"npm run dev -w packages/frondend\""
+    "dev": "concurrently \"npm run dev:fe\" \"npm run dev:be\"",
+    "dev:be": "npm run dev -w packages/backend",
+    "dev:fe": "npm run dev -w packages/frondend"
+
   },
   "workspaces": [
     "packages/*"
