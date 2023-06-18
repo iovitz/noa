@@ -13,7 +13,7 @@ model Post {
   content   String?
   published Boolean  @default(false)
   author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
+  authorId  Int      @db.UnsignedInt()
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -30,11 +30,12 @@ model UserProfile {
 
 model User {
   id        Int          @id @default(autoincrement()) @db.UnsignedInt()
-  userId    String       @unique @db.Char(30)
+  userId    String       @unique @db.Char(20)
+  nickname  String       @unique @db.Char(20)
   username  String       @unique @db.Char(20)
   password  String       @db.Char(70)
-  email     String       @db.Char(30)
-  phone     String       @db.Char(20)
+  email     String?      @db.Char(30)
+  phone     String?      @db.Char(20)
   posts     Post[]
   profile   UserProfile?
   createdAt DateTime     @default(now())

@@ -3,13 +3,17 @@ import {
   Catch,
   ExceptionFilter,
   HttpStatus,
+  LoggerService,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { ZodError } from 'zod';
 
 @Catch(ZodError)
 export class ZodExceptionFilter implements ExceptionFilter {
+  constructor(private logger: LoggerService) {}
+
   catch(exception: ZodError, host: ArgumentsHost) {
+    this.logger.error('ZodExceptionFilter', exception);
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const errorResponse = {
