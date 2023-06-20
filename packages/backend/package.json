@@ -23,7 +23,6 @@
     "migrate:deploy": "npx prisma migrate deploy",
     "prisma:generate": "./node_modules/.bin/dotenv -e .env.development -- npx prisma generate",
     "prisma:seed": "./node_modules/.bin/dotenv -e .env.development -- npx prisma db seed",
-    "install": "./node_modules/.bin/dotenv -e .env.development -- npx prisma generate",
     "prisma:push": "./node_modules/.bin/dotenv -e .env.development -- prisma db push"
   },
   "dependencies": {
