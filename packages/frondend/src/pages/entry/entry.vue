@@ -31,15 +31,14 @@ const handleSwitchLoginType = () => {
 	height: 100%;
 	width: 100%;
 	display: flex;
-	align-items: center;
+	align-items: start;
 	flex-direction: column;
 	background-color: #fff;
 	box-sizing: border-box;
-	padding: 30upx;
+	padding: 100upx;
 }
 .login-wrapper {
 	width: 100%;
-	margin-top: 100upx;
 }
 .login-title {
 	font-size: 60upx;

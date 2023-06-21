@@ -38,11 +38,12 @@ onHide(() => {
 <style lang="scss">
 @import '@/common/uni.scss';
 @import '@/static/icon/iconfont.css';
-@import '@/common/uni.css';
+@import '@/common/uni.scss';
+@import '@/common/tailwind.css';
 
 page {
 	height: 100%;
-	background-color: #f0f2f5;
+	background-color: #f5f5f5;
 	font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei,
 		Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;
 }
