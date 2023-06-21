@@ -10,8 +10,8 @@ import { PrismaClient } from '@prisma/client';
 export class PrismaService extends PrismaClient implements OnModuleInit {
   async onModuleInit() {
     try {
-      await this.$connect();
-      Logger.log('数据库链接成功');
+      const res = await this.$connect();
+      Logger.log('数据库链接成功', res);
     } catch (e) {
       Logger.error('数据库链接失败', e);
     }

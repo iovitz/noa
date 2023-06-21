@@ -1,3 +1,4 @@
+import { Inject, LoggerService } from '@nestjs/common';
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -5,6 +6,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import type { Socket } from 'socket.io';
 
 @WebSocketGateway({
@@ -18,15 +20,20 @@ import type { Socket } from 'socket.io';
   },
 })
 export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
+  constructor(
+    @Inject(WINSTON_MODULE_NEST_PROVIDER)
+    private readonly logger: LoggerService,
+  ) {}
+
   @WebSocketServer() server;
   users = 0;
 
   async handleConnection(client, paylaod: string) {
-    console.log(client.id, '链接');
+    this.logger.log(client.id, '链接');
   }
 
   async handleDisconnect(client: any) {
-    console.log(client.id, '取消链接');
+    this.logger.log(client.id, '取消连接');
   }
   @SubscribeMessage('hello')
   handleMessage(client: Socket, payload: string): void {

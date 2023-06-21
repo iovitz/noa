@@ -5,8 +5,10 @@ import {
   Inject,
   Logger,
   LoggerService,
+  // LoggerService,
   Post,
 } from '@nestjs/common';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 
 @Controller('user')
@@ -14,7 +16,8 @@ export class UserController {
   constructor(
     private userService: UserService,
     private prismaService: PrismaService,
-    @Inject(Logger) private readonly logger: LoggerService,
+    @Inject(WINSTON_MODULE_NEST_PROVIDER)
+    private readonly logger: LoggerService,
   ) {}
 
   @Post('/login')
@@ -29,9 +32,6 @@ export class UserController {
   async register(
     @Body() body: { nickname: string; username: string; password: string },
   ) {
-    this.logger.error('Hello, word', {
-      name: 'zs',
-    });
     const { nickname, username, password } = body;
     this.userService.zNickname.parse(nickname);
     this.userService.zUsername.parse(username);
@@ -46,7 +46,7 @@ export class UserController {
         password,
       },
     });
-    console.log(res);
+    this.logger.verbose(res);
     return 'hello';
   }
 }
