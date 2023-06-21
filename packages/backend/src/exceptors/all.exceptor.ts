@@ -19,7 +19,6 @@ export class AllErrorExceptionFilter implements ExceptionFilter {
       code: HttpStatus.INTERNAL_SERVER_ERROR,
       message: 'Internal Server Error',
     };
-    // 设置返回的状态码、请求头、发送错误信息
     response.status(HttpStatus.INTERNAL_SERVER_ERROR);
     response.send(errorResponse);
   }

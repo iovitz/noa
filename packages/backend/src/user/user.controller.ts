@@ -2,10 +2,10 @@ import { UserService } from './user.service';
 import {
   Body,
   Controller,
+  HttpException,
+  HttpStatus,
   Inject,
-  Logger,
   LoggerService,
-  // LoggerService,
   Post,
 } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
@@ -36,7 +36,32 @@ export class UserController {
     this.userService.zNickname.parse(nickname);
     this.userService.zUsername.parse(username);
     this.userService.zPassword.parse(password);
-    const uid = this.userService.genNumberString(10);
+
+    const existsUser = await this.prismaService.user.findFirst({
+      where: {
+        username,
+      },
+    });
+
+    if (existsUser) {
+      throw new HttpException('用户已存在', HttpStatus.BAD_REQUEST);
+    }
+
+    const getUserId = async () => {
+      const uid = this.userService.genNumberString(10);
+      const existsUser = await this.prismaService.user.findFirst({
+        where: {
+          userId: uid,
+        },
+      });
+      if (existsUser) return await getUserId();
+      return uid;
+    };
+
+    const uid = await getUserId();
+    this.logger.log({
+      uid,
+    });
 
     const res = await this.prismaService.user.create({
       data: {
@@ -46,6 +71,7 @@ export class UserController {
         password,
       },
     });
+
     this.logger.verbose(res);
     return 'hello';
   }

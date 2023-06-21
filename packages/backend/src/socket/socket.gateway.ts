@@ -37,7 +37,7 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
   @SubscribeMessage('hello')
   handleMessage(client: Socket, payload: string): void {
-    console.log(client.id, '说hello', payload);
+    this.logger.log(client.id, '说hello', payload);
     client.emit('hello', 'server hello paylaod');
   }
 }
