@@ -1,6 +1,6 @@
 <template>
 	<view class="user-aside">
-		<view class="header p-4 flex flex-row items-center">
+		<view class="header flex flex-row items-center">
 			<image
 				class="avatar"
 				mode="aspectFit"
@@ -37,10 +37,11 @@ export default defineComponent({
 		type: String,
 	},
 	data() {
-		return {};
+		return {
+			statusBarHeight: 0,
+		};
 	},
 	computed: {},
-	mounted() {},
 	methods: {},
 });
 </script>
@@ -49,8 +50,9 @@ export default defineComponent({
 .user-aside {
 	height: 100%;
 	width: 100%;
-	background-color: #f5f5f5;
+	background-color: #ffffff;
 	.header {
+		padding: 80upx 30upx;
 		.avatar {
 			height: 100upx;
 			width: 100upx;

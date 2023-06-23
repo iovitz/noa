@@ -23,7 +23,7 @@
 			</template>
 			<template #right>
 				<view class="w-full h-full flex flex-row items-center justify-center relative">
-					<uni-icons type="plusempty" size="30" color="#ffffff" @tap="handleOpenPopupMenu" />
+					<uni-icons type="plusempty" size="30" color="#ffffff" @tap="handleOpenHeaderMenu" />
 				</view>
 			</template>
 			<view class="flex w-full h-full flex-col justify-center">
@@ -58,8 +58,8 @@
 		<slot name="default" />
 	</scroll-view>
 
-	<uni-popup ref="popupMenu" background-color="#fff" @change="handlePopupChange" :safe-area="true">
-		<view style="height: 100upx"></view>
+	<uni-popup ref="headerMenu" background-color="#fff" @change="handlePopupChange" :safe-area="true">
+		<view :style="headerMenuFixStyle"></view>
 		<view class="add-dropdown">
 			<view @tap="goFindPage">
 				<uni-icons type="personadd" />
@@ -73,7 +73,9 @@
 	</uni-popup>
 
 	<uni-drawer ref="userMenu" mode="left" :width="250">
-		<user-aside />
+		<view class="w-full h-full" :style="userAsideFixStyle">
+			<user-aside />
+		</view>
 	</uni-drawer>
 </template>
 <script lang="ts">
@@ -91,9 +93,17 @@ export default defineComponent({
 		return {
 			refreshFlag: false,
 			swiperHeight: 0,
+			statusBarHeight: 0,
 		};
 	},
-	computed: {},
+	computed: {
+		userAsideFixStyle() {
+			return `padding-top: ${this.statusBarHeight}px`;
+		},
+		headerMenuFixStyle() {
+			return `padding-top: ${this.statusBarHeight + uni.upx2px(100)}px`;
+		},
+	},
 	mounted() {
 		uni.getSystemInfo({
 			success: (res) => {
@@ -104,6 +114,7 @@ export default defineComponent({
 					res.windowBottom;
 				// 如果有NavBar需要减去NavBar高度
 				this.swiperHeight = windowHeight - uni.upx2px(100);
+				this.statusBarHeight = res.statusBarHeight || 0;
 			},
 		});
 	},
@@ -120,9 +131,9 @@ export default defineComponent({
 		handleGoSearch() {
 			console.log('前往搜索');
 		},
-		handleOpenPopupMenu() {
-			const popupMenuRef: any = this.$refs.popupMenu;
-			popupMenuRef?.open('top');
+		handleOpenHeaderMenu() {
+			const headerMenuRef: any = this.$refs.headerMenu;
+			headerMenuRef?.open('top');
 		},
 		handlePopupChange() {
 			console.log('popup change');
