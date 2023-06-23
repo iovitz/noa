@@ -1,12 +1,22 @@
 <template>
 	<view class="find-page">
+		<uni-nav-bar
+			dark
+			class="text-white"
+			left-icon="left"
+			title="查找用户"
+			:border="false"
+			height="100upx"
+			status-bar
+			background-color="#2AC4FF"
+			:fixed="true"
+		/>
 		<view class="search-wrapper">
 			<uni-easyinput
 				v-model="searchValue"
 				placeholder="输入用户名或者userid"
 				@input="handleInput"
 			></uni-easyinput>
-			<button class="search-button" type="primary" size="mini" @tap="handleSearch">发布</button>
 		</view>
 
 		<view class="search-result-list">
@@ -51,6 +61,8 @@ const handleGoSpace = (id: number) => {
 .search-wrapper {
 	display: flex;
 	padding: 30upx;
+	align-items: center;
+	justify-content: center;
 }
 .search-button {
 	margin-left: 10upx;

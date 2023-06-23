@@ -65,8 +65,7 @@
 		{
 			"path": "pages/find/find",
 			"style": {
-				"navigationBarTitleText": "查找",
-				"animationType": "slide-in-right",
+				"navigationStyle": "custom",
 				"animationDuration": 500
 			}
 		},

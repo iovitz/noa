@@ -16,7 +16,7 @@
 					<image
 						class="avatar"
 						mode="aspectFit"
-						@tap="openUserMenu"
+						@tap="openUserAside"
 						:src="'https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png'"
 					></image>
 				</view>
@@ -72,7 +72,7 @@
 		</view>
 	</uni-popup>
 
-	<uni-drawer ref="userMenu" mode="left" :width="250">
+	<uni-drawer ref="userAside" @change="handlePopupChange" mode="left" :width="250">
 		<view class="w-full h-full" :style="userAsideFixStyle">
 			<user-aside />
 		</view>
@@ -105,6 +105,12 @@ export default defineComponent({
 			return `padding-top: ${this.statusBarHeight + uni.upx2px(100)}px`;
 		},
 	},
+	onShow() {
+		const userAsideRef: any = this.$refs.userAside;
+		userAsideRef?.close();
+		const headerMenuRef: any = this.$refs.headerMenu;
+		headerMenuRef?.open('top');
+	},
 	mounted() {
 		uni.getSystemInfo({
 			success: (res) => {
@@ -120,9 +126,9 @@ export default defineComponent({
 		});
 	},
 	methods: {
-		openUserMenu() {
-			const userMenuRef: any = this.$refs.userMenu;
-			userMenuRef?.open();
+		openUserAside() {
+			const userAsideRef: any = this.$refs.userAside;
+			userAsideRef?.open();
 		},
 		goFindPage() {
 			uni.navigateTo({
@@ -136,8 +142,22 @@ export default defineComponent({
 			const headerMenuRef: any = this.$refs.headerMenu;
 			headerMenuRef?.open('top');
 		},
-		handlePopupChange() {
-			logger.verbose('popup change');
+		handlePopupChange(e: boolean | { show: boolean }) {
+			logger.verbose('蒙层change事件', e);
+			if (typeof e === 'boolean') {
+				logger.verbose('yingc');
+				if (e) {
+					uni.hideTabBar();
+				} else {
+					uni.showTabBar();
+				}
+			} else {
+				if (e.show) {
+					uni.hideTabBar();
+				} else {
+					uni.showTabBar();
+				}
+			}
 		},
 		handleRefresh() {
 			this.refreshFlag = true;

@@ -1,5 +1,5 @@
 enum LogLevel {
-	verbose,
+	verbose = 1,
 	info,
 	warning,
 	error,
@@ -13,7 +13,7 @@ class Logger {
 	}
 
 	verbose(message: string, ...args: any[]) {
-		if (this.level >= LogLevel.info) console.log(message, ...args);
+		if (this.level >= LogLevel.verbose) console.log(message, ...args);
 	}
 
 	info(message: string, ...args: any[]) {
@@ -30,5 +30,6 @@ class Logger {
 }
 
 const level = Number(import.meta.env.VITE_LOG_LEVEL) || LogLevel.error;
+
 const logger = new Logger(level);
 export default logger;
