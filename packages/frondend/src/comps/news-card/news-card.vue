@@ -48,6 +48,7 @@
 	</view>
 </template>
 <script lang="ts">
+import logger from '@/utils/logger';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -62,25 +63,25 @@ export default defineComponent({
 			this.notFollow = !this.notFollow;
 		},
 		handleOpenSpace() {
-			console.log('打开个人空间');
+			logger.verbose('打开个人空间');
 		},
 		handleDetail() {
-			console.log('查看详情');
+			logger.verbose('查看详情');
 		},
 		handleGoComment() {
-			console.log('查看评论');
+			logger.verbose('查看评论');
 		},
 		handleImage() {
-			console.log('查看图片');
+			logger.verbose('查看图片');
 		},
 		handleShear() {
-			console.log('分享');
+			logger.verbose('分享');
 		},
 		handleLike() {
-			console.log('喜欢');
+			logger.verbose('喜欢');
 		},
 		handleDislike() {
-			console.log('不喜欢');
+			logger.verbose('不喜欢');
 		},
 	},
 });

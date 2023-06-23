@@ -1,3 +1,4 @@
+import logger from '../logger';
 import { storage } from '../storage/storage';
 
 type Header = Record<string, string>;
@@ -52,6 +53,7 @@ class ShortChain {
 		}).then((res: UniApp.RequestSuccessCallbackResult) => {
 			const data = res.data as any;
 			if (data.code !== 0) {
+				logger.error('请求失败', data);
 				uni.showToast({
 					icon: 'error',
 					title: data.message,

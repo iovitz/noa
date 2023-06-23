@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app';
 import io from '@hyoga/uni-socket.io';
+import logger from '@/utils/logger';
 
 onLaunch(() => {
 	const socket = io('http://127.0.0.1:28257/ws', {
@@ -12,7 +13,7 @@ onLaunch(() => {
 	socket.on('connect', () => {
 		const { id } = socket;
 
-		console.log('链接成功', id);
+		logger.verbose('链接成功', id);
 		// 发射
 		socket.emit('hello', 'client hello payload');
 		// 发射
@@ -22,15 +23,15 @@ onLaunch(() => {
 	});
 
 	socket.on('error', (msg: any) => {
-		console.log('ws error', msg);
+		logger.verbose('ws error', msg);
 	});
 });
 onShow(() => {
-	// console.log('App Show')
+	// logger.verbose('App Show')
 });
 
 onHide(() => {
-	// console.log('App Hide')
+	// logger.verbose('App Hide')
 });
 </script>
 

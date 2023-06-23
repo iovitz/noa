@@ -10,6 +10,7 @@
 import NewsCard from '@/comps/news-card/news-card.vue';
 import { defineComponent } from 'vue';
 import PageWithHeader from '@/comps/page-with-header/page-with-header.vue';
+import logger from '@/utils/logger';
 
 export default defineComponent({
 	components: {
@@ -39,20 +40,19 @@ export default defineComponent({
 		uni.getSystemInfo({
 			success: (res) => {
 				this.swiperHeight = res.windowHeight;
-				console.log(this.swiperHeight);
 			},
 		});
 	},
 	methods: {
 		handleRefresh() {
 			this.refreshFlag = true;
-			console.log('下拉刷新');
+			logger.verbose('下拉刷新');
 			setTimeout(() => {
 				this.refreshFlag = false;
 			}, 1000);
 		},
 		handleLoadMore() {
-			console.log('加载更多');
+			logger.verbose('加载更多');
 		},
 	},
 });

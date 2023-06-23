@@ -17,6 +17,7 @@
 	</view>
 </template>
 <script lang="ts">
+import logger from '@/utils/logger';
 import { defineComponent } from 'vue';
 export default defineComponent({
 	props: {
@@ -54,7 +55,7 @@ export default defineComponent({
 					this.imageList = [...this.imageList, ...paths];
 				},
 				fail: (err) => {
-					console.log('上传失败', err);
+					logger.error('上传图片失败', err);
 				},
 			});
 		},

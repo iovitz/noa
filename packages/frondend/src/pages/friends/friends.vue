@@ -36,12 +36,10 @@ export default defineComponent({
 		uni.getSystemInfo({
 			success: (res) => {
 				this.swiperHeight = res.windowHeight;
-				console.log(this.swiperHeight);
 			},
 		});
 	},
 	onNavigationBarButtonTap({ index }) {
-		console.log(index);
 		switch (index) {
 			case 1:
 				uni.navigateTo({
@@ -54,9 +52,7 @@ export default defineComponent({
 	},
 	methods: {
 		// 抽屉状态发生变化触发
-		handleCollapseChange(e: any) {
-			console.log(e);
-		},
+		handleCollapseChange(e: any) {},
 	},
 	// components: { EmptyStatus },
 });

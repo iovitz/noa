@@ -20,6 +20,7 @@ import { reactive, ref } from 'vue';
 import { useUserStore } from '@/store/user.store';
 import { loginRules } from '@/common/rules/login';
 import { storage } from '@/utils/storage/storage';
+import logger from '@/utils/logger';
 const sectionRef = ref();
 
 const userStore = useUserStore();
@@ -45,7 +46,7 @@ const handleSubmit = () => {
 					gender: data.gender,
 					description: data.description,
 				});
-				console.log(data.nickname, data.avatar, data.gender);
+				logger.verbose(data.nickname, data.avatar, data.gender);
 				storage.set('token', data.token);
 				setTimeout(() => {
 					uni.switchTab({

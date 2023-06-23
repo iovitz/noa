@@ -23,6 +23,7 @@
 import { registerRules } from '@/common/rules/login';
 import { rRegister } from '@/io/http/user';
 import { useUserStore } from '@/store/user.store';
+import logger from '@/utils/logger';
 import { ref, reactive } from 'vue';
 
 const userStore = useUserStore();
@@ -39,7 +40,6 @@ const handleSubmit = () => {
 	formRef.value.validate().then((res: any) => {
 		rRegister(res.nickname, res.username, res.password).then((res: any) => {
 			if (res.code === 0) {
-				console.log(res);
 				uni.showToast({
 					title: '注册成功，即将自动登录',
 					duration: 2000,

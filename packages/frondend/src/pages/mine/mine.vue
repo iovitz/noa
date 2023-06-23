@@ -36,7 +36,6 @@ import { useUserStore } from '@/store/user.store';
 import { computed, reactive } from 'vue';
 
 const userStore = useUserStore();
-console.log(userStore);
 
 const nickname = computed(() => userStore.nickname);
 

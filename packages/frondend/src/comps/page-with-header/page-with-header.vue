@@ -81,6 +81,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import UserAside from '@/comps/user-aside/user-aside.vue';
+import logger from '@/utils/logger';
 
 export default defineComponent({
 	props: {
@@ -129,24 +130,24 @@ export default defineComponent({
 			});
 		},
 		handleGoSearch() {
-			console.log('前往搜索');
+			logger.verbose('前往搜索');
 		},
 		handleOpenHeaderMenu() {
 			const headerMenuRef: any = this.$refs.headerMenu;
 			headerMenuRef?.open('top');
 		},
 		handlePopupChange() {
-			console.log('popup change');
+			logger.verbose('popup change');
 		},
 		handleRefresh() {
 			this.refreshFlag = true;
-			console.log('下拉刷新');
+			logger.verbose('下拉刷新');
 			setTimeout(() => {
 				this.refreshFlag = false;
 			}, 1000);
 		},
 		handleLoadMore() {
-			console.log('加载更多');
+			logger.verbose('加载更多');
 		},
 	},
 });

@@ -1,20 +1,34 @@
-class Logger {
-  constructor(private isPrint: boolean) {}
-  info(...args: any[]) {
-    if(!this.isPrint) return
-    console.warn(...args)
-  }
-
-  warn(...args: any[]) {
-    if(!this.isPrint) return
-    console.warn(...args)
-  }
-
-  error(...args: any[]) {
-    if(!this.isPrint) return
-    console.warn(...args)
-  }
+enum LogLevel {
+	verbose,
+	info,
+	warning,
+	error,
 }
 
-const isPrint = uni.getStorageSync('logger-to-console')
-export const logger = new Logger(!!isPrint)
+class Logger {
+	private level = uni.getStorageSync('logger-to-console') ?? import.meta.env.DEV;
+
+	constructor(level: LogLevel) {
+		this.level = uni.getStorageSync('app-enable-log') ? LogLevel.verbose : level;
+	}
+
+	verbose(message: string, ...args: any[]) {
+		if (this.level >= LogLevel.info) console.log(message, ...args);
+	}
+
+	info(message: string, ...args: any[]) {
+		if (this.level >= LogLevel.info) console.info(message, ...args);
+	}
+
+	warn(message: string, ...args: any[]) {
+		if (this.level >= LogLevel.warning) console.warn(message, ...args);
+	}
+
+	error(message: string, ...args: any[]) {
+		if (this.level >= LogLevel.error) console.error(message, ...args);
+	}
+}
+
+const level = Number(import.meta.env.VITE_LOG_LEVEL) || LogLevel.error;
+const logger = new Logger(level);
+export default logger;

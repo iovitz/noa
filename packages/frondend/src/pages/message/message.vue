@@ -24,6 +24,7 @@
 // import EmptyStatus from '@/comps/empty-status/empty-status.vue';
 import { defineComponent } from 'vue';
 import PageWithHeader from '@/comps/page-with-header/page-with-header.vue';
+import logger from '@/utils/logger';
 
 export default defineComponent({
 	components: {
@@ -38,7 +39,7 @@ export default defineComponent({
 	methods: {
 		// 抽屉状态发生变化触发
 		handlePopupChange(e: any) {
-			console.log(e);
+			logger.verbose(e);
 		},
 		handleGoChat() {
 			uni.navigateTo({
@@ -46,7 +47,7 @@ export default defineComponent({
 			});
 		},
 		handleGoSearch() {
-			console.log('前往搜索');
+			logger.verbose('前往搜索');
 		},
 	},
 	// components: { EmptyStatus },

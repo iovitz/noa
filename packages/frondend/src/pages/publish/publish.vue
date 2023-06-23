@@ -51,9 +51,7 @@ export default defineComponent({
 			const files = e.file ?? [];
 			this.fileList = [...this.fileList, ...files];
 		},
-		handleDeleteImage() {
-			console.log('删除图片');
-		},
+		handleDeleteImage() {},
 		handleBack() {
 			uni.navigateBack();
 		},
