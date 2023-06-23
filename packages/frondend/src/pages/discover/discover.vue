@@ -1,25 +1,21 @@
 <template>
-	<scroll-view
-		scroll-y="true"
-		:style="`height: ${swiperHeight}px`"
-		refresher-enabled
-		@scrolltolower="handleLoadMore"
-		refresher-background="#eee"
-		:refresher-triggered="refreshFlag"
-		:refresher-threshold="50"
-		@refresherrefresh="handleRefresh"
-	>
+	<page-with-header>
 		<view class="news-card-list">
 			<news-card v-for="i in 10" :key="i"></news-card>
 		</view>
-	</scroll-view>
+	</page-with-header>
 </template>
 
 <script lang="ts">
 import NewsCard from '@/comps/news-card/news-card.vue';
 import { defineComponent } from 'vue';
+import PageWithHeader from '@/comps/page-with-header/page-with-header.vue';
 
 export default defineComponent({
+	components: {
+		PageWithHeader,
+		NewsCard,
+	},
 	props: {
 		id: {
 			type: Number,
@@ -59,7 +55,6 @@ export default defineComponent({
 			console.log('加载更多');
 		},
 	},
-	components: { NewsCard },
 });
 </script>
 

@@ -20,10 +20,10 @@ model Post {
 
 model UserProfile {
   id        Int      @id @default(autoincrement()) @db.UnsignedInt()
-  uid       Int      @unique @db.UnsignedInt()
-  user      User     @relation(fields: [uid], references: [id])
+  uid       String?  @unique @db.Char(20)
+  user      User?    @relation(fields: [uid], references: [userId])
   gender    Boolean?
-  address   String
+  address   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -31,7 +31,7 @@ model UserProfile {
 model User {
   id        Int          @id @default(autoincrement()) @db.UnsignedInt()
   userId    String       @unique @db.Char(20)
-  nickname  String       @unique @db.Char(20)
+  nickname  String       @db.Char(20)
   username  String       @unique @db.Char(20)
   password  String       @db.Char(70)
   email     String?      @db.Char(30)

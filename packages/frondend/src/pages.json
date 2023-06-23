@@ -7,6 +7,13 @@
 	},
 	"pages": [
 		{
+			"path": "pages/message/message",
+			"style": {
+				"navigationBarTitleText": "消息",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/mine/mine",
 			"style": {
 				"navigationBarTitleText": "个人中心"
@@ -16,28 +23,7 @@
 			"path": "pages/friends/friends",
 			"style": {
 				"navigationBarTitleText": "好友列表",
-				"app-plus": {
-					"titleNView": {
-						"buttons": [
-							{
-								"text": " \ue624 ",
-								"fontSrc": "/static/icon/iconfont.ttf",
-								"fontSize": "20px"
-							}
-						]
-					}
-				},
-				"h5": {
-					"titleNView": {
-						"buttons": [
-							{
-								"text": " \ue624 ",
-								"fontSrc": "/static/icon/iconfont.ttf",
-								"fontSize": "20px"
-							}
-						]
-					}
-				}
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -88,28 +74,7 @@
 			"path": "pages/discover/discover",
 			"style": {
 				"navigationBarTitleText": "空间",
-				"app-plus": {
-					"titleNView": {
-						"buttons": [
-							{
-								"text": " \ue741 ",
-								"fontSrc": "/static/icon/iconfont.ttf",
-								"fontSize": "20px"
-							}
-						]
-					}
-				},
-				"h5": {
-					"titleNView": {
-						"buttons": [
-							{
-								"text": " \ue741 ",
-								"fontSrc": "/static/icon/iconfont.ttf",
-								"fontSize": "20px"
-							}
-						]
-					}
-				}
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -125,50 +90,6 @@
 				"animationType": "slide-in-right",
 				"animationDuration": 500,
 				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/message/message",
-			"style": {
-				"navigationBarTitleText": "消息",
-				"app-plus": {
-					"titleNView": {
-						"buttons": [
-							{
-								"text": " \ue604 ",
-								"fontSrc": "/static/icon/iconfont.ttf",
-								"fontSize": "20px"
-							},
-							{
-								"text": "北京市",
-								"fontSize": "14",
-								"select": true,
-								"width": "auto"
-							},
-							{
-								"text": " \ue624 ",
-								"fontSrc": "/static/icon/iconfont.ttf",
-								"fontSize": "20px"
-							}
-						]
-					}
-				},
-				"h5": {
-					"titleNView": {
-						"buttons": [
-							{
-								"text": " \ue604 ",
-								"fontSrc": "/static/icon/iconfont.ttf",
-								"fontSize": "20px"
-							},
-							{
-								"text": " \ue624 ",
-								"fontSrc": "/static/icon/iconfont.ttf",
-								"fontSize": "20px"
-							}
-						]
-					}
-				}
 			}
 		},
 		{
@@ -191,16 +112,16 @@
 				"text": "消息"
 			},
 			{
-				"pagePath": "pages/discover/discover",
+				"pagePath": "pages/friends/friends",
 				"iconPath": "static/tabbar-icons/discover.png",
 				"selectedIconPath": "static/tabbar-icons/discover_fill.png",
-				"text": "发现"
+				"text": "好友"
 			},
 			{
-				"pagePath": "pages/mine/mine",
+				"pagePath": "pages/discover/discover",
 				"iconPath": "static/tabbar-icons/my.png",
 				"selectedIconPath": "static/tabbar-icons/my_fill.png",
-				"text": "个人中心"
+				"text": "空间"
 			}
 		]
 	},

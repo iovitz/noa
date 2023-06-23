@@ -13,7 +13,7 @@ import { format, transports } from 'winston';
           // 使用时间戳和nest样式
           format: format.combine(
             format.timestamp(),
-            utilities.format.nestLike('HAHA'),
+            utilities.format.nestLike(process.env.NODE_ENV),
           ),
         });
         const infoTransport = new transports.DailyRotateFile({

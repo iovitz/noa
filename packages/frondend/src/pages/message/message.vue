@@ -1,17 +1,7 @@
 <template>
-	<!-- <EmptyStatus type="message"></EmptyStatus> -->
-	<view class="message-page">
-		<scroll-view
-			scroll-y="true"
-			:style="`height: ${swiperHeight}px`"
-			refresher-enabled
-			@scrolltolower="handleLoadMore"
-			refresher-background="#eee"
-			:refresher-triggered="refreshFlag"
-			:refresher-threshold="50"
-			@refresherrefresh="handleRefresh"
-		>
-			<uni-list :border="true">
+	<page-with-header>
+		<view class="message-page">
+			<uni-list :border="false">
 				<uni-list-chat
 					v-for="i in 99"
 					:key="i"
@@ -24,58 +14,28 @@
 					badge-text="99"
 					@tap="handleGoChat"
 					clickable
-				></uni-list-chat>
+				/>
 			</uni-list>
-		</scroll-view>
-		<uni-popup ref="popupMenu" background-color="#fff" @change="handlePopupChange">
-			<view class="popup-menu">
-				<uni-list>
-					<uni-list-item title="搜索" @tap="goFindPage" clickable />
-					<uni-list-item title="创建群组" clickable />
-				</uni-list>
-			</view>
-		</uni-popup>
-	</view>
+		</view>
+	</page-with-header>
 </template>
 
 <script lang="ts">
 // import EmptyStatus from '@/comps/empty-status/empty-status.vue';
 import { defineComponent } from 'vue';
+import PageWithHeader from '@/comps/page-with-header/page-with-header.vue';
 
 export default defineComponent({
+	components: {
+		PageWithHeader,
+	},
 	data() {
 		return {
 			refreshFlag: false,
 			swiperHeight: 0,
 		};
 	},
-	mounted() {
-		uni.getSystemInfo({
-			success: (res) => {
-				this.swiperHeight = res.windowHeight;
-				console.log(this.swiperHeight);
-			},
-		});
-	},
-	onNavigationBarButtonTap({ index }) {
-		switch (index) {
-			case 0:
-				uni.navigateTo({
-					url: '/pages/friends/friends',
-				});
-				break;
-			case 1:
-				console.log('打开popup');
-				(this.$refs.popupMenu as any)?.open('top');
-				break;
-		}
-	},
 	methods: {
-		goFindPage() {
-			uni.navigateTo({
-				url: '/pages/find/find',
-			});
-		},
 		// 抽屉状态发生变化触发
 		handlePopupChange(e: any) {
 			console.log(e);
@@ -85,24 +45,12 @@ export default defineComponent({
 				url: '/pages/chat/chat',
 			});
 		},
-		handleRefresh() {
-			this.refreshFlag = true;
-			console.log('下拉刷新');
-			setTimeout(() => {
-				this.refreshFlag = false;
-			}, 1000);
-		},
-		handleLoadMore() {
-			console.log('加载更多');
+		handleGoSearch() {
+			console.log('前往搜索');
 		},
 	},
 	// components: { EmptyStatus },
 });
 </script>
 
-<style lang="scss" scoped>
-.popup-menu-item {
-	text-align: center;
-	padding: 30upx;
-}
-</style>
+<style lang="scss" scoped></style>

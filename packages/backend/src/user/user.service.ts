@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/common/prisma/prisma.service';
 import { z } from 'zod';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -18,5 +18,15 @@ export class UserService {
       res += str[id];
     }
     return res;
+  }
+
+  async encryptPassword(password: string) {
+    const salt = await bcrypt.genSalt(10);
+    const pass = await bcrypt.hash(password, salt);
+    return pass;
+  }
+
+  async comparePassword(password: string, hash: string) {
+    return await bcrypt.compare(password, hash);
   }
 }

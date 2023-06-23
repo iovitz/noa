@@ -13,7 +13,7 @@ export class ZodExceptionFilter implements ExceptionFilter {
   constructor(private logger: LoggerService) {}
 
   catch(exception: ZodError, host: ArgumentsHost) {
-    this.logger.error('ZodExceptionFilter', exception);
+    this.logger.log('ZodExceptionFilter', exception);
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const errorResponse = {

@@ -9,6 +9,7 @@ import { HttpExceptionFilter } from './exceptors/http.exceptor';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import 'winston-daily-rotate-file';
 import { AllErrorExceptionFilter } from './exceptors/all.exceptor';
+import { ValidationPipe } from './pipes/validation.pipe';
 
 const prisma = new PrismaClient();
 
@@ -23,9 +24,10 @@ async function bootstrap() {
 
   // 虚拟路径为 static
   app.useStaticAssets('public', {
-    prefix: '/public',
+    prefix: '/',
   });
 
+  app.useGlobalPipes(new ValidationPipe(logger));
   app.useGlobalFilters(new AllErrorExceptionFilter(logger));
   app.useGlobalFilters(new HttpExceptionFilter(logger));
   app.useGlobalFilters(new ZodExceptionFilter(logger));
@@ -44,6 +46,7 @@ async function bootstrap() {
 
   const appPort = Number(configService.get('APP_PORT')) || 28257;
   await app.listen(appPort);
+  logger.verbose(`Server running in http://localhost:${appPort}`);
 }
 
 bootstrap();

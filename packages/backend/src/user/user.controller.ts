@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { PrismaService } from 'src/common/prisma/prisma.service';
+import { LoginDTO } from './user.dto';
 
 @Controller('user')
 export class UserController {
@@ -21,11 +22,37 @@ export class UserController {
   ) {}
 
   @Post('/login')
-  async login(@Body() body: { username?: string; password?: string }) {
+  async login(@Body() body: LoginDTO) {
+    const { username, password } = body;
     this.userService.zUsername.parse(body.username);
     this.userService.zPassword.parse(body.password);
+    const user = await this.prismaService.user.findFirst({
+      where: {
+        username,
+      },
+      select: {
+        nickname: true,
+        username: true,
+        password: true,
+        email: true,
+      },
+    });
 
-    return 'hello';
+    if (user) {
+      const res = await this.userService.comparePassword(
+        password,
+        user.password,
+      );
+      if (res) {
+        return {
+          email: user.email,
+          username: user.username,
+          nickname: user.nickname,
+        };
+      }
+    }
+
+    throw new HttpException('账号或密码错误', HttpStatus.BAD_REQUEST);
   }
 
   @Post('/register')
@@ -44,7 +71,7 @@ export class UserController {
     });
 
     if (existsUser) {
-      throw new HttpException('用户已存在', HttpStatus.BAD_REQUEST);
+      throw new HttpException('用户名已存在', HttpStatus.BAD_REQUEST);
     }
 
     const getUserId = async () => {
@@ -63,16 +90,22 @@ export class UserController {
       uid,
     });
 
-    const res = await this.prismaService.user.create({
-      data: {
-        userId: uid,
-        nickname,
-        username,
-        password,
-      },
-    });
+    this.prismaService.$transaction([
+      this.prismaService.user.create({
+        data: {
+          userId: uid,
+          nickname,
+          username,
+          password: await this.userService.encryptPassword(password),
+        },
+      }),
+      this.prismaService.userProfile.create({
+        data: {
+          uid,
+        },
+      }),
+    ]);
 
-    this.logger.verbose(res);
     return 'hello';
   }
 }
