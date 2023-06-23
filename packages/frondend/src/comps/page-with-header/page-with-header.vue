@@ -72,14 +72,20 @@
 		</view>
 	</uni-popup>
 
-	<uni-drawer ref="userMenu" mode="left" :width="250"> </uni-drawer>
+	<uni-drawer ref="userMenu" mode="left" :width="250">
+		<user-aside />
+	</uni-drawer>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
+import UserAside from '@/comps/user-aside/user-aside.vue';
 
 export default defineComponent({
 	props: {
 		type: String,
+	},
+	components: {
+		UserAside,
 	},
 	data() {
 		return {
@@ -103,7 +109,8 @@ export default defineComponent({
 	},
 	methods: {
 		openUserMenu() {
-			this.$refs.userMenu?.open();
+			const userMenuRef: any = this.$refs.userMenu;
+			userMenuRef?.open();
 		},
 		goFindPage() {
 			uni.navigateTo({
@@ -114,7 +121,8 @@ export default defineComponent({
 			console.log('前往搜索');
 		},
 		handleOpenPopupMenu() {
-			this.$refs.popupMenu?.open('top');
+			const popupMenuRef: any = this.$refs.popupMenu;
+			popupMenuRef?.open('top');
 		},
 		handlePopupChange() {
 			console.log('popup change');
@@ -143,10 +151,8 @@ export default defineComponent({
 .add-dropdown {
 	top: 30upx;
 	right: 30upx;
-	width: 230upx;
 	background-color: #ffffff;
 	border-radius: 10upx;
-	font-weight: bold;
 	font-size: 28upx;
 	& > * {
 		padding: 30upx;
