@@ -1,7 +1,7 @@
 <template>
 	<view class="news-card-wrapper">
 		<view class="card-header">
-			<view class="avatar" @tap="handleOpenSpace">
+			<view class="avatar" @tap="handleOpenHome">
 				<image class="avatar-iamge" src="https://web-assets.dcloud.net.cn/unidoc/zh/hx.png"></image>
 			</view>
 			<view class="author">
@@ -62,7 +62,7 @@ export default defineComponent({
 		handleFollow() {
 			this.notFollow = !this.notFollow;
 		},
-		handleOpenSpace() {
+		handleOpenHome() {
 			logger.verbose('打开个人空间');
 		},
 		handleDetail() {

@@ -60,18 +60,5 @@ export default defineComponent({
 			margin-right: 20upx;
 		}
 	}
-	.user-aside-list-group {
-		margin-top: 0 !important;
-	}
-	.user-aside-list-group:deep(.uni-group__title) {
-		background-color: #ffffff;
-		& > .uni-group__title-text {
-			font-size: 24upx;
-			color: #999;
-		}
-	}
-	.user-aside-list-group:deep(.uni-group__content) {
-		padding: 0;
-	}
 }
 </style>

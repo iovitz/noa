@@ -10,14 +10,27 @@
 			status-bar
 			background-color="#2AC4FF"
 			:fixed="true"
+			@clickLeft="handleBackup"
 		/>
-		<view class="search-wrapper">
-			<uni-easyinput
-				v-model="searchValue"
-				placeholder="输入用户名或者userid"
-				@input="handleInput"
-			></uni-easyinput>
-		</view>
+		<uni-search-bar
+			:focus="true"
+			v-model="searchValue"
+			placeholder="输入HaHa号或昵称"
+			cancelButton="true"
+		>
+		</uni-search-bar>
+		<uni-group title="用户" top="20">
+			<uni-list-chat
+				title="不锈钢盆"
+				@tap="handleOpenUserHome"
+				clickable
+				:avatar-list="avatarList"
+				note="256899231"
+			/>
+		</uni-group>
+		<uni-group title="群聊" top="20">
+			<uni-list-chat title="不锈钢盆" clickable :avatar-list="avatarList" note="256899231" />
+		</uni-group>
 
 		<view class="search-result-list">
 			<view class="search-user-item" v-for="{ nickname, username } in searchResult" :key="username">
@@ -25,7 +38,7 @@
 					<h3>昵称：{{ nickname }}</h3>
 					<p>id: {{ username }}</p>
 				</view>
-				<button @tap="() => handleGoSpace(username)" size="mini">查看</button>
+				<button size="mini">查看</button>
 			</view>
 		</view>
 	</view>
@@ -44,28 +57,33 @@ const searchResult = ref<
 	}[]
 >([]);
 
-const handleInput = (v: string) => (searchValue.value = v);
+const avatarList = ref([
+	{
+		url: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png',
+	},
+]);
+
+const handleBackup = () => {
+	uni.navigateBack();
+};
+
 const handleSearch = () => {
 	rFind(searchValue.value).then((res) => {
 		searchResult.value = res.data;
 	});
 };
-const handleGoSpace = (id: number) => {
+const handleOpenUserHome = (id: number) => {
 	uni.navigateTo({
-		url: '/pages/space/space?username=' + id,
+		url: '/pages/home/home?username=' + id,
 	});
 };
 </script>
 
 <style lang="scss" scoped>
-.search-wrapper {
-	display: flex;
-	padding: 30upx;
-	align-items: center;
-	justify-content: center;
-}
-.search-button {
-	margin-left: 10upx;
+.find-page {
+	height: 100%;
+	width: 100%;
+	background-color: #fff;
 }
 .search-result-list {
 	padding: 30upx;

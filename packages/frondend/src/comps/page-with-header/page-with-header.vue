@@ -105,11 +105,11 @@ export default defineComponent({
 			return `padding-top: ${this.statusBarHeight + uni.upx2px(100)}px`;
 		},
 	},
-	onShow() {
+	activated() {
 		const userAsideRef: any = this.$refs.userAside;
 		userAsideRef?.close();
 		const headerMenuRef: any = this.$refs.headerMenu;
-		headerMenuRef?.open('top');
+		headerMenuRef?.close();
 	},
 	mounted() {
 		uni.getSystemInfo({
@@ -129,6 +129,8 @@ export default defineComponent({
 		openUserAside() {
 			const userAsideRef: any = this.$refs.userAside;
 			userAsideRef?.open();
+			const headerMenuRef: any = this.$refs.headerMenu;
+			headerMenuRef?.close();
 		},
 		goFindPage() {
 			uni.navigateTo({
@@ -145,7 +147,6 @@ export default defineComponent({
 		handlePopupChange(e: boolean | { show: boolean }) {
 			logger.verbose('蒙层change事件', e);
 			if (typeof e === 'boolean') {
-				logger.verbose('yingc');
 				if (e) {
 					uni.hideTabBar();
 				} else {
