@@ -107,9 +107,9 @@ export default defineComponent({
 	},
 	activated() {
 		const userAsideRef: any = this.$refs.userAside;
-		userAsideRef?.close();
 		const headerMenuRef: any = this.$refs.headerMenu;
 		headerMenuRef?.close();
+		userAsideRef?.close();
 	},
 	mounted() {
 		uni.getSystemInfo({

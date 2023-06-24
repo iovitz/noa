@@ -9,7 +9,6 @@
 		{
 			"path": "pages/message/message",
 			"style": {
-				"navigationBarTitleText": "消息",
 				"navigationStyle": "custom"
 			}
 		},
@@ -22,37 +21,15 @@
 		{
 			"path": "pages/friends/friends",
 			"style": {
-				"navigationBarTitleText": "好友列表",
 				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "pages/chat/chat",
 			"style": {
-				"navigationBarTitleText": "聊天",
+				"navigationStyle": "custom",
 				"app-plus": {
-					"titleNView": {
-						"buttons": [
-							{
-								"text": " \ue78b ",
-								"fontSrc": "/static/icon/iconfont.ttf",
-								"fontSize": "20px"
-							}
-						],
-						"autoBackButton": true
-					}
-				},
-				"h5": {
-					"titleNView": {
-						"buttons": [
-							{
-								"text": " \ue78b ",
-								"fontSrc": "/static/icon/iconfont.ttf",
-								"fontSize": "20px"
-							}
-						],
-						"autoBackButton": true
-					}
+					"softinputMode": "adjustResize"
 				}
 			}
 		},
