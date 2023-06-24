@@ -83,6 +83,12 @@
 			}
 		},
 		{
+			"path": "pages/add/add",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/publish/publish",
 			"style": {
 				"navigationBarTitleText": "发布",

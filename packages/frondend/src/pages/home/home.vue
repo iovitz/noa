@@ -1,5 +1,9 @@
 <template>
-	<PageWithBottonButton title="用户资料" buttonText="发送消息">
+	<PageWithBottonButton
+		title="用户资料"
+		:buttonText="isFriends ? '发消息' : '添加好友'"
+		:buttonClick="buttonClick"
+	>
 		<view class="header">
 			<image
 				class="avatar"
@@ -30,14 +34,20 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { onLoad } from '@dcloudio/uni-app';
 import PageWithBottonButton from '@/comps/page-with-bottom-button/page-with-bottom-button.vue';
+import logger from '@/utils/logger';
 
-const scrollViewHeight = ref(0);
-onLoad((data) => {
-	const sysInfo = uni.getSystemInfoSync();
-	scrollViewHeight.value = sysInfo.screenHeight - uni.upx2px(100) * 2;
-});
+const isFriends = ref(false);
+
+const buttonClick = () => {
+	if (isFriends.value) {
+		logger.verbose('发送消息');
+	} else {
+		uni.navigateTo({
+			url: '/pages/add/add',
+		});
+	}
+};
 </script>
 
 <style lang="scss" scoped>

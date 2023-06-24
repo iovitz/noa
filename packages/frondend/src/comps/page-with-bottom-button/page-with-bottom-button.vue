@@ -23,7 +23,9 @@
 		</scroll-view>
 
 		<view class="bottom-btn">
-			<button class="send-btn" type="primary">{{ props.buttonText }}</button>
+			<button class="send-btn" type="primary" @tap="handleButtonClick">
+				{{ props.buttonText }}
+			</button>
 		</view>
 	</view>
 </template>
@@ -34,15 +36,20 @@ import { onMounted, ref } from 'vue';
 const props = defineProps<{
 	title: string;
 	buttonText: string;
+	buttonClick?: () => void;
 }>();
 
 const scrollViewHeight = ref(0);
-onMounted((data) => {
+onMounted(() => {
 	const sysInfo = uni.getSystemInfoSync();
 	scrollViewHeight.value = sysInfo.screenHeight - uni.upx2px(100) * 2;
 });
 const handleBackup = () => {
 	uni.navigateBack();
+};
+
+const handleButtonClick = () => {
+	props.buttonClick?.();
 };
 </script>
 

@@ -68,7 +68,7 @@ const handleBackup = () => {
 
 const handleOpenUserHome = (id: number) => {
 	uni.navigateTo({
-		url: '/pages/home/home?userid=' + id,
+		url: '/pages/home/home?userid=',
 	});
 };
 </script>

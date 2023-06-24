@@ -23,7 +23,7 @@
 			</template>
 			<template #right>
 				<view class="w-full h-full flex flex-row items-center justify-center relative">
-					<uni-icons type="plusempty" size="30" color="#ffffff" @tap="handleOpenHeaderMenu" />
+					<uni-icons type="plusempty" size="24" color="#ffffff" @tap="handleOpenHeaderMenu" />
 				</view>
 			</template>
 			<view class="flex w-full h-full flex-col justify-center">
