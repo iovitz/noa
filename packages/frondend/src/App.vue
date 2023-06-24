@@ -37,7 +37,7 @@ onHide(() => {
 
 <!-- 这里的style不能设置scoped -->
 <style lang="scss">
-@import '@/common/uni.css';
+@import '@/common/uni.scss';
 @import '@/static/icon/iconfont.css';
 @import '@/common/tailwind.css';
 

@@ -77,6 +77,13 @@
 			}
 		},
 		{
+			"path": "pages/notice/notice",
+			"style": {
+				"navigationBarTitleText": "通知",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/home/home",
 			"style": {
 				"navigationStyle": "custom"

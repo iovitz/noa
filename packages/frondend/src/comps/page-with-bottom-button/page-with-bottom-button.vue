@@ -22,7 +22,7 @@
 			<slot name="default" />
 		</scroll-view>
 
-		<view class="bottom-btn">
+		<view class="bottom-btn" v-if="props.showButton">
 			<button class="send-btn" type="primary" @tap="handleButtonClick">
 				{{ props.buttonText }}
 			</button>
@@ -36,13 +36,15 @@ import { onMounted, ref } from 'vue';
 const props = defineProps<{
 	title: string;
 	buttonText: string;
+	showButton: boolean;
 	buttonClick?: () => void;
 }>();
 
 const scrollViewHeight = ref(0);
 onMounted(() => {
 	const sysInfo = uni.getSystemInfoSync();
-	scrollViewHeight.value = sysInfo.screenHeight - uni.upx2px(100) * 2;
+	scrollViewHeight.value =
+		sysInfo.screenHeight - uni.upx2px(100) - (props.showButton ? uni.upx2px(100) : 0);
 });
 const handleBackup = () => {
 	uni.navigateBack();

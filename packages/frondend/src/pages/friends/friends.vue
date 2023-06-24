@@ -2,8 +2,20 @@
 	<!-- <EmptyStatus type="message"></EmptyStatus> -->
 	<page-with-header>
 		<uni-list :border="false">
-			<uni-list-item showArrow :border="false" clickable title="新朋友" />
-			<uni-list-item showArrow :border="false" clickable title="通知" />
+			<uni-list-item
+				showArrow
+				:border="false"
+				clickable
+				title="新朋友"
+				@tap="() => handleGoNotice(0)"
+			/>
+			<uni-list-item
+				showArrow
+				:border="false"
+				clickable
+				title="群通知"
+				@tap="() => handleGoNotice(1)"
+			/>
 		</uni-list>
 		<view class="mt-4">
 			<uni-list :border="false">
@@ -24,6 +36,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import PageWithHeader from '@/comps/page-with-header/page-with-header.vue';
+import logger from '@/utils/logger';
 
 export default defineComponent({
 	components: { PageWithHeader },
@@ -52,7 +65,11 @@ export default defineComponent({
 	},
 	methods: {
 		// 抽屉状态发生变化触发
-		handleCollapseChange(e: any) {},
+		handleGoNotice(tabName: number) {
+			uni.navigateTo({
+				url: '/pages/notice/notice?tab=' + tabName,
+			});
+		},
 	},
 	// components: { EmptyStatus },
 });

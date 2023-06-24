@@ -3,18 +3,9 @@
 		title="用户资料"
 		:buttonText="isFriends ? '发消息' : '添加好友'"
 		:buttonClick="buttonClick"
+		:show-button="true"
 	>
-		<view class="header">
-			<image
-				class="avatar"
-				mode="aspectFit"
-				:src="'https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png'"
-			/>
-			<view class="home-info">
-				<view class="nickname text-ellipsis">不锈钢盆</view>
-				<view class="haha-number text-sm text-ellipsis">HAHA号: 256899231</view>
-			</view>
-		</view>
+		<avatar-header nickname="不锈钢盆" desc="HAHA号: 256899231"></avatar-header>
 
 		<view class="user-info">
 			<uni-group type="card" title="签名">
@@ -36,6 +27,7 @@
 import { ref } from 'vue';
 import PageWithBottonButton from '@/comps/page-with-bottom-button/page-with-bottom-button.vue';
 import logger from '@/utils/logger';
+import AvatarHeader from '@/comps/avatar-header/avatar-header.vue';
 
 const isFriends = ref(false);
 
@@ -50,35 +42,4 @@ const buttonClick = () => {
 };
 </script>
 
-<style lang="scss" scoped>
-.header {
-	display: flex;
-	flex-direction: row;
-	justify-content: home-between;
-	padding: 50upx 30upx;
-	.avatar {
-		height: 140upx;
-		width: 140upx;
-		border-radius: 50%;
-		margin-right: 20upx;
-	}
-	.home-info {
-		flex: 1;
-		display: flex;
-		justify-content: center;
-		flex-direction: column;
-		.nickname {
-			font-weight: bold;
-			font-size: 1.2em;
-		}
-		.haha-number {
-			font-size: 24upx;
-			margin-top: 6upx;
-		}
-	}
-	.send-message {
-		display: flex;
-		align-items: center;
-	}
-}
-</style>
+<style lang="scss" scoped></style>
