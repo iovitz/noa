@@ -133,6 +133,8 @@ export default defineComponent({
 			headerMenuRef?.close();
 		},
 		goFindPage() {
+			const headerMenuRef: any = this.$refs.headerMenu;
+			headerMenuRef?.close();
 			uni.navigateTo({
 				url: '/pages/find/find',
 			});

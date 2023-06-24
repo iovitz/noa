@@ -46,7 +46,6 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { rFind } from '@/io/http/user';
 
 const searchValue = ref('');
 const searchResult = ref<
@@ -67,14 +66,9 @@ const handleBackup = () => {
 	uni.navigateBack();
 };
 
-const handleSearch = () => {
-	rFind(searchValue.value).then((res) => {
-		searchResult.value = res.data;
-	});
-};
 const handleOpenUserHome = (id: number) => {
 	uni.navigateTo({
-		url: '/pages/home/home?username=' + id,
+		url: '/pages/home/home?userid=' + id,
 	});
 };
 </script>
