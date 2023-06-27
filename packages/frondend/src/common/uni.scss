@@ -51,3 +51,8 @@ uni-button {
 		border: none !important;
 	}
 }
+
+// 会导致层级错乱某些情况下Mask遮住NavBar
+.fixforpc-z-index {
+	z-index: 100 !important;
+}

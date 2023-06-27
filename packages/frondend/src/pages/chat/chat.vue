@@ -13,11 +13,10 @@
 			:fixed="true"
 			@clickLeft="handleBackup"
 		/>
-		<view class="chat-message-container"> 22</view>
+		<!-- <view class="chat-message-container"> 22</view> -->
 		<view class="chat-input-container">
 			<textarea
 				class="message-input"
-				auto-height
 				v-model="inputValue"
 				placeholder="请输入内容"
 				@input="handleInput"
@@ -25,7 +24,7 @@
 				:auto-blur="true"
 			/>
 
-			<view class="send-button" type="primary" size="mini">发送</view>
+			<button class="send-button" type="primary" size="mini">发送</button>
 		</view>
 	</view>
 </template>
@@ -38,7 +37,7 @@ import { ref } from 'vue';
 const inputValue = ref('');
 
 function handleInput(e: Event) {
-	logger.verbose(e);
+	logger.verbose('input', e);
 }
 
 const handleBackup = () => {
@@ -55,18 +54,20 @@ const handleBackup = () => {
 		line-height: 100upx;
 	}
 	.chat-input-container {
-		padding: 30upx;
 		position: fixed;
-		height: 100upx;
+		height: 140upx;
+		padding: 30upx;
+		box-sizing: border-box;
 		left: 0;
 		bottom: 0;
 		right: 0;
 		display: flex;
-		background-color: #fff;
 		.message-input {
-			height: 60upx;
+			height: 100%;
 			flex: 1;
-			background: red;
+			padding: 10upx;
+			background-color: #eaeaea;
+			box-sizing: border-box;
 		}
 		.send-button {
 			margin-left: 30upx;

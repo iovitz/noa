@@ -1,5 +1,5 @@
 <template>
-	<view class="box-bg">
+	<view class="page-with-header">
 		<uni-nav-bar
 			dark
 			class="nav-bar border-none"
