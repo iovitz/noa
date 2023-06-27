@@ -1,5 +1,6 @@
 import logger from '../logger';
 import { storage } from '../storage/storage';
+import {ip2int} from '@hahachat/common'
 
 type Header = Record<string, string>;
 interface RequestConfig {
@@ -15,11 +16,28 @@ interface Response<T = any> {
 }
 
 class ShortChain {
-	private config: RequestConfig;
 
-	constructor(config: RequestConfig) {
+  private ipLong: string = '0'
+
+	constructor(private config: RequestConfig) {
 		this.config = config;
+    uni.request({
+      url: 'https://ifconfig.me/ip',
+      success: (res) => {
+        this.ipLong = `${ip2int(res.data as string)}`
+      }
+    })
 	}
+
+  get isProd() {
+    return process.env.NODE_ENV === 'production'
+  }
+
+  genLogId() {
+    const envFlag = this.isProd ? 'P' : 'D'
+    const logId = envFlag + this.ipLong.padStart(10, '0') + Date.now()
+    return logId
+  }
 
 	public setHeader(key: string, value: string) {
 		this.config.header[key] = value;
@@ -47,11 +65,11 @@ class ShortChain {
 				header: {
 					...header,
 					...requestHeader,
-					authorization: storage.get('token') || 'token',
+					authorization: storage.get('token'),
+          ['x-tt-logid']: this.genLogId()
 				},
 			});
 		}).then((res: UniApp.RequestSuccessCallbackResult) => {
-			const data = res.data as any;
 			if (data.code !== 0) {
 				logger.error('请求失败', data);
 				uni.showToast({
@@ -59,7 +77,7 @@ class ShortChain {
 					title: data.message,
 				});
 			}
-			return data;
+			return res.data;
 		});
 	}
 

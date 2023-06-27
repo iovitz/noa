@@ -204,6 +204,9 @@ importers:
       '@dcloudio/uni-ui':
         specifier: ^1.4.27
         version: 1.4.27
+      '@hahachat/common':
+        specifier: ../common
+        version: link:../common
       '@hyoga/uni-socket.io':
         specifier: ^3.0.4
         version: 3.0.4
@@ -247,6 +250,9 @@ importers:
       '@dcloudio/vite-plugin-uni':
         specifier: 3.0.0-3080420230531001
         version: 3.0.0-3080420230531001(postcss@8.4.23)(vite@4.1.4)(vue@3.3.4)
+      '@types/node':
+        specifier: ^16.0.0
+        version: 16.18.31
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.43.0
         version: 5.59.6(@typescript-eslint/parser@5.59.6)(eslint@8.40.0)(typescript@5.0.4)
@@ -255,7 +261,7 @@ importers:
         version: 5.59.6(eslint@8.40.0)(typescript@5.0.4)
       '@vue/tsconfig':
         specifier: ^0.1.3
-        version: 0.1.3
+        version: 0.1.3(@types/node@16.18.31)
       concurrently:
         specifier: ^7.6.0
         version: 7.6.0
@@ -306,7 +312,7 @@ importers:
         version: 5.0.4
       vite:
         specifier: 4.1.4
-        version: 4.1.4(sass@1.63.6)(terser@5.17.3)
+        version: 4.1.4(@types/node@16.18.31)(sass@1.63.6)(terser@5.17.3)
       vue-tsc:
         specifier: ^1.0.24
         version: 1.6.5(typescript@5.0.4)
@@ -2090,7 +2096,7 @@ packages:
       magic-string: 0.27.0
       picocolors: 1.0.0
       terser: 5.17.3
-      vite: 4.1.4(sass@1.63.6)(terser@5.17.3)
+      vite: 4.1.4(@types/node@16.18.31)(sass@1.63.6)(terser@5.17.3)
     transitivePeerDependencies:
       - postcss
       - supports-color
@@ -5461,7 +5467,7 @@ packages:
       regenerator-runtime: 0.13.11
       systemjs: 6.14.1
       terser: 5.17.3
-      vite: 4.1.4(sass@1.63.6)(terser@5.17.3)
+      vite: 4.1.4(@types/node@16.18.31)(sass@1.63.6)(terser@5.17.3)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -5476,7 +5482,7 @@ packages:
       '@babel/core': 7.21.8
       '@babel/plugin-transform-typescript': 7.21.3(@babel/core@7.21.8)
       '@vue/babel-plugin-jsx': 1.1.1(@babel/core@7.21.8)
-      vite: 4.1.4(sass@1.63.6)(terser@5.17.3)
+      vite: 4.1.4(@types/node@16.18.31)(sass@1.63.6)(terser@5.17.3)
       vue: 3.3.4
     transitivePeerDependencies:
       - supports-color
@@ -5489,7 +5495,7 @@ packages:
       vite: ^4.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 4.1.4(sass@1.63.6)(terser@5.17.3)
+      vite: 4.1.4(@types/node@16.18.31)(sass@1.63.6)(terser@5.17.3)
       vue: 3.3.4
 
   /@volar/language-core@1.4.1:
@@ -5690,13 +5696,15 @@ packages:
   /@vue/shared@3.3.4:
     resolution: {integrity: sha512-7OjdcV8vQ74eiz1TZLzZP4JwqM5fA94K6yntPS5Z25r9HDuGNzaGdgvwKYq6S+MxwF0TFRwe50fIR/MYnakdkQ==}
 
-  /@vue/tsconfig@0.1.3:
+  /@vue/tsconfig@0.1.3(@types/node@16.18.31):
     resolution: {integrity: sha512-kQVsh8yyWPvHpb8gIc9l/HIDiiVUy1amynLNpCy8p+FoCiZXCo6fQos5/097MmnNZc9AtseDsCrfkhqCrJ8Olg==}
     peerDependencies:
       '@types/node': '*'
     peerDependenciesMeta:
       '@types/node':
         optional: true
+    dependencies:
+      '@types/node': 16.18.31
     dev: true
 
   /@webassemblyjs/ast@1.11.6:
@@ -13643,7 +13651,7 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  /vite@4.1.4(sass@1.63.6)(terser@5.17.3):
+  /vite@4.1.4(@types/node@16.18.31)(sass@1.63.6)(terser@5.17.3):
     resolution: {integrity: sha512-3knk/HsbSTKEin43zHu7jTwYWv81f8kgAL99G5NWBcA1LKvtvcVAC4JjBH1arBunO9kQka+1oGbrMKOjk4ZrBg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -13668,6 +13676,7 @@ packages:
       terser:
         optional: true
     dependencies:
+      '@types/node': 16.18.31
       esbuild: 0.16.17
       postcss: 8.4.23
       resolve: 1.22.2
