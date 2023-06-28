@@ -18,13 +18,8 @@
 			@clickRight="handleOpenUser"
 		/>
 
-		<scroll-view
-			scroll-y="true"
-			class="chat-message-container"
-			:style="`height: ${swiperHeight}px`"
-			@touchstart="handleTouchStart"
-		>
-			<view v-for="i in 130" class="message-item" :key="i">{{ i }}</view>
+		<scroll-view scroll-y="true" :style="`height: ${swiperHeight}px`">
+			<ChatMessageList :messageList="messageList"></ChatMessageList>
 		</scroll-view>
 		<!-- <view class="chat-message-container"> 22</view> -->
 		<view
@@ -56,18 +51,14 @@
 <script setup lang="ts">
 import logger from '@/utils/logger';
 import classNames from 'classnames';
+import ChatMessageList from '@/comps/chat-message-list/chat-message-list.vue';
+import type { IMessage } from '@hahachat/common';
 import { computed, ref, onMounted } from 'vue';
 
 // import EmptyStatus from '@/comps/empty-status/empty-status.vue';
 const inputValue = ref('');
 const inputFocus = ref(false);
 const inputRef = ref<any>(null);
-
-const handleTouchStart = () => {
-	console.log(inputRef.value);
-	console.log(inputRef.value?.focus);
-	inputRef.value.focus = false;
-};
 
 function handleInput(e: Event) {
 	logger.verbose('input', e);
@@ -118,15 +109,33 @@ onMounted(() => {
 		},
 	});
 });
+
+const messageList: IMessage[] = [
+	{
+		uid: '29128391',
+		mid: '291239123123123',
+		type: 'text',
+		content: '111111',
+		timestamp: 1687972901741,
+	},
+	{
+		uid: '29128391',
+		mid: '291239123123123',
+		type: 'text',
+		content: '222222',
+		timestamp: 1687972907917,
+	},
+	{
+		uid: '29128391',
+		mid: '291239123123123',
+		type: 'text',
+		content: '333333',
+		timestamp: 1687972914429,
+	},
+];
 </script>
 
 <style lang="scss" scoped>
-.chat-message-container {
-	transform: rotate(180deg);
-	.message-item {
-		transform: rotate(180deg);
-	}
-}
 .chat-page {
 	height: 100%;
 	width: 100%;
