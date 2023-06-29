@@ -1,15 +1,24 @@
 <template>
 	<view class="chat-message-list">
-		<view class="message-item">
+		<view
+			:class="
+				classNames('message-item', {
+					reverse: itm.uid === currentUserId,
+				})
+			"
+			v-for="itm in props.messageList"
+			:key="itm.mid"
+		>
 			<image
 				class="avatar"
 				mode="aspectFit"
+				@tap="() => goToHome(itm.uid)"
 				:src="'https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png'"
 			/>
 			<view class="combind-messages">
-				<view class="content-wrapper" v-for="itm in combindMessageList" :key="itm.mid">
+				<view class="content-wrapper">
 					<view class="content-text" v-if="itm.type === 'text'">
-						4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+						{{ itm.content }}
 					</view>
 				</view>
 			</view>
@@ -17,21 +26,21 @@
 	</view>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
 import type { IMessage } from '@hahachat/common';
+import classNames from 'classnames';
+import { ref } from 'vue';
 
-export default defineComponent({
-	props: {
-		messageList: Array,
-	},
-	mounted() {
-		const messageList = (this.messageList || []).sort((a, b) => {
-			return a.timestamp > b.timestamp;
-		});
-		console.log(messageList);
-	},
-});
+const currentUserId = ref('222222222');
+const props = defineProps<{
+	messageList: IMessage[];
+}>();
+
+const goToHome = (uid: string) => {
+	uni.navigateTo({
+		url: '/pages/home/home?uid' + uid,
+	});
+};
 </script>
 
 <style lang="scss" scoped>
@@ -41,6 +50,7 @@ export default defineComponent({
 	transform: rotate(180deg);
 	box-sizing: border-box;
 	padding: 20upx;
+	flex-direction: column;
 }
 .message-item {
 	display: flex;
@@ -48,11 +58,14 @@ export default defineComponent({
 	flex-direction: row;
 	align-items: flex-start;
 	transform: rotate(180deg);
+	gap: 20upx;
+	&.reverse {
+		flex-direction: row-reverse;
+	}
 	.avatar {
 		border-radius: 50%;
 		height: 80upx;
 		width: 80upx;
-		margin-right: 20upx;
 	}
 	.combind-messages {
 		max-width: 65vw;
@@ -63,7 +76,7 @@ export default defineComponent({
 			max-width: 100%;
 			border-radius: 10upx;
 			background-color: #fff;
-			margin-bottom: 20upx;
+			margin-bottom: 40upx;
 		}
 		.content-text {
 			padding: 20upx;

@@ -18,7 +18,13 @@
 			@clickRight="handleOpenUser"
 		/>
 
-		<scroll-view scroll-y="true" :style="`height: ${swiperHeight}px`">
+		<scroll-view
+			scroll-y="true"
+			:style="`height: ${swiperHeight}px`"
+			:scroll-top="scrollTop"
+			:scroll-with-animation="true"
+			:show-scrollbar="false"
+		>
 			<ChatMessageList :messageList="messageList"></ChatMessageList>
 		</scroll-view>
 		<!-- <view class="chat-message-container"> 22</view> -->
@@ -43,7 +49,7 @@
 				@keyboardheightchange="keyboardheightchange"
 			/>
 
-			<button class="send-button" type="primary" size="mini">发送</button>
+			<button class="send-button" type="primary" @tap="handleSendMessage" size="mini">发送</button>
 		</view>
 	</view>
 </template>
@@ -110,7 +116,7 @@ onMounted(() => {
 	});
 });
 
-const messageList: IMessage[] = [
+const messageList = ref<IMessage[]>([
 	{
 		uid: '29128391',
 		mid: '291239123123123',
@@ -126,13 +132,121 @@ const messageList: IMessage[] = [
 		timestamp: 1687972907917,
 	},
 	{
-		uid: '29128391',
+		uid: '222222222',
 		mid: '291239123123123',
 		type: 'text',
 		content: '333333',
 		timestamp: 1687972914429,
 	},
-];
+	{
+		uid: '222222222',
+		mid: '291239123123123',
+		type: 'text',
+		content: '333333',
+		timestamp: 1687972914429,
+	},
+	{
+		uid: '222222222',
+		mid: '291239123123123',
+		type: 'text',
+		content: '333333',
+		timestamp: 1687972914429,
+	},
+	{
+		uid: '222222222',
+		mid: '291239123123123',
+		type: 'text',
+		content: '333333',
+		timestamp: 1687972914429,
+	},
+	{
+		uid: '222222222',
+		mid: '291239123123123',
+		type: 'text',
+		content: '333333',
+		timestamp: 1687972914429,
+	},
+	{
+		uid: '222222222',
+		mid: '291239123123123',
+		type: 'text',
+		content: '333333',
+		timestamp: 1687972914429,
+	},
+	{
+		uid: '222222222',
+		mid: '291239123123123',
+		type: 'text',
+		content: '333333',
+		timestamp: 1687972914429,
+	},
+	{
+		uid: '222222222',
+		mid: '291239123123123',
+		type: 'text',
+		content: '333333',
+		timestamp: 1687972914429,
+	},
+	{
+		uid: '222222222',
+		mid: '291239123123123',
+		type: 'text',
+		content: '333333',
+		timestamp: 1687972914429,
+	},
+	{
+		uid: '222222222',
+		mid: '291239123123123',
+		type: 'text',
+		content: '333333',
+		timestamp: 1687972914429,
+	},
+	{
+		uid: '222222222',
+		mid: '291239123123123',
+		type: 'text',
+		content: '333333',
+		timestamp: 1687972914429,
+	},
+	{
+		uid: '222222222',
+		mid: '291239123123123',
+		type: 'text',
+		content: '333333',
+		timestamp: 1687972914429,
+	},
+	{
+		uid: '222222222',
+		mid: '291239123123123',
+		type: 'text',
+		content: '333333',
+		timestamp: 1687972914429,
+	},
+	{
+		uid: '222222222',
+		mid: '291239123123123',
+		type: 'text',
+		content: '333333',
+		timestamp: 1687972914429,
+	},
+]);
+
+const scrollTop = ref(Number.MAX_SAFE_INTEGER);
+const handleSendMessage = () => {
+	console.log(scrollTop.value);
+	messageList.value = [
+		{
+			uid: '222222222',
+			mid: '',
+			content: inputValue.value,
+			type: 'text',
+			timestamp: Date.now(),
+		},
+		...messageList.value,
+	];
+	inputValue.value = '';
+	scrollTop.value = Number.MAX_SAFE_INTEGER;
+};
 </script>
 
 <style lang="scss" scoped>
