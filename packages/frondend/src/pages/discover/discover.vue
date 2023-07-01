@@ -1,5 +1,6 @@
 <template>
 	<page-with-header>
+		<uni-fab ref="fab" class="add-button" @fabClick="handleAdd" horizontal="right" />
 		<view class="news-card-list">
 			<news-card v-for="i in 10" :key="i"></news-card>
 		</view>
@@ -54,8 +55,21 @@ export default defineComponent({
 		handleLoadMore() {
 			logger.verbose('加载更多');
 		},
+		handleAdd() {
+			logger.verbose('添加新内容');
+			uni.navigateTo({
+				url: '/pages/publish/publish',
+			});
+		},
 	},
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.add-button {
+	:deep(.uni-fab__circle) {
+		box-shadow: none;
+		background-color: #2ac4ff !important;
+	}
+}
+</style>

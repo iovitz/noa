@@ -8,6 +8,7 @@ import { format, transports } from 'winston';
     WinstonModule.forRootAsync({
       inject: [ConfigService],
       useFactory(configService: ConfigService) {
+        const env = configService.get('NODE_ENV');
         const logLevel = configService.get('LOG_LEVEL');
         const consoleTransport = new transports.Console({
           // 使用时间戳和nest样式
@@ -17,7 +18,7 @@ import { format, transports } from 'winston';
           ),
         });
         const infoTransport = new transports.DailyRotateFile({
-          dirname: `logs/info`,
+          dirname: `logs/${env}/info`,
           filename: '%DATE%.log',
           datePattern: 'YYYY-MM-DD',
           zippedArchive: true,
@@ -35,7 +36,7 @@ import { format, transports } from 'winston';
           ),
         });
         const errorTransport = new transports.DailyRotateFile({
-          dirname: 'logs/error',
+          dirname: `logs/${env}/error`,
           filename: '%DATE%.log',
           datePattern: 'YYYY-MM-DD',
           zippedArchive: true,

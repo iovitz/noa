@@ -12,7 +12,8 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true,
       // 环境变量配置
-      envFilePath: ['.env', `.env.${process.env.NODE_ENV}`],
+      // .env文件中的属性，会默认覆盖所有环境单独配置的属性
+      envFilePath: [`.env.${process.env.NODE_ENV}`],
     }),
     LoggerModule,
   ],

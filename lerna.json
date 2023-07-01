@@ -1,9 +1,6 @@
 {
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*"],
   "npmClient": "pnpm",
-  "useWorkspaces": true,
   "command": {
     "publish": {},
     "bootstrap": {}

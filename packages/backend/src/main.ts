@@ -42,9 +42,9 @@ async function bootstrap() {
   await prisma.$disconnect();
 
   app.setGlobalPrefix(configService.get('API_GLOBAL_PREFIX'));
+  console.log(parseInt(configService.get('APP_PORT')));
   // app.useSt;
-
-  const appPort = Number(configService.get('APP_PORT')) || 28257;
+  const appPort = parseInt(configService.get('APP_PORT')) || 11000;
   await app.listen(appPort);
   logger.verbose(`Server running in http://localhost:${appPort}`);
 }

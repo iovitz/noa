@@ -1,29 +1,37 @@
 <template>
-	<view class="chat-message-list">
-		<view
-			:class="
-				classNames('message-item', {
-					reverse: itm.uid === currentUserId,
-				})
-			"
-			v-for="itm in props.messageList"
-			:key="itm.mid"
-		>
-			<image
-				class="avatar"
-				mode="aspectFit"
-				@tap="() => goToHome(itm.uid)"
-				:src="'https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png'"
-			/>
-			<view class="combind-messages">
-				<view class="content-wrapper">
-					<view class="content-text" v-if="itm.type === 'text'">
-						{{ itm.content }}
+	<scroll-view
+		scroll-y="true"
+		class="message-scroll-view"
+		:style="`height: ${props.scrollHeight}px`"
+		:scroll-with-animation="true"
+		:show-scrollbar="false"
+	>
+		<view class="chat-message-list">
+			<view
+				:class="
+					classNames('message-item', {
+						reverse: itm.uid === currentUserId,
+					})
+				"
+				v-for="itm in props.messageList"
+				:key="itm.mid"
+			>
+				<image
+					class="avatar"
+					mode="aspectFit"
+					@tap="() => goToHome(itm.uid)"
+					:src="'https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png'"
+				/>
+				<view class="combind-messages">
+					<view class="content-wrapper">
+						<view class="content-text" v-if="itm.type === 'text'">
+							{{ itm.content }}
+						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-	</view>
+	</scroll-view>
 </template>
 
 <script lang="ts" setup>
@@ -34,6 +42,7 @@ import { ref } from 'vue';
 const currentUserId = ref('222222222');
 const props = defineProps<{
 	messageList: IMessage[];
+	scrollHeight: number;
 }>();
 
 const goToHome = (uid: string) => {
@@ -44,13 +53,17 @@ const goToHome = (uid: string) => {
 </script>
 
 <style lang="scss" scoped>
+.message-scroll-view {
+	transform: rotate(180deg);
+	direction: rtl;
+}
 .chat-message-list {
 	width: 100%;
 	display: flex;
-	transform: rotate(180deg);
 	box-sizing: border-box;
 	padding: 20upx;
 	flex-direction: column;
+	direction: ltr;
 }
 .message-item {
 	display: flex;

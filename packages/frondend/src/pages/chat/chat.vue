@@ -18,15 +18,7 @@
 			@clickRight="handleOpenUser"
 		/>
 
-		<scroll-view
-			scroll-y="true"
-			:style="`height: ${swiperHeight}px`"
-			:scroll-top="scrollTop"
-			:scroll-with-animation="true"
-			:show-scrollbar="false"
-		>
-			<ChatMessageList :messageList="messageList"></ChatMessageList>
-		</scroll-view>
+		<ChatMessageList :messageList="messageList" :scroll-height="scrollHeight"></ChatMessageList>
 		<!-- <view class="chat-message-container"> 22</view> -->
 		<view
 			:class="classNames(['chat-input-container', inputFocus && 'focus'])"
@@ -96,7 +88,7 @@ const handleOpenUser = () => {
 const windowHeight = ref(0);
 const inputHeight = ref(uni.upx2px(100));
 const keyboardHeight = ref(0);
-const swiperHeight = computed(() => {
+const scrollHeight = computed(() => {
 	return windowHeight.value - inputHeight.value - keyboardHeight.value;
 });
 
