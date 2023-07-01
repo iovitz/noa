@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "description": "",
   "author": "",
-  "private": true,
   "license": "UNLICENSED",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nest start --debug --watch",
@@ -25,8 +24,7 @@
     "migrate:deploy": "npx prisma migrate deploy",
     "prisma:generate": "./node_modules/.bin/dotenv -e .env.development -- npx prisma generate",
     "prisma:seed": "./node_modules/.bin/dotenv -e .env.development -- npx prisma db seed",
-    "prisma:push": "./node_modules/.bin/dotenv -e .env.development -- prisma db push",
-    "install": "pnpx prisma generate"
+    "prisma:push": "./node_modules/.bin/dotenv -e .env.development -- prisma db push"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",

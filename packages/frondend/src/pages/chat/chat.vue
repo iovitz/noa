@@ -283,6 +283,7 @@ const handleSendMessage = () => {
 			justify-content: center;
 			align-items: center;
 			display: flex;
+			background-color: inherit;
 		}
 		.send-button {
 			margin-left: 10upx;

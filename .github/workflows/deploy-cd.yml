@@ -33,5 +33,7 @@ jobs:
             node -v
             npm i pnpm -g
             pnpm install
-            cd /packages/backend
+            cd /packages/frondend
+            pnpm run build:h5:cd
+            cd ../backend
             pnpm run pm2:cd
