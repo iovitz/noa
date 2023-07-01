@@ -25,7 +25,8 @@
     "migrate:deploy": "npx prisma migrate deploy",
     "prisma:generate": "./node_modules/.bin/dotenv -e .env.development -- npx prisma generate",
     "prisma:seed": "./node_modules/.bin/dotenv -e .env.development -- npx prisma db seed",
-    "prisma:push": "./node_modules/.bin/dotenv -e .env.development -- prisma db push"
+    "prisma:push": "./node_modules/.bin/dotenv -e .env.development -- prisma db push",
+    "postinstall": "npx prisma generate"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
