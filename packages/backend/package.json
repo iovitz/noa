@@ -25,8 +25,7 @@
     "migrate:deploy": "npx prisma migrate deploy",
     "prisma:generate": "./node_modules/.bin/dotenv -e .env.development -- npx prisma generate",
     "prisma:seed": "./node_modules/.bin/dotenv -e .env.development -- npx prisma db seed",
-    "prisma:push": "./node_modules/.bin/dotenv -e .env.development -- prisma db push",
-    "postinstall": "prisma generate"
+    "prisma:push": "./node_modules/.bin/dotenv -e .env.development -- prisma db push"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -36,7 +35,7 @@
     "@nestjs/platform-socket.io": "^9.4.1",
     "@nestjs/serve-static": "^3.0.1",
     "@nestjs/websockets": "^9.4.1",
-    "@prisma/client": "latest",
+    "@prisma/client": "^4.16.2",
     "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
