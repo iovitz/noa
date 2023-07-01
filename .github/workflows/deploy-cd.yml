@@ -1,4 +1,4 @@
-name: Deploy [Test] Environment
+name: Deploy [Test] And [Release]
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME_TEST }}
           password: ${{ secrets.SERVER_PASSWORD_TEST }}
           source: './'
-          target: /home/server-test
+          target: /home/server-cd
 
       - name: SSH to server and restart application
         uses: appleboy/ssh-action@master
@@ -29,8 +29,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME_TEST }}
           password: ${{ secrets.SERVER_PASSWORD_TEST }}
           script: |
-            cd /home/server-test
-            echo '=============='
+            cd /home/server-cd
             node -v
             npm i pnpm -g
             pnpm install
