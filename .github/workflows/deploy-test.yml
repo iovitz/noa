@@ -30,6 +30,8 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD_TEST }}
           script: |
             cd /home/server-test
+            echo '=============='
+            node -v
             npm i pnpm -g
             pnpm install
             cd /packages/backend
