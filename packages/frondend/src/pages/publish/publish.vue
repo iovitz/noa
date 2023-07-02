@@ -11,6 +11,11 @@
 			/>
 			<UploadImage></UploadImage>
 		</view>
+
+		<uni-group class="user-aside-list-group bg-white" type="card" title="账号管理">
+			<uni-list-item showArrow :border="false" clickable title="权限设置" />
+			<uni-list-item showArrow :border="false" clickable title="定时" />
+		</uni-group>
 	</CommonPageWrapper>
 </template>
 
@@ -52,6 +57,8 @@ export default defineComponent({
 		box-sizing: border-box;
 		font-size: 28upx;
 		line-height: 1.5em;
+		height: 200upx;
+		margin-bottom: 30upx;
 	}
 }
 </style>
