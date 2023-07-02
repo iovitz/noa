@@ -1,6 +1,5 @@
 <template>
-	<view class="publish-page">
-		<uni-nav-bar left-icon="left" title="返回" @clickLeft="handleBack" />
+	<CommonPageWrapper title="发布哈哈" buttonText="发布哈哈" :showButton="true">
 		<view class="content-editor">
 			<textarea
 				class="editor"
@@ -8,36 +7,21 @@
 				v-model="content"
 				maxlength="1000"
 				placeholder="请输入自我介绍"
+				placeholder-style="color: #aaa"
 			/>
+			<UploadImage></UploadImage>
 		</view>
-
-		<view class="upload-image">
-			<UploadImage :grid-column="3" :max="9"></UploadImage>
-		</view>
-
-		<view class="bottom-operations">
-			<view class="options-icons">
-				<view class="options-icon">
-					<text class="iconfont icon-classify_1_line" />
-				</view>
-				<view class="options-icon">
-					<text class="iconfont icon-topic" />
-				</view>
-				<view class="options-icon">
-					<text class="iconfont icon-pic_line" />
-				</view>
-			</view>
-			<button class="publish-button" type="primary" size="mini">发布</button>
-		</view>
-	</view>
+	</CommonPageWrapper>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import CommonPageWrapper from '@/comps/common-page-wrapper/common-page-wrapper.vue';
 import UploadImage from '@/comps/upload-image/upload-image.vue';
 
 export default defineComponent({
 	components: {
+		CommonPageWrapper,
 		UploadImage,
 	},
 	data() {
@@ -60,47 +44,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.publish-page {
-	height: 100%;
-	width: 100%;
-	background-color: #fff;
-	.content-editor {
-		.editor {
-			width: 100%;
-			padding: 30upx;
-			box-sizing: border-box;
-		}
-	}
-	.upload-image {
-		padding: 30upx;
-	}
-	.bottom-operations {
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		padding: 30upx;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		.options-icons {
-			display: flex;
-			.options-icon {
-				height: 60upx;
-				width: 60upx;
-				display: flex;
-				margin-right: 20upx;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				.iconfont {
-					font-size: 40upx;
-				}
-			}
-		}
-		.publish-button {
-			margin: 0;
-		}
+.content-editor {
+	background-color: #ffffff;
+	padding: 30upx;
+	.editor {
+		width: 100%;
+		box-sizing: border-box;
+		font-size: 28upx;
+		line-height: 1.5em;
 	}
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-	<view class="page-with-button-button">
+	<view class="common-page-wrapper">
 		<uni-nav-bar
 			dark
 			class="text-white"
@@ -56,7 +56,7 @@ const handleButtonClick = () => {
 </script>
 
 <style lang="scss" scoped>
-.page-with-button-button {
+.common-page-wrapper {
 	height: 100%;
 	width: 100%;
 	background-color: #fff;

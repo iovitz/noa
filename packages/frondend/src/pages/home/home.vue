@@ -1,5 +1,5 @@
 <template>
-	<PageWithBottonButton
+	<CommonPageWrapper
 		title="用户资料"
 		:buttonText="isFriends ? '发消息' : '添加好友'"
 		:buttonClick="buttonClick"
@@ -20,12 +20,12 @@
 		<uni-group type="card" title="空间动态">
 			<uni-list-item :border="false" showArrow clickable title="他的空间" rightText="10条内容" />
 		</uni-group>
-	</PageWithBottonButton>
+	</CommonPageWrapper>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import PageWithBottonButton from '@/comps/page-with-bottom-button/page-with-bottom-button.vue';
+import CommonPageWrapper from '@/comps/common-page-wrapper/common-page-wrapper.vue';
 import logger from '@/utils/logger';
 import AvatarHeader from '@/comps/avatar-header/avatar-header.vue';
 

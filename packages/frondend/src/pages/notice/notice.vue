@@ -1,5 +1,5 @@
 <template>
-	<PageWithBottonButton title="通知" buttonText="发送申请" :showButton="false">
+	<CommonPageWrapper title="通知" buttonText="发送申请" :showButton="false">
 		<view class="tabs">
 			<uni-segmented-control
 				class="tabs-switch"
@@ -38,11 +38,11 @@
 				/>
 			</view>
 		</view>
-	</PageWithBottonButton>
+	</CommonPageWrapper>
 </template>
 
 <script lang="ts" setup>
-import PageWithBottonButton from '@/comps/page-with-bottom-button/page-with-bottom-button.vue';
+import CommonPageWrapper from '@/comps/common-page-wrapper/common-page-wrapper.vue';
 import { ref } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
 import logger from '@/utils/logger';
