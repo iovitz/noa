@@ -33,16 +33,7 @@
 		</uni-nav-bar>
 	</view>
 
-	<scroll-view
-		scroll-y="true"
-		:style="`height: ${swiperHeight}px`"
-		refresher-enabled
-		@scrolltolower="handleLoadMore"
-		refresher-background="#eee"
-		:refresher-triggered="refreshFlag"
-		:refresher-threshold="50"
-		@refresherrefresh="handleRefresh"
-	>
+	<scroll-view scroll-y="true" :style="`height: ${swiperHeight}px`" @scrolltolower="handleLoadMore">
 		<uni-search-bar
 			placeholder="超级搜索"
 			@focus="handleGoSearch"
@@ -59,7 +50,7 @@
 	</scroll-view>
 
 	<uni-popup ref="headerMenu" background-color="#fff" @change="handlePopupChange" :safe-area="true">
-		<view :style="headerMenuFixStyle"></view>
+		<view class="popup-placeholder"></view>
 		<view class="add-dropdown">
 			<view @tap="goFindPage">
 				<uni-icons type="personadd" />
@@ -73,7 +64,7 @@
 	</uni-popup>
 
 	<uni-drawer ref="userAside" @change="handlePopupChange" mode="left" :width="250">
-		<view class="w-full h-full" :style="userAsideFixStyle">
+		<view class="w-full h-full fix-status-bar">
 			<user-aside />
 		</view>
 	</uni-drawer>
@@ -94,16 +85,7 @@ export default defineComponent({
 		return {
 			refreshFlag: false,
 			swiperHeight: 0,
-			statusBarHeight: 0,
 		};
-	},
-	computed: {
-		userAsideFixStyle() {
-			return `padding-top: ${this.statusBarHeight}px`;
-		},
-		headerMenuFixStyle() {
-			return `padding-top: ${this.statusBarHeight + uni.upx2px(100)}px`;
-		},
 	},
 	activated() {
 		const userAsideRef: any = this.$refs.userAside;
@@ -121,7 +103,6 @@ export default defineComponent({
 					res.windowBottom;
 				// 如果有NavBar需要减去NavBar高度
 				this.swiperHeight = windowHeight - uni.upx2px(100);
-				this.statusBarHeight = res.statusBarHeight || 0;
 			},
 		});
 	},
@@ -182,6 +163,10 @@ export default defineComponent({
 		width: 70upx;
 		border-radius: 50%;
 	}
+}
+.popup-placeholder {
+	padding-top: var(--status-bar-height);
+	height: 100upx;
 }
 .add-dropdown {
 	top: 30upx;

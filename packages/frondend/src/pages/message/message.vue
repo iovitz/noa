@@ -1,21 +1,7 @@
 <template>
 	<page-with-header>
 		<view class="message-page">
-			<uni-list :border="false">
-				<uni-list-chat
-					v-for="i in 99"
-					:key="i"
-					title="xieqianyu"
-					:avatar-circle="true"
-					avatar="https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png"
-					note="您收到一条新的消息"
-					time="2020-02-02 20:20"
-					badge-positon="left"
-					badge-text="99"
-					@tap="handleGoChat"
-					clickable
-				/>
-			</uni-list>
+			<MessageList></MessageList>
 		</view>
 	</page-with-header>
 </template>
@@ -25,10 +11,12 @@
 import { defineComponent } from 'vue';
 import PageWithHeader from '@/comps/page-with-header/page-with-header.vue';
 import logger from '@/utils/logger';
+import MessageList from '@/comps/message-list/message-list.vue';
 
 export default defineComponent({
 	components: {
 		PageWithHeader,
+		MessageList,
 	},
 	data() {
 		return {
@@ -40,11 +28,6 @@ export default defineComponent({
 		// 抽屉状态发生变化触发
 		handlePopupChange(e: any) {
 			logger.verbose(e);
-		},
-		handleGoChat() {
-			uni.navigateTo({
-				url: '/pages/chat/chat',
-			});
 		},
 		handleGoSearch() {
 			logger.verbose('前往搜索');

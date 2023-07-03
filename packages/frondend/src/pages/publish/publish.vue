@@ -1,5 +1,10 @@
 <template>
-	<CommonPageWrapper title="发布哈哈" buttonText="发布哈哈" :showButton="true">
+	<CommonPageWrapper
+		title="发布哈哈"
+		buttonText="发布哈哈"
+		:showButton="true"
+		:button-click="handlePublish"
+	>
 		<view class="content-editor">
 			<textarea
 				class="editor"
@@ -9,13 +14,10 @@
 				placeholder="请输入自我介绍"
 				placeholder-style="color: #aaa"
 			/>
-			<UploadImage></UploadImage>
+			<UploadImage v-model="imageList"></UploadImage>
 		</view>
 
-		<uni-group class="user-aside-list-group bg-white" type="card" title="账号管理">
-			<uni-list-item showArrow :border="false" clickable title="权限设置" />
-			<uni-list-item showArrow :border="false" clickable title="定时" />
-		</uni-group>
+		<uni-list-item showArrow :border="false" clickable title="权限设置" />
 	</CommonPageWrapper>
 </template>
 
@@ -23,26 +25,30 @@
 import { defineComponent } from 'vue';
 import CommonPageWrapper from '@/comps/common-page-wrapper/common-page-wrapper.vue';
 import UploadImage from '@/comps/upload-image/upload-image.vue';
+import logger from '@/utils/logger';
 
 export default defineComponent({
-	components: {
+components: {
 		CommonPageWrapper,
 		UploadImage,
 	},
 	data() {
 		return {
 			content: '',
-			fileList: [] as any[],
+			imageList: [] as any[],
 		};
 	},
-	methods: {
-		handleUploadImage(e: any) {
-			const files = e.file ?? [];
-			this.fileList = [...this.fileList, ...files];
+	watch: {
+		imageList(v) {
+			logger.verbose('图片上传', v);
 		},
-		handleDeleteImage() {},
-		handleBack() {
-			uni.navigateBack();
+	},
+	methods: {
+		handlePublish() {
+			logger.verbose('发布内容', {
+				content: this.content,
+				imageList: this.imageList,
+			});
 		},
 	},
 });

@@ -2,11 +2,17 @@
 	<view class="uploader">
 		<view class="uploader-head">
 			<view class="uploader-title">点击可预览选好的图片</view>
-			<view class="uploader-info">{{ imageList.length }}/9</view>
+			<view class="uploader-info">{{ modelValue.length }}/9</view>
 		</view>
 		<uni-grid :column="gridColumn" :showBorder="false">
-			<uni-grid-item v-for="(image, index) in imageList" :key="index">
-				<image class="uploader__img" :src="image" :data-src="image" @tap="previewImage"></image>
+			<uni-grid-item class="image-list-item" v-for="(image, index) in modelValue" :key="index">
+				<image
+					class="uploader__img"
+					mode="aspectFill"
+					:src="image"
+					:data-src="image"
+					@tap="previewImage"
+				></image>
 			</uni-grid-item>
 			<uni-grid-item v-if="isShowAddButton">
 				<view class="uploader__input-box">
@@ -29,20 +35,20 @@ export default defineComponent({
 			type: Number,
 			default: 9,
 		},
+		modelValue: {
+			type: Array,
+			default: () => [],
+		},
 	},
 	data() {
 		return {
 			title: 'choose/previewImage',
-			imageList: [] as string[],
 		};
 	},
 	computed: {
 		isShowAddButton() {
-			return this.imageList.length < this.max;
+			return this.modelValue.length < this.max;
 		},
-	},
-	onUnload() {
-		this.imageList = [];
 	},
 	methods: {
 		chooseImage: async function () {
@@ -52,7 +58,7 @@ export default defineComponent({
 				count: this.max,
 				success: ({ tempFilePaths }) => {
 					const paths = typeof tempFilePaths === 'string' ? [tempFilePaths] : tempFilePaths;
-					this.imageList = [...this.imageList, ...paths];
+					this.$emit('update:modelValue', [...this.modelValue, ...paths]);
 				},
 				fail: (err) => {
 					logger.error('上传图片失败', err);
@@ -64,7 +70,7 @@ export default defineComponent({
 			const current = e.target.dataset.src;
 			uni.previewImage({
 				current,
-				urls: this.imageList,
+				urls: this.modelValue as any[],
 			});
 		},
 	},
@@ -85,6 +91,9 @@ export default defineComponent({
 .uploader {
 	flex: 1;
 	flex-direction: column;
+}
+.image-list-item {
+	position: relative;
 }
 .uploader-info {
 	color: #b2b2b2;

@@ -56,3 +56,12 @@ uni-button {
 .fixforpc-z-index {
 	z-index: 100 !important;
 }
+
+.fix-status-bar {
+	padding-top: var(--status-bar-height);
+}
+
+// 全局下拉刷新到顶的距离
+uni-page-refresh {
+	top: calc(100upx + var(--status-bar-height));
+}

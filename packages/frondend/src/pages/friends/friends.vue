@@ -23,6 +23,7 @@
 					:avatar-circle="true"
 					:border="false"
 					v-for="i in 10"
+					clickable
 					:key="i"
 					title="uni-app"
 					avatar="https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png"

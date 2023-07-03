@@ -9,7 +9,8 @@
 		{
 			"path": "pages/message/message",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
 			}
 		},
 		{

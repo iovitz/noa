@@ -9,12 +9,5 @@
 		"lib": ["esnext", "dom"],
 		"types": ["@dcloudio/types", "node"]
 	},
-	"include": [
-		"src/**/*.ts",
-		"src/**/*.d.ts",
-		"src/**/*.tsx",
-		"src/**/*.vue",
-		"src/common/permission.ts",
-		"src/common/permission.ts"
-	]
+	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
