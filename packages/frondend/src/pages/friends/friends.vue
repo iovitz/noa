@@ -1,5 +1,4 @@
 <template>
-	<!-- <EmptyStatus type="message"></EmptyStatus> -->
 	<page-with-header>
 		<uni-list :border="false">
 			<uni-list-item

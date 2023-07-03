@@ -1,8 +1,6 @@
 <template>
 	<page-with-header>
-		<view class="message-page">
-			<MessageList></MessageList>
-		</view>
+		<message-list></message-list>
 	</page-with-header>
 </template>
 

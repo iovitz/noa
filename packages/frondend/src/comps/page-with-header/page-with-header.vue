@@ -34,22 +34,11 @@
 	</view>
 
 	<scroll-view scroll-y="true" :style="`height: ${swiperHeight}px`" @scrolltolower="handleLoadMore">
-		<uni-search-bar
-			placeholder="超级搜索"
-			@focus="handleGoSearch"
-			cancelButton="none"
-			class="bg-white"
-		>
-			<template #searchIcon>
-				<uni-icons color="#999999" size="18" type="search" />
-			</template>
-		</uni-search-bar>
-
 		<!-- 页面内容 -->
 		<slot name="default" />
 	</scroll-view>
 
-	<uni-popup ref="headerMenu" background-color="#fff" @change="handlePopupChange" :safe-area="true">
+	<uni-popup ref="headerMenu" background-color="#fff" :safe-area="true">
 		<view class="popup-placeholder"></view>
 		<view class="add-dropdown">
 			<view @tap="goFindPage">
@@ -63,7 +52,7 @@
 		</view>
 	</uni-popup>
 
-	<uni-drawer ref="userAside" @change="handlePopupChange" mode="left" :width="250">
+	<uni-drawer ref="userAside" mode="left" :width="250">
 		<view class="w-full h-full fix-status-bar">
 			<user-aside />
 		</view>
@@ -76,7 +65,10 @@ import logger from '@/utils/logger';
 
 export default defineComponent({
 	props: {
-		type: String,
+		heightUsed: {
+			type: Number,
+			default: 0,
+		},
 	},
 	components: {
 		UserAside,
@@ -101,8 +93,9 @@ export default defineComponent({
 				const windowHeight =
 					(res.safeArea?.height || res.windowHeight - (res.statusBarHeight ?? 0)) -
 					res.windowBottom;
-				// 如果有NavBar需要减去NavBar高度
-				this.swiperHeight = windowHeight - uni.upx2px(100);
+				// 如果有NavBar需要减去NavBar高度和已经被占用的高度
+				this.swiperHeight = windowHeight - uni.upx2px(100) - uni.upx2px(this.heightUsed);
+				logger.verbose('mess', uni.upx2px(this.heightUsed), this.swiperHeight, this.heightUsed);
 			},
 		});
 	},
@@ -120,28 +113,9 @@ export default defineComponent({
 				url: '/pages/find/find',
 			});
 		},
-		handleGoSearch() {
-			logger.verbose('前往搜索');
-		},
 		handleOpenHeaderMenu() {
 			const headerMenuRef: any = this.$refs.headerMenu;
 			headerMenuRef?.open('top');
-		},
-		handlePopupChange(e: boolean | { show: boolean }) {
-			logger.verbose('蒙层change事件', e);
-			if (typeof e === 'boolean') {
-				if (e) {
-					uni.hideTabBar();
-				} else {
-					uni.showTabBar();
-				}
-			} else {
-				if (e.show) {
-					uni.hideTabBar();
-				} else {
-					uni.showTabBar();
-				}
-			}
 		},
 		handleRefresh() {
 			this.refreshFlag = true;

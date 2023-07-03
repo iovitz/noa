@@ -7,6 +7,12 @@
 	},
 	"pages": [
 		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/message/message",
 			"style": {
 				"navigationStyle": "custom",

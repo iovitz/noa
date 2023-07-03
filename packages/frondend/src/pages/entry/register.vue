@@ -23,7 +23,6 @@
 import { registerRules } from '@/common/rules/login';
 import { rRegister } from '@/io/http/user';
 import { useUserStore } from '@/store/user.store';
-import logger from '@/utils/logger';
 import { ref, reactive } from 'vue';
 
 const userStore = useUserStore();
