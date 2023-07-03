@@ -66,6 +66,7 @@ export default defineComponent({
 	:deep(.uni-fab__circle) {
 		box-shadow: none;
 		background-color: #2ac4ff !important;
+		bottom: calc(140upx);
 	}
 }
 </style>
