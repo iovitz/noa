@@ -1,13 +1,13 @@
 import { Global, Module } from '@nestjs/common';
-import { PrismaService } from './prisma/prisma.service';
 import { UtilsService } from './utils/utils.service';
 import { LoggerModule } from './logger/logger.module';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from './typeorm/typeorm.module';
 
 @Global()
 @Module({
-  providers: [PrismaService, UtilsService],
-  exports: [PrismaService, UtilsService],
+  providers: [UtilsService],
+  exports: [UtilsService],
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
@@ -16,6 +16,7 @@ import { ConfigModule } from '@nestjs/config';
       envFilePath: [`.env.${process.env.NODE_ENV}`],
     }),
     LoggerModule,
+    TypeOrmModule,
   ],
 })
 export class CommonModule {}

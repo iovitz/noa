@@ -1,6 +1,5 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { PrismaClient } from '@prisma/client';
 import { ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ResponseInterceptor } from './interceptor/response.interceptor';
@@ -10,8 +9,6 @@ import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import 'winston-daily-rotate-file';
 import { AllErrorExceptionFilter } from './exceptors/all.exceptor';
 import { ValidationPipe } from './pipes/validation.pipe';
-
-const prisma = new PrismaClient();
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -38,8 +35,6 @@ async function bootstrap() {
   app.enableCors({
     origin: ['localhost:5173'],
   });
-
-  await prisma.$disconnect();
 
   app.setGlobalPrefix(configService.get('API_GLOBAL_PREFIX'));
   console.log(parseInt(configService.get('APP_PORT')));
