@@ -25,6 +25,7 @@ class ShortChain {
       url: 'https://ifconfig.me/ip',
       success: (res) => {
         this.ipLong = `${ip2int(res.data as string)}`
+        console.log(this.ipLong)
       }
     })
 	}
@@ -91,7 +92,7 @@ class ShortChain {
 }
 
 export const commonRequest = new ShortChain({
-	baseURL: 'http://localhost:28257/api',
+	baseURL: import.meta.env.BASE_URL,
 	timeout: 60000,
 	header: {},
 });

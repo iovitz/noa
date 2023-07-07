@@ -54,7 +54,7 @@ model ServerLog {
   userId    String   @db.Char(20)
   logid     String?
   level     String   @db.Char(10)
-  timestamp DateTime @db.DateTime()
+  timestamp DateTime @db.Timestamp()
   message   String   @db.Char(200)
   content   String?  @db.Text
   context   String?  @db.Char(20)

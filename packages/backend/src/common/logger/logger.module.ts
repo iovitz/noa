@@ -48,7 +48,7 @@ import { PrismaService } from '../prisma/prisma.service';
           format: format.combine(
             format.timestamp({ format: 'MMM-DD-YYYY HH:mm:ss' }),
             format.printf((i) => {
-              console.log(i);
+              // 持久化存储
               prismaService.serverLog
                 .create({
                   data: {
@@ -56,7 +56,7 @@ import { PrismaService } from '../prisma/prisma.service';
                     message: i.context + '' + i.message,
                     logid: '-------',
                     content: '',
-                    timestamp: '',
+                    timestamp: new Date(),
                     userId: '',
                   },
                 })

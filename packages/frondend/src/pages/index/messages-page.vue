@@ -15,6 +15,9 @@
 import { defineComponent } from 'vue';
 import messageList from '@/comps/message-list/message-list.vue';
 import logger from '@/utils/logger';
+import { rLogin } from '@/io/http/user';
+
+console.log(rLogin);
 
 export default defineComponent({
 	components: {
