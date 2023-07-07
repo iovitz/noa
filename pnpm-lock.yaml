@@ -54,6 +54,9 @@ importers:
       class-validator:
         specifier: ^0.14.0
         version: 0.14.0
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       nest-winston:
         specifier: ^1.9.2
         version: 1.9.2(@nestjs/common@9.4.1)(winston@3.9.0)
@@ -81,9 +84,6 @@ importers:
       winston-mysql:
         specifier: ^1.1.1
         version: 1.1.1
-      zod:
-        specifier: ^3.21.4
-        version: 3.21.4
     devDependencies:
       '@nestjs/cli':
         specifier: ^9.0.0
@@ -14611,7 +14611,3 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
-
-  /zod@3.21.4:
-    resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
-    dev: false

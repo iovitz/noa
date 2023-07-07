@@ -24,8 +24,6 @@ export class UserController {
   @Post('/login')
   async login(@Body() body: LoginDTO) {
     const { username, password } = body;
-    this.userService.zUsername.parse(body.username);
-    this.userService.zPassword.parse(body.password);
     const user = await this.prismaService.user.findFirst({
       where: {
         username,
@@ -60,10 +58,6 @@ export class UserController {
     @Body() body: { nickname: string; username: string; password: string },
   ) {
     const { nickname, username, password } = body;
-    this.userService.zNickname.parse(nickname);
-    this.userService.zUsername.parse(username);
-    this.userService.zPassword.parse(password);
-
     const existsUser = await this.prismaService.user.findFirst({
       where: {
         username,
