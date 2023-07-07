@@ -20,10 +20,10 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migrate:dev": "./node_modules/.bin/dotenv -e .env.development -- npx prisma migrate dev",
+    "migrate:dev": "./node_modules/.bin/dotenv -e .env.development -- ./node_modules/.bin/prisma migrate dev",
     "migrate:dev:create": "./node_modules/.bin/dotenv -e .env.development -- npx prisma migrate dev --create-only",
     "migrate:deploy": "npx prisma migrate deploy",
-    "prisma:generate": "./node_modules/.bin/dotenv -e .env.development -- npx prisma generate",
+    "prisma:generate": "npx prisma generate",
     "prisma:seed": "./node_modules/.bin/dotenv -e .env.development -- npx prisma db seed",
     "prisma:push": "./node_modules/.bin/dotenv -e .env.development -- prisma db push",
     "postinstall": "pnpx prisma generate"
@@ -48,6 +48,7 @@
     "socket.io": "^4.6.1",
     "winston": "^3.9.0",
     "winston-daily-rotate-file": "^4.7.1",
+    "winston-mysql": "^1.1.1",
     "zod": "^3.21.4"
   },
   "devDependencies": {

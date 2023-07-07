@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Post {
@@ -16,6 +17,8 @@ model Post {
   authorId  Int      @db.UnsignedInt()
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("post")
 }
 
 model UserProfile {
@@ -26,6 +29,8 @@ model UserProfile {
   address   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("user_profile")
 }
 
 model User {
@@ -40,4 +45,30 @@ model User {
   profile   UserProfile?
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
+
+  @@map("user")
+}
+
+model ServerLog {
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt()
+  userId    String   @db.Char(20)
+  logid     String?
+  level     String   @db.Char(10)
+  timestamp DateTime @db.DateTime()
+  message   String   @db.Char(200)
+  content   String?  @db.Text
+  context   String?  @db.Char(20)
+  createdAt DateTime @default(now())
+
+  @@map("server_log")
+}
+
+model ClientLog {
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt()
+  uuid      String
+  event     String   @db.Char(50)
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+
+  @@map("client_log")
 }
