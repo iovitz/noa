@@ -1,7 +1,7 @@
 <template>
 	<uni-list :border="false">
 		<uni-swipe-action>
-			<uni-swipe-action-item :right-options="options" v-for="i in 99" :key="i">
+			<uni-swipe-action-item :right-options="options" v-for="i in 20" :key="i">
 				<uni-list-chat
 					title="xieqianyu"
 					:avatar-circle="true"
