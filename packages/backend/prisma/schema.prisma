@@ -23,8 +23,8 @@ model Post {
 
 model UserProfile {
   id        Int      @id @default(autoincrement()) @db.UnsignedInt()
-  uid       String?  @unique @db.Char(20)
-  user      User?    @relation(fields: [uid], references: [userId])
+  userid    String?  @unique @db.Char(20)
+  user      User?    @relation(fields: [userid], references: [userid])
   gender    Boolean?
   address   String?
   createdAt DateTime @default(now())
@@ -35,7 +35,7 @@ model UserProfile {
 
 model User {
   id        Int          @id @default(autoincrement()) @db.UnsignedInt()
-  userId    String       @unique @db.Char(20)
+  userid    String       @unique @db.Char(20)
   nickname  String       @db.Char(20)
   username  String       @unique @db.Char(20)
   password  String       @db.Char(70)
@@ -45,8 +45,19 @@ model User {
   profile   UserProfile?
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
+  Session   Session?
 
   @@map("user")
+}
+
+model Session {
+  id      Int      @id @default(autoincrement()) @db.UnsignedInt()
+  session String   @unique @db.Char(20)
+  userid  String   @unique @db.Char(20)
+  user    User?    @relation(fields: [userid], references: [userid], onDelete: Cascade)
+  expires DateTime @db.Timestamp()
+
+  @@map("session")
 }
 
 model ServerLog {
@@ -54,9 +65,8 @@ model ServerLog {
   userId    String   @db.Char(20)
   logid     String?
   level     String   @db.Char(10)
-  timestamp DateTime @db.Timestamp()
+  timestamp BigInt   @db.UnsignedBigInt()
   message   String   @db.Char(200)
-  content   String?  @db.Text
   context   String?  @db.Char(20)
   createdAt DateTime @default(now())
 
@@ -67,7 +77,9 @@ model ClientLog {
   id        Int      @id @default(autoincrement()) @db.UnsignedInt()
   uuid      String
   event     String   @db.Char(50)
-  content   String   @db.Text
+  header    String   @db.Text
+  params    String   @db.Text
+  timestamp BigInt   @db.UnsignedBigInt()
   createdAt DateTime @default(now())
 
   @@map("client_log")

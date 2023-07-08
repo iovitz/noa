@@ -9,13 +9,14 @@ import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import 'winston-daily-rotate-file';
 import { AllErrorExceptionFilter } from './exceptors/all.exceptor';
 import { ValidationPipe } from './pipes/validation.pipe';
+import { LoggerService } from '@nestjs/common';
 
 const prisma = new PrismaClient();
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  const logger = app.get(WINSTON_MODULE_NEST_PROVIDER);
+  const logger = app.get<LoggerService>(WINSTON_MODULE_NEST_PROVIDER);
 
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
@@ -40,11 +41,9 @@ async function bootstrap() {
   await prisma.$disconnect();
 
   app.setGlobalPrefix(configService.get('API_GLOBAL_PREFIX'));
-  console.log(parseInt(configService.get('APP_PORT')));
-  // app.useSt;
   const appPort = parseInt(configService.get('APP_PORT')) || 11000;
   await app.listen(appPort);
-  logger.verbose(`Server running in http://localhost:${appPort}`);
+  logger.log(`Server running in http://localhost:${appPort}`, 'bootstrap');
 }
 
 bootstrap();

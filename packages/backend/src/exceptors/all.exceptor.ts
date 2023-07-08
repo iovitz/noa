@@ -12,7 +12,11 @@ export class AllErrorExceptionFilter implements ExceptionFilter {
   constructor(private logger: LoggerService) {}
 
   catch(exception: Error, host: ArgumentsHost) {
-    this.logger.error('AllErrorExceptionFilter', exception);
+    this.logger.error(
+      exception.message,
+      exception.stack,
+      'AllErrorExceptionFilter',
+    );
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const errorResponse = {

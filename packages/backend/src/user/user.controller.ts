@@ -8,6 +8,8 @@ import {
   LoggerService,
   Post,
 } from '@nestjs/common';
+import { v4 as uuidv4 } from 'uuid';
+import moment from 'moment';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { LoginDTO, RegisterDTO } from './user.dto';
@@ -29,6 +31,7 @@ export class UserController {
         username,
       },
       select: {
+        userid: true,
         nickname: true,
         username: true,
         password: true,
@@ -42,7 +45,24 @@ export class UserController {
         user.password,
       );
       if (res) {
+        const session = uuidv4();
+        console.log(
+          moment(new Date()).add(1, 'month').millisecond().toLocaleString(),
+        );
+        this.prismaService.session.create({
+          data: {
+            session: session,
+            userid: user.userid,
+            expires: moment(new Date())
+              .add(1, 'month')
+              .millisecond()
+              .toLocaleString(),
+          },
+        });
+
         return {
+          userid: user.userid,
+          session: session,
           email: user.email,
           username: user.username,
           nickname: user.nickname,
@@ -67,25 +87,25 @@ export class UserController {
     }
 
     const getUserId = async () => {
-      const uid = this.userService.genNumberString(10);
+      const userid = this.userService.genNumberString(10);
       const existsUser = await this.prismaService.user.findFirst({
         where: {
-          userId: uid,
+          userid,
         },
       });
       if (existsUser) return await getUserId();
-      return uid;
+      return userid;
     };
 
-    const uid = await getUserId();
-    this.logger.log({
-      uid,
+    const userid = await getUserId();
+    this.logger.log('generate user id', {
+      userid,
     });
 
     this.prismaService.$transaction([
       this.prismaService.user.create({
         data: {
-          userId: uid,
+          userid: userid,
           nickname,
           username,
           password: await this.userService.encryptPassword(password),
@@ -93,7 +113,7 @@ export class UserController {
       }),
       this.prismaService.userProfile.create({
         data: {
-          uid,
+          userid,
         },
       }),
     ]);
