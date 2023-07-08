@@ -4,7 +4,6 @@ import { PrismaClient } from '@prisma/client';
 import { ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ResponseInterceptor } from './interceptor/response.interceptor';
-import { ZodExceptionFilter } from './exceptors/zod.exceptor';
 import { HttpExceptionFilter } from './exceptors/http.exceptor';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import 'winston-daily-rotate-file';
@@ -30,7 +29,6 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe(logger));
   app.useGlobalFilters(new AllErrorExceptionFilter(logger));
   app.useGlobalFilters(new HttpExceptionFilter(logger));
-  app.useGlobalFilters(new ZodExceptionFilter(logger));
   app.useGlobalInterceptors(new ResponseInterceptor());
 
   // DEVELOP情况下允许跨院
