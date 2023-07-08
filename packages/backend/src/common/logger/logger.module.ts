@@ -22,24 +22,6 @@ import { PrismaService } from '../prisma/prisma.service';
             utilities.format.nestLike(prefix),
           ),
         });
-        const verboseTransport = new transports.DailyRotateFile({
-          dirname: `logs/${prefix}/verbose`,
-          filename: '%DATE%.log',
-          datePattern: 'YYYY-MM-DD',
-          zippedArchive: true,
-          maxSize: '20m',
-          maxFiles: '14d',
-          level: 'verbose',
-          format: format.combine(
-            format.colorize(),
-            format.timestamp({ format: 'MMM-DD-YYYY HH:mm:ss' }),
-            format.printf((i) => {
-              return `${i.level} ${[i.timestamp]} ${i.message} ${JSON.stringify(
-                i.stack,
-              )} ${i.context}`;
-            }),
-          ),
-        });
         const infoTransport = new transports.DailyRotateFile({
           dirname: `logs/${env}/info`,
           filename: '%DATE%.log',
@@ -57,10 +39,10 @@ import { PrismaService } from '../prisma/prisma.service';
                   .create({
                     data: {
                       level: i.level,
-                      message: i.message,
+                      message: JSON.stringify(i.message),
                       logid: '-------',
                       timestamp: Date.now(),
-                      context: i.context,
+                      context: JSON.stringify(i.context),
                       stack: i.stack ? JSON.stringify(i.stack) : null,
                       userId: '',
                     },
@@ -95,12 +77,7 @@ import { PrismaService } from '../prisma/prisma.service';
         });
         return {
           level: logLevel,
-          transports: [
-            consoleTransport,
-            verboseTransport,
-            infoTransport,
-            errorTransport,
-          ],
+          transports: [consoleTransport, infoTransport, errorTransport],
         };
       },
     }),

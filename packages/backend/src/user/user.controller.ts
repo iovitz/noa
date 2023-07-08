@@ -2,6 +2,7 @@ import { UserService } from './user.service';
 import {
   Body,
   Controller,
+  Get,
   HttpException,
   HttpStatus,
   Inject,
@@ -22,6 +23,13 @@ export class UserController {
     @Inject(WINSTON_MODULE_NEST_PROVIDER)
     private readonly logger: LoggerService,
   ) {}
+
+  @Get('/test')
+  async getTest() {
+    new Error().message;
+    this.logger.error(123, '123123');
+    return 'hello';
+  }
 
   @Post('/login')
   async login(@Body() body: LoginDTO) {

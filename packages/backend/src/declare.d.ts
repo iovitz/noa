@@ -1,3 +1,8 @@
+import * as NestjsCommonType from '@nestjs/common';
+import { LoggerService as NestLoggerService } from '@nestjs/common';
+import { Logger } from 'winston';
+
+Logger;
 declare namespace NodeJS {
   interface ProcessEnv {
     [key: string]: string | undefined;
@@ -6,30 +11,14 @@ declare namespace NodeJS {
   }
 }
 
-export interface LoggerService {
-  /**
-   * Write a 'log' level log.
-   */
-  log(message: string, context: string): any;
-  /**
-   * Write an 'error' level log.
-   */
-  error(message: any, ...optionalParams: any[]): any;
-  /**
-   * Write a 'warn' level log.
-   */
-  warn(message: any, ...optionalParams: any[]): any;
-  /**
-   * Write a 'debug' level log.
-   */
-  debug?(message: any, ...optionalParams: any[]): any;
-  /**
-   * Write a 'verbose' level log.
-   */
-  verbose?(message: any, ...optionalParams: any[]): any;
-  /**
-   * Set log levels.
-   * @param levels log levels
-   */
-  setLogLevels?(levels: LogLevel[]): any;
+// 修正一些内置类型
+declare module '@nestjs/common' {
+  export interface LoggerService extends NestLoggerService {
+    log(message: string, stack: string, context: unknown): void;
+    error(message: string, stack: string, context: unknown): void;
+    warn(message: string, context: unknown): void;
+    debug(message: string, context: unknown): void;
+    verbose(message: string, context: unknown): void;
+  }
+  export default NestjsCommonType;
 }
