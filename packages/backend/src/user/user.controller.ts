@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { PrismaService } from 'src/common/prisma/prisma.service';
-import { LoginDTO } from './user.dto';
+import { LoginDTO, RegisterDTO } from './user.dto';
 
 @Controller('user')
 export class UserController {
@@ -54,9 +54,7 @@ export class UserController {
   }
 
   @Post('/register')
-  async register(
-    @Body() body: { nickname: string; username: string; password: string },
-  ) {
+  async register(@Body() body: RegisterDTO) {
     const { nickname, username, password } = body;
     const existsUser = await this.prismaService.user.findFirst({
       where: {
