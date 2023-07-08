@@ -3,7 +3,6 @@ import { ConfigService } from '@nestjs/config';
 import { WinstonModule, utilities } from 'nest-winston';
 import { format, transports } from 'winston';
 import { PrismaService } from '../prisma/prisma.service';
-import * as moment from 'moment';
 
 @Module({
   imports: [
@@ -53,18 +52,23 @@ import * as moment from 'moment';
             format.timestamp({ format: 'MMM-DD-YYYY HH:mm:ss' }),
             format.printf((i) => {
               // 持久化存储
-              prismaService.serverLog
-                .create({
-                  data: {
-                    level: i.level,
-                    message: i.context + '' + i.message,
-                    logid: '-------',
-                    timestamp: Date.now(),
-                    context: i.context,
-                    userId: '',
-                  },
-                })
-                .catch(void 0);
+              if (i.message) {
+                prismaService.serverLog
+                  .create({
+                    data: {
+                      level: i.level,
+                      message: i.message,
+                      logid: '-------',
+                      timestamp: Date.now(),
+                      context: i.context,
+                      stack: i.stack ? JSON.stringify(i.stack) : null,
+                      userId: '',
+                    },
+                  })
+                  .catch((e: unknown) => {
+                    console.error(e);
+                  });
+              }
               return `${i.level} ${[i.timestamp]} ${i.message} ${JSON.stringify(
                 i.stack,
               )} ${i.context}`;

@@ -22,15 +22,14 @@ export class ValidationPipe implements PipeTransform {
 
   async transform(value: unknown, metadata: ArgumentMetadata) {
     const { metatype } = metadata;
-    this.logger.log(value);
-    this.logger.log(metadata);
+    this.logger.log('接受参数', JSON.stringify(value));
+    this.logger.log('收到Meta', JSON.stringify(metadata));
     if (!metatype || !this.toValidate(metatype)) {
       return value;
     }
     const object = plainToClass(metatype, value);
-    this.logger.log(metadata);
     const errors = await validate(object);
-    this.logger.log(errors);
+    this.logger.log('错误', JSON.stringify(errors));
     const errorList: string[] = [];
     const errObjList: ValidationError[] = [...errors];
 

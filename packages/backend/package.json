@@ -20,12 +20,13 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migrate:create": "./node_modules/.bin/dotenv -e .env.development -- npx prisma migrate dev --create-only",
-    "migrate:dev": "./node_modules/.bin/dotenv -e .env.development -- npx prisma migrate dev",
+    "mc": "dotenv -e .env.development -- npx prisma migrate dev --create-only",
+    "md": "dotenv -e .env.development -- npx prisma migrate dev",
     "migrate:deploy": "./node_modules/.bin/dotenv -e .env.development -- npx prisma migrate deploy",
     "prisma:generate": "./node_modules/.bin/prisma generate",
     "prisma:seed": "./node_modules/.bin/dotenv -e .env.development -- npx prisma db seed",
     "prisma:push": "./node_modules/.bin/dotenv -e .env.development -- prisma db push",
+    "pr": "npm run mc && npm run md && npx prisma generate",
     "postinstall": "npx prisma generate"
   },
   "dependencies": {

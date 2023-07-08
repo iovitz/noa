@@ -66,8 +66,9 @@ model ServerLog {
   logid     String?
   level     String   @db.Char(10)
   timestamp BigInt   @db.UnsignedBigInt()
-  message   String   @db.Char(200)
-  context   String?  @db.Char(20)
+  message   String?  @db.Char(200)
+  stack     String?  @db.Text
+  context   String?  @db.Char(50)
   createdAt DateTime @default(now())
 
   @@map("server_log")

@@ -46,9 +46,6 @@ export class UserController {
       );
       if (res) {
         const session = uuidv4();
-        console.log(
-          moment(new Date()).add(1, 'month').millisecond().toLocaleString(),
-        );
         this.prismaService.session.create({
           data: {
             session: session,
