@@ -22,11 +22,11 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "migrate:dev": "./node_modules/.bin/dotenv -e .env.development -- ./node_modules/.bin/prisma migrate dev",
     "migrate:dev:create": "./node_modules/.bin/dotenv -e .env.development -- npx prisma migrate dev --create-only",
-    "migrate:deploy": "npx prisma migrate deploy",
-    "prisma:generate": "npx prisma generate",
+    "migrate:deploy": "./node_modules/.bin/prisma migrate deploy",
+    "prisma:generate": "./node_modules/.bin/prisma generate",
     "prisma:seed": "./node_modules/.bin/dotenv -e .env.development -- npx prisma db seed",
     "prisma:push": "./node_modules/.bin/dotenv -e .env.development -- prisma db push",
-    "postinstall": "pnpx prisma generate"
+    "postinstall": "npx prisma generate"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",

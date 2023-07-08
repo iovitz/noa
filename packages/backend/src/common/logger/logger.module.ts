@@ -14,9 +14,10 @@ import { PrismaService } from '../prisma/prisma.service';
         const consoleTransport = new transports.Console({
           // 使用时间戳和nest样式
           format: format.combine(
-            format.colorize(),
             format.timestamp(),
-            utilities.format.nestLike(process.env.NODE_ENV),
+            utilities.format.nestLike(
+              process.env.NODE_ENV === 'production' ? 'PROD' : 'DEV',
+            ),
           ),
         });
         const verboseTransport = new transports.DailyRotateFile({
