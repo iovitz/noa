@@ -1,8 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { v4 as uuidv4 } from 'uuid';
+import * as moment from 'moment';
+import { PrismaService } from 'src/common/prisma/prisma.service';
 
 @Injectable()
 export class UserService {
+  constructor(private prismaService: PrismaService) {}
+
   genNumberString(digit = 10) {
     const str = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     let res = '';
@@ -22,5 +27,19 @@ export class UserService {
 
   async comparePassword(password: string, hash: string) {
     return await bcrypt.compare(password, hash);
+  }
+
+  async generateSession(userid: string) {
+    const session = uuidv4();
+
+    // 保存session
+    await this.prismaService.session.create({
+      data: {
+        session: session,
+        userid: userid,
+        expires: moment(new Date()).add(1, 'month').toDate(),
+      },
+    });
+    return session;
   }
 }

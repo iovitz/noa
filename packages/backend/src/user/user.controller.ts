@@ -9,8 +9,6 @@ import {
   LoggerService,
   Post,
 } from '@nestjs/common';
-import { v4 as uuidv4 } from 'uuid';
-import * as moment from 'moment';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { LoginDTO, RegisterDTO } from './user.dto';
@@ -52,16 +50,7 @@ export class UserController {
         user.password,
       );
       if (res) {
-        const session = uuidv4();
-
-        // 保存session
-        await this.prismaService.session.create({
-          data: {
-            session: session,
-            userid: user.userid,
-            expires: moment(new Date()).add(1, 'month').toDate(),
-          },
-        });
+        const session = await this.userService.generateSession(user.userid);
 
         return {
           userid: user.userid,
@@ -105,13 +94,21 @@ export class UserController {
       userid,
     });
 
-    this.prismaService.$transaction([
+    const [user] = await this.prismaService.$transaction([
       this.prismaService.user.create({
         data: {
           userid: userid,
           nickname,
           username,
           password: await this.userService.encryptPassword(password),
+        },
+
+        select: {
+          userid: true,
+          nickname: true,
+          username: true,
+          password: true,
+          email: true,
         },
       }),
       this.prismaService.userProfile.create({
@@ -121,6 +118,12 @@ export class UserController {
       }),
     ]);
 
-    return 'hello';
+    const session = await this.userService.generateSession(user.userid);
+    return {
+      userid: user.userid,
+      session: session,
+      username: user.username,
+      nickname: user.nickname,
+    };
   }
 }
