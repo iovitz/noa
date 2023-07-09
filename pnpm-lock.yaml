@@ -60,6 +60,9 @@ importers:
       moment:
         specifier: ^2.29.4
         version: registry.npmmirror.com/moment@2.29.4
+      moment-timezone:
+        specifier: ^0.5.43
+        version: registry.npmmirror.com/moment-timezone@0.5.43
       nest-winston:
         specifier: ^1.9.2
         version: 1.9.2(@nestjs/common@9.4.1)(winston@3.9.0)
@@ -16494,6 +16497,14 @@ packages:
     dependencies:
       brace-expansion: registry.npmmirror.com/brace-expansion@1.1.11
     dev: true
+
+  registry.npmmirror.com/moment-timezone@0.5.43:
+    resolution: {integrity: sha512-72j3aNyuIsDxdF1i7CEgV2FfxM1r6aaqJyLB2vwb33mXYyoyLly+F1zbWqhA3/bVIoJ4szlUoMbUnVdid32NUQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/moment-timezone/-/moment-timezone-0.5.43.tgz}
+    name: moment-timezone
+    version: 0.5.43
+    dependencies:
+      moment: registry.npmmirror.com/moment@2.29.4
+    dev: false
 
   registry.npmmirror.com/moment@2.29.4:
     resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/moment/-/moment-2.29.4.tgz}

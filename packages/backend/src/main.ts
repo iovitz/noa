@@ -10,6 +10,8 @@ import 'winston-daily-rotate-file';
 import { AllErrorExceptionFilter } from './exceptors/all.exceptor';
 import { ValidationPipe } from './pipes/validation.pipe';
 import { LoggerService } from '@nestjs/common';
+import * as moment from 'moment-timezone';
+moment.tz.setDefault('Asia/Shanghai');
 
 const prisma = new PrismaClient();
 

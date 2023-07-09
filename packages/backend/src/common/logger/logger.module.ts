@@ -34,23 +34,23 @@ import { PrismaService } from '../prisma/prisma.service';
             format.timestamp({ format: 'MMM-DD-YYYY HH:mm:ss' }),
             format.printf((i) => {
               // 持久化存储
-              if (i.message) {
-                prismaService.serverLog
-                  .create({
-                    data: {
-                      level: i.level,
-                      message: ensureContentSize(i.message, 255),
-                      logid: '-------',
-                      timestamp: Date.now(),
-                      context: ensureContentSize(i.context, 65535),
-                      stack: ensureContentSize(i.stack, 65535),
-                      userid: '',
-                    },
-                  })
-                  .catch((e: unknown) => {
-                    console.error(e);
-                  });
-              }
+              // if (i.message) {
+              //   prismaService.serverLog
+              //     .create({
+              //       data: {
+              //         level: i.level,
+              //         message: ensureContentSize(i.message, 255),
+              //         logid: '-------',
+              //         timestamp: Date.now(),
+              //         context: ensureContentSize(i.context, 65535),
+              //         stack: ensureContentSize(i.stack, 65535),
+              //         userid: '',
+              //       },
+              //     })
+              //     .catch((e: unknown) => {
+              //       console.error(e);
+              //     });
+              // }
               return `${i.level} ${[i.timestamp]} ${i.message} ${JSON.stringify(
                 i.stack,
               )} ${i.context}`;

@@ -43,6 +43,7 @@
     "class-validator": "^0.14.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
     "nest-winston": "^1.9.2",
     "nestjs-prisma": "^0.20.0",
     "reflect-metadata": "^0.1.13",
