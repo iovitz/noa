@@ -23,7 +23,7 @@ model Post {
 
 model UserProfile {
   id        Int      @id @default(autoincrement()) @db.UnsignedInt()
-  userid    String?  @unique @db.Char(20)
+  userid    String?  @unique @db.Char(10)
   user      User?    @relation(fields: [userid], references: [userid])
   gender    Boolean?
   address   String?
@@ -35,7 +35,7 @@ model UserProfile {
 
 model User {
   id        Int          @id @default(autoincrement()) @db.UnsignedInt()
-  userid    String       @unique @db.Char(20)
+  userid    String       @unique @db.Char(10)
   nickname  String       @db.Char(20)
   username  String       @unique @db.Char(20)
   password  String       @db.Char(70)
@@ -45,30 +45,30 @@ model User {
   profile   UserProfile?
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
-  Session   Session?
+  Session   Session[]
 
   @@map("user")
 }
 
 model Session {
   id      Int      @id @default(autoincrement()) @db.UnsignedInt()
-  session String   @unique @db.Char(20)
-  userid  String   @unique @db.Char(20)
-  user    User?    @relation(fields: [userid], references: [userid], onDelete: Cascade)
+  session String   @unique @db.Char(36)
+  userid  String   @db.Char(10)
   expires DateTime @db.Timestamp()
+  User    User?    @relation(fields: [userid], references: [userid])
 
   @@map("session")
 }
 
 model ServerLog {
   id        Int      @id @default(autoincrement()) @db.UnsignedInt()
-  userId    String   @db.Char(20)
+  userid    String   @db.Char(10)
   logid     String?
   level     String   @db.Char(10)
   timestamp BigInt   @db.UnsignedBigInt()
-  message   String?  @db.Char(200)
+  message   String?  @db.TinyText
   stack     String?  @db.Text
-  context   String?  @db.Char(50)
+  context   String?  @db.Text
   createdAt DateTime @default(now())
 
   @@map("server_log")

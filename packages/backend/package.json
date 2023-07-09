@@ -23,7 +23,7 @@
     "mc": "dotenv -e .env.development -- npx prisma migrate dev --create-only",
     "md": "dotenv -e .env.development -- npx prisma migrate dev",
     "migrate:deploy": "./node_modules/.bin/dotenv -e .env.development -- npx prisma migrate deploy",
-    "prisma:generate": "./node_modules/.bin/prisma generate",
+    "pg": "./node_modules/.bin/prisma generate",
     "prisma:seed": "./node_modules/.bin/dotenv -e .env.development -- npx prisma db seed",
     "prisma:push": "./node_modules/.bin/dotenv -e .env.development -- prisma db push",
     "pr": "npm run mc && npm run md && npx prisma generate",

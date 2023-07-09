@@ -10,7 +10,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
-import moment from 'moment';
+import * as moment from 'moment';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { LoginDTO, RegisterDTO } from './user.dto';
@@ -26,7 +26,6 @@ export class UserController {
 
   @Get('/test')
   async getTest() {
-    new Error().message;
     this.logger.error(123, '123123');
     return 'hello';
   }
@@ -54,14 +53,13 @@ export class UserController {
       );
       if (res) {
         const session = uuidv4();
-        this.prismaService.session.create({
+
+        // 保存session
+        await this.prismaService.session.create({
           data: {
             session: session,
             userid: user.userid,
-            expires: moment(new Date())
-              .add(1, 'month')
-              .millisecond()
-              .toLocaleString(),
+            expires: moment(new Date()).add(1, 'month').toDate(),
           },
         });
 

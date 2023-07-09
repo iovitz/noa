@@ -39,12 +39,12 @@ import { PrismaService } from '../prisma/prisma.service';
                   .create({
                     data: {
                       level: i.level,
-                      message: JSON.stringify(i.message),
+                      message: ensureContentSize(i.message, 255),
                       logid: '-------',
                       timestamp: Date.now(),
-                      context: JSON.stringify(i.context),
-                      stack: i.stack ? JSON.stringify(i.stack) : null,
-                      userId: '',
+                      context: ensureContentSize(i.context, 65535),
+                      stack: ensureContentSize(i.stack, 65535),
+                      userid: '',
                     },
                   })
                   .catch((e: unknown) => {
@@ -84,3 +84,15 @@ import { PrismaService } from '../prisma/prisma.service';
   ],
 })
 export class LoggerModule {}
+
+function ensureContentSize(content: unknown, maxLength: number) {
+  let str = '';
+  if (!content) return '';
+  if (typeof content !== 'string') {
+    str = JSON.stringify(content);
+  }
+  if (str.length > maxLength) {
+    return str.slice(0, maxLength);
+  }
+  return str;
+}
