@@ -119,6 +119,8 @@ export class UserController {
     ]);
 
     const session = await this.userService.generateSession(user.userid);
+
+    console.log(await this.prismaService.session.findFirst());
     return {
       userid: user.userid,
       session: session,

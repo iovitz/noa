@@ -37,7 +37,7 @@ export class UserService {
       data: {
         session: session,
         userid: userid,
-        expires: moment(new Date()).add(1, 'month').toDate(),
+        expires: moment(new Date()).add(1, 'month').valueOf().toString(),
       },
     });
     return session;
