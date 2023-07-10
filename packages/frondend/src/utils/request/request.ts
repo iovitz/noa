@@ -92,7 +92,7 @@ class ShortChain {
 }
 
 export const commonRequest = new ShortChain({
-	baseURL: import.meta.env.BASE_URL,
+	baseURL: import.meta.env.VITE_BASE_URL,
 	timeout: 60000,
 	header: {},
 });
