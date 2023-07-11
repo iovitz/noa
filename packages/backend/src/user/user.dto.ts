@@ -34,3 +34,7 @@ export class BPutUser {
   @Length(0, 100, { message: '头像url长度在2~20个字符之间' })
   avatar: string;
 }
+
+export class PGetProfile extends PGetUser {}
+
+export class PPostProfile {}

@@ -13,7 +13,14 @@ import {
 } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { PrismaService } from 'src/common/prisma/prisma.service';
-import { PGetUser, BPostLogin, BPostRegister, BPutUser } from './user.dto';
+import {
+  PGetUser,
+  BPostLogin,
+  BPostRegister,
+  BPutUser,
+  PGetProfile,
+  PPostProfile,
+} from './user.dto';
 
 @Controller('user')
 export class UserController {
@@ -162,6 +169,43 @@ export class UserController {
         userid: true,
         avatar: true,
         nickname: true,
+      },
+    });
+    return userInfo;
+  }
+
+  @Get('/profile/:userid')
+  async getProfile(@Param() { userid }: PGetProfile) {
+    const userInfo = await this.prismaService.userProfile.findFirst({
+      where: {
+        userid,
+      },
+      select: {
+        userid: true,
+        email: true,
+        gender: true,
+        phone: true,
+        address: true,
+      },
+    });
+    return userInfo;
+  }
+
+  @Put('/profile/:userid')
+  async putProfile(
+    @Param() { userid }: PGetProfile,
+    @Body() body: PPostProfile,
+  ) {
+    const userInfo = await this.prismaService.userProfile.findFirst({
+      where: {
+        userid,
+      },
+      select: {
+        userid: true,
+        email: true,
+        gender: true,
+        phone: true,
+        address: true,
       },
     });
     return userInfo;
