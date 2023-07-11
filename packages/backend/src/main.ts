@@ -11,6 +11,7 @@ import { AllErrorExceptionFilter } from './exceptors/all.exceptor';
 import { ValidationPipe } from './pipes/validation.pipe';
 import { LoggerService } from '@nestjs/common';
 import * as moment from 'moment-timezone';
+import { ParamsExceptionFilter } from './exceptors/validator.exceptor';
 moment.tz.setDefault('Asia/Shanghai');
 
 const prisma = new PrismaClient();
@@ -31,6 +32,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe(logger));
   app.useGlobalFilters(new AllErrorExceptionFilter(logger));
+  app.useGlobalFilters(new ParamsExceptionFilter(logger));
   app.useGlobalFilters(new HttpExceptionFilter(logger));
   app.useGlobalInterceptors(new ResponseInterceptor());
 

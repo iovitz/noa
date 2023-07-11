@@ -28,7 +28,7 @@ model UserProfile {
   gender    Boolean?
   email     String?      @db.Char(30)
   phone     String?      @db.Char(20)
-  address   String?
+  address   String?      @db.Char(100)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

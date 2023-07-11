@@ -3,12 +3,12 @@ import {
   PipeTransform,
   ArgumentMetadata,
   ValidationError,
-  HttpException,
   HttpStatus,
   LoggerService,
 } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
+import { ParamsException } from 'src/constans/errors';
 
 /**
  * 这是一个全局的参数验证管道，基于class-transformer
@@ -48,10 +48,7 @@ export class ValidationPipe implements PipeTransform {
       }
     } while (true);
     if (errorList.length > 0) {
-      throw new HttpException(
-        '请求参数校验错误:' + errorList.join(),
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new ParamsException(errorList);
     }
     return object;
   }
