@@ -40,6 +40,7 @@ export class UserController {
         nickname: true,
         username: true,
         password: true,
+        avatar: true,
         email: true,
       },
     });
@@ -107,7 +108,7 @@ export class UserController {
           userid: true,
           nickname: true,
           username: true,
-          password: true,
+          avatar: true,
           email: true,
         },
       }),
@@ -124,6 +125,7 @@ export class UserController {
     return {
       userid: user.userid,
       session: session,
+      avatar: user.avatar,
       username: user.username,
       nickname: user.nickname,
     };

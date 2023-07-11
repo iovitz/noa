@@ -26,6 +26,8 @@ model UserProfile {
   userid    String?  @unique @db.Char(10)
   user      User?    @relation(fields: [userid], references: [userid])
   gender    Boolean?
+  email     String?      @db.Char(30)
+  phone     String?      @db.Char(20)
   address   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -40,12 +42,10 @@ model User {
   username  String       @unique @db.Char(20)
   password  String       @db.Char(70)
   avatar    String?      @unique @db.Char(100)
-  email     String?      @db.Char(30)
-  phone     String?      @db.Char(20)
-  posts     Post[]
-  profile   UserProfile?
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
+  profile   UserProfile?
+  posts     Post[]
   Session   Session[]
 
   @@map("user")
