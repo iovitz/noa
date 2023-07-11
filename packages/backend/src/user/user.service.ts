@@ -13,7 +13,6 @@ export class UserService {
     let res = '';
     for (let i = 0, len = str.length; i < digit; i++) {
       const id = Math.floor(Math.random() * len);
-      Date.now();
       res += str[id];
     }
     return res;

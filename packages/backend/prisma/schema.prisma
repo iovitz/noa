@@ -39,6 +39,7 @@ model User {
   nickname  String       @db.Char(20)
   username  String       @unique @db.Char(20)
   password  String       @db.Char(70)
+  avatar    String?      @unique @db.Char(100)
   email     String?      @db.Char(30)
   phone     String?      @db.Char(20)
   posts     Post[]
