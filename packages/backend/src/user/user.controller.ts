@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { PrismaService } from 'src/common/prisma/prisma.service';
-import { PGetInfo, BPostLogin, BPostRegister } from './user.dto';
+import { PGetUser, BPostLogin, BPostRegister, BPutUser } from './user.dto';
 
 @Controller('user')
 export class UserController {
@@ -131,8 +131,8 @@ export class UserController {
     };
   }
 
-  @Get('/info/:userid')
-  async getInfo(@Param() { userid }: PGetInfo) {
+  @Get('/:userid')
+  async getUser(@Param() { userid }: PGetUser) {
     const userInfo = await this.prismaService.user.findFirst({
       where: {
         userid,
@@ -141,35 +141,27 @@ export class UserController {
         userid: true,
         avatar: true,
         nickname: true,
-        profile: {
-          select: {
-            gender: true,
-            email: true,
-            address: true,
-          },
-        },
       },
     });
     return userInfo;
   }
 
-  @Put('/info/:userid')
-  async putInfo(@Param() { userid }: PGetInfo) {
-    const userInfo = await this.prismaService.user.findFirst({
+  @Put('/:userid')
+  async putUser(@Param() { userid }: PGetUser, @Body() { avatar }: BPutUser) {
+    if (!avatar) {
+      return;
+    }
+    const userInfo = await this.prismaService.user.update({
       where: {
         userid,
+      },
+      data: {
+        avatar,
       },
       select: {
         userid: true,
         avatar: true,
         nickname: true,
-        profile: {
-          select: {
-            gender: true,
-            email: true,
-            address: true,
-          },
-        },
       },
     });
     return userInfo;
