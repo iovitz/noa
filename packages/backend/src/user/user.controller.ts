@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { PrismaService } from 'src/common/prisma/prisma.service';
-import { pGetInfo, bPostLogin, bPostRegister } from './user.dto';
+import { PGetInfo, BPostLogin, BPostRegister } from './user.dto';
 
 @Controller('user')
 export class UserController {
@@ -31,7 +31,7 @@ export class UserController {
   }
 
   @Post('/login')
-  async login(@Body() body: bPostLogin) {
+  async login(@Body() body: BPostLogin) {
     const { username, password } = body;
     const user = await this.prismaService.user.findFirst({
       where: {
@@ -68,7 +68,7 @@ export class UserController {
   }
 
   @Post('/register')
-  async register(@Body() body: bPostRegister) {
+  async register(@Body() body: BPostRegister) {
     const { nickname, username, password } = body;
     const existsUser = await this.prismaService.user.findFirst({
       where: {
@@ -132,7 +132,7 @@ export class UserController {
   }
 
   @Get('/info/:userid')
-  async getInfo(@Param() { userid }: pGetInfo) {
+  async getInfo(@Param() { userid }: PGetInfo) {
     const userInfo = await this.prismaService.user.findFirst({
       where: {
         userid,
@@ -154,7 +154,7 @@ export class UserController {
   }
 
   @Put('/info/:userid')
-  async putInfo(@Param() { userid }: pGetInfo) {
+  async putInfo(@Param() { userid }: PGetInfo) {
     const userInfo = await this.prismaService.user.findFirst({
       where: {
         userid,
