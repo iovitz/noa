@@ -7,11 +7,13 @@ import {
   HttpStatus,
   Inject,
   LoggerService,
+  Param,
   Post,
+  Put,
 } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { PrismaService } from 'src/common/prisma/prisma.service';
-import { LoginDTO, RegisterDTO } from './user.dto';
+import { pGetInfo, bPostLogin, bPostRegister } from './user.dto';
 
 @Controller('user')
 export class UserController {
@@ -29,7 +31,7 @@ export class UserController {
   }
 
   @Post('/login')
-  async login(@Body() body: LoginDTO) {
+  async login(@Body() body: bPostLogin) {
     const { username, password } = body;
     const user = await this.prismaService.user.findFirst({
       where: {
@@ -41,7 +43,6 @@ export class UserController {
         username: true,
         password: true,
         avatar: true,
-        email: true,
       },
     });
 
@@ -56,18 +57,18 @@ export class UserController {
         return {
           userid: user.userid,
           session: session,
-          email: user.email,
           username: user.username,
           nickname: user.nickname,
+          avatar: user.avatar,
         };
       }
     }
 
-    throw new HttpException('账号或密码错误', HttpStatus.BAD_REQUEST);
+    throw new HttpException('用户名或密码错误', HttpStatus.BAD_REQUEST);
   }
 
   @Post('/register')
-  async register(@Body() body: RegisterDTO) {
+  async register(@Body() body: bPostRegister) {
     const { nickname, username, password } = body;
     const existsUser = await this.prismaService.user.findFirst({
       where: {
@@ -109,7 +110,6 @@ export class UserController {
           nickname: true,
           username: true,
           avatar: true,
-          email: true,
         },
       }),
       this.prismaService.userProfile.create({
@@ -129,5 +129,49 @@ export class UserController {
       username: user.username,
       nickname: user.nickname,
     };
+  }
+
+  @Get('/info/:userid')
+  async getInfo(@Param() { userid }: pGetInfo) {
+    const userInfo = await this.prismaService.user.findFirst({
+      where: {
+        userid,
+      },
+      select: {
+        userid: true,
+        avatar: true,
+        nickname: true,
+        profile: {
+          select: {
+            gender: true,
+            email: true,
+            address: true,
+          },
+        },
+      },
+    });
+    return userInfo;
+  }
+
+  @Put('/info/:userid')
+  async putInfo(@Param() { userid }: pGetInfo) {
+    const userInfo = await this.prismaService.user.findFirst({
+      where: {
+        userid,
+      },
+      select: {
+        userid: true,
+        avatar: true,
+        nickname: true,
+        profile: {
+          select: {
+            gender: true,
+            email: true,
+            address: true,
+          },
+        },
+      },
+    });
+    return userInfo;
   }
 }

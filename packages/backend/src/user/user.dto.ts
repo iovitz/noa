@@ -1,6 +1,6 @@
-import { Length, Matches } from 'class-validator';
+import { Length, Matches, isString } from 'class-validator';
 
-export class LoginDTO {
+export class bPostLogin {
   @Length(6, 16, { message: '用户名长度在6~16位之间' })
   @Matches(/^[0-9a-zA-Z_]*$/, {
     message: '用户名只能由字母数字下划线组成',
@@ -14,7 +14,14 @@ export class LoginDTO {
   password: string;
 }
 
-export class RegisterDTO extends LoginDTO {
+export class bPostRegister extends bPostLogin {
   @Length(6, 16, { message: '昵称长度位2~20个字符' })
   nickname: string;
+}
+
+export class pGetInfo {
+  @Matches(/^\d{10}$/, {
+    message: 'userid格式错误',
+  })
+  userid: string;
 }
