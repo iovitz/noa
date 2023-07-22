@@ -23,6 +23,8 @@
 import { registerRules } from '@/common/rules/login'
 import { rRegister } from '@/io/http/user'
 import { useUserStore } from '@/store/user.store'
+import logger from '@/utils/logger'
+import { storage } from '@/utils/storage/storage'
 import { ref, reactive } from 'vue'
 
 const userStore = useUserStore()
@@ -37,22 +39,30 @@ const formData = reactive({
 })
 const handleSubmit = () => {
   formRef.value.validate().then((res: any) => {
-    rRegister(res.nickname, res.username, res.password).then((res: any) => {
-      if (res.code === 0) {
+    rRegister(res.nickname, res.username, res.password).then(({ code, data }) => {
+      if (code === 0) {
         uni.showToast({
           title: '注册成功，即将自动登录',
           duration: 2000,
           icon: 'success',
         })
         userStore.$patch({
-          nickname: res.nickmame,
-          gender: res.gender,
-          description: res.description,
+          username: data.username,
+          nickname: data.nickname,
+          avatar: data.avatar,
+          userid: data.userid,
+        })
+        logger.verbose('注册成功', data)
+        storage.set('session', {
+          username: data.username,
+          nickname: data.nickname,
+          avatar: data.avatar,
+          userid: data.userid,
         })
 
         setTimeout(() => {
           uni.switchTab({
-            url: '/pages/discover/discover',
+            url: '/pages/message/message',
           })
         }, 1000)
       }

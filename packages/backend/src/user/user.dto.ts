@@ -25,7 +25,7 @@ export class BPostLogin {
 
 export class BPostRegister extends BPostLogin {
   @IsString({ message: '昵称需要为字符串格式' })
-  @Length(6, 16, { message: '昵称长度在2~20个字符之间' })
+  @Length(2, 16, { message: '昵称长度在2~20个字符之间' })
   nickname: string;
 }
 

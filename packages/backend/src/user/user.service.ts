@@ -8,14 +8,20 @@ import { PrismaService } from 'src/common/prisma/prisma.service';
 export class UserService {
   constructor(private prismaService: PrismaService) {}
 
-  genNumberString(digit = 10) {
+  async genUserId(digit = 10) {
     const str = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    let res = str[Math.floor(Math.random() * 9)];
-    for (let i = 0; i < digit; i++) {
+    let userid = '1';
+    for (let i = 0; i < digit - 1; i++) {
       const id = Math.floor(Math.random() * 10);
-      res += str[id];
+      userid += str[id];
     }
-    return res;
+    const existsUser = await this.prismaService.user.findFirst({
+      where: {
+        userid,
+      },
+    });
+    if (existsUser) return await this.genUserId(digit);
+    return userid;
   }
 
   async encryptPassword(password: string) {

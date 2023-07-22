@@ -27,7 +27,7 @@
         </view>
       </template>
       <view class="flex w-full h-full flex-col justify-center">
-        <text class="font-bold">暴躁的不锈钢盆</text>
+        <text class="font-bold">{{ userInfo.nickname }}</text>
         <text class="text-sm">在线</text>
       </view>
     </uni-nav-bar>
@@ -62,6 +62,8 @@
 import { defineComponent } from 'vue'
 import UserAside from '@/comps/user-aside/user-aside.vue'
 import logger from '@/utils/logger'
+import { useUserStore } from '@/store/user.store'
+import { computed } from 'vue'
 
 export default defineComponent({
   components: {
@@ -88,7 +90,6 @@ export default defineComponent({
           (res.safeArea?.height || res.windowHeight - (res.statusBarHeight ?? 0)) - res.windowBottom
         // 如果有NavBar需要减去NavBar高度和已经被占用的高度
         this.swiperHeight = windowHeight - uni.upx2px(100)
-        logger.verbose('mess', this.swiperHeight, this.heightUsed)
       },
     })
   },
@@ -120,6 +121,17 @@ export default defineComponent({
     handleLoadMore() {
       logger.verbose('加载更多')
     },
+  },
+  setup() {
+    const userStore = useUserStore()
+    const userInfo = computed(() => {
+      return {
+        nickname: userStore.nickname,
+      }
+    })
+    return {
+      userInfo,
+    }
   },
 })
 </script>

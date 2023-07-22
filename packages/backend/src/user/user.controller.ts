@@ -65,7 +65,6 @@ export class UserController {
         return {
           userid: user.userid,
           session,
-          expires,
           username: user.username,
           nickname: user.nickname,
           avatar: user.avatar,
@@ -89,18 +88,9 @@ export class UserController {
       throw new HttpException('用户名已存在', HttpStatus.BAD_REQUEST);
     }
 
-    const getUserId = async () => {
-      const userid = this.userService.genNumberString(10);
-      const existsUser = await this.prismaService.user.findFirst({
-        where: {
-          userid,
-        },
-      });
-      if (existsUser) return await getUserId();
-      return userid;
-    };
+    const userid = await this.userService.genUserId(10);
 
-    const userid = await getUserId();
+    console.log(userid);
     this.logger.log('generate user id', {
       userid,
     });

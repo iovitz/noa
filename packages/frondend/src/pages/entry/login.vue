@@ -36,21 +36,20 @@ const handleSubmit = () => {
       if (code === 0) {
         uni.showToast({
           title: '登录成功，正在跳转',
-          duration: 2000,
+          duration: 1000,
           icon: 'success',
         })
         userStore.$patch({
           username: data.username,
           nickname: data.nickname,
           avatar: data.avatar,
-          gender: data.gender,
-          description: data.description,
+          userid: data.userid,
         })
-        logger.verbose(data.nickname, data.avatar, data.gender)
-        storage.set('token', data.token)
+        logger.verbose('登录成功', data)
+        storage.set('session', data.session)
         setTimeout(() => {
           uni.switchTab({
-            url: '/pages/discover/discover',
+            url: '/pages/message/message',
           })
         }, 1000)
       }

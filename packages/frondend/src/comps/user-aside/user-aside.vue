@@ -7,8 +7,7 @@
         :src="'https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png'"
       />
       <view>
-        <view class="font-bold text-xl text-ellipsis">不锈钢盆</view>
-        <view class="text-sm text-ellipsis mt-1">高低得来两句</view>
+        <view class="font-bold text-xl text-ellipsis">{{ userInfo.nickname }}</view>
       </view>
     </view>
 
@@ -29,20 +28,16 @@
   </view>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
+import { useUserStore } from '@/store/user.store'
+import { computed } from 'vue'
 
-export default defineComponent({
-  props: {
-    type: String,
-  },
-  data() {
-    return {
-      statusBarHeight: 0,
-    }
-  },
-  computed: {},
-  methods: {},
+const userStore = useUserStore()
+
+const userInfo = computed(() => {
+  return {
+    nickname: userStore.nickname,
+  }
 })
 </script>
 

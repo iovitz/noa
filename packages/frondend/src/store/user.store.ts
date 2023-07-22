@@ -4,22 +4,20 @@ interface UserStore {
   nickname: string
   username: string
   avatar: string | null
-  description: string | null
-  gender: number | null
+  userid: string
 }
 
 export const useUserStore = defineStore<'user', UserStore>('user', {
   persist: {
     key: 'user',
-    paths: ['nickname', 'avatar', 'description', 'gender', 'username'],
+    paths: ['nickname', 'avatar', 'username', 'userid'],
   },
   state: () => {
     return {
       username: '',
       nickname: '',
       avatar: '',
-      description: null,
-      gender: null,
+      userid: '',
     }
   },
 })
