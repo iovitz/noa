@@ -7,7 +7,19 @@
 	},
 	"pages": [
 		{
-			"path": "pages/index/index",
+			"path": "pages/message/message",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/friends/friends",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/discover/discover",
 			"style": {
 				"navigationStyle": "custom"
 			}
@@ -75,6 +87,32 @@
 			}
 		}
 	],
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#ec7436",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [
+			{
+				"pagePath": "pages/message/message",
+				"iconPath": "static/tabbar-icons/discover.png",
+				"selectedIconPath": "static/tabbar-icons/discover_fill.png",
+				"text": "消息"
+			},
+			{
+				"pagePath": "pages/friends/friends",
+				"iconPath": "static/tabbar-icons/discover.png",
+				"selectedIconPath": "static/tabbar-icons/discover_fill.png",
+				"text": "好友"
+			},
+			{
+				"pagePath": "pages/discover/discover",
+				"iconPath": "static/tabbar-icons/my.png",
+				"selectedIconPath": "static/tabbar-icons/my_fill.png",
+				"text": "空间"
+			}
+		]
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "Uniapp社区",

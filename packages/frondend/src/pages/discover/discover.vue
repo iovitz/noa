@@ -1,18 +1,22 @@
 <template>
+	<pageWithTabbar>
+		<view class="news-card-list">
+			<news-card v-for="i in 10" :key="i"></news-card>
+		</view>
+	</pageWithTabbar>
 	<uni-fab ref="fab" class="add-button" @fabClick="handleAdd" horizontal="right" />
-	<view class="news-card-list">
-		<news-card v-for="i in 10" :key="i"></news-card>
-	</view>
 </template>
 
 <script lang="ts">
 import NewsCard from '@/comps/news-card/news-card.vue';
+import pageWithTabbar from '@/comps/page-with-tabbar/page-with-tabbar.vue';
 import { defineComponent } from 'vue';
 import logger from '@/utils/logger';
 
 export default defineComponent({
 	components: {
 		NewsCard,
+		pageWithTabbar,
 	},
 	props: {
 		id: {

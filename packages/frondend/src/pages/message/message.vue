@@ -1,26 +1,27 @@
 <template>
-	<uni-search-bar
-		placeholder="超级搜索"
-		@focus="handleGoSearch"
-		cancelButton="none"
-		class="bg-white"
-	>
-		<template #searchIcon>
-			<uni-icons color="#999999" size="18" type="search" />
-		</template>
-	</uni-search-bar>
-	<message-list></message-list>
+	<pageWithTabbar>
+		<uni-search-bar
+			placeholder="超级搜索"
+			@focus="handleGoSearch"
+			cancelButton="none"
+			class="bg-white"
+		>
+			<template #searchIcon>
+				<uni-icons color="#999999" size="18" type="search" />
+			</template>
+		</uni-search-bar>
+		<message-list></message-list>
+	</pageWithTabbar>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
 import messageList from '@/comps/message-list/message-list.vue';
+import pageWithTabbar from '@/comps/page-with-tabbar/page-with-tabbar.vue';
 import logger from '@/utils/logger';
-import { rLogin } from '@/io/http/user';
-
-console.log(rLogin);
 
 export default defineComponent({
 	components: {
+		pageWithTabbar,
 		messageList,
 	},
 	methods: {
