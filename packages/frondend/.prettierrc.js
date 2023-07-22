@@ -4,9 +4,9 @@ module.exports = {
 	// 指定每个缩进级别的空格数
 	tabWidth: 2,
 	// 使用制表符而不是空格缩进行
-	useTabs: true,
+	useTabs: false,
 	// 在语句末尾是否需要分号
-	semi: true,
+	semi: false,
 	// 是否使用单引号
 	singleQuote: true,
 	// 更改引用对象属性的时间 可选值"<as-needed|consistent|preserve>"

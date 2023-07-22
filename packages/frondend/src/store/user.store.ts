@@ -6,7 +6,6 @@ interface UserStore {
   avatar: string | null
   description: string | null
   gender: number | null
-  
 }
 
 export const useUserStore = defineStore<'user', UserStore>('user', {
@@ -20,7 +19,7 @@ export const useUserStore = defineStore<'user', UserStore>('user', {
       nickname: '',
       avatar: '',
       description: null,
-      gender: null
+      gender: null,
     }
   },
 })

@@ -8,7 +8,7 @@ class Storage {
         key,
         data,
         success,
-        fail
+        fail,
       })
     }).catch((e) => {
       if (!safely) {

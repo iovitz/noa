@@ -1,7 +1,7 @@
-import { createPinia } from 'pinia';
-import { createPersistedState } from 'pinia-plugin-persistedstate';
+import { createPinia } from 'pinia'
+import { createPersistedState } from 'pinia-plugin-persistedstate'
 
-export const pinia = createPinia();
+export const pinia = createPinia()
 pinia.use(
   createPersistedState({
     storage: {
@@ -14,5 +14,5 @@ pinia.use(
         uni.setStorageSync(key, value)
       },
     },
-  }),
+  })
 )
