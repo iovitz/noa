@@ -59,11 +59,13 @@ export class UserController {
         user.password,
       );
       if (res) {
-        const session = await this.userService.generateSession(user.userid);
-
+        const { session, expires } = await this.userService.generateSession(
+          user.userid,
+        );
         return {
           userid: user.userid,
-          session: session,
+          session,
+          expires,
           username: user.username,
           nickname: user.nickname,
           avatar: user.avatar,
@@ -126,12 +128,12 @@ export class UserController {
       }),
     ]);
 
-    const session = await this.userService.generateSession(user.userid);
+    const { session } = await this.userService.generateSession(user.userid);
 
     console.log(await this.prismaService.session.findFirst());
     return {
       userid: user.userid,
-      session: session,
+      session,
       avatar: user.avatar,
       username: user.username,
       nickname: user.nickname,

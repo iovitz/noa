@@ -30,15 +30,19 @@ export class UserService {
 
   async generateSession(userid: string) {
     const session = uuidv4();
+    const expires = moment(new Date()).add(1, 'month').valueOf().toString();
 
     // 保存session
     await this.prismaService.session.create({
       data: {
         session: session,
         userid: userid,
-        expires: moment(new Date()).add(1, 'month').valueOf().toString(),
+        expires,
       },
     });
-    return session;
+    return {
+      session,
+      expires,
+    };
   }
 }
