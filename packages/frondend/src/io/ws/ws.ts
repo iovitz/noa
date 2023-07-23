@@ -11,18 +11,20 @@ class LongChain {
 
   private eventQueue: EventItem[] = []
 
-  connection: Socket
-  constructor(private url: string) {
+  connection: Socket | null = null
+
+  constructor(private url: string) {}
+
+  connect() {
     this.connection = io(this.url, {
       query: {},
       transports: ['websocket', 'polling'],
       timeout: 5000,
     })
-    this.init()
-  }
 
-  init() {
     this.connection.on('connect', () => {
+      if (!this.connection) return
+
       const { id } = this.connection
 
       logger.info('Socket链接成功', id)
@@ -38,24 +40,26 @@ class LongChain {
   }
 
   on(event: string, callBack: (...args: any[]) => void) {
-    this.connection.on(event, callBack)
+    this.connection?.on(event, callBack)
   }
 
   off(event: string, callBack: (...args: any[]) => void) {
-    this.connection.off(event, callBack)
+    this.connection?.off(event, callBack)
   }
 
   emit(event: string, data: unknown) {
-    if (!this.isConnected) {
+    const { connection } = this
+    if (!this.isConnected || !connection) {
       this.eventQueue.push({
         event,
         data,
       })
+      return
     }
     this.eventQueue.forEach(({ event, data }) => {
-      this.connection.emit(event, data)
+      connection.emit(event, data)
     })
-    this.connection.emit(event, data)
+    connection.emit(event, data)
   }
 }
 

@@ -3,7 +3,7 @@ import { onLaunch, onShow, onHide } from '@dcloudio/uni-app'
 import { longChain } from '@/io/ws/ws'
 
 onLaunch(() => {
-  console.log(longChain)
+  longChain.connect()
 })
 onShow(() => {
   // logger.verbose('App Show')
