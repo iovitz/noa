@@ -24,7 +24,6 @@ class ShortChain {
       url: 'https://ifconfig.me/ip',
       success: (res) => {
         this.ipLong = `${ip2int(res.data as string)}`
-        console.log(this.ipLong)
       },
     })
   }

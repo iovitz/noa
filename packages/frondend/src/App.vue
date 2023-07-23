@@ -1,30 +1,9 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app'
-import io from '@hyoga/uni-socket.io'
-import logger from '@/utils/logger'
+import { longChain } from '@/io/ws/ws'
 
 onLaunch(() => {
-  const socket = io('http://127.0.0.1:28257/ws', {
-    query: {},
-    transports: ['websocket', 'polling'],
-    timeout: 5000,
-  })
-
-  socket.on('connect', () => {
-    const { id } = socket
-
-    logger.verbose('链接成功', id)
-    // 发射
-    socket.emit('hello', 'client hello payload')
-    // 发射
-    socket.emit('events', {
-      name: 'alone',
-    })
-  })
-
-  socket.on('error', (msg: any) => {
-    logger.verbose('ws error', msg)
-  })
+  console.log(longChain)
 })
 onShow(() => {
   // logger.verbose('App Show')

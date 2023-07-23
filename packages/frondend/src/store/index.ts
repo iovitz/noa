@@ -8,7 +8,6 @@ pinia.use(
     storage: {
       getItem(key: string): string | null {
         key = 'pinia_store_' + key
-        console.log(uni.getStorageSync(key))
         return uni.getStorageSync(key)
       },
       setItem(key: string, value: string) {
@@ -18,4 +17,3 @@ pinia.use(
     },
   })
 )
-;(window as any).pinia = pinia

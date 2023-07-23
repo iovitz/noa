@@ -35,9 +35,17 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
   async handleDisconnect(client: any) {
     this.logger.log(client.id, '取消连接');
   }
+
+  @SubscribeMessage('events')
+  handleEvent(client: Socket, data: string): string {
+    this.logger.verbose(client);
+    return data;
+  }
+
   @SubscribeMessage('hello')
   handleMessage(client: Socket, payload: string): void {
-    this.logger.log(client.id, '说hello', payload);
+    this.logger.log(payload, '说hello');
+
     client.emit('hello', 'server hello paylaod');
   }
 }
