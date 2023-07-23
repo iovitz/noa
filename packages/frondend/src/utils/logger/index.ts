@@ -13,19 +13,19 @@ class Logger {
   }
 
   verbose(message: string, ...args: any[]) {
-    if (this.level >= LogLevel.verbose) console.log(message, ...args)
+    if (LogLevel.verbose >= this.level) console.log(message, ...args)
   }
 
   info(message: string, ...args: any[]) {
-    if (this.level >= LogLevel.info) console.info(message, ...args)
+    if (LogLevel.info >= this.level) console.info(message, ...args)
   }
 
   warn(message: string, ...args: any[]) {
-    if (this.level >= LogLevel.warning) console.warn(message, ...args)
+    if (LogLevel.warning >= this.level) console.warn(message, ...args)
   }
 
   error(message: string, ...args: any[]) {
-    if (this.level >= LogLevel.error) console.error(message, ...args)
+    if (LogLevel.error >= this.level) console.error(message, ...args)
   }
 }
 
