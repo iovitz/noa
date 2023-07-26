@@ -64,12 +64,8 @@ export const useUserStore = defineStore<'user', UserStore, {}, UserAction>('user
           userid: data.userid,
         })
         logger.verbose('注册成功', data)
-        storage.set('session', {
-          username: data.username,
-          nickname: data.nickname,
-          avatar: data.avatar,
-          userid: data.userid,
-        })
+        storage.syncSet('session', data.session)
+        longChain.connect()
       }
     },
   },

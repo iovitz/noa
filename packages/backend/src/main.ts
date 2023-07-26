@@ -12,7 +12,8 @@ import { ValidationPipe } from './pipes/validation.pipe';
 import { LoggerService } from '@nestjs/common';
 import * as moment from 'moment-timezone';
 import { ParamsExceptionFilter } from './exceptors/validator.exceptor';
-import { RedisIoAdapter } from './adaptors/socket.io.adaptor';
+import { SocketIoAdapter } from './adaptors/socket.io.adaptor';
+import { PrismaService } from './global/prisma/prisma.service';
 moment.tz.setDefault('Asia/Shanghai');
 
 const prisma = new PrismaClient();
@@ -21,6 +22,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   const logger = app.get<LoggerService>(WINSTON_MODULE_NEST_PROVIDER);
+  const prismaService = app.get(PrismaService);
 
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
@@ -31,7 +33,7 @@ async function bootstrap() {
     prefix: '/',
   });
 
-  app.useWebSocketAdapter(new RedisIoAdapter(app));
+  app.useWebSocketAdapter(new SocketIoAdapter(app, logger, prismaService));
   app.useGlobalPipes(new ValidationPipe(logger));
   app.useGlobalFilters(new AllErrorExceptionFilter(logger));
   app.useGlobalFilters(new ParamsExceptionFilter(logger));

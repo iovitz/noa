@@ -1,9 +1,14 @@
 import { IoAdapter } from '@nestjs/platform-socket.io';
 import { Server, ServerOptions } from 'socket.io';
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, LoggerService } from '@nestjs/common';
+import { PrismaService } from 'src/global/prisma/prisma.service';
 
-export class RedisIoAdapter extends IoAdapter {
-  constructor(app: INestApplication) {
+export class SocketIoAdapter extends IoAdapter {
+  constructor(
+    app: INestApplication,
+    private logger: LoggerService,
+    private prismaService: PrismaService,
+  ) {
     super(app);
   }
 
@@ -14,12 +19,27 @@ export class RedisIoAdapter extends IoAdapter {
 
     // 这里补充校验逻辑
     options.allowRequest = async (request, allowFunction) => {
+      const query = request.url?.split('?')[1];
+      const session = new URLSearchParams(query).get('session');
       try {
-        const query = request.url.split('?')[1];
-        const session = new URLSearchParams(query).get('session');
-        console.log(session);
+        this.logger.log(session, 'AllowRequest');
+        const sessionItem = await this.prismaService.session.findFirst({
+          where: {
+            session,
+          },
+          select: {
+            expires: true,
+            userid: true,
+          },
+        });
+        if (!sessionItem) throw Error('Invalid Session');
+        const { expires } = sessionItem;
+        if (Number(expires) < Date.now()) {
+          throw new Error('Expiration of certification');
+        }
         return allowFunction(null, true);
       } catch (error) {
+        this.logger.error(error, 'invalid token');
         return allowFunction('Unauthorized', false);
       }
     };

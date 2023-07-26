@@ -76,6 +76,7 @@ class ShortChain {
           icon: 'error',
           title: data.message,
         })
+        throw res
       }
       return res.data
     })

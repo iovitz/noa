@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app'
+import { isLoggedIn } from '@/utils/auth'
+import { longChain } from './io/ws/ws'
 
-onLaunch(() => {})
+onLaunch(() => {
+  if (isLoggedIn()) {
+    longChain.connect()
+  }
+})
 onShow(() => {
   // logger.verbose('App Show')
 })

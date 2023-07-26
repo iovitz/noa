@@ -17,14 +17,13 @@ class LongChain {
   constructor(private url: string, private path: string) {}
 
   connect() {
+    console.log('#', storage.get('session'))
+    if (this.isConnected) return
     const { url, path } = this
     this.connection = io(url, {
       path: path,
       query: {
         session: storage.get('session'),
-      },
-      extraHeaders: {
-        session: 'token',
       },
       transports: ['websocket', 'polling'],
       timeout: 5000,
@@ -41,9 +40,25 @@ class LongChain {
         name: 'zs',
       })
     })
+
     //监听断线
-    this.connection.on('error', (msg: any) => {
-      logger.info('Socket链接失败', msg)
+    this.connection.on('invalid_token', (msg: any) => {
+      logger.info('Token错误', msg)
+      this.isConnected = false
+    })
+
+    //监听断线
+    this.connection.on('connect_error', (error: any) => {
+      if (error.type === 'TransportError') {
+        throw new Error('Authenticate Fail')
+      }
+      this.isConnected = false
+    })
+
+    //监听断线
+    this.connection.on('disconnect', (msg: any) => {
+      logger.info('Socket断开连接', msg)
+      this.isConnected = false
     })
   }
 
