@@ -10,9 +10,9 @@ import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Socket } from 'socket.io';
 
 @WebSocketGateway({
-  path: '/ws/common',
+  path: '/ws/v1',
 })
-export class SocketGateway
+export class Wsv1Gateway
   implements OnGatewayConnection<Socket>, OnGatewayDisconnect<Socket>
 {
   constructor(

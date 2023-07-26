@@ -19,8 +19,6 @@ import { rLogin } from '@/io/http/user'
 import { reactive, ref } from 'vue'
 import { useUserStore } from '@/store/user.store'
 import { loginRules } from '@/common/rules/login'
-import { storage } from '@/utils/storage/storage'
-import logger from '@/utils/logger'
 const sectionRef = ref()
 
 const userStore = useUserStore()
@@ -30,31 +28,14 @@ const formData = reactive({
   password: '',
 })
 
-const handleSubmit = () => {
-  sectionRef.value.validate().then((res: any) => {
-    rLogin(res.username, res.password).then(({ code, data }) => {
-      if (code === 0) {
-        uni.showToast({
-          title: '登录成功，正在跳转',
-          duration: 1000,
-          icon: 'success',
-        })
-        userStore.$patch({
-          username: data.username,
-          nickname: data.nickname,
-          avatar: data.avatar,
-          userid: data.userid,
-        })
-        logger.verbose('登录成功', data)
-        storage.set('session', data.session)
-        setTimeout(() => {
-          uni.switchTab({
-            url: '/pages/message/message',
-          })
-        }, 1000)
-      }
+const handleSubmit = async () => {
+  const res = await sectionRef.value.validate()
+  await userStore.login(res.username, res.password)
+  setTimeout(() => {
+    uni.switchTab({
+      url: '/pages/message/message',
     })
-  })
+  }, 1000)
 }
 </script>
 

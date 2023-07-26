@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app'
-import { longChain } from '@/io/ws/ws'
 
-onLaunch(() => {
-  longChain.connect()
-})
+onLaunch(() => {})
 onShow(() => {
   // logger.verbose('App Show')
 })

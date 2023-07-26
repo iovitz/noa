@@ -69,8 +69,9 @@ class ShortChain {
         },
       })
     }).then((res: UniApp.RequestSuccessCallbackResult) => {
-      if (data.code !== 0) {
-        logger.error('请求失败', data)
+      const resData = res.data as any
+      if (resData.code !== 0) {
+        logger.error('请求失败', resData)
         uni.showToast({
           icon: 'error',
           title: data.message,

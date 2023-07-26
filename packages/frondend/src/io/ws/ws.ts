@@ -1,4 +1,5 @@
 import logger from '@/utils/logger'
+import { storage } from '@/utils/storage/storage'
 import { Socket, io } from '@hyoga/uni-socket.io'
 
 interface EventItem {
@@ -19,7 +20,12 @@ class LongChain {
     const { url, path } = this
     this.connection = io(url, {
       path: path,
-      query: {},
+      query: {
+        session: storage.get('session'),
+      },
+      extraHeaders: {
+        session: 'token',
+      },
       transports: ['websocket', 'polling'],
       timeout: 5000,
     })

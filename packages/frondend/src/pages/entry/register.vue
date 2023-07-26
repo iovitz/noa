@@ -37,37 +37,14 @@ const formData = reactive({
   password: '',
   repeat: '',
 })
-const handleSubmit = () => {
-  formRef.value.validate().then((res: any) => {
-    rRegister(res.nickname, res.username, res.password).then(({ code, data }) => {
-      if (code === 0) {
-        uni.showToast({
-          title: '注册成功，即将自动登录',
-          duration: 2000,
-          icon: 'success',
-        })
-        userStore.$patch({
-          username: data.username,
-          nickname: data.nickname,
-          avatar: data.avatar,
-          userid: data.userid,
-        })
-        logger.verbose('注册成功', data)
-        storage.set('session', {
-          username: data.username,
-          nickname: data.nickname,
-          avatar: data.avatar,
-          userid: data.userid,
-        })
-
-        setTimeout(() => {
-          uni.switchTab({
-            url: '/pages/message/message',
-          })
-        }, 1000)
-      }
+const handleSubmit = async () => {
+  const { nickname, username, password } = await formRef.value.validate()
+  await userStore.register(nickname, username, password)
+  setTimeout(() => {
+    uni.switchTab({
+      url: '/pages/message/message',
     })
-  })
+  }, 1000)
 }
 </script>
 

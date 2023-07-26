@@ -18,4 +18,4 @@ import { ConfigModule } from '@nestjs/config';
     LoggerModule,
   ],
 })
-export class CommonModule {}
+export class GlobalModule {}
