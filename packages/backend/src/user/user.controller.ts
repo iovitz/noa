@@ -12,7 +12,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
-import { PrismaService } from 'src/common/prisma/prisma.service';
+import { PrismaService } from 'src/global/prisma/prisma.service';
 import {
   PGetUser,
   BPostLogin,

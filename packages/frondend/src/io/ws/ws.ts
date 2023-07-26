@@ -13,10 +13,12 @@ class LongChain {
 
   connection: Socket | null = null
 
-  constructor(private url: string) {}
+  constructor(private url: string, private path: string) {}
 
   connect() {
-    this.connection = io(this.url, {
+    const { url, path } = this
+    this.connection = io(url, {
+      path: path,
       query: {},
       transports: ['websocket', 'polling'],
       timeout: 5000,
@@ -63,4 +65,7 @@ class LongChain {
   }
 }
 
-export const longChain = new LongChain(import.meta.env.VITE_WS_URL)
+export const longChain = new LongChain(
+  import.meta.env.VITE_WS_COMMON_URL,
+  import.meta.env.VITE_WS_COMMON_PATH
+)

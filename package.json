@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "concurrently \"npm run dev:fe\" \"npm run dev:be\"",
     "dev:be": "npm run dev -w packages/backend",
-    "dev:fe": "npm run dev -w packages/frondend"
+    "dev:fe": "npm run dev -w packages/frondend",
+    "pi": "pnpm install --no-frozen-lockfile --shamefully-hoist"
   },
   "engines": {
     "node": "18.x"

@@ -7,19 +7,14 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
-import type { Socket } from 'socket.io';
+import { Socket } from 'socket.io';
 
 @WebSocketGateway({
-  // 域名
-  namespace: '/ws',
-  // 解决跨域
-  // allowEIO3: true,
-  cors: {
-    origin: /.*/,
-    credentials: true,
-  },
+  path: '/ws/common',
 })
-export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class SocketGateway
+  implements OnGatewayConnection<Socket>, OnGatewayDisconnect<Socket>
+{
   constructor(
     @Inject(WINSTON_MODULE_NEST_PROVIDER)
     private readonly logger: LoggerService,
@@ -28,17 +23,18 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server;
   users = 0;
 
-  async handleConnection(client, paylaod: string) {
-    this.logger.log(client.id, '链接');
+  // https://juejin.cn/post/7225171762395824188
+  async handleConnection(client: Socket) {
+    this.logger.log(client.id, '链接成功');
   }
 
-  async handleDisconnect(client: any) {
+  async handleDisconnect(client: Socket) {
     this.logger.log(client.id, '取消连接');
   }
 
   @SubscribeMessage('events')
   handleEvent(client: Socket, data: string): string {
-    this.logger.verbose(client);
+    this.logger.verbose('sss');
     return data;
   }
 
@@ -46,6 +42,6 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
   handleMessage(client: Socket, payload: string): void {
     this.logger.log(payload, '说hello');
 
-    client.emit('hello', 'server hello paylaod');
+    client.emit('hello', 'server hello payload');
   }
 }

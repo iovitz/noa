@@ -3,7 +3,8 @@
 interface ImportMetaEnv {
   readonly VITE_APP_NAME: string
   readonly VITE_LOG_LEVEL: false
-  readonly VITE_WS_URL: string
+  readonly VITE_WS_COMMON_URL: string
+  readonly VITE_WS_COMMON_PATH: string
 }
 
 interface ImportMeta {

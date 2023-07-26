@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import * as moment from 'moment-timezone';
-import { PrismaService } from 'src/common/prisma/prisma.service';
+import { PrismaService } from 'src/global/prisma/prisma.service';
 
 @Injectable()
 export class UserService {

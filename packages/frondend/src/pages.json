@@ -83,7 +83,8 @@
     {
       "path": "pages/unknown/unknown",
       "style": {
-        "navigationBarTitleText": "404"
+        "navigationBarTitleText": "404",
+        "navigationStyle": "custom"
       }
     }
   ],
