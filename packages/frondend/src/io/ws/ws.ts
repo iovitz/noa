@@ -17,7 +17,6 @@ class LongChain {
   constructor(private url: string, private path: string) {}
 
   connect() {
-    console.log('#', storage.get('session'))
     if (this.isConnected) return
     const { url, path } = this
     this.connection = io(url, {
@@ -39,12 +38,6 @@ class LongChain {
       this.emit('hello', {
         name: 'zs',
       })
-    })
-
-    //监听断线
-    this.connection.on('invalid_token', (msg: any) => {
-      logger.info('Token错误', msg)
-      this.isConnected = false
     })
 
     //监听断线

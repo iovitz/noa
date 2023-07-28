@@ -25,7 +25,13 @@ export class Wsv1Gateway
 
   // https://juejin.cn/post/7225171762395824188
   async handleConnection(client: Socket) {
-    this.logger.log(client.id, '链接成功');
+    this.logger.log(
+      {
+        userid: client.request.userid,
+        clientId: client.id,
+      },
+      '链接成功',
+    );
   }
 
   async handleDisconnect(client: Socket) {

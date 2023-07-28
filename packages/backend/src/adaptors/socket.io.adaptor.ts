@@ -33,10 +33,16 @@ export class SocketIoAdapter extends IoAdapter {
           },
         });
         if (!sessionItem) throw Error('Invalid Session');
-        const { expires } = sessionItem;
+
+        // 校验时间
+        const { expires, userid } = sessionItem;
         if (Number(expires) < Date.now()) {
           throw new Error('Expiration of certification');
         }
+
+        // 把UserID写入请求对象中
+        request.userid = userid;
+
         return allowFunction(null, true);
       } catch (error) {
         this.logger.error(error, 'invalid token');

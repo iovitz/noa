@@ -22,3 +22,8 @@ declare module '@nestjs/common' {
   }
   export default NestjsCommonType;
 }
+declare module 'http' {
+  interface IncomingMessage {
+    userid?: string;
+  }
+}
