@@ -113,7 +113,5 @@ const optionsList = reactive([
   .value {
     font-size: 40upx;
   }
-  .text {
-  }
 }
 </style>

@@ -55,7 +55,7 @@ onLoad((data) => {
   current.value = parseInt(data.tab)
 })
 
-const onClickItem = (e) => {
+const onClickItem = (e: any) => {
   if (current.value !== e.currentIndex) {
     current.value = e.currentIndex
   }
