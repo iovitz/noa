@@ -13,10 +13,11 @@ model Post {
   title     String   @db.VarChar(255)
   content   String?
   published Boolean  @default(false)
-  author    User     @relation(fields: [authorId], references: [id])
   authorId  Int      @db.UnsignedInt()
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  author User @relation(fields: [authorId], references: [id])
 
   @@map("post")
 }
@@ -24,39 +25,88 @@ model Post {
 model UserProfile {
   id        Int      @id @default(autoincrement()) @db.UnsignedInt()
   userid    String?  @unique @db.Char(10)
-  user      User?    @relation(fields: [userid], references: [userid])
   gender    Boolean?
-  email     String?      @db.Char(30)
-  phone     String?      @db.Char(20)
-  address   String?      @db.Char(100)
+  email     String?  @db.Char(30)
+  phone     String?  @db.Char(20)
+  address   String?  @db.Char(100)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  user User? @relation(fields: [userid], references: [userid])
 
   @@map("user_profile")
 }
 
 model User {
-  id        Int          @id @default(autoincrement()) @db.UnsignedInt()
-  userid    String       @unique @db.Char(10)
-  nickname  String       @db.Char(20)
-  username  String       @unique @db.Char(20)
-  password  String       @db.Char(70)
-  avatar    String?      @unique @db.Char(100)
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
-  profile   UserProfile?
-  posts     Post[]
-  Session   Session[]
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt()
+  userid    String   @unique @db.Char(10)
+  nickname  String   @db.Char(20)
+  username  String   @unique @db.Char(20)
+  password  String   @db.Char(70)
+  avatar    String?  @unique @db.Char(100)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  profile    UserProfile?
+  posts      Post[]
+  Session    Session[]
+  GroupUser  GroupUser[]
+  UserNotice UserNotice[]
 
   @@map("user")
 }
 
+model Group {
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt()
+  groupid   String   @unique @db.Char(10)
+  name      String   @db.Char(20)
+  avatar    String?  @unique @db.Char(100)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users GroupUser[]
+
+  @@map("group")
+}
+
+// 群组关系
+model GroupUser {
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt()
+  groupid   String   @db.Char(10)
+  userid    String   @db.Char(10)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  group Group @relation(fields: [groupid], references: [groupid])
+  user  User  @relation(fields: [userid], references: [userid])
+
+  @@map("group_user")
+}
+
+// 用户通知消息
+model UserNotice {
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt()
+  userid    String   @db.Char(10)
+  type      String   @db.Char(50)
+  content   String   @db.Text
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userid], references: [userid])
+
+  @@map("user_notice")
+}
+
 model Session {
-  id      Int    @id @default(autoincrement()) @db.UnsignedInt()
-  session String @unique @db.Char(36)
-  userid  String @db.Char(10)
-  expires String @db.Char(13)
-  User    User?  @relation(fields: [userid], references: [userid])
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt()
+  session   String   @unique @db.Char(36)
+  userid    String   @db.Char(10)
+  expires   String   @db.Char(13)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User User? @relation(fields: [userid], references: [userid])
 
   @@map("session")
 }
