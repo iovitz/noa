@@ -283,6 +283,9 @@ importers:
       '@uni-helper/uni-cloud-types':
         specifier: ^0.5.2
         version: 0.5.2(@uni-helper/uni-app-types@0.5.8)
+      '@uni-helper/uni-ui-types':
+        specifier: ^0.5.10
+        version: 0.5.10(@uni-helper/uni-app-types@0.5.8)
       '@vue/tsconfig':
         specifier: ^0.1.3
         version: 0.1.3(@types/node@16.18.31)
@@ -5398,6 +5401,20 @@ packages:
 
   /@uni-helper/uni-cloud-types@0.5.2(@uni-helper/uni-app-types@0.5.8):
     resolution: {integrity: sha512-DnzYI4CYzBxSqDqjT9RK/lFK19igKTrqAKeXSGd2lgaE1bC+gg2DvBSNWtjGbZw24oReNeXxaQVx6f5iOjxw/Q==}
+    engines: {node: '>=14.18'}
+    peerDependencies:
+      '@uni-helper/uni-app-types': ^0.5.1
+    peerDependenciesMeta:
+      '@uni-helper/uni-app-types':
+        optional: true
+    dependencies:
+      '@dcloudio/types': 3.3.3
+      '@uni-helper/uni-app-types': 0.5.8(typescript@5.0.4)
+      vue3: /vue@3.3.4
+    dev: true
+
+  /@uni-helper/uni-ui-types@0.5.10(@uni-helper/uni-app-types@0.5.8):
+    resolution: {integrity: sha512-7DaAPncYHWHn6D6rhp1HzIH4CiMB1b2DIRKmtempH+KbptvfBpj3m7yVvOTF+UGcjkD63ab45/vzGEyG1hXYfg==}
     engines: {node: '>=14.18'}
     peerDependencies:
       '@uni-helper/uni-app-types': ^0.5.1
