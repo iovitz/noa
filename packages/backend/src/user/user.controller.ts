@@ -2,6 +2,7 @@ import { UserService } from './user.service';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   HttpStatus,
@@ -20,6 +21,7 @@ import {
   BPutUser,
   PGetProfile,
   PPostProfile,
+  BDeleteLogout,
 } from './user.dto';
 
 @Controller('user')
@@ -40,18 +42,7 @@ export class UserController {
   @Post('/login')
   async login(@Body() body: BPostLogin) {
     const { username, password } = body;
-    const user = await this.prismaService.user.findFirst({
-      where: {
-        username,
-      },
-      select: {
-        userid: true,
-        nickname: true,
-        username: true,
-        password: true,
-        avatar: true,
-      },
-    });
+    const user = await this.userService.findUserByUsername(username);
 
     if (user) {
       const res = await this.userService.comparePassword(
@@ -59,9 +50,7 @@ export class UserController {
         user.password,
       );
       if (res) {
-        const { session, expires } = await this.userService.generateSession(
-          user.userid,
-        );
+        const { session } = await this.userService.generateSession(user.userid);
         return {
           userid: user.userid,
           session,
@@ -75,14 +64,17 @@ export class UserController {
     throw new HttpException('用户名或密码错误', HttpStatus.BAD_REQUEST);
   }
 
+  @Delete('/logout')
+  async logout(@Body() body: BDeleteLogout) {
+    const { session } = body;
+    await this.userService.deleteSession(session);
+    return 'Logout Success!';
+  }
+
   @Post('/register')
   async register(@Body() body: BPostRegister) {
     const { nickname, username, password } = body;
-    const existsUser = await this.prismaService.user.findFirst({
-      where: {
-        username,
-      },
-    });
+    const existsUser = await this.userService.findUserByUsername(username);
 
     if (existsUser) {
       throw new HttpException('用户名已存在', HttpStatus.BAD_REQUEST);
@@ -95,32 +87,15 @@ export class UserController {
       userid,
     });
 
-    const [user] = await this.prismaService.$transaction([
-      this.prismaService.user.create({
-        data: {
-          userid: userid,
-          nickname,
-          username,
-          password: await this.userService.encryptPassword(password),
-        },
-
-        select: {
-          userid: true,
-          nickname: true,
-          username: true,
-          avatar: true,
-        },
-      }),
-      this.prismaService.userProfile.create({
-        data: {
-          userid,
-        },
-      }),
-    ]);
+    const [user] = await this.userService.createUser(
+      userid,
+      nickname,
+      username,
+      password,
+    );
 
     const { session } = await this.userService.generateSession(user.userid);
 
-    console.log(await this.prismaService.session.findFirst());
     return {
       userid: user.userid,
       session,

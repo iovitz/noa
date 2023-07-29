@@ -1,6 +1,6 @@
 <template>
   <scroll-view
-    scroll-y="true"
+    :scroll-y="true"
     class="message-scroll-view"
     :style="`height: ${props.scrollHeight}px`"
     :scroll-with-animation="true"

@@ -15,7 +15,6 @@
 </template>
 
 <script lang="ts" setup>
-import { rLogin } from '@/io/http/user'
 import { reactive, ref } from 'vue'
 import { useUserStore } from '@/store/user.store'
 import { loginRules } from '@/common/rules/login'

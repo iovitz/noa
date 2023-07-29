@@ -1,7 +1,7 @@
 import { rLogin, rRegister } from '@/io/http/user'
 import { longChain } from '@/io/ws/ws'
 import logger from '@/utils/logger'
-import { storage } from '@/utils/storage/storage'
+import { storage } from '@/utils/storage'
 import { defineStore } from 'pinia'
 
 interface UserStore {

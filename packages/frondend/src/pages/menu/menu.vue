@@ -27,7 +27,7 @@
     </uni-list>
   </view>
 
-  <uni-popup ref="sectionRef">
+  <uni-popup ref="sectionRef" type="dialog">
     <uni-popup-dialog
       mode="input"
       message="成功消息"

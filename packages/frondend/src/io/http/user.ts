@@ -25,6 +25,11 @@ export const rRegister = (nickname: string, username: string, password: string) 
     password,
   })
 
+export const rLogout = (session: string) =>
+  commonRequest.delete<any>(`/user/logout`, {
+    session,
+  })
+
 export const rFind = (content: string) =>
   commonRequest.post<any>(`/user/find`, {
     content,

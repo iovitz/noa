@@ -23,6 +23,12 @@ export class BPostLogin {
   password: string;
 }
 
+export class BDeleteLogout {
+  @IsString({ message: 'session需要为字符串格式' })
+  @Length(36, 36, { message: 'session长度为36位' })
+  session: string;
+}
+
 export class BPostRegister extends BPostLogin {
   @IsString({ message: '昵称需要为字符串格式' })
   @Length(2, 16, { message: '昵称长度在2~20个字符之间' })

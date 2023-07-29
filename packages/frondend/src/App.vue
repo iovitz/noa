@@ -1,10 +1,19 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app'
-import { isLoggedIn } from '@/utils/auth'
-import { longChain } from './io/ws/ws'
+import { longChain } from '@/io/ws/ws'
+import { getSession } from '@/utils/storage'
+import { RouterGaide } from './utils/router'
+import logger from './utils/logger'
 
-onLaunch(() => {
-  if (isLoggedIn()) {
+uni.addInterceptor('navigateTo', {
+  // 页面跳转前进行拦截, invoke根据返回值进行判断是否继续执行跳转
+  invoke: ({ url }) => RouterGaide(url),
+})
+
+onLaunch((e) => {
+  if (!e) return
+  RouterGaide(e.path)
+  if (getSession()) {
     longChain.connect()
   }
 })
@@ -30,3 +39,4 @@ page {
     Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;
 }
 </style>
+./utils/router

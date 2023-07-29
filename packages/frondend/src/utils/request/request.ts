@@ -86,8 +86,25 @@ class ShortChain {
     return this.request('GET', url, data, header) as Promise<Response<T>>
   }
 
+  createPostLickRequest<T>(
+    method: UniNamespace.RequestOptions['method'],
+    url: string,
+    data: unknown,
+    header: Header = {}
+  ) {
+    return this.request(method, url, data, header) as Promise<Response<T>>
+  }
+
   public post<T = unknown>(url: string, data: any = {}, header: Header = {}) {
-    return this.request('POST', url, data, header) as Promise<Response<T>>
+    return this.createPostLickRequest<T>('POST', url, data, header)
+  }
+
+  public put<T = unknown>(url: string, data: any = {}, header: Header = {}) {
+    return this.createPostLickRequest<T>('PUT', url, data, header)
+  }
+
+  public delete<T = unknown>(url: string, data: any = {}, header: Header = {}) {
+    return this.createPostLickRequest<T>('DELETE', url, data, header)
   }
 }
 

@@ -23,7 +23,7 @@
     </scroll-view>
 
     <view class="bottom-btn" v-if="props.showButton">
-      <button class="send-btn" type="123123" @tap="handleButtonClick">
+      <button class="send-btn" type="primary" @tap="handleButtonClick">
         {{ props.buttonText }}
       </button>
     </view>

@@ -1,5 +1,5 @@
 import logger from '@/utils/logger'
-import { storage } from '@/utils/storage/storage'
+import { storage } from '@/utils/storage'
 import { Socket, io } from '@hyoga/uni-socket.io'
 
 interface EventItem {
@@ -43,6 +43,7 @@ class LongChain {
     //监听断线
     this.connection.on('connect_error', (error: any) => {
       if (error.type === 'TransportError') {
+        storage.remove('session')
         throw new Error('Authenticate Fail')
       }
       this.isConnected = false

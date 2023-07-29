@@ -24,7 +24,7 @@ import { registerRules } from '@/common/rules/login'
 import { rRegister } from '@/io/http/user'
 import { useUserStore } from '@/store/user.store'
 import logger from '@/utils/logger'
-import { storage } from '@/utils/storage/storage'
+import { storage } from '@/utils/storage'
 import { ref, reactive } from 'vue'
 
 const userStore = useUserStore()

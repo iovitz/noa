@@ -34,6 +34,74 @@ export class UserService {
     return await bcrypt.compare(password, hash);
   }
 
+  async findUserByUsername(username: string) {
+    return this.prismaService.user.findFirst({
+      where: {
+        username,
+      },
+      select: {
+        userid: true,
+        nickname: true,
+        username: true,
+        password: true,
+        avatar: true,
+      },
+    });
+  }
+
+  async findUserByUserId(userid: string) {
+    return this.prismaService.user.findFirst({
+      where: {
+        userid,
+      },
+      select: {
+        userid: true,
+        nickname: true,
+        username: true,
+        password: true,
+        avatar: true,
+      },
+    });
+  }
+
+  async createUser(
+    userid: string,
+    nickname: string,
+    username: string,
+    password: string,
+  ) {
+    return this.prismaService.$transaction([
+      this.prismaService.user.create({
+        data: {
+          userid: userid,
+          nickname,
+          username,
+          password: await this.encryptPassword(password),
+        },
+
+        select: {
+          userid: true,
+          nickname: true,
+          username: true,
+          avatar: true,
+        },
+      }),
+      this.prismaService.userProfile.create({
+        data: {
+          userid,
+        },
+      }),
+    ]);
+  }
+
+  deleteSession(session: string) {
+    return this.prismaService.session.delete({
+      where: {
+        session,
+      },
+    });
+  }
+
   async generateSession(userid: string) {
     const session = uuidv4();
     const expires = moment(new Date()).add(1, 'month').valueOf().toString();

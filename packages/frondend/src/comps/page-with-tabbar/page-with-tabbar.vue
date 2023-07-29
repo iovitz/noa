@@ -33,7 +33,11 @@
     </uni-nav-bar>
   </view>
 
-  <scroll-view scroll-y="true" :style="`height: ${swiperHeight}px`" @scrolltolower="handleLoadMore">
+  <scroll-view
+    :scroll-y="true"
+    :style="`height: ${swiperHeight}px`"
+    @scrolltolower="handleLoadMore"
+  >
     <!-- 页面内容 -->
     <slot name="default" />
   </scroll-view>
@@ -95,10 +99,9 @@ export default defineComponent({
   },
   methods: {
     openUserAside() {
-      const userAsideRef: any = this.$refs.userAside
-      userAsideRef?.open()
-      const headerMenuRef: any = this.$refs.headerMenu
-      headerMenuRef?.close()
+      uni.navigateTo({
+        url: '/pages/menu/menu',
+      })
     },
     goFindPage() {
       const headerMenuRef: any = this.$refs.headerMenu
