@@ -3,24 +3,25 @@ import * as bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import * as moment from 'moment-timezone';
 import { PrismaService } from 'src/global/prisma/prisma.service';
+import { UtilsService } from 'src/global/utils/utils.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UserService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(
+    private prismaService: PrismaService,
+    private utilsService: UtilsService,
+  ) {}
 
-  async genUserId(digit = 10) {
-    const str = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    let userid = '1';
-    for (let i = 0; i < digit - 1; i++) {
-      const id = Math.floor(Math.random() * 10);
-      userid += str[id];
-    }
+  async genUserId() {
+    // userid以u开头
+    const userid = this.utilsService.genId('u', 9);
     const existsUser = await this.prismaService.user.findFirst({
       where: {
         userid,
       },
     });
-    if (existsUser) return await this.genUserId(digit);
+    if (existsUser) return await this.genUserId();
     return userid;
   }
 
@@ -34,51 +35,26 @@ export class UserService {
     return await bcrypt.compare(password, hash);
   }
 
-  async findUserByUsername(username: string) {
-    return this.prismaService.user.findFirst({
-      where: {
-        username,
-      },
-      select: {
-        userid: true,
-        nickname: true,
-        username: true,
-        password: true,
-        avatar: true,
-      },
-    });
-  }
-
-  async findUserByUserId(userid: string) {
-    return this.prismaService.user.findFirst({
-      where: {
-        userid,
-      },
-      select: {
-        userid: true,
-        nickname: true,
-        username: true,
-        password: true,
-        avatar: true,
-      },
-    });
-  }
-
-  async createUser(
-    userid: string,
-    nickname: string,
-    username: string,
-    password: string,
+  async findUser(
+    where: Prisma.UserWhereInput,
+    select: Prisma.UserSelect = {
+      userid: true,
+      nickname: true,
+      username: true,
+      password: true,
+      avatar: true,
+    },
   ) {
+    return this.prismaService.user.findFirst({
+      where,
+      select: select,
+    });
+  }
+
+  async createUser(data: Prisma.UserCreateInput) {
     return this.prismaService.$transaction([
       this.prismaService.user.create({
-        data: {
-          userid: userid,
-          nickname,
-          username,
-          password: await this.encryptPassword(password),
-        },
-
+        data,
         select: {
           userid: true,
           nickname: true,
@@ -88,7 +64,7 @@ export class UserService {
       }),
       this.prismaService.userProfile.create({
         data: {
-          userid,
+          userid: data.userid,
         },
       }),
     ]);

@@ -7,7 +7,7 @@ import {
   IsOptional,
 } from 'class-validator';
 
-export class BPostLogin {
+export class LoginDTO {
   @IsString({ message: '用户名需要为字符串格式' })
   @Length(6, 16, { message: '用户名长度在6~16位之间' })
   @Matches(/^[0-9a-zA-Z_]*$/, {
@@ -23,26 +23,26 @@ export class BPostLogin {
   password: string;
 }
 
-export class BDeleteLogout {
+export class LogOutDTO {
   @IsString({ message: 'session需要为字符串格式' })
   @Length(36, 36, { message: 'session长度为36位' })
   session: string;
 }
 
-export class BPostRegister extends BPostLogin {
+export class RegisterDTO extends LoginDTO {
   @IsString({ message: '昵称需要为字符串格式' })
   @Length(2, 16, { message: '昵称长度在2~20个字符之间' })
   nickname: string;
 }
 
-export class PGetUser {
+export class UserParamsDTO {
   @Matches(/^\d{10}$/, {
     message: 'userid格式错误',
   })
   userid: string;
 }
 
-export class BPutUser {
+export class ModifyUserDTO {
   @IsOptional()
   @IsString({ message: '头像url需要为字符串格式' })
   @Length(0, 100, { message: '头像url长度在100个字符以内' })
@@ -54,9 +54,9 @@ export class BPutUser {
   nickname?: string;
 }
 
-export class PGetProfile extends PGetUser {}
+export class GetProfileDTO extends UserParamsDTO {}
 
-export class PPostProfile {
+export class ModifyProfileDTO {
   @IsOptional()
   @Max(1)
   @Min(0)

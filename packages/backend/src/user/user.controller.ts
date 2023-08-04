@@ -15,13 +15,11 @@ import {
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { PrismaService } from 'src/global/prisma/prisma.service';
 import {
-  PGetUser,
-  BPostLogin,
-  BPostRegister,
-  BPutUser,
-  PGetProfile,
-  PPostProfile,
-  BDeleteLogout,
+  UserParamsDTO,
+  LoginDTO,
+  RegisterDTO,
+  ModifyUserDTO,
+  LogOutDTO,
 } from './user.dto';
 
 @Controller('user')
@@ -40,9 +38,9 @@ export class UserController {
   }
 
   @Post('/login')
-  async login(@Body() body: BPostLogin) {
+  async login(@Body() body: LoginDTO) {
     const { username, password } = body;
-    const user = await this.userService.findUserByUsername(username);
+    const user = await this.userService.findUser({ username });
 
     if (user) {
       const res = await this.userService.comparePassword(
@@ -65,34 +63,36 @@ export class UserController {
   }
 
   @Delete('/logout')
-  async logout(@Body() body: BDeleteLogout) {
+  async logout(@Body() body: LogOutDTO) {
     const { session } = body;
     await this.userService.deleteSession(session);
     return 'Logout Success!';
   }
 
   @Post('/register')
-  async register(@Body() body: BPostRegister) {
+  async register(@Body() body: RegisterDTO) {
     const { nickname, username, password } = body;
-    const existsUser = await this.userService.findUserByUsername(username);
+    const existsUser = await this.userService.findUser({
+      username,
+    });
 
     if (existsUser) {
       throw new HttpException('用户名已存在', HttpStatus.BAD_REQUEST);
     }
 
-    const userid = await this.userService.genUserId(10);
+    const userid = await this.userService.genUserId();
 
     console.log(userid);
     this.logger.log('generate user id', {
       userid,
     });
 
-    const [user] = await this.userService.createUser(
+    const [user] = await this.userService.createUser({
       userid,
       nickname,
       username,
       password,
-    );
+    });
 
     const { session } = await this.userService.generateSession(user.userid);
 
@@ -106,22 +106,16 @@ export class UserController {
   }
 
   @Get('/:userid')
-  async getUser(@Param() { userid }: PGetUser) {
-    const userInfo = await this.prismaService.user.findFirst({
-      where: {
-        userid,
-      },
-      select: {
-        userid: true,
-        avatar: true,
-        nickname: true,
-      },
-    });
+  async getUser(@Param() { userid }: UserParamsDTO) {
+    const userInfo = await this.userService.findUser({ userid });
     return userInfo;
   }
 
   @Put('/:userid')
-  async putUser(@Param() { userid }: PGetUser, @Body() { avatar }: BPutUser) {
+  async modifyUser(
+    @Param() { userid }: UserParamsDTO,
+    @Body() { avatar }: ModifyUserDTO,
+  ) {
     if (!avatar) {
       return;
     }
@@ -136,43 +130,6 @@ export class UserController {
         userid: true,
         avatar: true,
         nickname: true,
-      },
-    });
-    return userInfo;
-  }
-
-  @Get('/profile/:userid')
-  async getProfile(@Param() { userid }: PGetProfile) {
-    const userInfo = await this.prismaService.userProfile.findFirst({
-      where: {
-        userid,
-      },
-      select: {
-        userid: true,
-        email: true,
-        gender: true,
-        phone: true,
-        address: true,
-      },
-    });
-    return userInfo;
-  }
-
-  @Put('/profile/:userid')
-  async putProfile(
-    @Param() { userid }: PGetProfile,
-    @Body() body: PPostProfile,
-  ) {
-    const userInfo = await this.prismaService.userProfile.findFirst({
-      where: {
-        userid,
-      },
-      select: {
-        userid: true,
-        email: true,
-        gender: true,
-        phone: true,
-        address: true,
       },
     });
     return userInfo;

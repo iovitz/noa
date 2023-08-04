@@ -35,6 +35,7 @@ onHide(() => {
 page {
   height: 100%;
   background-color: #f5f5f5;
+  color: #757575;
   font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei,
     Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;
 }

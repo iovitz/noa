@@ -59,7 +59,7 @@ const handleButtonClick = () => {
 .common-page-wrapper {
   height: 100%;
   width: 100%;
-  background-color: #fff;
+  background-color: inherit;
   padding-bottom: 100upx;
   box-sizing: border-box;
   position: relative;

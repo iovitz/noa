@@ -59,6 +59,13 @@
       }
     },
     {
+      "path": "pages/new_group/new_group",
+      "style": {
+        "navigationStyle": "custom",
+        "animationDuration": 500
+      }
+    },
+    {
       "path": "pages/notice/notice",
       "style": {
         "navigationBarTitleText": "通知",
