@@ -39,13 +39,13 @@ export class Wsv1Gateway
   }
 
   @SubscribeMessage('events')
-  handleEvent(client: Socket, data: string): string {
+  async handleEvent(client: Socket, data: string) {
     this.logger.verbose('sss');
     return data;
   }
 
   @SubscribeMessage('hello')
-  handleMessage(client: Socket, payload: string): void {
+  async handleMessage(client: Socket, payload: string) {
     this.logger.log(payload, '说hello');
 
     client.emit('hello', 'server hello payload');
