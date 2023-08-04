@@ -8,18 +8,18 @@ datasource db {
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
-model Post {
+model Moment {
   id        Int      @id @default(autoincrement())
-  title     String   @db.VarChar(255)
-  content   String?
+  content   String   @db.Text()
   published Boolean  @default(false)
   authorId  Int      @db.UnsignedInt()
+  medias     String   @db.Text()
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   author User @relation(fields: [authorId], references: [id])
 
-  @@map("post")
+  @@map("moment")
 }
 
 model UserProfile {
@@ -48,7 +48,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   profile    UserProfile?
-  posts      Post[]
+  moments    Moment[]
   Session    Session[]
   GroupUser  GroupUser[]
   UserNotice UserNotice[]

@@ -3,7 +3,6 @@ import {
   PipeTransform,
   ArgumentMetadata,
   ValidationError,
-  HttpStatus,
   LoggerService,
 } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
@@ -29,7 +28,6 @@ export class ValidationPipe implements PipeTransform {
     }
     const object = plainToClass(metatype, value);
     const errors = await validate(object);
-    this.logger.log('错误', JSON.stringify(errors));
     const errorList: string[] = [];
     const errObjList: ValidationError[] = [...errors];
 
