@@ -74,7 +74,7 @@ class ShortChain {
         logger.error('请求失败', resData)
         uni.showToast({
           icon: 'error',
-          title: data.message,
+          title: data.message ?? '网络或服务器错误',
         })
         throw res
       }
