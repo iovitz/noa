@@ -7,12 +7,11 @@ export class MomentsService {
   constructor(private prismaService: PrismaService) {}
 
   async createMoment(data: PublishMomentDTO) {
-    return this.prismaService.moment.create({
-      data: {
-        content: data.content,
-      },
-
-      select: {},
-    });
+    // return this.prismaService.moment.create({
+    //   data: {
+    //     content: data.content,
+    //   },
+    //   select: {},
+    // });
   }
 }
