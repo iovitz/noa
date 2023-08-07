@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-import { rLogout } from '@/io/http/user'
+import { rLogout } from '@/io/http/auth'
 import { useUserStore } from '@/store/user.store'
 import { getSession, storage } from '@/utils/storage'
 import { computed, ref } from 'vue'
@@ -82,3 +82,4 @@ const handleLogoutConfirm = async () => {
   }
 }
 </style>
+@/io/http/auth

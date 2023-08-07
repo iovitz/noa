@@ -1,4 +1,4 @@
-import { rLogin, rRegister } from '@/io/http/user'
+import { rLogin, rRegister } from '@/io/http/auth'
 import { longChain } from '@/io/ws/ws'
 import logger from '@/utils/logger'
 import { storage } from '@/utils/storage'

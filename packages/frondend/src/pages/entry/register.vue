@@ -21,7 +21,7 @@
 
 <script lang="ts" setup>
 import { registerRules } from '@/common/rules/login'
-import { rRegister } from '@/io/http/user'
+import { rRegister } from '@/io/http/auth'
 import { useUserStore } from '@/store/user.store'
 import logger from '@/utils/logger'
 import { storage } from '@/utils/storage'
@@ -53,3 +53,4 @@ const handleSubmit = async () => {
   margin-bottom: 100upx;
 }
 </style>
+@/io/http/auth

@@ -84,15 +84,3 @@ import { PrismaService } from '../prisma/prisma.service';
   ],
 })
 export class LoggerModule {}
-
-function ensureContentSize(content: unknown, maxLength: number) {
-  let str = '';
-  if (!content) return '';
-  if (typeof content !== 'string') {
-    str = JSON.stringify(content);
-  }
-  if (str.length > maxLength) {
-    return str.slice(0, maxLength);
-  }
-  return str;
-}

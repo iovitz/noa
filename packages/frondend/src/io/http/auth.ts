@@ -7,7 +7,7 @@ export const rLogin = (username: string, password: string) =>
     session: string
     userid: string
     username: string
-  }>(`/user/login`, {
+  }>(`/auth/login`, {
     username,
     password,
   })
@@ -19,18 +19,13 @@ export const rRegister = (nickname: string, username: string, password: string) 
     session: string
     userid: string
     username: string
-  }>(`/user/register`, {
+  }>(`/auth/register`, {
     nickname,
     username,
     password,
   })
 
 export const rLogout = (session: string) =>
-  commonRequest.delete<any>(`/user/logout`, {
+  commonRequest.delete<any>(`/auth/logout`, {
     session,
-  })
-
-export const rFind = (content: string) =>
-  commonRequest.post<any>(`/user/find`, {
-    content,
   })

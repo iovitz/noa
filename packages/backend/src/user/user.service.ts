@@ -1,10 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
-import { v4 as uuidv4 } from 'uuid';
-import * as moment from 'moment-timezone';
 import { PrismaService } from 'src/global/prisma/prisma.service';
 import { UtilsService } from 'src/global/utils/utils.service';
-import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -12,90 +8,4 @@ export class UserService {
     private prismaService: PrismaService,
     private utilsService: UtilsService,
   ) {}
-
-  async genUserId() {
-    // userid以u开头
-    const userid = this.utilsService.genId('u', 9);
-    const existsUser = await this.prismaService.user.findFirst({
-      where: {
-        userid,
-      },
-    });
-    if (existsUser) return await this.genUserId();
-    return userid;
-  }
-
-  async encryptPassword(password: string) {
-    const salt = await bcrypt.genSalt(10);
-    const pass = await bcrypt.hash(password, salt);
-    return pass;
-  }
-
-  async comparePassword(password: string, hash: string) {
-    return await bcrypt.compare(password, hash);
-  }
-
-  async findUser(
-    where: Prisma.UserWhereInput,
-    select: Prisma.UserSelect = {
-      userid: true,
-      nickname: true,
-      username: true,
-      password: true,
-      avatar: true,
-    },
-  ) {
-    return this.prismaService.user.findFirst({
-      where,
-      select: select,
-    });
-  }
-
-  async createUser(data: Prisma.UserCreateInput) {
-    return this.prismaService.$transaction([
-      this.prismaService.user.create({
-        data: {
-          ...data,
-          password: await this.encryptPassword(data.password),
-        },
-        select: {
-          userid: true,
-          nickname: true,
-          username: true,
-          avatar: true,
-        },
-      }),
-      this.prismaService.userProfile.create({
-        data: {
-          userid: data.userid,
-        },
-      }),
-    ]);
-  }
-
-  deleteSession(session: string) {
-    return this.prismaService.session.delete({
-      where: {
-        session,
-      },
-    });
-  }
-
-  async generateSession(userid: string) {
-    const session = uuidv4();
-    const expires = moment(new Date()).add(1, 'month').valueOf().toString();
-
-    // 保存session
-    await this.prismaService.session.create({
-      data: {
-        session: session,
-        userid: userid,
-        expires,
-      },
-    });
-    return {
-      session,
-      expires,
-    };
-  }
 }

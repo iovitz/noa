@@ -2,25 +2,15 @@ import { UserService } from './user.service';
 import {
   Body,
   Controller,
-  Delete,
   Get,
-  HttpException,
-  HttpStatus,
   Inject,
   LoggerService,
   Param,
-  Post,
   Put,
 } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { PrismaService } from 'src/global/prisma/prisma.service';
-import {
-  UserParamsDTO,
-  LoginDTO,
-  RegisterDTO,
-  ModifyUserDTO,
-  LogOutDTO,
-} from './user.dto';
+import { UserParamsDTO, ModifyUserDTO } from './user.dto';
 
 @Controller('user')
 export class UserController {
@@ -31,84 +21,11 @@ export class UserController {
     private readonly logger: LoggerService,
   ) {}
 
-  @Get('/test')
-  async getTest() {
-    this.logger.error(123, '123123');
-    return 'hello';
-  }
-
-  @Post('/login')
-  async login(@Body() body: LoginDTO) {
-    const { username, password } = body;
-    const user = await this.userService.findUser({ username });
-
-    if (user) {
-      const res = await this.userService.comparePassword(
-        password,
-        user.password,
-      );
-      if (res) {
-        const { session } = await this.userService.generateSession(user.userid);
-        return {
-          userid: user.userid,
-          session,
-          username: user.username,
-          nickname: user.nickname,
-          avatar: user.avatar,
-        };
-      }
-    }
-
-    throw new HttpException('用户名或密码错误', HttpStatus.BAD_REQUEST);
-  }
-
-  @Delete('/logout')
-  async logout(@Body() body: LogOutDTO) {
-    const { session } = body;
-    await this.userService.deleteSession(session);
-    return 'Logout Success!';
-  }
-
-  @Post('/register')
-  async register(@Body() body: RegisterDTO) {
-    const { nickname, username, password } = body;
-    const existsUser = await this.userService.findUser({
-      username,
-    });
-
-    if (existsUser) {
-      throw new HttpException('用户名已存在', HttpStatus.BAD_REQUEST);
-    }
-
-    const userid = await this.userService.genUserId();
-
-    console.log(userid);
-    this.logger.log('generate user id', {
-      userid,
-    });
-
-    const [user] = await this.userService.createUser({
-      userid,
-      nickname,
-      username,
-      password,
-    });
-
-    const { session } = await this.userService.generateSession(user.userid);
-
-    return {
-      userid: user.userid,
-      session,
-      avatar: user.avatar,
-      username: user.username,
-      nickname: user.nickname,
-    };
-  }
-
   @Get('/:userid')
   async getUser(@Param() { userid }: UserParamsDTO) {
-    const userInfo = await this.userService.findUser({ userid });
-    return userInfo;
+    // const userInfo = await this.userService.findUser({ userid });
+    // return userInfo;
+    return '';
   }
 
   @Put('/:userid')

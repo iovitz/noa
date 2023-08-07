@@ -42,10 +42,6 @@ class LongChain {
 
     //监听断线
     this.connection.on('connect_error', (error: any) => {
-      if (error.type === 'TransportError') {
-        storage.remove('session')
-        throw new Error('Authenticate Fail')
-      }
       this.isConnected = false
     })
 
