@@ -64,7 +64,7 @@ class ShortChain {
         header: {
           ...header,
           ...requestHeader,
-          authorization: storage.get('token'),
+          authorization: storage.get('session'),
           ['x-tt-logid']: this.genLogId(),
         },
       })

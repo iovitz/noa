@@ -1,8 +1,7 @@
 import * as NestjsCommonType from '@nestjs/common';
 import { LoggerService as NestLoggerService } from '@nestjs/common';
-import { Logger } from 'winston';
+export { Request } from 'express';
 
-Logger;
 declare namespace NodeJS {
   interface ProcessEnv {
     [key: string]: string | undefined;
@@ -24,6 +23,14 @@ declare module '@nestjs/common' {
 }
 declare module 'http' {
   interface IncomingMessage {
+    userid?: string;
+  }
+}
+
+// 全局类型
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface ExpressRequest extends Request {
     userid?: string;
   }
 }

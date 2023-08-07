@@ -6,6 +6,7 @@ import {
   LoggerService,
   Param,
   Post,
+  Request,
 } from '@nestjs/common';
 import { PublishMomentDTO } from './moment.dto';
 import { MomentsService } from './moments.service';
@@ -19,9 +20,12 @@ export class MomentsController {
     private readonly logger: LoggerService,
   ) {}
 
-  @Get('/:page')
-  getMomentsByPage(@Param('page') page: string) {
-    return page;
+  @Get('/p/:page')
+  getMomentsByPage(
+    @Param('page') page: string,
+    @Request() req: ExpressRequest,
+  ) {
+    return req.userid;
   }
 
   @Post('/publish')

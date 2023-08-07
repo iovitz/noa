@@ -6,14 +6,13 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { ResponseInterceptor } from './interceptor/response.interceptor';
 import { HttpExceptionFilter } from './exceptors/http.exceptor';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
-import 'winston-daily-rotate-file';
 import { AllErrorExceptionFilter } from './exceptors/all.exceptor';
 import { ValidationPipe } from './pipes/validation.pipe';
 import { LoggerService } from '@nestjs/common';
-import * as moment from 'moment-timezone';
 import { ParamsExceptionFilter } from './exceptors/validator.exceptor';
 import { SocketIoAdapter } from './adaptors/socket.io.adaptor';
 import { PrismaService } from './global/prisma/prisma.service';
+import * as moment from 'moment-timezone';
 moment.tz.setDefault('Asia/Shanghai');
 
 const prisma = new PrismaClient();

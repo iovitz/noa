@@ -19,7 +19,7 @@
       }
     },
     {
-      "path": "pages/discover/discover",
+      "path": "pages/moment/moment",
       "style": {
         "navigationStyle": "custom"
       }
@@ -120,7 +120,7 @@
         "text": "好友"
       },
       {
-        "pagePath": "pages/discover/discover",
+        "pagePath": "pages/moment/moment",
         "iconPath": "static/tabbar-icons/my.png",
         "selectedIconPath": "static/tabbar-icons/my_fill.png",
         "text": "空间"

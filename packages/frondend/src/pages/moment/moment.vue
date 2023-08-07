@@ -10,6 +10,7 @@
 <script lang="ts">
 import NewsCard from '@/comps/news-card/news-card.vue'
 import pageWithTabbar from '@/comps/page-with-tabbar/page-with-tabbar.vue'
+import { rGetMoment } from '@/io/http/moment'
 import { defineComponent } from 'vue'
 import logger from '@/utils/logger'
 
@@ -38,6 +39,7 @@ export default defineComponent({
     })
   },
   mounted() {
+    rGetMoment(1)
     uni.getSystemInfo({
       success: (res) => {
         this.swiperHeight = res.windowHeight

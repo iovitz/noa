@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { WinstonModule, utilities } from 'nest-winston';
 import { format, transports } from 'winston';
 import { PrismaService } from '../prisma/prisma.service';
+import 'winston-daily-rotate-file';
 
 @Module({
   imports: [

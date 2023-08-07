@@ -4,6 +4,7 @@ import { longChain } from '@/io/ws/ws'
 import { getSession } from '@/utils/storage'
 import { RouterGaide } from './utils/router'
 import logger from './utils/logger'
+import { rGetMoment } from './io/http/moment'
 
 uni.addInterceptor('navigateTo', {
   // 页面跳转前进行拦截, invoke根据返回值进行判断是否继续执行跳转
