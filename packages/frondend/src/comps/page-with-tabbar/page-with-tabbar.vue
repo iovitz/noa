@@ -49,7 +49,7 @@
         <uni-icons type="personadd" />
         添加好友
       </view>
-      <view>
+      <view @tap="goCreatGroup">
         <uni-icons type="plusempty" />
         创建群聊
       </view>
@@ -108,6 +108,13 @@ export default defineComponent({
       headerMenuRef?.close()
       uni.navigateTo({
         url: '/pages/find/find',
+      })
+    },
+    goCreatGroup() {
+      const headerMenuRef: any = this.$refs.headerMenu
+      headerMenuRef?.close()
+      uni.navigateTo({
+        url: '/pages/new_group/new_group',
       })
     },
     handleOpenHeaderMenu() {
