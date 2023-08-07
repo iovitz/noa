@@ -108,8 +108,15 @@ class ShortChain {
   }
 }
 
+let baseURL = import.meta.env.VITE_API_PREFIX
+// #ifdef  APP-PLUS
+baseURL = import.meta.env.VITE_BASE_URL + import.meta.env.VITE_API_PREFIX
+// #endif
+
+console.log(baseURL)
+
 export const commonRequest = new ShortChain({
-  baseURL: import.meta.env.VITE_BASE_URL,
+  baseURL,
   timeout: 60000,
   header: {},
 })

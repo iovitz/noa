@@ -29,11 +29,13 @@
 
   <uni-popup ref="sectionRef" type="dialog">
     <uni-popup-dialog
-      mode="input"
-      message="成功消息"
-      :duration="2000"
-      :before-close="true"
+      type="info"
+      cancelText="取消"
+      confirmText="确认"
+      title="请确认"
+      content="请确认是否要登出哈聊社区"
       @confirm="handleLogoutConfirm"
+      @close="dialogClose"
     ></uni-popup-dialog>
   </uni-popup>
 </template>
@@ -73,6 +75,9 @@ const handleLogoutConfirm = async () => {
       url: '/pages/entry/entry',
     })
   }, 1000)
+}
+const dialogClose = () => {
+  sectionRef.value?.close()
 }
 </script>
 

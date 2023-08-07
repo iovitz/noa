@@ -19,6 +19,8 @@ class LongChain {
   connect() {
     if (this.isConnected) return
     const { url, path } = this
+    logger.error('链接IO', storage.get('session'))
+    console.log(url)
     this.connection = io(url, {
       path: path,
       query: {
@@ -80,7 +82,4 @@ class LongChain {
   }
 }
 
-export const longChain = new LongChain(
-  import.meta.env.VITE_WS_COMMON_URL,
-  import.meta.env.VITE_WS_COMMON_PATH
-)
+export const longChain = new LongChain(import.meta.env.VITE_WS_URL, import.meta.env.VITE_WS_PATH)

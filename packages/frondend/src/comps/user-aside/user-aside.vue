@@ -26,16 +26,6 @@
       </uni-group>
     </uni-list>
   </view>
-
-  <uni-popup ref="sectionRef">
-    <uni-popup-dialog
-      mode="input"
-      message="成功消息"
-      :duration="2000"
-      :before-close="true"
-      @confirm="handleLogoutConfirm"
-    ></uni-popup-dialog>
-  </uni-popup>
 </template>
 
 <script lang="ts" setup>
@@ -59,10 +49,8 @@ const handleLogout = () => {
 
 const handleLogoutConfirm = async () => {
   const session = getSession()
-  if (!session) return
-  rLogout(session)
   storage.remove('session')
-  sectionRef.value.close()
+  sectionRef.value?.close()
   uni.showToast({
     icon: 'success',
     title: '退出登录成功',
@@ -73,6 +61,8 @@ const handleLogoutConfirm = async () => {
       url: '/pages/entry/entry',
     })
   }, 1000)
+  if (!session) return
+  rLogout(session)
 }
 </script>
 

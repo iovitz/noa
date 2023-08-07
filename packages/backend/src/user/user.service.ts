@@ -54,7 +54,10 @@ export class UserService {
   async createUser(data: Prisma.UserCreateInput) {
     return this.prismaService.$transaction([
       this.prismaService.user.create({
-        data,
+        data: {
+          ...data,
+          password: await this.encryptPassword(data.password),
+        },
         select: {
           userid: true,
           nickname: true,

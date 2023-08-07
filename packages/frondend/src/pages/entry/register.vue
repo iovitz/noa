@@ -40,11 +40,6 @@ const formData = reactive({
 const handleSubmit = async () => {
   const { nickname, username, password } = await formRef.value.validate()
   await userStore.register(nickname, username, password)
-  setTimeout(() => {
-    uni.switchTab({
-      url: '/pages/message/message',
-    })
-  }, 1000)
 }
 </script>
 

@@ -44,8 +44,15 @@ export const useUserStore = defineStore<'user', UserStore, {}, UserAction>('user
           userid: data.userid,
         })
         logger.verbose('登录成功', data)
+        console.log(data.session)
+        console.log(data)
         storage.syncSet('session', data.session)
         longChain.connect()
+        setTimeout(() => {
+          uni.switchTab({
+            url: '/pages/message/message',
+          })
+        }, 1000)
       }
     },
 
@@ -66,6 +73,11 @@ export const useUserStore = defineStore<'user', UserStore, {}, UserAction>('user
         logger.verbose('注册成功', data)
         storage.syncSet('session', data.session)
         longChain.connect()
+        setTimeout(() => {
+          uni.switchTab({
+            url: '/pages/message/message',
+          })
+        }, 1000)
       }
     },
   },

@@ -12,6 +12,7 @@
   </view>
 
   <button type="primary" @tap="handleSubmit">登录</button>
+  <button type="primary" class="mt-4" @tap="handleTestLogin">测试账号登录</button>
 </template>
 
 <script lang="ts" setup>
@@ -30,11 +31,10 @@ const formData = reactive({
 const handleSubmit = async () => {
   const res = await sectionRef.value.validate()
   await userStore.login(res.username, res.password)
-  setTimeout(() => {
-    uni.switchTab({
-      url: '/pages/message/message',
-    })
-  }, 1000)
+}
+
+const handleTestLogin = async () => {
+  await userStore.login('tester1', '123123')
 }
 </script>
 

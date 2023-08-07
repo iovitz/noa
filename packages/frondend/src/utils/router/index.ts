@@ -9,6 +9,7 @@ export function RouterGaide(url: string) {
   }
   const session = getSession()
   if (!session) {
+    logger.error('找不到Session，跳转登录页..')
     uni.reLaunch({
       url: '/pages/entry/entry',
     })

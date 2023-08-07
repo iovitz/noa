@@ -43,7 +43,7 @@ async function bootstrap() {
   // DEVELOP情况下允许跨院
 
   app.enableCors({
-    origin: ['localhost:5173'],
+    origin: ['127.0.0.1:5173'],
   });
 
   await prisma.$disconnect();
@@ -51,7 +51,7 @@ async function bootstrap() {
   app.setGlobalPrefix(configService.get('API_GLOBAL_PREFIX'));
   const appPort = parseInt(configService.get('APP_PORT')) || 11000;
   await app.listen(appPort);
-  logger.log(`Server running in http://localhost:${appPort}`, 'bootstrap');
+  logger.log(`Server running in http://127.0.0.1:${appPort}`, 'bootstrap');
 }
 
 bootstrap();

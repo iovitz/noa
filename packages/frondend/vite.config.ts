@@ -19,7 +19,7 @@ export default {
     proxy: {
       '/api': {
         // 本地开发
-        target: 'http://localhost:8061',
+        target: 'http://127.0.0.1:8061',
         changeOrigin: true,
       },
     },
