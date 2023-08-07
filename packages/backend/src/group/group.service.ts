@@ -10,12 +10,12 @@ export class GroupService {
     private utilsService: UtilsService,
   ) {}
 
-  async newUserId() {
+  async newGroupId() {
     const groupid = this.utilsService.genId('g', 9);
     const existsGroup = await this.findGroup({
       groupid,
     });
-    if (existsGroup) return this.newUserId();
+    if (existsGroup) return this.newGroupId();
     return groupid;
   }
 
@@ -26,12 +26,15 @@ export class GroupService {
   }
 
   async createGroup(name: string) {
-    return this.prismaService.group.create({
-      data: {
-        name,
-        groupid: await this.newUserId(),
-      },
-    });
+    return this.prismaService.$transaction([
+      this.prismaService.group.create({
+        data: {
+          name,
+          groupid: await this.newGroupId(),
+        },
+      }),
+      // this.prismaService.groupUser.create({}),
+    ]);
   }
 
   async createGroupUser(groupid, userid) {
