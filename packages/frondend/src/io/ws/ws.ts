@@ -19,8 +19,6 @@ class LongChain {
   connect() {
     if (this.isConnected) return
     const { url, path } = this
-    logger.error('链接IO', storage.get('session'))
-    console.log(url)
     this.connection = io(url, {
       path: path,
       query: {

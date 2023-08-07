@@ -35,7 +35,6 @@ class Storage {
    */
   public get<T = any>(key: string): T | null {
     const val = uni.getStorageSync(key)
-    console.error('###', val, typeof val)
     if (val) {
       try {
         return JSON.parse(val) as T
