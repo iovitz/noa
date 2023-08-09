@@ -10,6 +10,7 @@ interface RequestConfig {
 }
 
 interface Response<T = any> {
+[x: string]: any
   code: number
   data: T
   message: string

@@ -7,6 +7,10 @@ import {
   IsOptional,
 } from 'class-validator';
 
+export class FindUserDTO {
+  contains: string;
+}
+
 export class UserParamsDTO {
   @Matches(/^u\d{9}$/)
   userid: string;

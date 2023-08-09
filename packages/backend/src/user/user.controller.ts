@@ -6,11 +6,12 @@ import {
   Inject,
   LoggerService,
   Param,
+  Post,
   Put,
 } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { PrismaService } from 'src/global/prisma/prisma.service';
-import { UserParamsDTO, ModifyUserDTO } from './user.dto';
+import { UserParamsDTO, ModifyUserDTO, FindUserDTO } from './user.dto';
 
 @Controller('user')
 export class UserController {
@@ -21,14 +22,19 @@ export class UserController {
     private readonly logger: LoggerService,
   ) {}
 
-  @Get('/:userid')
+  @Post('/find')
+  async findUser(@Body() { contains }: FindUserDTO) {
+    return this.userService.findUser(contains);
+  }
+
+  @Get('/u/:userid')
   async getUser(@Param() { userid }: UserParamsDTO) {
     // const userInfo = await this.userService.findUser({ userid });
     // return userInfo;
     return '';
   }
 
-  @Put('/:userid')
+  @Put('/u/:userid')
   async modifyUser(
     @Param() { userid }: UserParamsDTO,
     @Body() { avatar }: ModifyUserDTO,

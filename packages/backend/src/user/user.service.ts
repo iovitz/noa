@@ -8,4 +8,28 @@ export class UserService {
     private prismaService: PrismaService,
     private utilsService: UtilsService,
   ) {}
+
+  async findUser(contains: string) {
+    return this.prismaService.user.findMany({
+      where: {
+        OR: [
+          {
+            userid: {
+              contains,
+            },
+          },
+          {
+            nickname: {
+              contains,
+            },
+          },
+        ],
+      },
+      select: {
+        nickname: true,
+        userid: true,
+        avatar: true,
+      },
+    });
+  }
 }

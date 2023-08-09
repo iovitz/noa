@@ -17,15 +17,18 @@
       v-model="searchValue"
       placeholder="输入HaHa号或昵称"
       cancelButton="true"
+      @confirm="handleFindUserOrGroup"
     >
     </uni-search-bar>
     <uni-group title="用户" top="20">
       <uni-list-chat
-        title="不锈钢盆"
+        :title="nickname"
         @tap="handleOpenUserHome"
         clickable
         :avatar-list="avatarList"
-        note="256899231"
+        :note="userid"
+        v-for="{ nickname, userid } in userSearchResult"
+        :key="userid"
       />
     </uni-group>
     <uni-group title="群聊" top="20">
@@ -33,10 +36,14 @@
     </uni-group>
 
     <view class="search-result-list">
-      <view class="search-user-item" v-for="{ nickname, username } in searchResult" :key="username">
+      <view
+        class="search-user-item"
+        v-for="{ nickname, userid } in groupSearchResult"
+        :key="userid"
+      >
         <view class="user-info">
           <h3>昵称：{{ nickname }}</h3>
-          <p>id: {{ username }}</p>
+          <p>id: {{ userid }}</p>
         </view>
         <button size="mini">查看</button>
       </view>
@@ -45,14 +52,22 @@
 </template>
 
 <script lang="ts" setup>
+import { rFindUser } from '@/io/http/user'
 import { ref } from 'vue'
 
 const searchValue = ref('')
-const searchResult = ref<
+const userSearchResult = ref<
   {
-    username: number
     nickname: string
-    avatar: ''
+    userid: string
+    avatar: string
+  }[]
+>([])
+const groupSearchResult = ref<
+  {
+    nickname: string
+    userid: string
+    avatar: string
   }[]
 >([])
 
@@ -64,6 +79,19 @@ const avatarList = ref([
 
 const handleBackup = () => {
   uni.navigateBack()
+}
+
+const handleFindUserOrGroup = async () => {
+  const res = await rFindUser(searchValue.value)
+  if (res.code === 0) {
+    userSearchResult.value = res.data.map((user) => {
+      return {
+        nickname: user.nickname,
+        userid: user.userid,
+        avatar: user.avatar,
+      }
+    })
+  }
 }
 
 const handleOpenUserHome = (id: number) => {
