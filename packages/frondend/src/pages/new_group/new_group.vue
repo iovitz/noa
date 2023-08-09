@@ -21,12 +21,23 @@
 
 <script lang="ts" setup>
 import CommonPageWrapper from '@/comps/common-page-wrapper/common-page-wrapper.vue'
+import { rCreateGroup } from '@/io/http/group'
 import { ref } from 'vue'
 
 const groupName = ref('')
 
 const buttonClick = () => {
-  console.log('创建群组')
+  rCreateGroup(groupName.value, '').then((res) => {
+    if (res.code === 0) {
+      uni.showToast({
+        icon: 'success',
+        title: '创建群组成功',
+        duration: 1000,
+      })
+    }
+    groupName.value = ''
+    uni.navigateBack()
+  })
 }
 </script>
 

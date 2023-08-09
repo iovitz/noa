@@ -15,7 +15,7 @@ export class GroupService {
     const existsGroup = await this.findGroup({
       groupid,
     });
-    if (existsGroup) return this.newGroupId();
+    if (existsGroup) return await this.newGroupId();
     return groupid;
   }
 
@@ -25,15 +25,21 @@ export class GroupService {
     });
   }
 
-  async createGroup(name: string) {
+  async createGroup(name: string, creatUserId: string) {
+    const groupid = await this.newGroupId();
     return this.prismaService.$transaction([
       this.prismaService.group.create({
         data: {
           name,
-          groupid: await this.newGroupId(),
+          groupid,
         },
       }),
-      // this.prismaService.groupUser.create({}),
+      this.prismaService.groupUser.create({
+        data: {
+          groupid: groupid,
+          userid: creatUserId,
+        },
+      }),
     ]);
   }
 
