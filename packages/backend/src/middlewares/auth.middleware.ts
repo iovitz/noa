@@ -27,7 +27,7 @@ export class AuthMiddleware implements NestMiddleware {
         session: clientSession,
       },
     });
-    if (!sessionItem) {
+    if (!sessionItem || Number(sessionItem.expires) < Date.now()) {
       throw new UnauthorizedException('Invalid Session');
     }
     req.userid = sessionItem.userid;
