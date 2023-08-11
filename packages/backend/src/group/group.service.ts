@@ -12,19 +12,23 @@ export class GroupService {
 
   async newGroupId() {
     const groupid = this.utilsService.genId('g', 9);
-    const existsGroup = await this.findGroup({
-      groupid,
+    const existsGroup = await this.prismaService.group.findFirst({
+      where: {
+        groupid,
+      },
     });
     if (existsGroup) return await this.newGroupId();
     return groupid;
   }
 
-  findGroup(where: Prisma.GroupWhereInput) {
+  findGroup(where: Prisma.GroupWhereInput, page: number, size: number) {
     return this.prismaService.group.findMany({
       where,
       orderBy: {
-        name: 'desc',
+        name: 'asc',
       },
+      skip: (page - 1) * size,
+      take: size,
     });
   }
 

@@ -17,21 +17,24 @@ export class GroupController {
   }
 
   @Post('/search')
-  async searchGroup(@Body() body: SearchGroupDTO) {
-    const { contains } = body;
-    return this.groupService.findGroup({
-      OR: [
-        {
-          groupid: {
-            contains,
+  async searchGroup(@Body() { contains, page = 1, size = 10 }: SearchGroupDTO) {
+    return this.groupService.findGroup(
+      {
+        OR: [
+          {
+            groupid: {
+              contains,
+            },
           },
-        },
-        {
-          name: {
-            contains,
+          {
+            name: {
+              contains,
+            },
           },
-        },
-      ],
-    });
+        ],
+      },
+      page,
+      size,
+    );
   }
 }

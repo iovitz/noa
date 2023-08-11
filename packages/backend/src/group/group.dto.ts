@@ -1,4 +1,5 @@
 import { IsString, Length } from 'class-validator';
+import { PagingDTO } from 'src/common/dto';
 
 export class CreateGroupDTO {
   @IsString()
@@ -10,7 +11,7 @@ export class CreateGroupDTO {
   avatar?: string;
 }
 
-export class SearchGroupDTO {
+export class SearchGroupDTO extends PagingDTO {
   @IsString()
   @Length(0, 20)
   contains: string;
