@@ -6,8 +6,10 @@ import {
   Min,
   IsOptional,
 } from 'class-validator';
+import { PagingDTO } from 'src/common/dto';
 
-export class FindUserDTO {
+export class SearchUserDTO extends PagingDTO {
+  @Length(0, 20)
   contains: string;
 }
 

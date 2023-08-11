@@ -32,27 +32,21 @@
       />
     </uni-group>
     <uni-group title="群聊" top="20">
-      <uni-list-chat title="不锈钢盆" clickable :avatar-list="avatarList" note="256899231" />
+      <uni-list-chat
+        :title="name"
+        v-for="{ name, groupid } in groupSearchResult"
+        :key="groupid"
+        clickable
+        :avatar-list="avatarList"
+        :note="groupid"
+      />
     </uni-group>
-
-    <view class="search-result-list">
-      <view
-        class="search-user-item"
-        v-for="{ nickname, userid } in groupSearchResult"
-        :key="userid"
-      >
-        <view class="user-info">
-          <h3>昵称：{{ nickname }}</h3>
-          <p>id: {{ userid }}</p>
-        </view>
-        <button size="mini">查看</button>
-      </view>
-    </view>
   </view>
 </template>
 
 <script lang="ts" setup>
-import { rFindUser } from '@/io/http/user'
+import { rSearchGroup } from '@/io/http/group'
+import { rSearchUser } from '@/io/http/user'
 import { ref } from 'vue'
 
 const searchValue = ref('')
@@ -65,9 +59,9 @@ const userSearchResult = ref<
 >([])
 const groupSearchResult = ref<
   {
-    nickname: string
-    userid: string
-    avatar: string
+    name: string
+    groupid: string
+    avatar?: string
   }[]
 >([])
 
@@ -82,16 +76,16 @@ const handleBackup = () => {
 }
 
 const handleFindUserOrGroup = async () => {
-  const res = await rFindUser(searchValue.value)
-  if (res.code === 0) {
-    userSearchResult.value = res.data.map((user) => {
-      return {
-        nickname: user.nickname,
-        userid: user.userid,
-        avatar: user.avatar,
-      }
-    })
-  }
+  const findUsers = await rSearchUser(searchValue.value)
+  const findGroups = await rSearchGroup(searchValue.value)
+  userSearchResult.value = findUsers.data.map((user) => {
+    return {
+      nickname: user.nickname,
+      userid: user.userid,
+      avatar: user.avatar,
+    }
+  })
+  groupSearchResult.value = findGroups.data
 }
 
 const handleOpenUserHome = (id: number) => {

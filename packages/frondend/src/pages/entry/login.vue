@@ -34,7 +34,7 @@ const handleSubmit = async () => {
 }
 
 const handleTestLogin = async () => {
-  await userStore.login('tester1', '123123')
+  await userStore.login('tester', 'tester')
 }
 </script>
 

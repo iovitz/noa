@@ -1,12 +1,12 @@
 import { commonRequest } from '@/utils/request/request'
 
-export const rFindUser = (contains: string) =>
+export const rSearchUser = (contains: string) =>
   commonRequest.post<
     {
       userid: string
       nickname: string
       avatar: ''
     }[]
-  >(`/user/find`, {
+  >(`/user/search`, {
     contains,
   })

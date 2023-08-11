@@ -8,10 +8,11 @@ import {
   Param,
   Post,
   Put,
+  Request,
 } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { PrismaService } from 'src/global/prisma/prisma.service';
-import { UserParamsDTO, ModifyUserDTO, FindUserDTO } from './user.dto';
+import { UserParamsDTO, ModifyUserDTO, SearchUserDTO } from './user.dto';
 
 @Controller('user')
 export class UserController {
@@ -22,16 +23,52 @@ export class UserController {
     private readonly logger: LoggerService,
   ) {}
 
-  @Post('/find')
-  async findUser(@Body() { contains }: FindUserDTO) {
-    return this.userService.findUser(contains);
+  @Post('/search')
+  async searchUser(
+    @Body() { contains, page = 1, take = 10 }: SearchUserDTO,
+    @Request() req: ExpressRequest,
+  ) {
+    return await this.userService.findUsers(
+      {
+        OR: [
+          {
+            userid: {
+              contains,
+            },
+          },
+          {
+            nickname: {
+              contains,
+            },
+          },
+        ],
+        NOT: {
+          userid: req.userid,
+        },
+      },
+      page,
+      take,
+    );
   }
 
   @Get('/u/:userid')
-  async getUser(@Param() { userid }: UserParamsDTO) {
-    // const userInfo = await this.userService.findUser({ userid });
-    // return userInfo;
-    return '';
+  async getUser(
+    @Param() { userid }: UserParamsDTO,
+    @Request() req: ExpressRequest,
+  ) {
+    return await this.prismaService.user.findFirst({
+      where: {
+        userid,
+        NOT: {
+          userid,
+        },
+      },
+      select: {
+        userid: true,
+        avatar: true,
+        nickname: true,
+      },
+    });
   }
 
   @Put('/u/:userid')

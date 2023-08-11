@@ -1,3 +1,4 @@
+import { error } from 'console'
 import logger from '../logger'
 import { storage } from '../storage/storage'
 import { ip2int } from '@hahachat/common'
@@ -10,7 +11,7 @@ interface RequestConfig {
 }
 
 interface Response<T = any> {
-[x: string]: any
+  [x: string]: any
   code: number
   data: T
   message: string
@@ -69,17 +70,27 @@ class ShortChain {
           ['x-tt-logid']: this.genLogId(),
         },
       })
-    }).then((res: UniApp.RequestSuccessCallbackResult) => {
-      const resData = res.data as any
-      if (resData.code !== 0) {
-        logger.error('请求失败', resData)
-        uni.showToast({
-          icon: 'error',
-          title: data.message ?? '网络或服务器错误',
-        })
-        throw res
+    }).then(({ data, statusCode }: UniApp.RequestSuccessCallbackResult) => {
+      const res = data as {
+        data?: unknown
+        message: string
       }
-      return res.data
+      if (statusCode < 400) {
+        return res
+      }
+      switch (statusCode) {
+        case 401:
+          storage.remove('session')
+          uni.reLaunch({
+            url: '/pages/entry/entry',
+          })
+          const title = res.message || '认证已经过期'
+          uni.showToast({
+            title: title,
+            icon: 'error',
+          })
+          return Promise.reject(res)
+      }
     })
   }
 
