@@ -20,8 +20,11 @@ export class GroupService {
   }
 
   findGroup(where: Prisma.GroupWhereInput) {
-    return this.prismaService.group.findFirst({
+    return this.prismaService.group.findMany({
       where,
+      orderBy: {
+        name: 'desc',
+      },
     });
   }
 

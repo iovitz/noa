@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
-import { ParamsException } from 'src/constans/errors';
+import { ParamsException } from 'src/common/errors';
 
 /**
  * 这是一个全局的参数验证管道，基于class-transformer
