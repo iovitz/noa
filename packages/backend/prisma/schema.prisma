@@ -52,6 +52,7 @@ model User {
   Session    Session[]
   GroupUser  GroupUser[]
   UserNotice UserNotice[]
+  Apply      Apply[]
 
   @@map("user")
 }
@@ -81,6 +82,20 @@ model GroupUser {
   user  User  @relation(fields: [userid], references: [userid], onDelete: Cascade)
 
   @@map("group_user")
+}
+
+model Apply {
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt()
+  userid    String   @db.Char(10)
+  type      String   @db.Char(50)
+  from      String   @db.Char(10)
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userid], references: [userid], onDelete: Cascade)
+
+  @@map("apply")
 }
 
 // 用户通知消息
