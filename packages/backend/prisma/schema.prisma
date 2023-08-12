@@ -37,6 +37,19 @@ model UserProfile {
   @@map("user_profile")
 }
 
+model Friend {
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt()
+  userid    String   @db.Char(10)
+  friendid  String   @db.Char(10)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User @relation("friends", fields: [userid], references: [userid], onDelete: Cascade)
+  friend User @relation("friend", fields: [friendid], references: [userid], onDelete: Cascade)
+
+  @@map("friend")
+}
+
 model User {
   id        Int      @id @default(autoincrement()) @db.UnsignedInt()
   userid    String   @unique @db.Char(10)
@@ -53,6 +66,8 @@ model User {
   groupUser  GroupUser[]
   userNotice UserNotice[]
   apply      Apply[]
+  friends    Friend[]     @relation("friends")
+  friend     Friend[]     @relation("friend")
 
   @@map("user")
 }
