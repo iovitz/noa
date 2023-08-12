@@ -11,7 +11,7 @@ export class GroupService {
   ) {}
 
   async newGroupId() {
-    const groupid = this.utilsService.genId('g', 9);
+    const groupid = this.utilsService.genId('g', 10);
     const existsGroup = await this.prismaService.group.findFirst({
       where: {
         groupid,

@@ -60,14 +60,23 @@ export class UserController {
     return await this.prismaService.user.findFirst({
       where: {
         userid,
-        NOT: {
-          userid,
-        },
       },
       select: {
         userid: true,
         avatar: true,
         nickname: true,
+        profile: {
+          select: {
+            gender: true,
+            birth: true,
+            desc: true,
+          },
+        },
+        apply: {
+          where: {
+            user,
+          },
+        },
       },
     });
   }

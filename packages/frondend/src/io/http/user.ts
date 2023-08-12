@@ -10,3 +10,15 @@ export const rSearchUser = (contains: string) =>
   >(`/user/search`, {
     contains,
   })
+
+export const rGetUserInfo = (userid: string) =>
+  commonRequest.get<{
+    userid: string
+    avatar?: string
+    nickname: string
+    profile: {
+      gender?: number
+      birth?: number
+      desc?: string
+    }
+  }>(`/user/u/${userid}`)

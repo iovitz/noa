@@ -23,14 +23,14 @@ model Moment {
 }
 
 model UserProfile {
-  id        Int      @id @default(autoincrement()) @db.UnsignedInt()
-  userid    String?  @unique @db.Char(10)
+  id        Int       @id @default(autoincrement()) @db.UnsignedInt()
+  userid    String?   @unique @db.Char(10)
+  desc      String?   @db.Char(100)
   gender    Boolean?
-  email     String?  @db.Char(30)
-  phone     String?  @db.Char(20)
-  address   String?  @db.Char(100)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  birth     DateTime? @db.Date
+  address   String?   @db.Char(100)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   user User? @relation(fields: [userid], references: [userid], onDelete: Cascade)
 
@@ -49,10 +49,10 @@ model User {
 
   profile    UserProfile?
   moments    Moment[]
-  Session    Session[]
-  GroupUser  GroupUser[]
-  UserNotice UserNotice[]
-  Apply      Apply[]
+  session    Session[]
+  groupUser  GroupUser[]
+  userNotice UserNotice[]
+  apply      Apply[]
 
   @@map("user")
 }
@@ -121,7 +121,7 @@ model Session {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  User User? @relation(fields: [userid], references: [userid], onDelete: Cascade)
+  user User? @relation(fields: [userid], references: [userid], onDelete: Cascade)
 
   @@map("session")
 }

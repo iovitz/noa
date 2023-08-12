@@ -25,7 +25,7 @@
       <template v-if="userSearchResult.length > 0">
         <uni-list-chat
           :title="nickname"
-          @tap="handleOpenUserHome"
+          @tap="() => handleOpenUserHome(userid)"
           clickable
           :avatar-list="avatarList"
           :note="userid"
@@ -96,9 +96,9 @@ const handleFindUserOrGroup = async () => {
   groupSearchResult.value = findGroups.data
 }
 
-const handleOpenUserHome = (id: number) => {
+const handleOpenUserHome = (userid: string) => {
   uni.navigateTo({
-    url: '/pages/home/home?userid=',
+    url: `/pages/home/home?userid=${userid}`,
   })
 }
 </script>
