@@ -18,28 +18,35 @@
       placeholder="输入HaHa号或昵称"
       cancelButton="true"
       @confirm="handleFindUserOrGroup"
+      :maxlength="20"
     >
     </uni-search-bar>
     <uni-group title="用户" top="20">
-      <uni-list-chat
-        :title="nickname"
-        @tap="handleOpenUserHome"
-        clickable
-        :avatar-list="avatarList"
-        :note="userid"
-        v-for="{ nickname, userid } in userSearchResult"
-        :key="userid"
-      />
+      <template v-if="userSearchResult.length > 0">
+        <uni-list-chat
+          :title="nickname"
+          @tap="handleOpenUserHome"
+          clickable
+          :avatar-list="avatarList"
+          :note="userid"
+          v-for="{ nickname, userid } in userSearchResult"
+          :key="userid"
+        />
+      </template>
+      <view v-else class="search-place-holder"> 暂无符合条件的用户 </view>
     </uni-group>
     <uni-group title="群聊" top="20">
-      <uni-list-chat
-        :title="name"
-        v-for="{ name, groupid } in groupSearchResult"
-        :key="groupid"
-        clickable
-        :avatar-list="avatarList"
-        :note="groupid"
-      />
+      <template v-if="groupSearchResult.length > 0">
+        <uni-list-chat
+          :title="name"
+          v-for="{ name, groupid } in groupSearchResult"
+          :key="groupid"
+          clickable
+          :avatar-list="avatarList"
+          :note="groupid"
+        />
+      </template>
+      <view v-else class="search-place-holder"> 暂无符合条件的用户 </view>
     </uni-group>
   </view>
 </template>
@@ -76,6 +83,7 @@ const handleBackup = () => {
 }
 
 const handleFindUserOrGroup = async () => {
+  if (!searchValue.value) return
   const findUsers = await rSearchUser(searchValue.value)
   const findGroups = await rSearchGroup(searchValue.value)
   userSearchResult.value = findUsers.data.map((user) => {
@@ -110,5 +118,13 @@ const handleOpenUserHome = (id: number) => {
   .user-info {
     flex: 1;
   }
+}
+.search-place-holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20upx;
+  font-size: 24upx;
+  color: #999;
 }
 </style>

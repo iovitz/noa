@@ -28,6 +28,7 @@ export class UserController {
     @Body() { contains, page = 1, take = 10 }: SearchUserDTO,
     @Request() req: ExpressRequest,
   ) {
+    if (!contains) return [];
     return await this.userService.findUsers(
       {
         OR: [
