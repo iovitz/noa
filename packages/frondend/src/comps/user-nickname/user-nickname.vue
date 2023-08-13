@@ -1,5 +1,5 @@
 <template>
-  <view class="empty-status-wrapper"> 内容为空 </view>
+  <view> 内容为空 </view>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'

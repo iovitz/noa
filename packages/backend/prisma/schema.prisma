@@ -65,9 +65,9 @@ model User {
   session    Session[]
   groupUser  GroupUser[]
   userNotice UserNotice[]
-  apply      Apply[]
-  friends    Friend[]     @relation("friends")
-  friend     Friend[]     @relation("friend")
+  request    UserRequest[]
+  friends    Friend[]      @relation("friends")
+  friend     Friend[]      @relation("friend")
 
   @@map("user")
 }
@@ -99,18 +99,19 @@ model GroupUser {
   @@map("group_user")
 }
 
-model Apply {
-  id        Int      @id @default(autoincrement()) @db.UnsignedInt()
-  userid    String   @db.Char(10)
-  type      String   @db.Char(50)
-  from      String   @db.Char(10)
-  read      Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model UserRequest {
+  id        Int         @id @default(autoincrement()) @db.UnsignedInt()
+  userid    String      @db.Char(10)
+  type      RequestType
+  from      String      @db.Char(10)
+  reason    String      @db.Char(50)
+  agree     Boolean     @default(false)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 
   user User @relation(fields: [userid], references: [userid], onDelete: Cascade)
 
-  @@map("apply")
+  @@map("friend_request")
 }
 
 // 用户通知消息
@@ -165,4 +166,9 @@ model ClientLog {
   createdAt DateTime @default(now())
 
   @@map("client_log")
+}
+
+enum RequestType {
+  Friend
+  Group
 }

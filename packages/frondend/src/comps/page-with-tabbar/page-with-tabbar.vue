@@ -66,7 +66,7 @@
 import { defineComponent } from 'vue'
 import UserAside from '@/comps/user-aside/user-aside.vue'
 import logger from '@/utils/logger'
-import { useUserStore } from '@/store/user.store'
+import { useAuthStore } from '@/store'
 import { computed } from 'vue'
 
 export default defineComponent({
@@ -133,10 +133,10 @@ export default defineComponent({
     },
   },
   setup() {
-    const userStore = useUserStore()
+    const authStore = useAuthStore()
     const userInfo = computed(() => {
       return {
-        nickname: userStore.nickname,
+        nickname: authStore.nickname,
       }
     })
     return {
@@ -168,3 +168,4 @@ export default defineComponent({
   }
 }
 </style>
+@/store

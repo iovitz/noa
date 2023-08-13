@@ -32,12 +32,12 @@
 </template>
 
 <script lang="ts" setup>
-import { useUserStore } from '@/store/user.store'
+import { useAuthStore } from '@/store'
 import { computed, reactive } from 'vue'
 
-const userStore = useUserStore()
+const authStore = useAuthStore()
 
-const nickname = computed(() => userStore.nickname)
+const nickname = computed(() => authStore.nickname)
 
 const userData = reactive([
   {
@@ -115,3 +115,4 @@ const optionsList = reactive([
   }
 }
 </style>
+@/store

@@ -5,15 +5,31 @@
     :buttonClick="buttonClick"
     :show-button="true"
   >
-    <avatar-header :nickname="nickname" :desc="`HAHA号：${hahaNumber}`"></avatar-header>
+    <avatar-header
+      :nickname="userinfo.nickname || '...'"
+      :desc="`HAHA号：${hahaNumber}`"
+    ></avatar-header>
 
     <view class="user-info">
       <uni-group type="card" title="签名">
-        <uni-list-item showArrow :border="false" clickable :title="signature" />
+        <uni-list-item
+          showArrow
+          :border="false"
+          clickable
+          :title="userinfo.profile?.desc || '这个人很懒，什么也没留下'"
+        />
       </uni-group>
       <uni-group type="card" title="个人信息">
-        <uni-list-item :border="false" title="年龄" :rightText="age" />
-        <uni-list-item :border="false" title="生日" :rightText="birth" />
+        <uni-list-item
+          :border="false"
+          title="年龄"
+          :rightText="userinfo.profile?.birth || '保密'"
+        />
+        <uni-list-item
+          :border="false"
+          title="生日"
+          :rightText="userinfo.profile?.birth || '保密'"
+        />
       </uni-group>
     </view>
     <uni-group type="card" title="空间动态">
@@ -23,20 +39,26 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import CommonPageWrapper from '@/comps/common-page-wrapper/common-page-wrapper.vue'
 import logger from '@/utils/logger'
 import AvatarHeader from '@/comps/avatar-header/avatar-header.vue'
 import { onLoad } from '@dcloudio/uni-app'
-import { rGetUserInfo } from '@/io/http/user'
+import { useUserStore } from '@/store'
 
-const isFriends = ref(false)
-const nickname = ref('...')
-const signature = ref('...')
+const userStore = useUserStore()
+
 const hahaNumber = ref('...')
-const age = ref('保密')
-const birth = ref('保密')
-const address = ref('保密')
+const isFriends = ref(false)
+const userinfo = ref<{
+  nickname?: string
+  avatar?: string
+  profile?: {
+    birth?: string
+    desc?: string
+    gender?: string
+  }
+}>({})
 
 const buttonClick = () => {
   if (isFriends.value) {
@@ -47,18 +69,24 @@ const buttonClick = () => {
     })
   }
 }
+
+watch([hahaNumber, userStore.userinfo], () => {
+  const userid = hahaNumber.value
+  const storeInfo = userStore.userinfo
+  if (!storeInfo || !storeInfo[userid]) {
+    return
+  }
+  userinfo.value = storeInfo[userid]
+})
+
 onLoad(async (options) => {
   const userid = options?.userid
   if (!userid) {
     uni.navigateBack()
     return
   }
-  const { data } = await rGetUserInfo(userid)
-  nickname.value = data.nickname
-  hahaNumber.value = data.userid
-  signature.value = data.profile?.desc || '这个用户很有趣，什么都没留下'
-  birth.value = `${data.profile.birth || '保密'}`
-  age.value = `${14}`
+  await userStore.fetchUserInfo([userid], true)
+  hahaNumber.value = userid
 })
 </script>
 

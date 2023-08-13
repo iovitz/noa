@@ -12,7 +12,13 @@ import {
 } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { PrismaService } from 'src/global/prisma/prisma.service';
-import { UserParamsDTO, ModifyUserDTO, SearchUserDTO } from './user.dto';
+import {
+  UserParamsDTO,
+  ModifyUserDTO,
+  SearchUserDTO,
+  FriendRequestDTO,
+  FetchUserInfoDTO,
+} from './user.dto';
 
 @Controller('user')
 export class UserController {
@@ -52,33 +58,36 @@ export class UserController {
     );
   }
 
-  @Get('/u/:userid')
-  async getUser(
-    @Param() { userid }: UserParamsDTO,
-    @Request() req: ExpressRequest,
-  ) {
-    return await this.prismaService.user.findFirst({
+  @Post('/info')
+  async fetchUserInfo(@Body() { userids, profile }: FetchUserInfoDTO) {
+    if (!userids.length) return [];
+    const res = await this.prismaService.user.findMany({
       where: {
-        userid,
+        userid: {
+          in: userids,
+        },
       },
       select: {
         userid: true,
         avatar: true,
         nickname: true,
-        profile: {
+        profile: profile && {
           select: {
             gender: true,
             birth: true,
             desc: true,
           },
         },
-        apply: {
-          where: {
-            user,
-          },
-        },
       },
     });
+    return res.reduce((prev, { userid, nickname, avatar, profile }) => {
+      prev[userid] = {
+        nickname,
+        avatar,
+        profile,
+      };
+      return prev;
+    }, {});
   }
 
   @Put('/u/:userid')
@@ -103,5 +112,21 @@ export class UserController {
       },
     });
     return userInfo;
+  }
+
+  @Post('/friend_request')
+  async friendRequest(
+    @Body() { friendId, reason = '' }: FriendRequestDTO,
+    @Request() req: ExpressRequest,
+  ) {
+    const userid = req.userid;
+    return this.prismaService.userRequest.create({
+      data: {
+        userid: friendId,
+        type: 'Friend',
+        reason,
+        from: userid,
+      },
+    });
   }
 }
