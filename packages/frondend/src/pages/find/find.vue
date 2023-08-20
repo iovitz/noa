@@ -84,8 +84,13 @@ const handleBackup = () => {
 
 const handleFindUserOrGroup = async () => {
   if (!searchValue.value) return
+  uni.showLoading({
+    title: '正在查询中',
+    mask: true,
+  })
   const findUsers = await rSearchUser(searchValue.value)
   const findGroups = await rSearchGroup(searchValue.value)
+  uni.hideLoading()
   userSearchResult.value = findUsers.data.map((user) => {
     return {
       nickname: user.nickname,

@@ -85,7 +85,12 @@ onLoad(async (options) => {
     uni.navigateBack()
     return
   }
+  uni.showLoading({
+    title: '正在加载用户信息',
+    mask: true,
+  })
   await userStore.fetchUserInfo([userid], true)
+  uni.hideLoading()
   hahaNumber.value = userid
 })
 </script>
