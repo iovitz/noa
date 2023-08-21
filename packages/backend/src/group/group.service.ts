@@ -21,14 +21,19 @@ export class GroupService {
     return groupid;
   }
 
-  findGroup(where: Prisma.GroupWhereInput, page: number, size: number) {
+  findGroup(where: Prisma.GroupWhereInput, page: number, take: number) {
     return this.prismaService.group.findMany({
       where,
       orderBy: {
         name: 'asc',
       },
-      skip: (page - 1) * size,
-      take: size,
+      select: {
+        avatar: true,
+        name: true,
+        groupid: true,
+      },
+      skip: (page - 1) * take,
+      take: take,
     });
   }
 

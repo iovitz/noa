@@ -5,16 +5,31 @@
     :buttonClick="buttonClick"
     :show-button="true"
   >
-    <avatar-header nickname="不锈钢盆" desc="HAHA号: 256899231"></avatar-header>
+    <avatar-header
+      :nickname="userinfo.nickname || '...'"
+      :desc="`HAHA号：${hahaNumber}`"
+    ></avatar-header>
 
     <view class="user-info">
       <uni-group type="card" title="签名">
-        <uni-list-item showArrow :border="false" clickable title="老子明天不上班" />
+        <uni-list-item
+          showArrow
+          :border="false"
+          clickable
+          :title="userinfo.profile?.desc || '这个人很懒，什么也没留下'"
+        />
       </uni-group>
       <uni-group type="card" title="个人信息">
-        <uni-list-item :border="false" title="年龄" rightText="18" />
-        <uni-list-item :border="false" title="生日" rightText="12月19日" />
-        <uni-list-item :border="false" title="现居" rightText="广东深圳" />
+        <uni-list-item
+          :border="false"
+          title="年龄"
+          :rightText="userinfo.profile?.birth || '保密'"
+        />
+        <uni-list-item
+          :border="false"
+          title="生日"
+          :rightText="userinfo.profile?.birth || '保密'"
+        />
       </uni-group>
     </view>
     <uni-group type="card" title="空间动态">
@@ -24,12 +39,26 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import CommonPageWrapper from '@/comps/common-page-wrapper/common-page-wrapper.vue'
 import logger from '@/utils/logger'
 import AvatarHeader from '@/comps/avatar-header/avatar-header.vue'
+import { onLoad } from '@dcloudio/uni-app'
+import { useUserStore } from '@/store'
 
+const userStore = useUserStore()
+
+const hahaNumber = ref('...')
 const isFriends = ref(false)
+const userinfo = ref<{
+  nickname?: string
+  avatar?: string
+  profile?: {
+    birth?: string
+    desc?: string
+    gender?: string
+  }
+}>({})
 
 const buttonClick = () => {
   if (isFriends.value) {
@@ -40,6 +69,30 @@ const buttonClick = () => {
     })
   }
 }
+
+watch([hahaNumber, userStore.userinfo], () => {
+  const userid = hahaNumber.value
+  const storeInfo = userStore.userinfo
+  if (!storeInfo || !storeInfo[userid]) {
+    return
+  }
+  userinfo.value = storeInfo[userid]
+})
+
+onLoad(async (options) => {
+  const userid = options?.userid
+  if (!userid) {
+    uni.navigateBack()
+    return
+  }
+  uni.showLoading({
+    title: '正在加载用户信息',
+    mask: true,
+  })
+  await userStore.fetchUserInfo([userid], true)
+  uni.hideLoading()
+  hahaNumber.value = userid
+})
 </script>
 
 <style lang="scss" scoped></style>

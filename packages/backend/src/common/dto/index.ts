@@ -10,5 +10,5 @@ export class PagingDTO {
   @IsInt()
   @Min(1)
   @Max(50)
-  size?: number;
+  take?: number;
 }

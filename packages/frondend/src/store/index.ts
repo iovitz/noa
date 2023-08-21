@@ -1,5 +1,7 @@
 import { createPinia } from 'pinia'
 import { createPersistedState } from 'pinia-plugin-persistedstate'
+export * from './auth.store'
+export * from './user.store'
 
 export const pinia = createPinia()
 
@@ -17,3 +19,4 @@ pinia.use(
     },
   })
 )
+;(window as any).pinia = pinia

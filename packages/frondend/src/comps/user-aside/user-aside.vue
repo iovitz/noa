@@ -30,15 +30,15 @@
 
 <script lang="ts" setup>
 import { rLogout } from '@/io/http/auth'
-import { useUserStore } from '@/store/user.store'
+import { useAuthStore } from '@/store'
 import { getSession, storage } from '@/utils/storage'
 import { computed, ref } from 'vue'
 
-const userStore = useUserStore()
+const authStore = useAuthStore()
 
 const userInfo = computed(() => {
   return {
-    nickname: userStore.nickname,
+    nickname: authStore.nickname,
   }
 })
 
@@ -82,4 +82,4 @@ const handleLogoutConfirm = async () => {
   }
 }
 </style>
-@/io/http/auth
+@/io/http/auth @/store

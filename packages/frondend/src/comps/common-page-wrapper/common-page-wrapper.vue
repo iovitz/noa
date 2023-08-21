@@ -63,6 +63,7 @@ const handleButtonClick = () => {
   padding-bottom: 100upx;
   box-sizing: border-box;
   position: relative;
+  background-color: #fff;
 }
 .bottom-btn {
   position: absolute;

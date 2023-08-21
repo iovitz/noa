@@ -22,12 +22,12 @@
 <script lang="ts" setup>
 import { registerRules } from '@/common/rules/login'
 import { rRegister } from '@/io/http/auth'
-import { useUserStore } from '@/store/user.store'
+import { useAuthStore } from '@/store'
 import logger from '@/utils/logger'
 import { storage } from '@/utils/storage'
 import { ref, reactive } from 'vue'
 
-const userStore = useUserStore()
+const authStore = useAuthStore()
 
 const formRef = ref()
 
@@ -39,7 +39,7 @@ const formData = reactive({
 })
 const handleSubmit = async () => {
   const { nickname, username, password } = await formRef.value.validate()
-  await userStore.register(nickname, username, password)
+  await authStore.register(nickname, username, password)
 }
 </script>
 
@@ -53,4 +53,4 @@ const handleSubmit = async () => {
   margin-bottom: 100upx;
 }
 </style>
-@/io/http/auth
+@/io/http/auth @/store

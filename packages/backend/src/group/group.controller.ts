@@ -17,7 +17,8 @@ export class GroupController {
   }
 
   @Post('/search')
-  async searchGroup(@Body() { contains, page = 1, size = 10 }: SearchGroupDTO) {
+  async searchGroup(@Body() { contains, page = 1, take = 10 }: SearchGroupDTO) {
+    if (!contains) return [];
     return this.groupService.findGroup(
       {
         OR: [
@@ -34,7 +35,7 @@ export class GroupController {
         ],
       },
       page,
-      size,
+      take,
     );
   }
 }

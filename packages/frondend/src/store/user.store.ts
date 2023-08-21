@@ -1,84 +1,51 @@
-import { rLogin, rRegister } from '@/io/http/auth'
-import { longChain } from '@/io/ws/ws'
+import { rGetUserInfo } from '@/io/http/user'
 import logger from '@/utils/logger'
-import { storage } from '@/utils/storage'
 import { defineStore } from 'pinia'
 
 interface UserStore {
-  nickname: string
-  username: string
-  avatar: string | null
-  userid: string
+  userinfo: Record<
+    string,
+    {
+      nickname: string
+      avatar?: string
+      profile?: {
+        birth?: string
+        desc?: string
+        gender?: string
+      }
+    }
+  >
 }
-interface UserAction {
-  login: (username: string, password: string) => void
-  register: (nickname: string, username: string, password: string) => void
+interface UserActions {
+  fetchUserInfo: (useridList: string[], profile?: boolean) => void
 }
 
-export const useUserStore = defineStore<'user', UserStore, {}, UserAction>('user', {
+export const useUserStore = defineStore<'user', UserStore, {}, UserActions>('user', {
   persist: {
     key: 'user',
-    paths: ['nickname', 'avatar', 'username', 'userid'],
+    paths: ['userinfo'],
   },
   state: () => {
     return {
-      username: '',
-      nickname: '',
-      avatar: '',
-      userid: '',
+      userinfo: {
+        zs: {
+          nickname: '张三',
+          age: 18,
+        },
+      },
     }
   },
   actions: {
-    async login(username, password) {
-      const { code, data } = await rLogin(username, password)
-      if (code === 0) {
-        uni.showToast({
-          title: '登录成功，正在跳转',
-          duration: 1000,
-          icon: 'success',
-        })
-        this.$patch({
-          username: data.username,
-          nickname: data.nickname,
-          avatar: data.avatar,
-          userid: data.userid,
-        })
-        logger.verbose('登录成功', data)
-        console.log(data.session)
-        console.log(data)
-        storage.syncSet('session', data.session)
-        longChain.connect()
-        setTimeout(() => {
-          uni.switchTab({
-            url: '/pages/message/message',
-          })
-        }, 1000)
-      }
-    },
-
-    async register(nickname, username, password) {
-      const { code, data } = await rRegister(nickname, username, password)
-      if (code === 0) {
-        uni.showToast({
-          title: '注册成功，即将自动登录',
-          duration: 2000,
-          icon: 'success',
-        })
-        this.$patch({
-          username: data.username,
-          nickname: data.nickname,
-          avatar: data.avatar,
-          userid: data.userid,
-        })
-        logger.verbose('注册成功', data)
-        storage.syncSet('session', data.session)
-        longChain.connect()
-        setTimeout(() => {
-          uni.switchTab({
-            url: '/pages/message/message',
-          })
-        }, 1000)
-      }
+    async fetchUserInfo(useridList, profile = false) {
+      const { userinfo } = this
+      logger.verbose('拉取用户信息', useridList)
+      const { data } = await rGetUserInfo(useridList, profile)
+      this.$patch({
+        userinfo: {
+          ...userinfo,
+          ...data,
+        },
+      })
     },
   },
 })

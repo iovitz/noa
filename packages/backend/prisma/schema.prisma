@@ -23,18 +23,31 @@ model Moment {
 }
 
 model UserProfile {
-  id        Int      @id @default(autoincrement()) @db.UnsignedInt()
-  userid    String?  @unique @db.Char(10)
+  id        Int       @id @default(autoincrement()) @db.UnsignedInt()
+  userid    String?   @unique @db.Char(10)
+  desc      String?   @db.Char(100)
   gender    Boolean?
-  email     String?  @db.Char(30)
-  phone     String?  @db.Char(20)
-  address   String?  @db.Char(100)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  birth     DateTime? @db.Date
+  address   String?   @db.Char(100)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   user User? @relation(fields: [userid], references: [userid], onDelete: Cascade)
 
   @@map("user_profile")
+}
+
+model Friend {
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt()
+  userid    String   @db.Char(10)
+  friendid  String   @db.Char(10)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User @relation("friends", fields: [userid], references: [userid], onDelete: Cascade)
+  friend User @relation("friend", fields: [friendid], references: [userid], onDelete: Cascade)
+
+  @@map("friend")
 }
 
 model User {
@@ -49,9 +62,12 @@ model User {
 
   profile    UserProfile?
   moments    Moment[]
-  Session    Session[]
-  GroupUser  GroupUser[]
-  UserNotice UserNotice[]
+  session    Session[]
+  groupUser  GroupUser[]
+  userNotice UserNotice[]
+  request    UserRequest[]
+  friends    Friend[]      @relation("friends")
+  friend     Friend[]      @relation("friend")
 
   @@map("user")
 }
@@ -83,6 +99,21 @@ model GroupUser {
   @@map("group_user")
 }
 
+model UserRequest {
+  id        Int         @id @default(autoincrement()) @db.UnsignedInt()
+  userid    String      @db.Char(10)
+  type      RequestType
+  from      String      @db.Char(10)
+  reason    String      @db.Char(50)
+  agree     Boolean     @default(false)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  user User @relation(fields: [userid], references: [userid], onDelete: Cascade)
+
+  @@map("friend_request")
+}
+
 // 用户通知消息
 model UserNotice {
   id        Int      @id @default(autoincrement()) @db.UnsignedInt()
@@ -106,7 +137,7 @@ model Session {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  User User? @relation(fields: [userid], references: [userid], onDelete: Cascade)
+  user User? @relation(fields: [userid], references: [userid], onDelete: Cascade)
 
   @@map("session")
 }
@@ -135,4 +166,9 @@ model ClientLog {
   createdAt DateTime @default(now())
 
   @@map("client_log")
+}
+
+enum RequestType {
+  Friend
+  Group
 }

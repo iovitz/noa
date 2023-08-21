@@ -17,11 +17,11 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import { useUserStore } from '@/store/user.store'
+import { useAuthStore } from '@/store'
 import { loginRules } from '@/common/rules/login'
 const sectionRef = ref()
 
-const userStore = useUserStore()
+const authStore = useAuthStore()
 
 const formData = reactive({
   username: '',
@@ -30,11 +30,11 @@ const formData = reactive({
 
 const handleSubmit = async () => {
   const res = await sectionRef.value.validate()
-  await userStore.login(res.username, res.password)
+  await authStore.login(res.username, res.password)
 }
 
 const handleTestLogin = async () => {
-  await userStore.login('tester1', '123123')
+  await authStore.login('tester', 'tester')
 }
 </script>
 
@@ -48,3 +48,4 @@ const handleTestLogin = async () => {
   margin-bottom: 100upx;
 }
 </style>
+@/store

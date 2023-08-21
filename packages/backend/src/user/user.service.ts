@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/global/prisma/prisma.service';
 import { UtilsService } from 'src/global/utils/utils.service';
 
@@ -9,26 +10,23 @@ export class UserService {
     private utilsService: UtilsService,
   ) {}
 
-  async findUser(contains: string) {
+  async findUsers(where: Prisma.UserWhereInput, page: number, take: number) {
     return this.prismaService.user.findMany({
-      where: {
-        OR: [
-          {
-            userid: {
-              contains,
-            },
-          },
-          {
-            nickname: {
-              contains,
-            },
-          },
-        ],
-      },
+      where: where,
       select: {
-        nickname: true,
         userid: true,
         avatar: true,
+        nickname: true,
+      },
+      skip: (page - 1) * take,
+      take,
+    });
+  }
+
+  findUser(userid: string) {
+    return this.prismaService.user.findFirst({
+      where: {
+        userid,
       },
     });
   }

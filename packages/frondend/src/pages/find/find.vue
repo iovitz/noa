@@ -18,41 +18,42 @@
       placeholder="输入HaHa号或昵称"
       cancelButton="true"
       @confirm="handleFindUserOrGroup"
+      :maxlength="20"
     >
     </uni-search-bar>
     <uni-group title="用户" top="20">
-      <uni-list-chat
-        :title="nickname"
-        @tap="handleOpenUserHome"
-        clickable
-        :avatar-list="avatarList"
-        :note="userid"
-        v-for="{ nickname, userid } in userSearchResult"
-        :key="userid"
-      />
+      <template v-if="userSearchResult.length > 0">
+        <uni-list-chat
+          :title="nickname"
+          @tap="() => handleOpenUserHome(userid)"
+          clickable
+          :avatar-list="avatarList"
+          :note="userid"
+          v-for="{ nickname, userid } in userSearchResult"
+          :key="userid"
+        />
+      </template>
+      <view v-else class="search-place-holder"> 暂无符合条件的用户 </view>
     </uni-group>
     <uni-group title="群聊" top="20">
-      <uni-list-chat title="不锈钢盆" clickable :avatar-list="avatarList" note="256899231" />
+      <template v-if="groupSearchResult.length > 0">
+        <uni-list-chat
+          :title="name"
+          v-for="{ name, groupid } in groupSearchResult"
+          :key="groupid"
+          clickable
+          :avatar-list="avatarList"
+          :note="groupid"
+        />
+      </template>
+      <view v-else class="search-place-holder"> 暂无符合条件的用户 </view>
     </uni-group>
-
-    <view class="search-result-list">
-      <view
-        class="search-user-item"
-        v-for="{ nickname, userid } in groupSearchResult"
-        :key="userid"
-      >
-        <view class="user-info">
-          <h3>昵称：{{ nickname }}</h3>
-          <p>id: {{ userid }}</p>
-        </view>
-        <button size="mini">查看</button>
-      </view>
-    </view>
   </view>
 </template>
 
 <script lang="ts" setup>
-import { rFindUser } from '@/io/http/user'
+import { rSearchGroup } from '@/io/http/group'
+import { rSearchUser } from '@/io/http/user'
 import { ref } from 'vue'
 
 const searchValue = ref('')
@@ -65,9 +66,9 @@ const userSearchResult = ref<
 >([])
 const groupSearchResult = ref<
   {
-    nickname: string
-    userid: string
-    avatar: string
+    name: string
+    groupid: string
+    avatar?: string
   }[]
 >([])
 
@@ -82,21 +83,27 @@ const handleBackup = () => {
 }
 
 const handleFindUserOrGroup = async () => {
-  const res = await rFindUser(searchValue.value)
-  if (res.code === 0) {
-    userSearchResult.value = res.data.map((user) => {
-      return {
-        nickname: user.nickname,
-        userid: user.userid,
-        avatar: user.avatar,
-      }
-    })
-  }
+  if (!searchValue.value) return
+  uni.showLoading({
+    title: '正在查询中',
+    mask: true,
+  })
+  const findUsers = await rSearchUser(searchValue.value)
+  const findGroups = await rSearchGroup(searchValue.value)
+  uni.hideLoading()
+  userSearchResult.value = findUsers.data.map((user) => {
+    return {
+      nickname: user.nickname,
+      userid: user.userid,
+      avatar: user.avatar,
+    }
+  })
+  groupSearchResult.value = findGroups.data
 }
 
-const handleOpenUserHome = (id: number) => {
+const handleOpenUserHome = (userid: string) => {
   uni.navigateTo({
-    url: '/pages/home/home?userid=',
+    url: `/pages/home/home?userid=${userid}`,
   })
 }
 </script>
@@ -116,5 +123,13 @@ const handleOpenUserHome = (id: number) => {
   .user-info {
     flex: 1;
   }
+}
+.search-place-holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20upx;
+  font-size: 24upx;
+  color: #999;
 }
 </style>

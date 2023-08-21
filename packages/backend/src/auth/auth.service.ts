@@ -89,7 +89,7 @@ export class AuthService {
 
   async genUserId() {
     // userid以u开头
-    const userid = this.utilsService.genId('u', 9);
+    const userid = this.utilsService.genId('u', 10);
     const existsUser = await this.prismaService.user.findFirst({
       where: {
         userid,
