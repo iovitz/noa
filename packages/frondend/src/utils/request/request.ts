@@ -89,8 +89,8 @@ class ShortChain {
             title: title,
             icon: 'error',
           })
-          return Promise.reject(res)
       }
+      return Promise.reject(res)
     })
   }
 
