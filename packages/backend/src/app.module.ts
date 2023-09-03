@@ -6,6 +6,7 @@ import { WsModule } from './ws/ws.module';
 import { MomentsModule } from './moments/moments.module';
 import { GroupModule } from './group/group.module';
 import { AuthModule } from './auth/auth.module';
+import { ApplyModule } from './apply/apply.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AuthModule } from './auth/auth.module';
     UserModule,
     GroupModule,
     MomentsModule,
+    ApplyModule,
   ],
 })
 export class AppModule {}

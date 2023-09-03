@@ -2,7 +2,6 @@ import { UserService } from './user.service';
 import {
   Body,
   Controller,
-  Get,
   Inject,
   LoggerService,
   Param,
@@ -16,7 +15,6 @@ import {
   UserParamsDTO,
   ModifyUserDTO,
   SearchUserDTO,
-  FriendRequestDTO,
   FetchUserInfoDTO,
 } from './user.dto';
 
@@ -112,21 +110,5 @@ export class UserController {
       },
     });
     return userInfo;
-  }
-
-  @Post('/friend_request')
-  async friendRequest(
-    @Body() { friendId, reason = '' }: FriendRequestDTO,
-    @Request() req: ExpressRequest,
-  ) {
-    const userid = req.userid;
-    return this.prismaService.userRequest.create({
-      data: {
-        userid: friendId,
-        type: 'Friend',
-        reason,
-        from: userid,
-      },
-    });
   }
 }

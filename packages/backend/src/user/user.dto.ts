@@ -5,8 +5,6 @@ import {
   Max,
   Min,
   IsOptional,
-  IsArray,
-  MaxLength,
   IsBoolean,
 } from 'class-validator';
 import { PagingDTO } from 'src/common/dto';
@@ -55,18 +53,6 @@ export class ModifyProfileDTO {
   @IsString()
   @Length(0, 20)
   address?: string;
-}
-
-export class FriendRequestDTO {
-  @Matches(/^u\d{9}$/, {
-    message: 'friendId格式错误',
-  })
-  friendId: string;
-
-  @IsOptional()
-  @IsString()
-  @Length(0, 50)
-  reason?: string;
 }
 
 export class FetchUserInfoDTO {
