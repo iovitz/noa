@@ -1,4 +1,5 @@
 import { Inject, LoggerService } from '@nestjs/common';
+import { OnEvent } from '@nestjs/event-emitter';
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -8,6 +9,9 @@ import {
 } from '@nestjs/websockets';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Socket } from 'socket.io';
+import { EventName } from 'src/common/const/events';
+import { EventTypes } from 'src/common/type/events';
+import { PrismaService } from 'src/global/prisma/prisma.service';
 
 @WebSocketGateway({
   path: '/ws/v1',
@@ -18,6 +22,7 @@ export class Wsv1Gateway
   constructor(
     @Inject(WINSTON_MODULE_NEST_PROVIDER)
     private readonly logger: LoggerService,
+    private readonly prismaService: PrismaService,
   ) {}
 
   @WebSocketServer() server;
@@ -49,5 +54,10 @@ export class Wsv1Gateway
     this.logger.log(payload, '说hello');
 
     client.emit('hello', 'server hello payload');
+  }
+
+  @OnEvent(EventName.ApplyFriend)
+  handleOrderCreatedEvent(payload: EventTypes[EventName.ApplyFriend]) {
+    const { userid, fromid, reason } = payload;
   }
 }

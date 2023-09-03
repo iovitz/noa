@@ -101,8 +101,8 @@ model GroupUser {
 
 model ApplyRequest {
   id        Int              @id @default(autoincrement()) @db.UnsignedInt()
-  userid    String           @db.Char(10)
   type      ApplyRequestType
+  userid    String           @db.Char(10)
   from      String           @db.Char(10)
   reason    String           @db.Char(50)
   agree     Boolean          @default(false)

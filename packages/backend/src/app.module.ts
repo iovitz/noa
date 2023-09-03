@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { UserModule } from './user/user.module';
 import { GlobalModule } from './global/common.module';
 import { LogModule } from './log/log.module';
@@ -11,6 +12,7 @@ import { ApplyModule } from './apply/apply.module';
 @Module({
   imports: [
     GlobalModule,
+    EventEmitterModule.forRoot(),
     WsModule,
     AuthModule,
     LogModule,

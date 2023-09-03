@@ -1,5 +1,7 @@
 import * as NestjsCommonType from '@nestjs/common';
 import { LoggerService as NestLoggerService } from '@nestjs/common';
+import { EventName } from './common/const/events';
+import { EventTypes } from './common/type/events';
 export { Request } from 'express';
 
 declare namespace NodeJS {
@@ -32,5 +34,17 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface ExpressRequest extends Request {
     userid: string;
+  }
+}
+
+declare module '@nestjs/event-emitter' {
+  import { EventEmitter2 as OriginEventEmitter2 } from '@nestjs/event-emitter';
+  export declare const OnEvent: (
+    event: EventName,
+    options?: OnEventOptions | undefined,
+  ) => MethodDecorator;
+
+  export declare class EventEmitter2 extends OriginEventEmitter2 {
+    emit<T extends EventName>(event: T, value: EventTypes[T]): boolean;
   }
 }
