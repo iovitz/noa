@@ -13,6 +13,8 @@
 import CommonPageWrapper from '@/comps/common-page-wrapper/common-page-wrapper.vue'
 import { computed, ref } from 'vue'
 import AvatarHeader from '@/comps/avatar-header/avatar-header.vue'
+import { UserInfo } from '@/common/types/user'
+import { useUserInfo } from '@/hooks/userinfo.hook'
 
 const isAddUser = ref(true)
 
@@ -21,6 +23,14 @@ const titleText = computed(() => {
 })
 
 const message = ref('')
+
+// 当前主页的userid
+const userid = ref('')
+// 用户信息
+const userinfo = ref<UserInfo>({
+  nickname: '',
+})
+useUserInfo(userid, userinfo)
 </script>
 
 <style lang="scss" scoped></style>

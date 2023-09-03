@@ -1,24 +1,16 @@
+import { UserInfo } from '@/common/types/user'
 import { rGetUserInfo } from '@/io/http/user'
 import logger from '@/utils/logger'
 import { defineStore } from 'pinia'
 
 interface UserStore {
-  userinfo: Record<
-    string,
-    {
-      nickname: string
-      avatar?: string
-      profile?: {
-        birth?: string
-        desc?: string
-        gender?: string
-      }
-    }
-  >
+  userinfo: Record<string, UserInfo>
 }
 interface UserActions {
-  fetchUserInfo: (useridList: string[], profile?: boolean) => void
+  fetchUserInfo: (useridList: string[], profile?: boolean, force?: boolean) => void
 }
+
+const fetchingUserIds = new Set<string>()
 
 export const useUserStore = defineStore<'user', UserStore, {}, UserActions>('user', {
   persist: {
@@ -36,10 +28,22 @@ export const useUserStore = defineStore<'user', UserStore, {}, UserActions>('use
     }
   },
   actions: {
-    async fetchUserInfo(useridList, profile = false) {
+    async fetchUserInfo(useridList, profile = false, force = false) {
       const { userinfo } = this
-      logger.verbose('拉取用户信息', useridList)
+      // 过滤掉已经拉取过的UserID
+      if (!force) {
+        useridList = useridList.filter((uid) => {
+          if (userinfo[uid] || fetchingUserIds.has(uid)) {
+            return false
+          } else {
+            fetchingUserIds.add(uid)
+            return true
+          }
+        })
+      }
+      // 加入fetching队列
       const { data } = await rGetUserInfo(useridList, profile)
+      useridList.forEach((id) => fetchingUserIds.delete(id))
       this.$patch({
         userinfo: {
           ...userinfo,

@@ -7,7 +7,7 @@
   >
     <avatar-header
       :nickname="userinfo.nickname || '...'"
-      :desc="`HAHA号：${hahaNumber}`"
+      :desc="`HAHA号：${userid}`"
     ></avatar-header>
 
     <view class="user-info">
@@ -39,60 +39,33 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import CommonPageWrapper from '@/comps/common-page-wrapper/common-page-wrapper.vue'
 import logger from '@/utils/logger'
 import AvatarHeader from '@/comps/avatar-header/avatar-header.vue'
-import { onLoad } from '@dcloudio/uni-app'
-import { useUserStore } from '@/store'
+import { useUserInfo } from '@/hooks'
+import { UserInfo } from '@/common/types/user'
 
-const userStore = useUserStore()
+// 当前主页的userid
+const userid = ref('')
+// 用户信息
+const userinfo = ref<UserInfo>({
+  nickname: '',
+})
+useUserInfo(userid, userinfo)
 
-const hahaNumber = ref('...')
+// 是不是好友
 const isFriends = ref(false)
-const userinfo = ref<{
-  nickname?: string
-  avatar?: string
-  profile?: {
-    birth?: string
-    desc?: string
-    gender?: string
-  }
-}>({})
 
 const buttonClick = () => {
   if (isFriends.value) {
     logger.verbose('发送消息')
   } else {
     uni.navigateTo({
-      url: '/pages/add/add',
+      url: `/pages/add/add?userid=${userid.value}`,
     })
   }
 }
-
-watch([hahaNumber, userStore.userinfo], () => {
-  const userid = hahaNumber.value
-  const storeInfo = userStore.userinfo
-  if (!storeInfo || !storeInfo[userid]) {
-    return
-  }
-  userinfo.value = storeInfo[userid]
-})
-
-onLoad(async (options) => {
-  const userid = options?.userid
-  if (!userid) {
-    uni.navigateBack()
-    return
-  }
-  uni.showLoading({
-    title: '正在加载用户信息',
-    mask: true,
-  })
-  await userStore.fetchUserInfo([userid], true)
-  uni.hideLoading()
-  hahaNumber.value = userid
-})
 </script>
 
 <style lang="scss" scoped></style>
