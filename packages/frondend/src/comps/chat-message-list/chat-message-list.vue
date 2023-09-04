@@ -39,7 +39,7 @@ import type { IMessage } from '@hahachat/common'
 import classNames from 'classnames'
 import { ref } from 'vue'
 
-const currentUserId = ref('222222222')
+const currentUserId = ref('')
 const props = defineProps<{
   messageList: IMessage[]
   scrollHeight: number

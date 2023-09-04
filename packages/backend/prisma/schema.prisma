@@ -129,10 +129,18 @@ model UserNotice {
   @@map("user_notice")
 }
 
+model SocketMember {
+  id       Int    @id @default(autoincrement()) @db.UnsignedInt()
+  userid   String @db.Char(10)
+  memberid String @unique @db.Char(20)
+
+  @@map("socket_member")
+}
+
 model Session {
   id        Int      @id @default(autoincrement()) @db.UnsignedInt()
-  session   String   @unique @db.Char(36)
   userid    String   @db.Char(10)
+  session   String   @unique @db.Char(36)
   expires   String   @db.Char(13)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

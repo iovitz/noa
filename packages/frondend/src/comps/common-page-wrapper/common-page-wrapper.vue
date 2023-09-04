@@ -38,6 +38,7 @@ const props = defineProps<{
   buttonText: string
   showButton: boolean
   buttonClick?: () => void
+  buttonDisabled?: boolean
 }>()
 
 const scrollViewHeight = ref(0)

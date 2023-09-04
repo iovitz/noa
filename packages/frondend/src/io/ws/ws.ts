@@ -50,9 +50,13 @@ class LongChain {
       logger.info('Socket断开连接', msg)
       this.isConnected = false
     })
+    this.connection.on('NewFriendApply', (msg: any) => {
+      logger.verbose('收到长链信息', msg)
+    })
   }
 
   on(event: string, callBack: (...args: any[]) => void) {
+    logger.verbose('收到长链信息', ...args)
     this.connection?.on(event, callBack)
   }
 

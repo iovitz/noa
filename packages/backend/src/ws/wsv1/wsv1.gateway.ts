@@ -8,7 +8,7 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
-import { Socket } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import { EventName } from 'src/common/const/events';
 import { EventTypes } from 'src/common/type/events';
 import { PrismaService } from 'src/global/prisma/prisma.service';
@@ -25,11 +25,18 @@ export class Wsv1Gateway
     private readonly prismaService: PrismaService,
   ) {}
 
-  @WebSocketServer() server;
+  @WebSocketServer() server: Server;
   users = 0;
 
   // https://juejin.cn/post/7225171762395824188
   async handleConnection(client: Socket) {
+    const res = await this.prismaService.socketMember.create({
+      data: {
+        userid: client.request.userid,
+        memberid: client.id,
+      },
+    });
+    console.log(res);
     this.logger.log(
       {
         userid: client.request.userid,
@@ -40,6 +47,11 @@ export class Wsv1Gateway
   }
 
   async handleDisconnect(client: Socket) {
+    this.prismaService.socketMember.delete({
+      where: {
+        memberid: client.id,
+      },
+    });
     this.logger.log(client.id, '取消连接');
   }
 
@@ -57,7 +69,33 @@ export class Wsv1Gateway
   }
 
   @OnEvent(EventName.ApplyFriend)
-  handleOrderCreatedEvent(payload: EventTypes[EventName.ApplyFriend]) {
+  async handleOrderCreatedEvent(payload: EventTypes[EventName.ApplyFriend]) {
     const { userid, fromid, reason } = payload;
+    const sessions = await this.prismaService.socketMember.findMany({
+      where: {
+        userid,
+      },
+    });
+    const expiredMemberIds: string[] = [];
+    sessions.forEach(({ memberid }) => {
+      const clientSocket = this.server.sockets.sockets.get(memberid);
+      console.log(memberid, clientSocket);
+      // 如果没有client说明已经过期，删除memberid
+      if (!clientSocket) {
+        expiredMemberIds.push(memberid);
+        return;
+      }
+      clientSocket.emit('NewFriendApply', {
+        fromid,
+        reason,
+      });
+    });
+    this.prismaService.socketMember.deleteMany({
+      where: {
+        memberid: {
+          in: expiredMemberIds,
+        },
+      },
+    });
   }
 }

@@ -17,6 +17,8 @@ export async function useUserInfo(useridRef: Ref<string>, userInfoRef: Ref<UserI
       return
     }
     useridRef.value = queryUserid
+
+    // 如果store中没有信息就loading进行加载
     if (!userStore.userinfo[queryUserid]) {
       uni.showLoading({
         title: '正在加载用户信息',

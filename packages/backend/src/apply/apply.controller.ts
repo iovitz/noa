@@ -20,19 +20,40 @@ export class ApplyController {
   ) {
     const { friend_id, reason } = body;
     const userid = req.userid;
-    const res = await this.prismaService.applyRequest.create({
-      data: {
+    const existsApply = await this.prismaService.applyRequest.findFirst({
+      where: {
         userid: friend_id,
         type: ApplyRequestType.Friend,
-        reason,
         from: userid,
       },
     });
+    // 如果申请已经存在，更新Message
+    if (existsApply) {
+      await this.prismaService.applyRequest.update({
+        where: {
+          id: existsApply.id,
+        },
+        data: {
+          reason,
+        },
+      });
+    } else {
+      // 否则创建Message
+      await this.prismaService.applyRequest.create({
+        data: {
+          userid: friend_id,
+          type: ApplyRequestType.Friend,
+          reason,
+          from: userid,
+        },
+      });
+    }
+    // 创建成功后通过长链推送消息
     this.eventEmitter.emit(EventName.ApplyFriend, {
       userid: friend_id,
       reason,
       from: userid,
     });
-    return res;
+    return 'success';
   }
 }

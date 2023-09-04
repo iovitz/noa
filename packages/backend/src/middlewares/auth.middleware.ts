@@ -18,7 +18,6 @@ export class AuthMiddleware implements NestMiddleware {
   ) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
-    console.log('#######');
     const clientSession = req.headers.authorization;
     if (!clientSession) {
       throw new UnauthorizedException('Invalid Session');
