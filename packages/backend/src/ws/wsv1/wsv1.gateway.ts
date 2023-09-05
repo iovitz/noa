@@ -30,10 +30,10 @@ export class Wsv1Gateway
 
   // https://juejin.cn/post/7225171762395824188
   async handleConnection(client: Socket) {
-    const res = await this.prismaService.socketMember.create({
+    const res = await this.prismaService.socketClientId.create({
       data: {
         userid: client.request.userid,
-        memberid: client.id,
+        clientid: client.id,
       },
     });
     console.log(res);
@@ -47,9 +47,9 @@ export class Wsv1Gateway
   }
 
   async handleDisconnect(client: Socket) {
-    this.prismaService.socketMember.delete({
+    this.prismaService.socketClientId.delete({
       where: {
-        memberid: client.id,
+        clientid: client.id,
       },
     });
     this.logger.log(client.id, '取消连接');
@@ -71,18 +71,18 @@ export class Wsv1Gateway
   @OnEvent(EventName.ApplyFriend)
   async handleOrderCreatedEvent(payload: EventTypes[EventName.ApplyFriend]) {
     const { userid, fromid, reason } = payload;
-    const sessions = await this.prismaService.socketMember.findMany({
+    const sessions = await this.prismaService.socketClientId.findMany({
       where: {
         userid,
       },
     });
-    const expiredMemberIds: string[] = [];
-    sessions.forEach(({ memberid }) => {
-      const clientSocket = this.server.sockets.sockets.get(memberid);
-      console.log(memberid, clientSocket);
-      // 如果没有client说明已经过期，删除memberid
+    const expiredClientIds: string[] = [];
+    sessions.forEach(({ clientid }) => {
+      const clientSocket = this.server.sockets.sockets.get(clientid);
+      console.log(clientid, clientSocket);
+      // 如果没有client说明已经过期，删除clientid
       if (!clientSocket) {
-        expiredMemberIds.push(memberid);
+        expiredClientIds.push(clientid);
         return;
       }
       clientSocket.emit('NewFriendApply', {
@@ -90,10 +90,10 @@ export class Wsv1Gateway
         reason,
       });
     });
-    this.prismaService.socketMember.deleteMany({
+    this.prismaService.socketClientId.deleteMany({
       where: {
-        memberid: {
-          in: expiredMemberIds,
+        clientid: {
+          in: expiredClientIds,
         },
       },
     });

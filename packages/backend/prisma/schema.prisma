@@ -129,12 +129,12 @@ model UserNotice {
   @@map("user_notice")
 }
 
-model SocketMember {
+model SocketClientId {
   id       Int    @id @default(autoincrement()) @db.UnsignedInt()
   userid   String @db.Char(10)
-  memberid String @unique @db.Char(20)
+  clientid String @unique @db.Char(20)
 
-  @@map("socket_member")
+  @@map("socket_client_id")
 }
 
 model Session {

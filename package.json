@@ -7,10 +7,10 @@
     "dev": "concurrently \"npm run dev:fe\" \"npm run dev:be\"",
     "dev:be": "npm run dev -w packages/backend",
     "dev:fe": "npm run dev -w packages/frondend",
-    "pi": "pnpm install --no-frozen-lockfile --shamefully-hoist"
+    "pi": "pnpm install --no-frozen-lockfile"
   },
   "engines": {
-    "node": "18.x"
+    "node": ">=18"
   },
   "workspaces": [
     "packages/*"
