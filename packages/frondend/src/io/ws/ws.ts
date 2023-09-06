@@ -53,10 +53,13 @@ class LongChain {
     this.connection.on('NewFriendApply', (msg: any) => {
       logger.verbose('收到长链信息', msg)
     })
+    this.connection.on('Unauthorized', (msg: any) => {
+      logger.error('认证失败')
+    })
   }
 
   on(event: string, callBack: (...args: any[]) => void) {
-    logger.verbose('收到长链信息', ...args)
+    logger.verbose('收到长链信息')
     this.connection?.on(event, callBack)
   }
 

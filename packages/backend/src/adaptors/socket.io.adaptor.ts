@@ -23,29 +23,10 @@ export class SocketIoAdapter extends IoAdapter {
       const session = new URLSearchParams(query).get('session');
       try {
         this.logger.log(session, 'AllowRequest');
-        const sessionItem = await this.prismaService.session.findFirst({
-          where: {
-            session,
-          },
-          select: {
-            expires: true,
-            userid: true,
-          },
-        });
-        if (!sessionItem) throw Error('Invalid Session');
-
-        // 校验时间
-        const { expires, userid } = sessionItem;
-        if (Number(expires) < Date.now()) {
-          throw new Error('Expiration of certification');
-        }
-
-        // 把UserID写入请求对象中
-        request.userid = userid;
 
         return allowFunction(null, true);
       } catch (error) {
-        this.logger.error(error, 'invalid token');
+        this.logger.error(error, 'invalid session');
         return allowFunction('Unauthorized', false);
       }
     };

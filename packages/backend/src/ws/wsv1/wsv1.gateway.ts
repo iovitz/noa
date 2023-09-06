@@ -30,20 +30,46 @@ export class Wsv1Gateway
 
   // https://juejin.cn/post/7225171762395824188
   async handleConnection(client: Socket) {
-    const res = await this.prismaService.socketClientId.create({
-      data: {
-        userid: client.request.userid,
-        clientid: client.id,
-      },
-    });
-    console.log(res);
-    this.logger.log(
-      {
-        userid: client.request.userid,
-        clientId: client.id,
-      },
-      '链接成功',
-    );
+    try {
+      const query = client.request.url?.split('?')[1];
+      const session = new URLSearchParams(query).get('session');
+      const sessionItem = await this.prismaService.session.findFirst({
+        where: {
+          session,
+        },
+        select: {
+          expires: true,
+          userid: true,
+        },
+      });
+      if (!sessionItem) throw Error('Invalid Session');
+
+      // 校验时间
+      const { expires, userid } = sessionItem;
+      if (Number(expires) < Date.now()) {
+        throw new Error('Expiration of certification');
+      }
+
+      client.request.userid = userid;
+
+      // 保存session
+      await this.prismaService.socketClientId.create({
+        data: {
+          userid: client.request.userid,
+          clientid: client.id,
+        },
+      });
+      this.logger.log(
+        {
+          userid: client.request.userid,
+          clientId: client.id,
+        },
+        '链接成功',
+      );
+    } catch (error) {
+      client.emit('Unauthorized');
+      this.logger.error(error, 'invalid token');
+    }
   }
 
   async handleDisconnect(client: Socket) {
@@ -90,6 +116,7 @@ export class Wsv1Gateway
         reason,
       });
     });
+    // 删除不使用的clientID
     this.prismaService.socketClientId.deleteMany({
       where: {
         clientid: {
