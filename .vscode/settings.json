@@ -1,0 +1,19 @@
+{
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default",
+        "enableSsl": "Disabled"
+      },
+      "previewLimit": 50,
+      "server": "mysql.sqlpub.com",
+      "port": 3306,
+      "driver": "MySQL",
+      "name": "hahachat_dev",
+      "group": "hahachat",
+      "database": "hahachat_dev",
+      "username": "hahachat_dev",
+      "password": "9c8ad4336eabfcc3"
+    }
+  ]
+}
