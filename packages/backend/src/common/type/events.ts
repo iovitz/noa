@@ -3,7 +3,7 @@ import { EventName } from '../const/events';
 export interface EventTypes {
   [EventName.ApplyFriend]: {
     userid: string;
-    fromid: string;
+    from: string;
     reason: string;
   };
 }

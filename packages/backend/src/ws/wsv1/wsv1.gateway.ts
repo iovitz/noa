@@ -96,7 +96,7 @@ export class Wsv1Gateway
 
   @OnEvent(EventName.ApplyFriend)
   async handleOrderCreatedEvent(payload: EventTypes[EventName.ApplyFriend]) {
-    const { userid, fromid, reason } = payload;
+    const { userid, from, reason } = payload;
     const sessions = await this.prismaService.socketClientId.findMany({
       where: {
         userid,
@@ -105,14 +105,13 @@ export class Wsv1Gateway
     const expiredClientIds: string[] = [];
     sessions.forEach(({ clientid }) => {
       const clientSocket = this.server.sockets.sockets.get(clientid);
-      console.log(clientid, clientSocket);
       // 如果没有client说明已经过期，删除clientid
       if (!clientSocket) {
         expiredClientIds.push(clientid);
         return;
       }
       clientSocket.emit('NewFriendApply', {
-        fromid,
+        from,
         reason,
       });
     });

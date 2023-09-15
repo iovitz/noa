@@ -4,18 +4,18 @@ import logger from '@/utils/logger'
 import { storage } from '@/utils/storage'
 import { defineStore } from 'pinia'
 
-interface AuthStore {
+interface IStore {
   nickname: string
   username: string
   avatar: string | null
   userid: string
 }
-interface AuthActions {
+interface IAction {
   login: (username: string, password: string) => void
   register: (nickname: string, username: string, password: string) => void
 }
 
-export const useAuthStore = defineStore<'auth', AuthStore, {}, AuthActions>('auth', {
+export const useAuthStore = defineStore<'auth', IStore, {}, IAction>('auth', {
   persist: {
     key: 'auth',
     paths: ['nickname', 'avatar', 'username', 'userid'],

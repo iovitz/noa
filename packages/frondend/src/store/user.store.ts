@@ -3,16 +3,16 @@ import { rGetUserInfo } from '@/io/http/user'
 import logger from '@/utils/logger'
 import { defineStore } from 'pinia'
 
-interface UserStore {
+interface IStore {
   userinfo: Record<string, UserInfo>
 }
-interface UserActions {
+interface IAction {
   fetchUserInfo: (useridList: string[], profile?: boolean, force?: boolean) => void
 }
 
 const fetchingUserIds = new Set<string>()
 
-export const useUserStore = defineStore<'user', UserStore, {}, UserActions>('user', {
+export const useUserStore = defineStore<'user', IStore, {}, IAction>('user', {
   persist: {
     key: 'user',
     paths: ['userinfo'],
