@@ -105,7 +105,7 @@ model ApplyRequest {
   userid    String           @db.Char(10)
   from      String           @db.Char(10)
   reason    String           @db.Char(50)
-  agree     Boolean          @default(false)
+  pass      Boolean          @default(false)
   createdAt DateTime         @default(now())
   updatedAt DateTime         @updatedAt
 

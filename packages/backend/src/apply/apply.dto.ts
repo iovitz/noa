@@ -9,3 +9,9 @@ export class FriendApplyDTO {
   @MaxLength(50)
   reason: string;
 }
+
+export class FriendApplyPassDTO {
+  @IsString()
+  @Length(10, 10)
+  from: string;
+}

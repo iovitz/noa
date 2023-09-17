@@ -43,7 +43,7 @@ import { ref } from 'vue'
 import CommonPageWrapper from '@/comps/common-page-wrapper/common-page-wrapper.vue'
 import logger from '@/utils/logger'
 import AvatarHeader from '@/comps/avatar-header/avatar-header.vue'
-import { useUserInfo } from '@/hooks'
+import { useLoadUserInfo } from '@/hooks'
 import { UserInfo } from '@/common/types/user'
 
 // 当前主页的userid
@@ -52,7 +52,7 @@ const userid = ref('')
 const userinfo = ref<UserInfo>({
   nickname: '',
 })
-useUserInfo(userid, userinfo)
+useLoadUserInfo(userid, userinfo)
 
 // 是不是好友
 const isFriends = ref(false)

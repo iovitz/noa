@@ -1,5 +1,12 @@
-import { Body, Controller, Post, Request } from '@nestjs/common';
-import { FriendApplyDTO } from './apply.dto';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+} from '@nestjs/common';
+import { FriendApplyDTO, FriendApplyPassDTO } from './apply.dto';
 import { ApplyService } from './apply.service';
 import { PrismaService } from 'src/global/prisma/prisma.service';
 import { ApplyRequestType } from '@prisma/client';
@@ -55,6 +62,66 @@ export class ApplyController {
       reason,
       from: userid,
     });
+    return 'success';
+  }
+
+  @Get('/friend')
+  async getFriendApplyList(@Request() req: ExpressRequest) {
+    const { userid } = req;
+    return await this.prismaService.applyRequest.findMany({
+      where: {
+        userid: userid,
+      },
+      select: {
+        from: true,
+        reason: true,
+        pass: true,
+      },
+    });
+  }
+
+  @Post('/friend/pass')
+  async passFriendApply(
+    @Request() req: ExpressRequest,
+    @Body() body: FriendApplyPassDTO,
+  ) {
+    const { userid } = req;
+    const { from } = body;
+    // 判断是否已经是好友
+    const friendItem = await this.prismaService.friend.findFirst({
+      where: {
+        userid: userid,
+        friendid: from,
+      },
+    });
+    const apply = await this.prismaService.applyRequest.findFirst({
+      where: {
+        userid,
+        from,
+      },
+    });
+    if (friendItem) {
+      throw new BadRequestException('好友已经存在噜');
+    }
+    if (!apply) {
+      throw new BadRequestException('好友申请不存在');
+    }
+    await this.prismaService.$transaction([
+      this.prismaService.applyRequest.update({
+        where: {
+          id: apply.id,
+        },
+        data: {
+          pass: true,
+        },
+      }),
+      this.prismaService.friend.create({
+        data: {
+          userid,
+          friendid: from,
+        },
+      }),
+    ]);
     return 'success';
   }
 }

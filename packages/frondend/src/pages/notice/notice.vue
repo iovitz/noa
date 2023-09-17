@@ -10,32 +10,10 @@
     </view>
     <view class="content">
       <view v-if="current === 0">
-        <uni-list-item
-          :border="false"
-          title="不锈钢盆"
-          note="这里就不是什么"
-          thumb="https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png"
-          thumb-size="lg"
-          v-for="i in 10"
-          :key="i"
-        >
-          <template v-slot:footer>
-            <view class="flex justify-center items-center">
-              <button size="mini">同意</button>
-            </view>
-          </template>
-        </uni-list-item>
+        <FriendApply />
       </view>
       <view v-if="current === 1">
-        <uni-list-item
-          :border="false"
-          title="不锈钢盆"
-          note="这里就不是什么"
-          thumb="https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png"
-          thumb-size="lg"
-          v-for="i in 10"
-          :key="i"
-        />
+        <GroupApply />
       </view>
     </view>
   </CommonPageWrapper>
@@ -45,7 +23,11 @@
 import CommonPageWrapper from '@/comps/common-page-wrapper/common-page-wrapper.vue'
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
-import logger from '@/utils/logger'
+import { useApplyStore } from '@/store'
+import FriendApply from './friend_apply.vue'
+import GroupApply from './group_apply.vue'
+
+const applyStore = useApplyStore()
 
 const current = ref(0)
 const items = ref(['新朋友', '群通知'])

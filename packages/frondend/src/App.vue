@@ -3,6 +3,7 @@ import { onLaunch, onShow, onHide } from '@dcloudio/uni-app'
 import { longChain } from '@/io/ws/ws'
 import { getSession } from '@/utils/storage'
 import { RouterGaide } from './utils/router'
+import { socketEventManager } from './events/socket.events'
 import logger from './utils/logger'
 import { rGetMoment } from './io/http/moment'
 
@@ -13,11 +14,13 @@ uni.addInterceptor('navigateTo', {
 
 onLaunch((e) => {
   if (!e) return
+  socketEventManager.bind()
   RouterGaide(e.path)
   if (getSession()) {
     longChain.connect()
   }
 })
+
 onShow(() => {
   // logger.verbose('App Show')
 })

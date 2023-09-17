@@ -3,7 +3,7 @@
     :title="titleText"
     buttonText="发送申请"
     :showButton="true"
-    :buttonClick="handleApply"
+    :buttonClick="requestApplyList"
     :buttonDisabled="!!userid"
   >
     <avatar-header nickname="不锈钢盆" desc="256899231"></avatar-header>
@@ -20,7 +20,7 @@ import CommonPageWrapper from '@/comps/common-page-wrapper/common-page-wrapper.v
 import { computed, ref } from 'vue'
 import AvatarHeader from '@/comps/avatar-header/avatar-header.vue'
 import { UserInfo } from '@/common/types/user'
-import { useUserInfo } from '@/hooks/userinfo.hook'
+import { useLoadUserInfo } from '@/hooks/userinfo.hook'
 import { rFriendRequest } from '@/io/http/apply'
 
 const isAddUser = ref(true)
@@ -38,7 +38,8 @@ const userinfo = ref<UserInfo>({
   nickname: '',
 })
 
-const handleApply = async () => {
+useLoadUserInfo(userid, userinfo)
+const requestApplyList = async () => {
   await rFriendRequest(userid.value, message.value)
   uni.navigateBack()
   uni.showToast({
@@ -47,7 +48,6 @@ const handleApply = async () => {
     duration: 1000,
   })
 }
-useUserInfo(userid, userinfo)
 </script>
 
 <style lang="scss" scoped></style>
