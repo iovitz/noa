@@ -29,3 +29,5 @@ export const rGetUserInfo = (userids: string[], profile = false) =>
     userids,
     profile,
   })
+
+export const rFetchCurrentUserinfo = () => commonRequest.get<any>('/user/fullinfo')

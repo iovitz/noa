@@ -20,4 +20,4 @@ pinia.use(
     },
   })
 )
-;(window as any).pinia = pinia
+// ;(window as any).pinia = pinia

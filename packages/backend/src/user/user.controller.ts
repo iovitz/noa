@@ -2,6 +2,7 @@ import { UserService } from './user.service';
 import {
   Body,
   Controller,
+  Get,
   Inject,
   LoggerService,
   Param,
@@ -110,5 +111,30 @@ export class UserController {
       },
     });
     return userInfo;
+  }
+
+  @Get('/fullinfo')
+  async getFullInfo(@Request() { userid }: ExpressRequest) {
+    return await this.prismaService.user.findFirst({
+      where: {
+        userid,
+      },
+      select: {
+        userid: true,
+        profile: true,
+        nickname: true,
+        avatar: true,
+        request: true,
+        friends: {
+          select: {
+            friend: {
+              select: {
+                userid: true,
+              },
+            },
+          },
+        },
+      },
+    });
   }
 }

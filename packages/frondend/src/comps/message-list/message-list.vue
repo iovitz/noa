@@ -33,13 +33,13 @@ export default defineComponent({
     return {
       options: [
         {
-          text: '取消',
+          text: '置顶',
           style: {
             backgroundColor: '#007aff',
           },
         },
         {
-          text: '确认',
+          text: '删除',
           style: {
             backgroundColor: '#dd524d',
           },

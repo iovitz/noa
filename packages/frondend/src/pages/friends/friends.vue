@@ -18,61 +18,33 @@
     </uni-list>
     <view class="mt-4">
       <uni-list :border="false">
-        <uni-list-chat
-          :avatar-circle="true"
-          :border="false"
-          clickable
-          v-for="i in 10"
-          :key="i"
-          title="uni-app"
-          avatar="https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png"
-          note="您收到一条新的消息"
-        ></uni-list-chat>
+        <FriendItem
+          v-for="userid in userStore.friends"
+          :key="userid"
+          :userid="userid"
+          :handleClick="() => selectUser(userid)"
+        />
       </uni-list>
     </view>
   </pageWithTabbar>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
 import pageWithTabbar from '@/comps/page-with-tabbar/page-with-tabbar.vue'
+import { useUserStore } from '@/store'
+import FriendItem from './friend-item.vue'
+const userStore = useUserStore()
 
-export default defineComponent({
-  components: {
-    pageWithTabbar,
-  },
-  data() {
-    return {
-      swiperHeight: 0,
-    }
-  },
-  mounted() {
-    uni.getSystemInfo({
-      success: (res) => {
-        this.swiperHeight = res.windowHeight
-      },
-    })
-  },
-  onNavigationBarButtonTap({ index }) {
-    switch (index) {
-      case 1:
-        uni.navigateTo({
-          url: '/pages/friends/friends',
-        })
-        break
-      case 2:
-        break
-    }
-  },
-  methods: {
-    // 抽屉状态发生变化触发
-    handleGoNotice(tabName: number) {
-      uni.navigateTo({
-        url: '/pages/notice/notice?tab=' + tabName,
-      })
-    },
-  },
-})
+const selectUser = (userid: string) => {
+  uni.navigateTo({
+    url: '/pages/home/home?userid=' + userid,
+  })
+}
+const handleGoNotice = (tabName: number) => {
+  uni.navigateTo({
+    url: '/pages/notice/notice?tab=' + tabName,
+  })
+}
 </script>
 
 <style lang="scss" scoped></style>

@@ -65,7 +65,7 @@ model User {
   session    Session[]
   groupUser  GroupUser[]
   userNotice UserNotice[]
-  request    ApplyRequest[]
+  apply      ApplyRequest[]
   friends    Friend[]       @relation("friends")
   friend     Friend[]       @relation("friend")
 

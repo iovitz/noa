@@ -6,6 +6,9 @@ import { RouterGaide } from './utils/router'
 import { socketEventManager } from './events/socket.events'
 import logger from './utils/logger'
 import { rGetMoment } from './io/http/moment'
+import { useUserStore } from './store'
+
+const userStore = useUserStore()
 
 uni.addInterceptor('navigateTo', {
   // 页面跳转前进行拦截, invoke根据返回值进行判断是否继续执行跳转
@@ -18,6 +21,7 @@ onLaunch((e) => {
   RouterGaide(e.path)
   if (getSession()) {
     longChain.connect()
+    userStore.fetchCurrentUserinfo()
   }
 })
 

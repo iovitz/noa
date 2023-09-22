@@ -1,13 +1,15 @@
 import { UserInfo } from '@/common/types/user'
-import { rGetUserInfo } from '@/io/http/user'
+import { rFetchCurrentUserinfo, rGetUserInfo } from '@/io/http/user'
 import logger from '@/utils/logger'
 import { defineStore } from 'pinia'
 
 interface IStore {
   userinfo: Record<string, UserInfo>
+  friends: Array<string>
 }
 interface IAction {
   fetchUserInfo: (useridList: string[], profile?: boolean, force?: boolean) => void
+  fetchCurrentUserinfo: () => void
 }
 
 const fetchingUserIds = new Set<string>()
@@ -19,6 +21,7 @@ export const useUserStore = defineStore<'user', IStore, {}, IAction>('user', {
   },
   state: () => {
     return {
+      friends: [],
       userinfo: {
         zs: {
           nickname: '张三',
@@ -50,6 +53,17 @@ export const useUserStore = defineStore<'user', IStore, {}, IAction>('user', {
           ...data,
         },
       })
+    },
+    async fetchCurrentUserinfo() {
+      uni.showLoading({
+        title: '正在加载用户数据',
+        mask: true,
+      })
+      const res = await rFetchCurrentUserinfo()
+      this.$patch({
+        friends: res.data.friends.map((friend: any) => friend.friend.userid),
+      })
+      setTimeout(uni.hideLoading, 500)
     },
   },
 })
