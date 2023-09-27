@@ -124,7 +124,7 @@ export class UserController {
         profile: true,
         nickname: true,
         avatar: true,
-        request: true,
+        apply: true,
         friends: {
           select: {
             friend: {
