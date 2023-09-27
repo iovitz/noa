@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"npm run dev:fe\" \"npm run dev:be\"",
-    "dev:be": "npm run dev -w packages/backend",
-    "dev:fe": "npm run dev -w packages/frondend",
+    "dev:be": "npm run dev -w packages/server",
+    "dev:fe": "npm run dev -w packages/app",
     "pr": "npm run pr -w packages/backend",
     "pi": "pnpm install --no-frozen-lockfile"
   },
