@@ -31,6 +31,12 @@
       }
     },
     {
+      "path": "pages/launch/launch",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/menu/menu",
       "style": {
         "navigationStyle": "custom"

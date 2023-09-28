@@ -13,12 +13,16 @@ uni.addInterceptor("navigateTo", {
 });
 
 onLaunch((e) => {
-  if (!e) return;
-  RouterGaide(e.path);
-  if (getSession()) {
-    longChain.connect();
-    userStore.fetchCurrentUserinfo();
-  }
+  // 启动时默认跳转到启动页
+  uni.navigateTo({
+    url: "/pages/launch/launch",
+  });
+  // if (!e) return;
+  // RouterGaide(e.path);
+  // if (getSession()) {
+  //   longChain.connect();
+  //   // userStore.fetchCurrentUserinfo();
+  // }
 });
 
 onShow(() => {

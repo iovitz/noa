@@ -34,14 +34,13 @@ class Storage {
 	 * @return {T | null} 获取结果
 	 */
 	get(key) {
-		const val = uni.getStorageSync(key);
-		if (val) {
-			try {
-				return JSON.parse(val);
-			} catch (e) {
-				return val;
-			}
-		} else {
+		return uni.getStorageSync(key);
+	}
+
+	getObj(key) {
+		try {
+			return JSON.parse(this.get(key));
+		} catch (e) {
 			return null;
 		}
 	}
