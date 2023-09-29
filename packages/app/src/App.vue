@@ -1,7 +1,5 @@
 <script setup>
 import { onLaunch, onShow, onHide } from "@dcloudio/uni-app";
-import { longChain } from "@/io/ws/ws";
-import { getSession } from "@/utils/storage";
 import { RouterGaide } from "./utils/router";
 import { useUserStore } from "./store";
 
