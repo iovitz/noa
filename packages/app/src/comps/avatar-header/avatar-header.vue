@@ -1,10 +1,6 @@
 <template>
   <view class="header">
-    <image
-      class="avatar"
-      mode="aspectFit"
-      :src="'https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png'"
-    />
+    <image class="avatar" mode="aspectFit" :src="avatar" />
     <view class="home-info">
       <view class="nickname text-ellipsis">{{ nickname }}</view>
       <view class="haha-number text-sm text-ellipsis">{{ desc }}</view>

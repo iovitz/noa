@@ -17,3 +17,5 @@ export const rLogout = (session) =>
 	commonRequest.delete(`/auth/logout`, {
 		session,
 	});
+
+export const rTestAuth = () => commonRequest.get(`/auth/test`);

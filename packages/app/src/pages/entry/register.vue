@@ -30,12 +30,13 @@
 <script setup>
 import { registerRules } from "@/common/rules/login";
 import { rRegister } from "@/io/http/auth";
-import { useAuthStore } from "@/store";
+import { useAuthStore, useUserStore } from "@/store";
 import logger from "@/utils/logger";
 import { storage } from "@/utils/storage";
 import { ref, reactive } from "vue";
 
 const authStore = useAuthStore();
+const userStore = useUserStore();
 
 const formRef = ref();
 
@@ -48,6 +49,7 @@ const formData = reactive({
 const handleSubmit = async () => {
   const { nickname, username, password } = await formRef.value.validate();
   await authStore.register(nickname, username, password);
+  await userStore.fetchFriendsList();
 };
 </script>
 

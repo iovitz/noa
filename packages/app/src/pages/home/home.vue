@@ -1,13 +1,14 @@
 <template>
   <CommonPageWrapper
     title="用户资料"
-    :buttonText="isFriends ? '发消息' : '添加好友'"
+    :buttonText="isFriend ? '开始聊天' : '添加好友'"
     :buttonClick="buttonClick"
     :show-button="true"
   >
     <avatar-header
       :nickname="userinfo.nickname || '...'"
       :desc="`HAHA号：${userid}`"
+      :avatar="userinfo.avatar"
     ></avatar-header>
 
     <view class="user-info">
@@ -50,27 +51,57 @@ import CommonPageWrapper from "@/comps/common-page-wrapper/common-page-wrapper.v
 import logger from "@/utils/logger";
 import AvatarHeader from "@/comps/avatar-header/avatar-header.vue";
 import { useLoadUserInfo } from "@/hooks";
+import { onLoad } from "@dcloudio/uni-app";
+import { rGetUserInfo } from "@/io/http/user";
+import MD5 from "md5.js";
+import Identicon from "identicon.js";
 
 // 当前主页的userid
 const userid = ref("");
 // 用户信息
-const userinfo = {
+const userinfo = ref({
   nickname: "",
-};
+  avatar: null,
+  isFriend: false,
+});
 useLoadUserInfo(userid, userinfo);
 
 // 是不是好友
-const isFriends = ref(false);
+const isFriend = ref(false);
 
 const buttonClick = () => {
-  if (isFriends.value) {
-    logger.verbose("发送消息");
+  if (isFriend.value) {
+    uni.redirectTo({
+      url: `/pages/chat/chat?userid=${userid.value}`,
+    });
   } else {
-    uni.navigateTo({
+    uni.redirectTo({
       url: `/pages/add/add?userid=${userid.value}`,
     });
   }
 };
+
+onLoad(async (options) => {
+  // 拿到需要获取的的userid
+  const queryUserid = options?.userid;
+  if (!queryUserid) {
+    uni.navigateBack();
+    return;
+  }
+  userid.value = queryUserid;
+
+  const { data, code } = await rGetUserInfo([queryUserid], true, true);
+  const info = data[queryUserid];
+  userinfo.value.nickname = info.nickname;
+  userinfo.value.avatar =
+    info.avatar ??
+    "data:image/png;base64," +
+      new Identicon(
+        new MD5().update(queryUserid).digest("hex"),
+        420,
+      ).toString();
+  isFriend.value = info.isFriend;
+});
 </script>
 
 <style lang="scss" scoped></style>

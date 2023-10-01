@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpException,
   HttpStatus,
   Inject,
@@ -65,7 +66,6 @@ export class AuthController {
 
     const userid = await this.aythService.genUserId();
 
-    console.log(userid);
     this.logger.log('generate user id', {
       userid,
     });

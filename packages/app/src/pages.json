@@ -137,7 +137,6 @@
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "Uniapp社区",
     "navigationBarBackgroundColor": "#328CFF",
-    "backgroundColor": "#328CFF",
-    "bounce": "none"
+    "backgroundColor": "#328CFF"
   }
 }

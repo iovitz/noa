@@ -5,10 +5,11 @@ export const rSearchUser = (contains) =>
 		contains,
 	});
 
-export const rGetUserInfo = (userids, profile = false) =>
+export const rGetUserInfo = (userids, profile = false, isFriend = false) =>
 	commonRequest.post(`/user/info`, {
 		userids,
 		profile,
+		isFriend,
 	});
 
-export const rFetchCurrentUserinfo = () => commonRequest.get("/user/fullinfo");
+export const rFetchFriendList = () => commonRequest.get("/user/friends");

@@ -58,7 +58,10 @@ export class UserController {
   }
 
   @Post('/info')
-  async fetchUserInfo(@Body() { userids, profile }: FetchUserInfoDTO) {
+  async fetchUserInfo(
+    @Body() { userids, profile, isFriend }: FetchUserInfoDTO,
+    @Request() req: ExpressRequest,
+  ) {
     if (!userids.length) return [];
     const res = await this.prismaService.user.findMany({
       where: {
@@ -79,12 +82,33 @@ export class UserController {
         },
       },
     });
+
+    const friends: Record<string, true> = {};
+
+    if (isFriend) {
+      console.log(req.userid, userids);
+      const friendItems = await this.prismaService.friend.findMany({
+        where: {
+          userid: req.userid,
+          friendid: {
+            in: userids,
+          },
+        },
+      });
+      console.log(friendItems);
+      friendItems.forEach((item) => {
+        friends[item.friendid] = true;
+      });
+    }
     return res.reduce((prev, { userid, nickname, avatar, profile }) => {
       prev[userid] = {
         nickname,
         avatar,
         profile,
       };
+      if (isFriend) {
+        prev[userid].isFriend = friends[userid] ?? false;
+      }
       return prev;
     }, {});
   }
@@ -113,27 +137,14 @@ export class UserController {
     return userInfo;
   }
 
-  @Get('/fullinfo')
+  @Get('/friends')
   async getFullInfo(@Request() { userid }: ExpressRequest) {
-    return await this.prismaService.user.findFirst({
+    return await this.prismaService.friend.findFirst({
       where: {
         userid,
       },
       select: {
-        userid: true,
-        profile: true,
-        nickname: true,
-        avatar: true,
-        apply: true,
-        friends: {
-          select: {
-            friend: {
-              select: {
-                userid: true,
-              },
-            },
-          },
-        },
+        friendid: true,
       },
     });
   }

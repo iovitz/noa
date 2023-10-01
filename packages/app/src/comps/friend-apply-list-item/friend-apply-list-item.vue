@@ -26,11 +26,7 @@ import MD5 from "md5.js";
 const props = defineProps(["pass", "handleClick", "desc", "userid"]);
 
 // 用户信息
-const userinfo = ref({
-  nickname: "",
-});
-
-useUserInfo(props.userid, userinfo);
+const userinfo = useUserInfo(props.userid);
 
 const avatar = computed(() => {
   return (

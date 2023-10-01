@@ -115,11 +115,18 @@ export class ApplyController {
           pass: true,
         },
       }),
-      this.prismaService.friend.create({
-        data: {
-          userid,
-          friendid: from,
-        },
+      // 创建两条好友记录
+      this.prismaService.friend.createMany({
+        data: [
+          {
+            userid,
+            friendid: from,
+          },
+          {
+            userid: from,
+            friendid: userid,
+          },
+        ],
       }),
     ]);
     return 'success';

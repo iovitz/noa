@@ -52,13 +52,14 @@ export class Wsv1Gateway
 
       client.request.userid = userid;
 
-      // 保存session
+      // 保存 clientid 到 db
       await this.prismaService.socketClientId.create({
         data: {
           userid: client.request.userid,
           clientid: client.id,
         },
       });
+      this.logger.log('添加client', client.id);
       this.logger.log(
         {
           userid: client.request.userid,
@@ -73,6 +74,7 @@ export class Wsv1Gateway
   }
 
   async handleDisconnect(client: Socket) {
+    console.log(client.id, '##离开');
     this.prismaService.socketClientId.delete({
       where: {
         clientid: client.id,
@@ -83,7 +85,6 @@ export class Wsv1Gateway
 
   @SubscribeMessage('events')
   async handleEvent(client: Socket, data: string) {
-    this.logger.verbose('sss');
     return data;
   }
 
@@ -94,8 +95,45 @@ export class Wsv1Gateway
     client.emit('hello', 'server hello payload');
   }
 
+  @SubscribeMessage('NEW_MESSAGE')
+  async handleNewMessage(
+    client: Socket,
+    payload: {
+      targetid: string;
+      type: string;
+      content: string;
+    },
+  ) {
+    const fromUserId = client.request.userid;
+    console.log('###', payload);
+    const clientItems = await this.prismaService.socketClientId.findMany({
+      where: {
+        userid: payload.targetid,
+      },
+    });
+    const expiredClientIds: string[] = [];
+    clientItems.forEach((clientItem) => {
+      const targetSocket = this.server.sockets.sockets.get(clientItem.clientid);
+      if (!targetSocket) {
+        expiredClientIds.push(clientItem.clientid);
+        return;
+      }
+      this.server.sockets.to(clientItem.clientid).emit('NEW_MESSAGE', {
+        from: fromUserId,
+        ...payload,
+      });
+    });
+    await this.prismaService.socketClientId.deleteMany({
+      where: {
+        clientid: {
+          in: expiredClientIds,
+        },
+      },
+    });
+  }
+
   @OnEvent(EventName.ApplyFriend)
-  async handleOrderCreatedEvent(payload: EventTypes[EventName.ApplyFriend]) {
+  async handleApplyFriend(payload: EventTypes[EventName.ApplyFriend]) {
     const { userid, from, reason } = payload;
     const sessions = await this.prismaService.socketClientId.findMany({
       where: {

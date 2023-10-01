@@ -6,7 +6,11 @@
     :buttonClick="requestApplyList"
     :buttonDisabled="!!userid"
   >
-    <avatar-header nickname="不锈钢盆" desc="256899231"></avatar-header>
+    <avatar-header
+      :avatar="userinfo.avatar"
+      :nickname="userinfo.nickname"
+      :desc="userid"
+    ></avatar-header>
     <uni-group title="填写验证信息">
       <view class="px-4">
         <uni-easyinput
@@ -34,14 +38,7 @@ const titleText = computed(() => {
 
 const message = ref("");
 
-// 当前主页的userid
-const userid = ref("");
-// 用户信息
-const userinfo = ref({
-  nickname: "",
-});
-
-useLoadUserInfo(userid, userinfo);
+const { userid, userinfo } = useLoadUserInfo();
 const requestApplyList = async () => {
   await rFriendRequest(userid.value, message.value);
   uni.navigateBack();

@@ -64,4 +64,8 @@ export class FetchUserInfoDTO {
   @IsOptional()
   @IsBoolean()
   profile?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  isFriend?: boolean;
 }

@@ -1,61 +1,49 @@
 <template>
   <uni-list :border="false">
     <uni-swipe-action>
-      <uni-swipe-action-item :right-options="options" v-for="i in 20" :key="i">
-        <uni-list-chat
-          title="xieqianyu"
-          :avatar-circle="true"
-          avatar="https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png"
-          note="您收到一条新的消息"
-          time="2020-02-02 20:20"
-          badge-positon="left"
-          badge-text="99"
-          @tap="handleGoChat"
-          clickable
+      <uni-swipe-action-item
+        :right-options="options"
+        v-for="item in chatStore.chatList"
+        :key="item.targetid"
+        @click="(e) => bindClick(e, item.targetid)"
+      >
+        <MessageListItem
+          :userid="item.targetid"
+          :timestamp="item.timestamp"
+          :message="item.message"
+          :notRead="item.notRead"
         />
       </uni-swipe-action-item>
     </uni-swipe-action>
   </uni-list>
 </template>
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { useChatStore } from "@/store";
+import { ref } from "vue";
+import MessageListItem from "@/comps/message-list-item/message-list-item";
 
-export default defineComponent({
-  props: {
-    type: {
-      type: String,
+const chatStore = useChatStore();
+
+const options = ref([
+  {
+    text: "置顶",
+    style: {
+      backgroundColor: "#007aff",
     },
   },
-  computed: {
-    iconUrl() {
-      return `http://cdn.uviewui.com/uview/empty/${this.type}.png`;
+  {
+    text: "删除",
+    style: {
+      backgroundColor: "#dd524d",
     },
   },
-  data() {
-    return {
-      options: [
-        {
-          text: "置顶",
-          style: {
-            backgroundColor: "#007aff",
-          },
-        },
-        {
-          text: "删除",
-          style: {
-            backgroundColor: "#dd524d",
-          },
-        },
-      ],
-    };
-  },
-  methods: {
-    handleGoChat() {
-      uni.navigateTo({
-        url: "/pages/chat/chat",
-      });
-    },
-  },
-});
+]);
+
+const bindClick = (e, targetid) => {
+  if (e.content.text === "删除") {
+    // 从消息列表中删除
+    chatStore.delectFromChatList(targetid);
+  }
+};
 </script>
 <style lang="scss" scoped></style>

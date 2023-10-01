@@ -23,11 +23,12 @@
 
 <script setup>
 import { reactive, ref } from "vue";
-import { useAuthStore } from "@/store";
+import { useAuthStore, useUserStore } from "@/store";
 import { loginRules } from "@/common/rules/login";
 const sectionRef = ref();
 
 const authStore = useAuthStore();
+const userStore = useUserStore();
 
 const formData = reactive({
   username: "",
@@ -37,10 +38,12 @@ const formData = reactive({
 const handleSubmit = async () => {
   const res = await sectionRef.value.validate();
   await authStore.login(res.username, res.password);
+  await userStore.fetchFriendsList();
 };
 
 const handleTestLogin = async () => {
   await authStore.login("tester", "tester");
+  await userStore.fetchFriendsList();
 };
 </script>
 

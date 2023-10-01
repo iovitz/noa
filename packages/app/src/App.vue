@@ -1,26 +1,28 @@
 <script setup>
 import { onLaunch, onShow, onHide } from "@dcloudio/uni-app";
 import { RouterGaide } from "./utils/router";
-import { useUserStore } from "./store";
+import { useAuthStore, useChatStore, useUserStore } from "./store";
+import { getSession } from "./utils/storage";
+import { longChain } from "./io/ws/ws";
 
 const userStore = useUserStore();
+const chatStore = useChatStore();
+const authStore = useAuthStore();
 
 uni.addInterceptor("navigateTo", {
   // 页面跳转前进行拦截, invoke根据返回值进行判断是否继续执行跳转
   invoke: ({ url }) => RouterGaide(url),
 });
 
-onLaunch((e) => {
-  // 启动时默认跳转到启动页
-  uni.navigateTo({
-    url: "/pages/launch/launch",
-  });
-  // if (!e) return;
-  // RouterGaide(e.path);
-  // if (getSession()) {
-  //   longChain.connect();
-  //   // userStore.fetchCurrentUserinfo();
-  // }
+onLaunch(async (e) => {
+  if (!e) return;
+  RouterGaide(e.path);
+
+  // 有session拉取数据
+  if (getSession()) {
+    // 拉取信息
+    authStore.init();
+  }
 });
 
 onShow(() => {
@@ -41,7 +43,7 @@ onHide(() => {
 page {
   height: 100%;
   background-color: #f5f5f5;
-  color: #555555;
+  color: #7a7e83;
   font-family:
     -apple-system,
     BlinkMacSystemFont,

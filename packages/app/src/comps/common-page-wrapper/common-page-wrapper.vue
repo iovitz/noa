@@ -33,7 +33,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 
-const props = defineProps(["title", "showButton", "buttonText"]);
+const props = defineProps(["title", "showButton", "buttonText", "buttonClick"]);
 
 const scrollViewHeight = ref(0);
 onMounted(() => {

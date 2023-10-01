@@ -1,8 +1,10 @@
-import { rLogin, rRegister } from "@/io/http/auth";
+import { rLogin, rRegister, rTestAuth } from "@/io/http/auth";
 import { longChain } from "@/io/ws/ws";
 import logger from "@/utils/logger";
 import { storage } from "@/utils/storage";
 import { defineStore } from "pinia";
+import { useUserStore } from "./user.store";
+import { useChatStore } from "./chat.store";
 
 export const useAuthStore = defineStore("auth", {
 	persist: {
@@ -18,6 +20,17 @@ export const useAuthStore = defineStore("auth", {
 		};
 	},
 	actions: {
+		async init(userid) {
+			userid = userid ?? this.userid;
+			longChain.connect();
+			if (window) {
+				window.userid = userid;
+			}
+			const chatStore = useChatStore();
+			const userStore = useUserStore();
+			chatStore.init(userid);
+			await userStore.fetchFriendsList();
+		},
 		async login(username, password) {
 			const { code, data } = await rLogin(username, password);
 			if (code === 0) {
@@ -32,9 +45,9 @@ export const useAuthStore = defineStore("auth", {
 					avatar: data.avatar,
 					userid: data.userid,
 				});
+				await this.init(data.userid);
 				logger.verbose("登录成功", data);
 				storage.syncSet("session", data.session);
-				longChain.connect();
 				setTimeout(() => {
 					uni.switchTab({
 						url: "/pages/message/message",
@@ -59,7 +72,7 @@ export const useAuthStore = defineStore("auth", {
 				});
 				logger.verbose("注册成功", data);
 				storage.syncSet("session", data.session);
-				longChain.connect();
+				await this.init(data.userid);
 				setTimeout(() => {
 					uni.switchTab({
 						url: "/pages/message/message",

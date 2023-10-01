@@ -19,7 +19,7 @@
     />
 
     <ChatMessageList
-      :messageList="messageList"
+      :messageList="chatStore.currentChatMessages"
       :scroll-height="scrollHeight"
     ></ChatMessageList>
     <!-- <view class="chat-message-container"> 22</view> -->
@@ -49,6 +49,7 @@
         type="primary"
         @tap="handleSendMessage"
         size="mini"
+        :disabled="!inputValue"
       >
         发送
       </button>
@@ -61,8 +62,13 @@ import logger from "@/utils/logger";
 import classNames from "classnames";
 import ChatMessageList from "@/comps/chat-message-list/chat-message-list.vue";
 import { computed, ref, onMounted } from "vue";
+import { useChatStore } from "@/store";
+import { onLoad, onUnload } from "@dcloudio/uni-app";
 
-// import EmptyStatus from '@/comps/empty-status/empty-status.vue';
+const chatStore = useChatStore();
+
+const targetId = ref("");
+
 const inputValue = ref("");
 const inputFocus = ref(false);
 const inputRef = ref(null);
@@ -90,7 +96,7 @@ const handleInputBlur = () => {
 const handleOpenUser = () => {
   logger.verbose("打开用户界面");
   uni.navigateTo({
-    url: "/pages/home/home",
+    url: "/pages/home/home?userid=" + targetId.value,
   });
 };
 
@@ -118,134 +124,25 @@ onMounted(() => {
   });
 });
 
-const messageList = ref([
-  {
-    uid: "29128391",
-    mid: "291239123123123",
-    type: "text",
-    content: "111111",
-    timestamp: 1687972901741,
-  },
-  {
-    uid: "29128391",
-    mid: "291239123123123",
-    type: "text",
-    content: "222222",
-    timestamp: 1687972907917,
-  },
-  {
-    uid: "222222222",
-    mid: "291239123123123",
-    type: "text",
-    content: "333333",
-    timestamp: 1687972914429,
-  },
-  {
-    uid: "222222222",
-    mid: "291239123123123",
-    type: "text",
-    content: "333333",
-    timestamp: 1687972914429,
-  },
-  {
-    uid: "222222222",
-    mid: "291239123123123",
-    type: "text",
-    content: "333333",
-    timestamp: 1687972914429,
-  },
-  {
-    uid: "222222222",
-    mid: "291239123123123",
-    type: "text",
-    content: "333333",
-    timestamp: 1687972914429,
-  },
-  {
-    uid: "222222222",
-    mid: "291239123123123",
-    type: "text",
-    content: "333333",
-    timestamp: 1687972914429,
-  },
-  {
-    uid: "222222222",
-    mid: "291239123123123",
-    type: "text",
-    content: "333333",
-    timestamp: 1687972914429,
-  },
-  {
-    uid: "222222222",
-    mid: "291239123123123",
-    type: "text",
-    content: "333333",
-    timestamp: 1687972914429,
-  },
-  {
-    uid: "222222222",
-    mid: "291239123123123",
-    type: "text",
-    content: "333333",
-    timestamp: 1687972914429,
-  },
-  {
-    uid: "222222222",
-    mid: "291239123123123",
-    type: "text",
-    content: "333333",
-    timestamp: 1687972914429,
-  },
-  {
-    uid: "222222222",
-    mid: "291239123123123",
-    type: "text",
-    content: "333333",
-    timestamp: 1687972914429,
-  },
-  {
-    uid: "222222222",
-    mid: "291239123123123",
-    type: "text",
-    content: "333333",
-    timestamp: 1687972914429,
-  },
-  {
-    uid: "222222222",
-    mid: "291239123123123",
-    type: "text",
-    content: "333333",
-    timestamp: 1687972914429,
-  },
-  {
-    uid: "222222222",
-    mid: "291239123123123",
-    type: "text",
-    content: "333333",
-    timestamp: 1687972914429,
-  },
-  {
-    uid: "222222222",
-    mid: "291239123123123",
-    type: "text",
-    content: "333333",
-    timestamp: 1687972914429,
-  },
-]);
+onUnload(() => {
+  chatStore.handleChatEnd();
+});
+
+onLoad(async (options) => {
+  // 拿到需要获取的的userid
+  const queryUserid = options?.userid;
+  if (!queryUserid) {
+    uni.navigateBack();
+    return;
+  }
+  targetId.value = queryUserid;
+  chatStore.handleChatStart(queryUserid);
+  chatStore;
+});
 
 const scrollTop = ref(Number.MAX_SAFE_INTEGER);
 const handleSendMessage = () => {
-  console.log(scrollTop.value);
-  messageList.value = [
-    {
-      uid: "222222222",
-      mid: "",
-      content: inputValue.value,
-      type: "text",
-      timestamp: Date.now(),
-    },
-    ...messageList.value,
-  ];
+  chatStore.handleTextMessage(targetId.value, inputValue.value);
   inputValue.value = "";
   scrollTop.value = Number.MAX_SAFE_INTEGER;
 };
