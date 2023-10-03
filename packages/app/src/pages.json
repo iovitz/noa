@@ -19,6 +19,12 @@
       }
     },
     {
+      "path": "pages/commits/commits",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/moment/moment",
       "style": {
         "navigationStyle": "custom"

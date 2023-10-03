@@ -2,7 +2,7 @@
   <CommonPageWrapper
     title="用户资料"
     :buttonText="isFriend ? '开始聊天' : '添加好友'"
-    :buttonClick="buttonClick"
+    @buttonClick="buttonClick"
     :show-button="true"
   >
     <avatar-header
@@ -64,7 +64,6 @@ const userinfo = ref({
   avatar: null,
   isFriend: false,
 });
-useLoadUserInfo(userid, userinfo);
 
 // 是不是好友
 const isFriend = ref(false);

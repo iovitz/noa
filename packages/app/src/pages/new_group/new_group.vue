@@ -4,7 +4,7 @@
       title="群名称和群头像"
       buttonText="创建"
       :showButton="true"
-      :buttonClick="buttonClick"
+      @buttonClick="buttonClick"
     >
       <uni-card :is-shadow="false" :border="false" class="group-name">
         <uni-title color="#767676" type="h4" title="群名称" />

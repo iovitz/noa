@@ -17,6 +17,7 @@
       :scroll-y="true"
       :style="`height: ${scrollViewHeight}px`"
       refresher-background="#eee"
+      @scrolltolower="handleScrollToLower"
     >
       <!-- 页面内容 -->
       <slot name="default" />
@@ -35,6 +36,8 @@ import { onMounted, ref } from "vue";
 
 const props = defineProps(["title", "showButton", "buttonText", "buttonClick"]);
 
+const emits = defineEmits(["buttonClick", "scrolltolower"]);
+
 const scrollViewHeight = ref(0);
 onMounted(() => {
   const sysInfo = uni.getSystemInfoSync();
@@ -47,8 +50,12 @@ const handleBackup = () => {
   uni.navigateBack();
 };
 
-const handleButtonClick = () => {
-  props.buttonClick?.();
+const handleButtonClick = (e) => {
+  emits("buttonClick", e);
+};
+
+const handleScrollToLower = (e) => {
+  emits("scrolltolower", e);
 };
 </script>
 

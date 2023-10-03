@@ -3,7 +3,7 @@
     :title="titleText"
     buttonText="发送申请"
     :showButton="true"
-    :buttonClick="requestApplyList"
+    @buttonClick="requestApplyList"
     :buttonDisabled="!!userid"
   >
     <avatar-header

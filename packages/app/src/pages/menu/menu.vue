@@ -19,9 +19,15 @@
         type="card"
         title="账号管理"
       >
-        <uni-list-item showArrow :border="false" clickable title="个人信息" />
+        <uni-list-item
+          showArrow
+          :border="false"
+          clickable
+          title="个人信息"
+          link
+          to="/pages/vue/index/index"
+        />
         <uni-list-item showArrow :border="false" clickable title="账号管理" />
-        <uni-list-item showArrow :border="false" clickable title="通知" />
         <uni-list-item
           showArrow
           :border="false"
@@ -39,10 +45,10 @@
         <uni-list-item
           :border="false"
           clickable
-          title="版本信息"
+          to="/pages/commits/commits"
+          title="研发日志"
           rightText="已是最新版本"
         />
-        <uni-list-item showArrow :border="false" clickable title="官网" />
         <uni-list-item showArrow :border="false" clickable title="反馈" />
       </uni-group>
     </uni-list>
@@ -74,10 +80,15 @@ const userInfo = computed(() => {
     nickname: authStore.nickname,
   };
 });
-
 const sectionRef = ref();
 const handleLogout = () => {
   sectionRef.value.open();
+};
+
+const navigateTo = (url) => {
+  return uni.navigateTo({
+    url,
+  });
 };
 
 const handleLogoutConfirm = async () => {
