@@ -1,5 +1,5 @@
 <template>
-  <CommonPageWrapper title="提交记录" @scrolltolower="fetchCommitList">
+  <CommonPageWrapper title="研发日志" @scrolltolower="fetchCommitList">
     <view class="p-2">
       <view class="app-info">
         <image
