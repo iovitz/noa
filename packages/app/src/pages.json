@@ -25,6 +25,12 @@
       }
     },
     {
+      "path": "pages/personal_information/personal_information",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/moment/moment",
       "style": {
         "navigationStyle": "custom"

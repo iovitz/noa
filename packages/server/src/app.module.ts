@@ -8,6 +8,7 @@ import { MomentsModule } from './moments/moments.module';
 import { GroupModule } from './group/group.module';
 import { AuthModule } from './auth/auth.module';
 import { ApplyModule } from './apply/apply.module';
+import { OssModule } from './oss/oss.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ApplyModule } from './apply/apply.module';
     GroupModule,
     MomentsModule,
     ApplyModule,
+    OssModule,
   ],
 })
 export class AppModule {}

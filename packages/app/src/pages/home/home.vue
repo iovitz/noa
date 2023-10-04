@@ -3,7 +3,7 @@
     title="用户资料"
     :buttonText="isFriend ? '开始聊天' : '添加好友'"
     @buttonClick="buttonClick"
-    :show-button="true"
+    :show-button="!isMe"
   >
     <avatar-header
       :nickname="userinfo.nickname || '...'"
@@ -55,6 +55,9 @@ import { onLoad } from "@dcloudio/uni-app";
 import { rGetUserInfo } from "@/io/http/user";
 import MD5 from "md5.js";
 import Identicon from "identicon.js";
+import { useAuthStore } from "@/store";
+
+const authStore = useAuthStore();
 
 // 当前主页的userid
 const userid = ref("");
@@ -67,6 +70,8 @@ const userinfo = ref({
 
 // 是不是好友
 const isFriend = ref(false);
+// 是否是自己的主页
+const isMe = ref(true);
 
 const buttonClick = () => {
   if (isFriend.value) {
@@ -79,7 +84,6 @@ const buttonClick = () => {
     });
   }
 };
-
 onLoad(async (options) => {
   // 拿到需要获取的的userid
   const queryUserid = options?.userid;
@@ -100,6 +104,7 @@ onLoad(async (options) => {
         420,
       ).toString();
   isFriend.value = info.isFriend;
+  isMe.value = queryUserid === authStore.userid;
 });
 </script>
 

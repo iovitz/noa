@@ -1,6 +1,6 @@
 <template>
   <view class="user-aside">
-    <view class="header flex flex-row items-center">
+    <view class="header flex flex-row items-center" @click="jumpToHome">
       <image
         class="avatar"
         mode="aspectFit"
@@ -23,9 +23,9 @@
           showArrow
           :border="false"
           clickable
+          to="/pages/personal_information/personal_information"
           title="个人信息"
           link
-          to="/pages/vue/index/index"
         />
         <uni-list-item showArrow :border="false" clickable title="账号管理" />
         <uni-list-item
@@ -110,6 +110,12 @@ const handleLogoutConfirm = async () => {
 };
 const dialogClose = () => {
   sectionRef.value?.close();
+};
+
+const jumpToHome = () => {
+  uni.navigateTo({
+    url: "/pages/home/home?userid=" + authStore.userid,
+  });
 };
 </script>
 

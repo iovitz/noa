@@ -18,7 +18,7 @@ uni-button[type="primary"] {
   background-color: var(--app-color-primary) !important;
 }
 .button-hover[type="primary"] {
-  background-color: #209ff2 !important;
+  background-color: var(--app-color-primary) !important;
 }
 
 .uni-group {
@@ -44,14 +44,23 @@ uni-button[type="primary"] {
   border-color: #f5f5f5 !important;
 }
 .segmented-control__item--button.segmented-control__item--button--active {
-  background-color: #2ac4ff !important;
+  background-color: var(--app-color-primary) !important;
   .segmented-control__text {
     color: #ffffff !important;
   }
 }
 
+.uni-calendar-item__weeks-box .uni-calendar-item--checked,
+.uni-datetime-picker--btn {
+  background-color: var(--app-color-primary) !important;
+}
+
+.uni-list-item__content {
+  justify-content: center !important;
+}
+
 .segmented-control__text {
-  color: #2ac4ff !important;
+  color: var(--app-color-primary) !important;
 }
 
 uni-button {

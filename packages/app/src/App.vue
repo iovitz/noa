@@ -4,6 +4,7 @@ import { RouterGaide } from "./utils/router";
 import { useAuthStore, useChatStore, useUserStore } from "./store";
 import { getSession } from "./utils/storage";
 import { longChain } from "./io/ws/ws";
+import { rGetSTSKey } from "./io/http/oss";
 
 const userStore = useUserStore();
 const chatStore = useChatStore();
@@ -23,6 +24,8 @@ onLaunch(async (e) => {
     // 拉取信息
     authStore.init();
   }
+  const res = await rGetSTSKey();
+  console.log(res);
 });
 
 onShow(() => {

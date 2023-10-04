@@ -40,7 +40,6 @@
         @focus="handleInputFocus"
         @blur="handleInputBlur"
         :hold-keyboard="true"
-        ref="inputRef"
         @keyboardheightchange="keyboardheightchange"
       />
 
@@ -71,7 +70,6 @@ const targetId = ref("");
 
 const inputValue = ref("");
 const inputFocus = ref(false);
-const inputRef = ref(null);
 
 function handleInput(e) {
   logger.verbose("input", e);

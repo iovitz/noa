@@ -74,7 +74,6 @@ export class Wsv1Gateway
   }
 
   async handleDisconnect(client: Socket) {
-    console.log(client.id, '##离开');
     this.prismaService.socketClientId.delete({
       where: {
         clientid: client.id,
