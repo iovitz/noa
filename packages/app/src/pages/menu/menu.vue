@@ -1,15 +1,12 @@
 <template>
   <view class="user-aside">
     <view class="header flex flex-row items-center" @click="jumpToHome">
-      <image
-        class="avatar"
-        mode="aspectFit"
-        :src="'https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png'"
-      />
-      <view>
+      <image class="avatar" mode="aspectFit" :src="authStore.avatar" />
+      <view class="info">
         <view class="font-bold text-xl text-ellipsis">{{
-          userInfo.nickname
+          authStore.nickname
         }}</view>
+        <view class="text-sm text-ellipsis">{{ authStore.desc }}</view>
       </view>
     </view>
 
@@ -75,20 +72,9 @@ import { computed, ref } from "vue";
 
 const authStore = useAuthStore();
 
-const userInfo = computed(() => {
-  return {
-    nickname: authStore.nickname,
-  };
-});
 const sectionRef = ref();
 const handleLogout = () => {
   sectionRef.value.open();
-};
-
-const navigateTo = (url) => {
-  return uni.navigateTo({
-    url,
-  });
 };
 
 const handleLogoutConfirm = async () => {
@@ -130,7 +116,13 @@ const jumpToHome = () => {
       height: 100upx;
       width: 100upx;
       border-radius: 50%;
-      margin-right: 20upx;
+    }
+    .info {
+      max-width: 400upx;
+      margin-left: 20upx;
+      .text-sm {
+        font-size: 24upx !important;
+      }
     }
   }
 }

@@ -33,11 +33,12 @@ class ShortChain {
 					authorization: storage.get("session"),
 				},
 			});
-		}).then(({ data, statusCode }) => {
-			const res = data;
+		}).then(({ data: res, statusCode }) => {
 			if (statusCode < 400) {
-				return res;
+				// 直接把响应体返回
+				return res.data;
 			}
+			logger.error("#请求出错", statusCode, res);
 			switch (statusCode) {
 				case 401:
 					storage.remove("session");

@@ -17,7 +17,7 @@
             class="avatar"
             mode="aspectFit"
             @tap="openUserAside"
-            :src="'https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png'"
+            :src="userInfo.avatar"
           ></image>
         </view>
       </template>
@@ -145,6 +145,8 @@ export default defineComponent({
     const userInfo = computed(() => {
       return {
         nickname: authStore.nickname,
+        desc: authStore.desc,
+        avatar: authStore.avatar,
       };
     });
     return {

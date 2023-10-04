@@ -93,7 +93,7 @@ onLoad(async (options) => {
   }
   userid.value = queryUserid;
 
-  const { data, code } = await rGetUserInfo([queryUserid], true, true);
+  const data = await rGetUserInfo([queryUserid], true, true);
   const info = data[queryUserid];
   userinfo.value.nickname = info.nickname;
   userinfo.value.avatar =

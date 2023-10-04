@@ -25,7 +25,6 @@ model Moment {
 model UserProfile {
   id        Int       @id @default(autoincrement()) @db.UnsignedInt()
   userid    String?   @unique @db.Char(10)
-  desc      String?   @db.Char(100)
   gender    Boolean?
   birth     DateTime? @db.Date
   address   String?   @db.Char(100)
@@ -56,6 +55,7 @@ model User {
   nickname  String   @db.Char(20)
   username  String   @unique @db.Char(20)
   password  String   @db.Char(70)
+  desc      String?  @db.Char(100)
   avatar    String?  @unique @db.Char(100)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

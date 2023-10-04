@@ -35,6 +35,7 @@ export class AuthService {
           nickname: true,
           username: true,
           avatar: true,
+          desc: true,
         },
       }),
       this.prismaService.userProfile.create({
@@ -53,6 +54,7 @@ export class AuthService {
       username: true,
       password: true,
       avatar: true,
+      desc: true,
     },
   ) {
     return this.prismaService.user.findFirst({

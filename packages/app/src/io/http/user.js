@@ -13,3 +13,6 @@ export const rGetUserInfo = (userids, profile = false, isFriend = false) =>
 	});
 
 export const rFetchFriendList = () => commonRequest.get("/user/friends");
+
+export const rPutUserInfo = (userid, userinfo) =>
+	commonRequest.put(`/user/info/${userid}`, userinfo);

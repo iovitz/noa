@@ -67,7 +67,7 @@ export const useUserStore = defineStore("user", {
 			const res = await rFetchFriendList();
 
 			this.$patch({
-				friends: res.data,
+				friends: res,
 			});
 			setTimeout(uni.hideLoading, 500);
 		},

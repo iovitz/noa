@@ -29,6 +29,11 @@ export class ModifyUserDTO {
   @IsString()
   @Length(0, 20)
   nickname?: string;
+
+  @IsOptional()
+  @IsString()
+  @Length(0, 100)
+  desc?: string;
 }
 
 export class GetProfileDTO extends UserParamsDTO {}

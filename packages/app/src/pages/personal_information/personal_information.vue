@@ -7,13 +7,13 @@
         title="社交信息"
       >
         <AvatarCell />
-        <DescriptionCell />
         <uni-list-item
           :border="false"
           title="HaHa号"
           :rightText="authStore.userid"
         />
         <NicknameCell />
+        <DescriptionCell />
       </uni-group>
 
       <uni-group

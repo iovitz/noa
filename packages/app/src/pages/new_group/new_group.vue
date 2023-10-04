@@ -28,13 +28,11 @@ const groupName = ref("");
 
 const buttonClick = () => {
   rCreateGroup(groupName.value, "").then((res) => {
-    if (res.code === 0) {
-      uni.showToast({
-        icon: "success",
-        title: "创建群组成功",
-        duration: 1000,
-      });
-    }
+    uni.showToast({
+      icon: "success",
+      title: "创建群组成功",
+      duration: 1000,
+    });
     groupName.value = "";
     uni.navigateBack();
   });

@@ -77,7 +77,6 @@ export class UserController {
           select: {
             gender: true,
             birth: true,
-            desc: true,
           },
         },
       },
@@ -113,24 +112,25 @@ export class UserController {
     }, {});
   }
 
-  @Put('/u/:userid')
-  async modifyUser(
+  @Put('/info/:userid')
+  async modifyUserInfo(
     @Param() { userid }: UserParamsDTO,
-    @Body() { avatar }: ModifyUserDTO,
+    @Body() { avatar, desc, nickname }: ModifyUserDTO,
   ) {
-    if (!avatar) {
-      return;
-    }
     const userInfo = await this.prismaService.user.update({
       where: {
         userid,
       },
       data: {
         avatar,
+        desc,
+        nickname,
       },
       select: {
         userid: true,
         avatar: true,
+        desc: true,
+        
         nickname: true,
       },
     });
@@ -139,13 +139,15 @@ export class UserController {
 
   @Get('/friends')
   async getFullInfo(@Request() { userid }: ExpressRequest) {
-    return await this.prismaService.friend.findFirst({
-      where: {
-        userid,
-      },
-      select: {
-        friendid: true,
-      },
-    });
+    return (
+      (await this.prismaService.friend.findFirst({
+        where: {
+          userid,
+        },
+        select: {
+          friendid: true,
+        },
+      })) ?? []
+    );
   }
 }
