@@ -7,12 +7,6 @@
   },
   "pages": [
     {
-      "path": "pages/moment_detail/moment_detail",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
       "path": "pages/message/message",
       "style": {
         "navigationStyle": "custom"
@@ -20,6 +14,12 @@
     },
     {
       "path": "pages/friends/friends",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/moment_detail/moment_detail",
       "style": {
         "navigationStyle": "custom"
       }

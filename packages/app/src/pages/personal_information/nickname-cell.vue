@@ -39,10 +39,10 @@ const closeDialog = () => {
 
 const confirm = (nickname) => {
   closeDialog();
-  if (nickname.length < 2 || nickname.length > 10) {
+  if (nickname.length > 20) {
     uni.showToast({
       icon: "error",
-      title: "修改失败，昵称长度在2~10位之间",
+      title: "昵称过长",
     });
     return;
   }
