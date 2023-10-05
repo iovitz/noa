@@ -60,16 +60,16 @@ export const useUserStore = defineStore("user", {
 			});
 		},
 		async fetchFriendsList() {
-			uni.showLoading({
-				title: "正在加载用户数据",
-				mask: true,
-			});
+			// uni.showLoading({
+			// 	title: "正在加载用户数据",
+			// 	mask: true,
+			// });
 			const res = await rFetchFriendList();
 
 			this.$patch({
 				friends: res,
 			});
-			setTimeout(uni.hideLoading, 500);
+			// setTimeout(uni.hideLoading, 500);
 		},
 		async getUserNameById(targetid) {
 			return this.userinfo[targetid].nickname;

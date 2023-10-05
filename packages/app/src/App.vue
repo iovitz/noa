@@ -24,8 +24,6 @@ onLaunch(async (e) => {
     // 拉取信息
     authStore.init();
   }
-  const res = await rGetSTSKey();
-  console.log(res);
 });
 
 onShow(() => {

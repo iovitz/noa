@@ -1,8 +1,6 @@
 <template>
   <pageWithTabbar>
-    <view class="news-card-list">
-      <news-card v-for="i in 10" :key="i"></news-card>
-    </view>
+    <moment-card v-for="i in 10" :key="i"></moment-card>
   </pageWithTabbar>
   <uni-fab
     ref="fab"
@@ -13,7 +11,7 @@
 </template>
 
 <script>
-import NewsCard from "@/comps/news-card/news-card.vue";
+import MomentCard from "@/comps/moment-card/moment-card.vue";
 import pageWithTabbar from "@/comps/page-with-tabbar/page-with-tabbar.vue";
 import { rGetMoment } from "@/io/http/moment";
 import { defineComponent } from "vue";
@@ -21,7 +19,7 @@ import logger from "@/utils/logger";
 
 export default defineComponent({
   components: {
-    NewsCard,
+    MomentCard,
     pageWithTabbar,
   },
   props: {
