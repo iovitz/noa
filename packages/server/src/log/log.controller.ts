@@ -5,7 +5,6 @@ import { Request as ExpressResPonse } from 'express';
 export class LogController {
   @Get('info')
   getInfos(@Request() res: ExpressResPonse) {
-    console.log(res.ip);
     return '12';
   }
 }

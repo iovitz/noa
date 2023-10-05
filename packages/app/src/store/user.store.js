@@ -41,7 +41,6 @@ export const useUserStore = defineStore("user", {
 			});
 			// 加入fetching队列
 			const { data } = await rGetUserInfo(useridList);
-			console.log(data);
 			useridList.forEach((id) => {
 				const info = data[id];
 				// 没有头像时使用默认头像(性能问题)

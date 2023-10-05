@@ -27,7 +27,6 @@ export class ApplyController {
   ) {
     const { friend_id, reason } = body;
     const userid = req.userid;
-    console.log(userid);
     const existsApply = await this.prismaService.applyRequest.findFirst({
       where: {
         userid: friend_id,

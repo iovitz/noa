@@ -104,7 +104,6 @@ export class Wsv1Gateway
     },
   ) {
     const fromUserId = client.request.userid;
-    console.log('###', payload);
     const clientItems = await this.prismaService.socketClientId.findMany({
       where: {
         userid: payload.targetid,

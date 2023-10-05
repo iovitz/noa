@@ -71,7 +71,6 @@ export const useAuthStore = defineStore("auth", {
 		async updateUserInfo(userinfo) {
 			// 更新用户头像
 			const data = await rPutUserInfo(this.userid, userinfo);
-			console.log(data);
 			this.$patch(data);
 		},
 	},

@@ -14,7 +14,6 @@ export class ParamsExceptionFilter implements ExceptionFilter {
 
   catch(exception: ParamsException, host: ArgumentsHost) {
     this.logger.error(exception.message, exception.stack, 'ParamsException');
-    console.log('============');
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const errorResponse = {

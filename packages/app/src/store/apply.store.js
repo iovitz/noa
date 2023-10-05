@@ -35,7 +35,6 @@ export const useApplyStore = defineStore("apply", {
 		async passApply(from, idx) {
 			this.applyList[idx].pass = true;
 			const res = await rPassFriendApply(from);
-			console.log("通过", res);
 			this.applyList[idx].pass = false;
 		},
 

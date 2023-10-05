@@ -16,7 +16,6 @@ export class OssController {
       accessKeyId: this.configService.get('ali_cloud_access_key'),
       accessKeySecret: this.configService.get('ali_cloud_access_key_secret'),
     });
-    console.log(this.configService.get('ali_cloud_arn'));
     const result = await sts.assumeRole(
       this.configService.get('ali_cloud_arn'),
     );

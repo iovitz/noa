@@ -85,7 +85,6 @@ export class UserController {
     const friends: Record<string, true> = {};
 
     if (isFriend) {
-      console.log(req.userid, userids);
       const friendItems = await this.prismaService.friend.findMany({
         where: {
           userid: req.userid,
@@ -94,7 +93,6 @@ export class UserController {
           },
         },
       });
-      console.log(friendItems);
       friendItems.forEach((item) => {
         friends[item.friendid] = true;
       });
@@ -130,7 +128,7 @@ export class UserController {
         userid: true,
         avatar: true,
         desc: true,
-        
+
         nickname: true,
       },
     });
