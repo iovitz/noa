@@ -40,9 +40,9 @@ export const useAuthStore = defineStore("auth", {
 				icon: "success",
 			});
 			this.$patch(data);
-			await this.init(data.userid);
 			logger.verbose("登录成功", data);
 			storage.syncSet("session", data.session);
+			await this.init(data.userid);
 			setTimeout(() => {
 				uni.switchTab({
 					url: "/pages/message/message",

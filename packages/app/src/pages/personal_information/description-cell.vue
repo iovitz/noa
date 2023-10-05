@@ -14,9 +14,9 @@
   </uni-list-item>
   <uni-popup ref="popup" type="dialog">
     <uni-popup-dialog
-      title="修改昵称"
+      title="修改签名"
       mode="input"
-      :value="desc"
+      :value="authStore.desc"
       message="成功消息"
       :duration="2000"
       :before-close="true"
@@ -29,8 +29,6 @@
 import { useAuthStore } from "@/store";
 import { ref } from "vue";
 const authStore = useAuthStore();
-
-const desc = ref(authStore.desc);
 
 const popup = ref();
 const openDialog = () => {

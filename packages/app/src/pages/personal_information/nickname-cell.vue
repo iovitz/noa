@@ -12,7 +12,7 @@
     <uni-popup-dialog
       title="修改昵称"
       mode="input"
-      v-model="nickname"
+      :value="authStore.nickname"
       message="成功消息"
       :duration="2000"
       :before-close="true"
@@ -27,8 +27,6 @@ import logger from "@/utils/logger";
 import { ref } from "vue";
 
 const authStore = useAuthStore();
-
-const nickname = ref(authStore.nickname);
 
 const popup = ref();
 const openDialog = () => {
