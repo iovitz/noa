@@ -1,7 +1,7 @@
 <template>
   <pageWithTabbar>
     <uni-search-bar
-      placeholder="超级搜索"
+      placeholder="哈哈搜索"
       @focus="handleGoSearch"
       cancelButton="none"
       class="bg-white"

@@ -16,7 +16,13 @@
         @tap="() => handleGoNotice(1)"
       />
     </uni-list>
-    <view class="mt-4">
+    <Default
+      v-if="userStore.friends.length === 0"
+      style="padding-top: 200upx"
+      type="history"
+      title="消息"
+    />
+    <view class="mt-4" v-else>
       <uni-list :border="false">
         <FriendItem
           v-for="userid in userStore.friends"
@@ -31,6 +37,7 @@
 
 <script setup>
 import pageWithTabbar from "@/comps/page-with-tabbar/page-with-tabbar.vue";
+import Default from "@/comps/default/default.vue";
 import { useUserStore } from "@/store";
 import FriendItem from "./friend-item.vue";
 const userStore = useUserStore();

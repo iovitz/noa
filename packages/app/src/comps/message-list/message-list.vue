@@ -1,5 +1,11 @@
 <template>
-  <uni-list :border="false">
+  <Default
+    v-if="chatStore.chatList.length === 0"
+    style="padding-top: 200upx"
+    type="message"
+    title="消息"
+  />
+  <uni-list v-else :border="false">
     <uni-swipe-action>
       <uni-swipe-action-item
         :right-options="options"
@@ -20,6 +26,7 @@
 <script setup>
 import { useChatStore } from "@/store";
 import { ref } from "vue";
+import Default from "@/comps/default/default.vue";
 import MessageListItem from "@/comps/message-list-item/message-list-item";
 
 const chatStore = useChatStore();

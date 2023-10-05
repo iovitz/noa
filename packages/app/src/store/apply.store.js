@@ -28,7 +28,7 @@ export const useApplyStore = defineStore("apply", {
 
 		requestApplyList() {
 			rGetFriendApplyList().then((res) => {
-				this.applyList = res.data;
+				this.applyList = res;
 			});
 		},
 
