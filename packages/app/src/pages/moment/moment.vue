@@ -74,7 +74,7 @@ export default defineComponent({
 .add-button {
   :deep(.uni-fab__circle) {
     box-shadow: none;
-    background-color: #2ac4ff !important;
+    background-color: #575170 !important;
     bottom: calc(140upx);
   }
 }

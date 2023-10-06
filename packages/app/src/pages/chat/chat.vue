@@ -12,7 +12,7 @@
       rightWidth="70upx"
       height="100upx"
       status-bar
-      background-color="#2AC4FF"
+      background-color="#575170"
       :fixed="true"
       @clickLeft="handleBackup"
       @clickRight="handleOpenUser"

@@ -5,7 +5,7 @@
       class="nav-bar border-none"
       height="100upx"
       :fixed="true"
-      background-color="#2AC4FF"
+      background-color="#575170"
       status-bar
       leftWidth="80upx"
       rightWidth="80upx"

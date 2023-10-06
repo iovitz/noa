@@ -18,7 +18,7 @@
 
       <uni-steps
         :options="listData"
-        active-color="#2ac4ff"
+        active-color="#575170"
         :active="active"
         direction="column"
       />
@@ -39,7 +39,7 @@ let commitPage = 1; // 分页
 const isFetching = ref(false);
 const pageSize = Number(import.meta.env.VITE_GITHUB_COMMITS_PAGE_SIZE);
 const allCommitsLoaded = ref(false); // 是否已经全部拉取
-const active = ref(1);
+const active = ref(0);
 
 const octokit = new Octokit({
   auth: import.meta.env.VITE_GITHUB_OPEN_API_TOKEN,
@@ -70,8 +70,6 @@ function fetchCommitList() {
     });
 }
 fetchCommitList();
-
-// console.log(res);
 </script>
 
 <style lang="scss" scoped>
