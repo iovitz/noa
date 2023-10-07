@@ -10,14 +10,14 @@ export class PublishMomentDTO {
   @IsOptional()
   @IsString()
   @MaxLength(10000)
-  content?: string;
+  content: string;
 
   @IsOptional()
   @IsArray()
   @MaxLength(1000)
-  medias?: string;
+  media: string[];
 
   @IsOptional()
   @IsBoolean()
-  published?: boolean;
+  private: boolean;
 }

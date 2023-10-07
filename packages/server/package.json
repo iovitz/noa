@@ -26,6 +26,7 @@
     "pg": "./node_modules/.bin/prisma generate",
     "prisma:seed": "./node_modules/.bin/dotenv -e .env.development -- npx prisma db seed",
     "prisma:push": "./node_modules/.bin/dotenv -e .env.development -- prisma db push",
+    "prisma:reset": "./node_modules/.bin/dotenv -e .env.development -- prisma migrate resolve --applied \"20201207184859\"",
     "pr": "npm run mc && npm run md && npx prisma generate",
     "postinstall": "npx prisma generate"
   },

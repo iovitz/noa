@@ -50,6 +50,12 @@ class ShortChain {
 						title: title,
 						icon: "error",
 					});
+					break;
+				default:
+					uni.showToast({
+						title: res.message,
+						icon: "error",
+					});
 			}
 			return Promise.reject(res);
 		});

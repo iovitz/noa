@@ -13,7 +13,7 @@
         <image
           class="uploader__img"
           mode="aspectFill"
-          :src="image"
+          :src="image.path"
           :data-src="image"
           @tap="previewImage"
         ></image>
@@ -39,6 +39,14 @@ export default defineComponent({
       type: Number,
       default: 9,
     },
+    fileTypes: {
+      type: Array,
+      default: () => [".png", ".jpg", ".jpeg"],
+    },
+    maxSize: {
+      type: Number,
+      default: 1,
+    },
     modelValue: {
       type: Array,
       default: () => [],
@@ -60,10 +68,31 @@ export default defineComponent({
         sourceType: ["album"],
         sizeType: ["original", "compressed"],
         count: this.max,
-        success: ({ tempFilePaths }) => {
-          const paths =
-            typeof tempFilePaths === "string" ? [tempFilePaths] : tempFilePaths;
-          this.$emit("update:modelValue", [...this.modelValue, ...paths]);
+        success: ({ tempFiles }) => {
+          const files = Array.isArray(tempFiles) ? tempFiles : [tempFiles];
+          // 校验图片大小
+          if (files.some((file) => file.size / 1024 / 1024 > this.maxSize)) {
+            uni.showToast({
+              icon: "error",
+              title: `图片大小不能超过${this.maxSize}M`,
+            });
+            return;
+          }
+          // 校验图片格式
+          if (
+            files.some((file) => {
+              const exet = file.name.substring(file.name.lastIndexOf(".") || 0);
+              // 扩展名检查
+              return !this.fileTypes.includes(exet.toLowerCase());
+            })
+          ) {
+            uni.showToast({
+              icon: "error",
+              title: `仅支持${this.fileTypes.join(",")}格式的图片`,
+            });
+            return;
+          }
+          this.$emit("update:modelValue", [...this.modelValue, ...files]);
         },
         fail: (err) => {
           logger.error("上传图片失败", err);
@@ -74,8 +103,8 @@ export default defineComponent({
     previewImage: function (e) {
       const current = e.target.dataset.src;
       uni.previewImage({
-        current,
-        urls: this.modelValue,
+        current: current.path,
+        urls: this.modelValue.map((f) => f.path),
       });
     },
   },

@@ -11,13 +11,13 @@ datasource db {
 model Moment {
   id        Int      @id @default(autoincrement())
   content   String   @db.Text()
-  published Boolean  @default(false)
-  authorId  Int      @db.UnsignedInt()
-  medias    String   @db.Text()
+  private   Boolean  @default(false)
+  userid    String   @db.Char(10)
+  media     String   @db.Text()
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  author User @relation(fields: [userid], references: [userid], onDelete: Cascade)
 
   @@map("moment")
 }

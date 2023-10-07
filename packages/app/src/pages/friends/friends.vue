@@ -8,13 +8,6 @@
         title="新朋友"
         @tap="() => handleGoNotice(0)"
       />
-      <uni-list-item
-        showArrow
-        :border="false"
-        clickable
-        title="群通知"
-        @tap="() => handleGoNotice(1)"
-      />
     </uni-list>
     <Default
       v-if="userStore.friends.length === 0"

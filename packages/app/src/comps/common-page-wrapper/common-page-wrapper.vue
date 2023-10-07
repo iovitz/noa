@@ -74,7 +74,6 @@ const handleScrollToLower = (e) => {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 100upx;
   padding: 5px 30upx;
   background-color: #f5f5f5;
   .send-btn {

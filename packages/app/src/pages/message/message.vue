@@ -1,15 +1,5 @@
 <template>
   <pageWithTabbar>
-    <uni-search-bar
-      placeholder="哈哈搜索"
-      @focus="handleGoSearch"
-      cancelButton="none"
-      class="bg-white"
-    >
-      <template #searchIcon>
-        <uni-icons color="#999999" size="18" type="search" />
-      </template>
-    </uni-search-bar>
     <message-list></message-list>
   </pageWithTabbar>
 </template>
