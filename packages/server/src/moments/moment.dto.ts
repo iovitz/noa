@@ -5,6 +5,7 @@ import {
   IsString,
   MaxLength,
 } from 'class-validator';
+import { PagingDTO } from 'src/common/dto';
 
 export class PublishMomentDTO {
   @IsOptional()
@@ -21,3 +22,5 @@ export class PublishMomentDTO {
   @IsBoolean()
   private: boolean;
 }
+
+export class GetMomentDTO extends PagingDTO {}

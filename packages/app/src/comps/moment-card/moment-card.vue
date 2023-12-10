@@ -11,28 +11,29 @@
         <text class="nickname">钢盆的勇气</text>
         <text class="time">2023.3.1</text>
       </view>
-      <view>
+      <!-- <view>
         <uni-fav
           :checked="notFollow"
           :content-text="followText"
           @tap="handleFollow"
         />
-      </view>
+      </view> -->
     </view>
     <view class="card-body">
       <view class="content" @tap="handleDetail">
-        就斤斤计较斤斤计较斤斤计较斤斤计较斤斤计较斤斤计较斤斤计较斤斤计较斤斤计较斤斤计较斤斤计较姐法就斤斤计较斤斤计较斤斤计较斤
+        {{ content }}
       </view>
-      <view
-        class="image"
-        @tap="handleImage"
-        :style="{
-          backgroundImage: 'url(https://s1.ax1x.com/2023/04/03/pp4Fug1.jpg)',
-        }"
-      >
-      </view>
+      <uni-grid :column="3" v-if="mediaList.length >= 0" :highlight="true">
+        <uni-grid-item
+          v-for="(item, index) in mediaList"
+          :index="index"
+          :key="index"
+        >
+          <image :src="item" class="mt-0 max-w-full" mode="aspectFill" />
+        </uni-grid-item>
+      </uni-grid>
     </view>
-    <view class="card-footer">
+    <!-- <view class="card-footer">
       <view class="options">
         <view class="option" @tap="handleLike">
           <text class="iconfont icon-thumb_up_line" />
@@ -51,7 +52,7 @@
           <text class="count">{{ 2 }}</text>
         </view>
       </view>
-    </view>
+    </view> -->
   </view>
 </template>
 <script>
@@ -59,6 +60,21 @@ import logger from "@/utils/logger";
 import { defineComponent } from "vue";
 
 export default defineComponent({
+  props: {
+    author: {
+      type: String,
+    },
+    creatTime: {
+      type: Number,
+    },
+    content: {
+      type: String,
+    },
+    mediaList: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
       notFollow: true,

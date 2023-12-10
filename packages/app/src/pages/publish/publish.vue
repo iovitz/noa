@@ -29,14 +29,19 @@ import { v4 as uuidv4 } from "uuid";
 import logger from "@/utils/logger";
 import { rPublishMoment } from "@/io/http/moment";
 import { rGetSTSKey } from "@/io/http/oss";
+import { useAuthStore, useMomentStore } from "@/store";
 const content = ref("");
 const imageList = ref([]);
+
+const authStore = useAuthStore();
+const momentStore = useMomentStore();
 
 async function handlePublish() {
   logger.verbose("发布内容", {
     content: content.value,
     imageList: imageList.value,
   });
+  uni.navigateBack();
   const data = await rGetSTSKey();
   const OSSUrl = import.meta.env.VITE_OSS_URL;
   const pathList = [];
@@ -61,17 +66,19 @@ async function handlePublish() {
       });
     });
   });
-  await Promise.all(promises);
-  uni.showLoading({
-    title: "正在发表中",
+
+  momentStore.add({
+    author: authStore.nickname,
+    createTime: Date.now(),
+    content: content.value,
+    mediaList: imageList.value.map((image) => image.path),
   });
-  rPublishMoment(content.value, pathList)
-    .catch(() => {
-      uni.hideLoading();
-    })
-    .then((res) => {
-      uni.hideLoading();
-    });
+  await Promise.all(promises);
+  await rPublishMoment(content.value, pathList);
+  uni.showToast({
+    title: "发布成功",
+    icon: "success",
+  });
 }
 </script>
 

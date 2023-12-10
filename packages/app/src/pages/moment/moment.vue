@@ -1,6 +1,13 @@
 <template>
   <pageWithTabbar>
-    <moment-card v-for="i in 10" :key="i"></moment-card>
+    <moment-card
+      v-for="(item, i) in momentList"
+      :author="item.author"
+      :creatTime="item.creatTime"
+      :content="item.content"
+      :mediaList="item.mediaList"
+      :key="i"
+    ></moment-card>
   </pageWithTabbar>
   <uni-fab
     ref="fab"
@@ -16,6 +23,7 @@ import pageWithTabbar from "@/comps/page-with-tabbar/page-with-tabbar.vue";
 import { rGetMoment } from "@/io/http/moment";
 import { defineComponent } from "vue";
 import logger from "@/utils/logger";
+import { useMomentStore } from "@/store";
 
 export default defineComponent({
   components: {
@@ -66,6 +74,12 @@ export default defineComponent({
         url: "/pages/publish/publish",
       });
     },
+  },
+  setup() {
+    const momentStore = useMomentStore();
+    return {
+      momentList: momentStore.momentList,
+    };
   },
 });
 </script>

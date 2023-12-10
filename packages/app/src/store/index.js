@@ -5,6 +5,7 @@ export * from "./user.store";
 export * from "./apply.store";
 export * from "./app.store";
 export * from "./chat.store";
+export * from "./moment.store";
 
 export const pinia = createPinia();
 
