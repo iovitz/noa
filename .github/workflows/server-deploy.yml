@@ -1,0 +1,44 @@
+name: Deploy Node Server
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - "server/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 部署到预发环境
+      - name: Deploy To Pre
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: "${{ secrets.PRE_SERVER_HOST }}"
+          username: ${{ secrets.PRE_SERVER_NAME }}
+          key: ${{ secrets.PRE_SERVER_SSH_KEY }}
+          script: |
+            echo 'Set Environment Variable'
+            export NOA_APP_COOKIE_KEY="${{ secrets.NOA_APP_COOKIE_KEY }}"
+            export NOA_APP_PORT="${{ secrets.NOA_APP_PORT }}"
+            export NOA_DB_MYSQL_DB_NAME="${{ secrets.NOA_DB_MYSQL_DB_NAME }}"
+            export NOA_DB_MYSQL_HOST="${{ secrets.NOA_DB_MYSQL_HOST }}"
+            export NOA_DB_MYSQL_PASSWORD="${{ secrets.NOA_DB_MYSQL_PASSWORD }}"
+            export NOA_DB_MYSQL_PORT="${{ secrets.NOA_DB_MYSQL_PORT }}"
+            export NOA_DB_MYSQL_USER="${{ secrets.NOA_DB_MYSQL_USER }}"
+            export NOA_SECRET_MULTIAVATAR="${{ secrets.NOA_SECRET_MULTIAVATAR }}"
+            export NOA_SECRET_FW_ALERT="${{ secrets.NOA_SECRET_FW_ALERT }}"
+
+            echo 'Update Code'
+            cd ~/apps/noa-server/
+            git pull
+
+            echo 'Install Dependence & Build'
+            cd noa-server/
+            pnpm i
+            pnpm build
+
+            echo 'Reload Server'
+            pm2 startOrReload --wait-ready ecosystem.config.js

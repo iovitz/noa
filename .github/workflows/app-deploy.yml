@@ -1,0 +1,47 @@
+name: Deploy App To H5
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - "app/**"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 指定版本Node
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.17.0"
+
+      - name: CD To App Directory
+        run: |
+          cd app
+
+      # 安装指定版本pnpm(避免lock文件变更)
+      - name: Install pnpm
+        run: |
+          npm install -g pnpm@9.9.0
+
+      # 安装依赖
+      - name: Install dependencies & Build
+        run: |
+          cd noa-platform
+          pnpm install
+          pnpm build
+
+      - name: Sync Files To Server
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.APP_H5_FTP_HOST }}
+          username: ${{ secrets.APP_H5_FTP_USERNAME }}
+          password: ${{ secrets.APP_H5_FTP_PASSWORD }}
+          local-dir: "app/dist/"
+          server-dir: "${{ secrets.APP_H5_FTP_SERVER_DIR }}"

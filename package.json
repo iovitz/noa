@@ -1,0 +1,43 @@
+{
+  "name": "noa",
+  "version": "1.0.0",
+  "description": "Noa App",
+  "scripts": {
+    "postinstall": "pnpm i:server && pnpm i:app",
+    "i:server": "pnpm --prefix server i",
+    "i:app": "pnpm --prefix app i",
+    "dev:app": "pnpm --prefix app dev",
+    "dev:server": "pnpm --prefix server dev",
+    "cz": "node_modules/.bin/cz",
+    "lint-staged": "pnpm --filter server --filter app run lint-staged",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "commitizen": "^4.3.1",
+    "concurrently": "^9.0.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "cz-customizable": "^7.2.1",
+    "git-cz": "^4.9.0",
+    "husky": "^9.1.6",
+    "lerna": "^8.1.8",
+    "lint-staged": "^15.2.10"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": ".cz-config.cjs"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx}": [
+      "eslint --fix"
+    ]
+  }
+}
