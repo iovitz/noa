@@ -1,31 +1,13 @@
 {
-  "name": "noa",
-  "version": "1.0.0",
-  "description": "Noa App",
+  "name": "noa-h5",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "postinstall": "pnpm i:server && pnpm i:app",
-    "i:server": "pnpm --prefix server i",
-    "i:app": "pnpm --prefix app i",
-    "dev:app": "pnpm --prefix app dev",
-    "dev:server": "pnpm --prefix server dev",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint-staged": "pnpm lint:fix",
     "cz": "node_modules/.bin/cz",
-    "lint-staged": "pnpm --filter server --filter app run lint-staged",
     "prepare": "husky"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@commitlint/cli": "^19.5.0",
-    "@commitlint/config-conventional": "^19.5.0",
-    "commitizen": "^4.3.1",
-    "concurrently": "^9.0.1",
-    "cz-conventional-changelog": "^3.3.0",
-    "cz-customizable": "^7.2.1",
-    "git-cz": "^4.9.0",
-    "husky": "^9.1.6",
-    "lerna": "^8.1.8",
-    "lint-staged": "^15.2.10"
   },
   "config": {
     "commitizen": {
@@ -34,6 +16,39 @@
     "cz-customizable": {
       "config": ".cz-config.cjs"
     }
+  },
+  "dependencies": {
+    "axios": "1.7.7",
+    "classnames": "^2.5.1",
+    "i18next": "^23.16.0",
+    "lodash": "^4.17.21",
+    "socket.io-client": "4.8.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.8.0",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@eslint-react/eslint-plugin": "^1.15.0",
+    "@types/lodash": "^4.17.10",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "commitizen": "^4.3.1",
+    "concurrently": "^9.0.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "cz-customizable": "^7.2.1",
+    "eslint": "^9.12.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.12",
+    "git-cz": "^4.9.0",
+    "husky": "^9.1.6",
+    "lerna": "^8.1.8",
+    "lint-staged": "^15.2.10",
+    "postcss": "^8",
+    "sass": "^1.80.5",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5",
+    "typescript-plugin-css-modules": "^5.1.0"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [

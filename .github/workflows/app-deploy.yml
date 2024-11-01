@@ -5,7 +5,7 @@ on:
     branches:
       - develop
     paths:
-      - "app/**"
+      - 'app/**'
 
 jobs:
   deploy:
@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "20.17.0"
+          node-version: 20.17.0
 
       - name: CD To App Directory
         run: |
@@ -43,5 +43,5 @@ jobs:
           server: ${{ secrets.APP_H5_FTP_HOST }}
           username: ${{ secrets.APP_H5_FTP_USERNAME }}
           password: ${{ secrets.APP_H5_FTP_PASSWORD }}
-          local-dir: "app/dist/"
-          server-dir: "${{ secrets.APP_H5_FTP_SERVER_DIR }}"
+          local-dir: app/dist/
+          server-dir: '${{ secrets.APP_H5_FTP_SERVER_DIR }}'

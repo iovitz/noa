@@ -4,10 +4,11 @@
     "target": "ES2017",
     "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "baseUrl": ".",
     "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"]
     },
     "resolveJsonModule": true,
     "allowJs": true,
@@ -25,6 +26,6 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["packages/h5/next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

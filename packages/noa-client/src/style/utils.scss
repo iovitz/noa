@@ -1,0 +1,24 @@
+/* 溢出省略号 */
+.text-ellipsis,
+.text-ellipsis-2,
+.text-ellipsis-3 {
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+}
+.text-ellipsis {
+  white-space: nowrap !important;
+  -o-text-overflow: ellipsis !important;
+}
+.text-ellipsis-2,
+.text-ellipsis-3 {
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+}
+
+.text-ellipsis-2 {
+  -webkit-line-clamp: 2;
+}
+
+.text-ellipsis-3 {
+  -webkit-line-clamp: 3;
+}
