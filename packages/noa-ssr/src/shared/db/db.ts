@@ -1,9 +1,8 @@
-import { homedir } from 'node:os'
-import path from 'node:path'
-import { drizzle } from 'drizzle-orm/better-sqlite3'
+import { drizzle } from 'drizzle-orm/mysql2'
 
-import { logger } from '../logger/logger'
-
-const dbPath = path.join(homedir(), 'sqlite/noa.sqlite')
-export const sqliteClient = drizzle(dbPath)
-logger.info('Sqlite DB file is: ', dbPath)
+// You can specify any property from the mysql2 connection options
+export const db = drizzle({
+  connection: {
+    uri: 'mysql://noa_dev:pzQsZLH0iWs5iP4D@mysql.sqlpub.com:3306/noa_dev',
+  },
+})

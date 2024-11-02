@@ -3,13 +3,14 @@ import process from 'node:process'
 // eslint-disable-next-line node/no-deprecated-api
 import { parse } from 'node:url'
 import next from 'next'
-import { logger } from './src/shared/logger/logger'
-import './src/shared/db/db'
+import { logger } from './shared/logger/logger'
+import './shared/db/db'
 
 const port = Number.parseInt(process.env.PORT || '3000', 10)
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
+
 Promise.all([
   app.prepare(),
 ]).then(async () => {
