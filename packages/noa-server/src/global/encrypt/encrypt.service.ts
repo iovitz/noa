@@ -1,4 +1,5 @@
 import { Buffer } from 'node:buffer'
+import { createHash } from 'node:crypto'
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { compare, genSalt, hash } from 'bcrypt'
@@ -28,10 +29,8 @@ export class EncryptService {
     return compare(password, hash)
   }
 
-  async encryptPassword(password) {
-    const salt = await genSalt(10)
-    const pass = hash(password, salt)
-    return pass
+  async encryptPassword(data: string) {
+    return createHash('md5').update(data).digest('hex')
   }
 
   aesEncrypt(message) {

@@ -10,4 +10,4 @@ import { VerifyService } from './verify/verify.service'
   providers: [EncryptService, VerifyService, TracerService, HttpService],
   exports: [EncryptService, VerifyService, TracerService, HttpService],
 })
-export class ServicesModule {}
+export class GlobalModule {}

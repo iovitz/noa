@@ -12,9 +12,9 @@ import { PreparePromiseInterceptor } from './aspects/interceptors/prepare-promis
 import { ResponseFormatterInterceptor } from './aspects/interceptors/response-formatter/response-formatter.interceptor'
 import { InjectorMiddleware } from './aspects/middlewares/injector/injector.middleware'
 import { DbModule } from './db/db.module'
+import { GlobalModule } from './global/global.module'
+import { TracerService } from './global/tracer/tracer.service'
 import { HomeModule } from './home/home.module'
-import { ServicesModule } from './services/services.module'
-import { TracerService } from './services/tracer/tracer.service'
 import { SocketV1Module } from './socketv1/socketv1.module'
 import { UserModule } from './user/user.module'
 
@@ -40,7 +40,7 @@ import { UserModule } from './user/user.module'
         },
       ],
     }),
-    ServicesModule,
+    GlobalModule,
     EventEmitterModule.forRoot(),
     DbModule,
     SocketV1Module,

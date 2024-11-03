@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { TracerService } from './services/tracer/tracer.service'
+import { TracerService } from './global/tracer/tracer.service'
 import { PromiseManager } from './shared/utils/promise-manager'
 
 declare global {

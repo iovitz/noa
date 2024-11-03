@@ -1,7 +1,7 @@
 import * as process from 'node:process'
 import { Inject, Injectable, NestMiddleware } from '@nestjs/common'
 import { customAlphabet } from 'nanoid'
-import { TracerService } from 'src/services/tracer/tracer.service'
+import { TracerService } from 'src/global/tracer/tracer.service'
 import { CookieKeys } from 'src/shared/constans/cookie'
 import { PromiseManager } from 'src/shared/utils/promise-manager'
 
