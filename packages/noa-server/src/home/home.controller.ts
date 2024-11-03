@@ -1,6 +1,4 @@
-import { Controller, Get, Header, Headers, Render } from '@nestjs/common'
-import { HeaderKeys } from 'src/shared/constans/header'
-import { SkipFormat } from 'src/shared/decorator/skip-format'
+import { Controller, Get } from '@nestjs/common'
 
 @Controller()
 export class HomeController {
