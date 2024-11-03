@@ -5,6 +5,7 @@ export default antfu({
   typescript: {
     overrides: {
       'node/prefer-global/process': 'off',
+      'ts/consistent-type-imports': 0,
     },
   },
 })
