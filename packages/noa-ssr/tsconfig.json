@@ -24,7 +24,7 @@
       {
         "name": "typescript-plugin-css-modules"
       }
-    ],
+    ]
   },
   "include": [
     "packages/h5/next-env.d.ts",
