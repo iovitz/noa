@@ -9,3 +9,9 @@ content-type: application/json
     "name": "{{username}}",
     "age": {{$randomInt 5 150}}
 }
+
+
+### getCode
+@username = {{$random.alphabetic(10)}}
+GET {{prefix}}/verify/image-code?name=zs
+content-type: application/json

@@ -12,7 +12,7 @@ export async function POST(
 ) {
   const body = await request.json()
 
-  // 校验
+  // 参数校验
   const [data, err] = await of(CreateUser.parseAsync(body))
   if (err instanceof ZodError) {
     return Response.json({
@@ -21,6 +21,10 @@ export async function POST(
       status: HttpStatusCode.UnprocessableEntity,
     })
   }
+
+  // 验证码
+
+  // 创建用户
 
   return Response.json({
     data,

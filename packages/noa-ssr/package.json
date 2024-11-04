@@ -8,7 +8,9 @@
     "dev": "nodemon",
     "build": "next build && tsc --project tsconfig.server.json",
     "start": "cross-env NODE_ENV=production NOA_PORT=9393 node dist/server.js",
-    "yac": "node_modules/.bin/httpyac -e dev -o body ./rest.http"
+    "yac": "node_modules/.bin/httpyac -e dev -o body ./rest.http",
+    "db:g": "pnpm drizzle-kit generate",
+    "db:m": "pnpm drizzle-kit migrate"
   },
   "dependencies": {
     "await-of": "^3.1.1",
