@@ -11,7 +11,6 @@ import { LogInterceptor } from './aspects/interceptors/log/log.interceptor'
 import { PreparePromiseInterceptor } from './aspects/interceptors/prepare-promise/prepare-promise.interceptor'
 import { ResponseFormatterInterceptor } from './aspects/interceptors/response-formatter/response-formatter.interceptor'
 import { InjectorMiddleware } from './aspects/middlewares/injector/injector.middleware'
-import { DbModule } from './db/db.module'
 import { GlobalModule } from './global/global.module'
 import { TracerService } from './global/tracer/tracer.service'
 import { HomeModule } from './home/home.module'
@@ -42,7 +41,6 @@ import { UserModule } from './user/user.module'
     }),
     GlobalModule,
     EventEmitterModule.forRoot(),
-    DbModule,
     SocketV1Module,
     UserModule,
     HomeModule,

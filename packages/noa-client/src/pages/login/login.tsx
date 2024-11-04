@@ -1,8 +1,10 @@
 import { Button, Card, Divider, Space } from 'antd'
-import React from 'react'
-import Regsiter from './register'
+import React, { useState } from 'react'
+import LoginForm from './login-form'
+import RegisterForm from './register-form'
 
 export default function Login() {
+  const [isLogin, setIsLogin] = useState(true)
   return (
     <div className="h-full w-full bg-dark-900 flex items-center justify-center">
       <Card
@@ -10,13 +12,20 @@ export default function Login() {
         title="登录Noa"
       >
 
-        <Regsiter />
-
+        {
+          isLogin
+            ? <LoginForm />
+            : <RegisterForm />
+        }
         <Divider plain>或者</Divider>
 
         <Space direction="vertical" className="w-full">
-          <Button color="primary" block>返回登录</Button>
-          <Button type="primary" color="primary" block>微信登录</Button>
+          <Button color="default" variant="filled" block onClick={() => setIsLogin(!isLogin)}>
+            {isLogin ? '前往注册' : '返回登录'}
+          </Button>
+          <Button color="default" variant="solid" block>
+            使用 Github 账号登录
+          </Button>
         </Space>
       </Card>
     </div>

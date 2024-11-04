@@ -1,7 +1,7 @@
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd'
 import React from 'react'
 
-export default function Regsiter() {
+export default function LoginForm() {
   return (
     <Form
       name="layout-multiple-horizontal"
@@ -15,15 +15,15 @@ export default function Regsiter() {
         <Input />
       </Form.Item>
       <Form.Item
-        label="图形验证码"
-        name="code"
+        label="密码"
+        name="password"
         rules={[{ required: true }]}
       >
         <Input />
       </Form.Item>
       <Form.Item
-        label="手机验证码"
-        name="phoneCode"
+        label="图形验证码"
+        name="code"
         rules={[{ required: true }]}
       >
         <Row gutter={12}>
@@ -38,20 +38,6 @@ export default function Regsiter() {
         </Row>
       </Form.Item>
       <Form.Item
-        label="密码"
-        name="password"
-        rules={[{ required: true }]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="确认密码"
-        name="repeatPassword"
-        rules={[{ required: true }]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
         name="agree"
         valuePropName="agree"
         wrapperCol={{ offset: 7, span: 17 }}
@@ -59,7 +45,7 @@ export default function Regsiter() {
         <Checkbox>同意软件使用协议</Checkbox>
       </Form.Item>
 
-      <Button type="primary" block>注册</Button>
+      <Button type="primary" block>登录</Button>
     </Form>
   )
 }
