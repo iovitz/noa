@@ -3,8 +3,8 @@ import process from 'node:process'
 // eslint-disable-next-line node/no-deprecated-api
 import { parse } from 'node:url'
 import next from 'next'
+import { db } from './shared/db/db'
 import { logger } from './shared/logger/logger'
-import './shared/db/db'
 
 const port = Number.parseInt(process.env.PORT || '3000', 10)
 const dev = process.env.NODE_ENV !== 'production'
