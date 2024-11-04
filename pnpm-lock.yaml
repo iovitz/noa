@@ -323,6 +323,9 @@ importers:
 
   packages/noa-ssr:
     dependencies:
+      await-of:
+        specifier: ^3.1.1
+        version: 3.1.1
       better-sqlite3:
         specifier: ^11.1.2
         version: 11.5.0
@@ -350,6 +353,9 @@ importers:
       svg-captcha:
         specifier: ^1.4.0
         version: 1.4.0
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
     devDependencies:
       '@types/better-sqlite3':
         specifier: ^7.6.11
@@ -360,6 +366,9 @@ importers:
       drizzle-kit:
         specifier: ^0.27.1
         version: 0.27.1
+      httpyac:
+        specifier: ^6.15.0
+        version: 6.16.3(@types/node@20.17.4)
       nodemon:
         specifier: ^3.1.7
         version: 3.1.7
@@ -3516,6 +3525,10 @@ packages:
     hasBin: true
     peerDependencies:
       postcss: ^8.1.0
+
+  await-of@3.1.1:
+    resolution: {integrity: sha512-80naavFUrZPt+XabzjaOx3MUjIsu9wxlsuWmgetDRam9Ffbn4BCYEC04DenwvXwC8bc+ueNs4mIN6bauvq48XQ==}
+    engines: {node: '>=7.6.0'}
 
   aws-ssl-profiles@1.1.2:
     resolution: {integrity: sha512-NZKeq9AfyQvEeNlN0zSYAaWrmBffJh3IELMZfRpJVWgrpEbtEpnjvzqBPf+mxoI287JohRDoa+/nsfqqiZmF6g==}
@@ -9030,6 +9043,9 @@ packages:
     resolution: {integrity: sha512-cYVsTjKl8b+FrnidjibDWskAv7UKOfcwaVZdp/it9n1s9fU3IkgDbhdIRKCW4JDsAlECJY0ytoVPT3sK6kideA==}
     engines: {node: '>=18'}
 
+  zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
+
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
@@ -12679,6 +12695,8 @@ snapshots:
       picocolors: 1.1.1
       postcss: 8.4.47
       postcss-value-parser: 4.2.0
+
+  await-of@3.1.1: {}
 
   aws-ssl-profiles@1.1.2:
     optional: true
@@ -19264,5 +19282,7 @@ snapshots:
   yocto-queue@1.1.1: {}
 
   yoctocolors-cjs@2.1.2: {}
+
+  zod@3.23.8: {}
 
   zwitch@2.0.4: {}

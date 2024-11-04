@@ -1,5 +1,5 @@
 {
   "watch": ["src/*.ts"],
-  "exec": "ts-node --project tsconfig.server.json ./src/server",
+  "exec": "cross-env NOA_PORT=9393 ts-node --project tsconfig.server.json ./src/server",
   "ext": "js ts"
 }

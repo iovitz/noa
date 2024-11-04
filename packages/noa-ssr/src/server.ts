@@ -3,11 +3,11 @@ import next from 'next'
 import { Server } from 'socket.io'
 import { sqliteClient } from './db/sqlite'
 import { settings } from './settings'
-import { logger } from './shared/logger/logger'
+import { logger } from './shared/logger'
 
 const dev = process.env.NODE_ENV !== 'production'
 const hostname = 'localhost'
-const port = 3000
+const port = process.env.NOA_PORT ? Number(process.env.NOA_PORT) : 9393
 const app = next({ dev, hostname, port })
 const handler = app.getRequestHandler()
 

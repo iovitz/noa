@@ -1,0 +1,11 @@
+@prefix = {{host}}/api
+
+### createUser
+@username = {{$random.alphabetic(10)}}
+POST {{prefix}}/user/create
+content-type: application/json
+
+{
+    "name": "{{username}}",
+    "age": {{$randomInt 5 150}}
+}
