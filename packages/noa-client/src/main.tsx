@@ -12,7 +12,7 @@ http.initial({
   baseURL: '/api',
 })
 
-createRoot(document.getElementById('XIANBING_APP')!).render(
+createRoot(document.getElementById('NOA_APP')!).render(
   <HashRouter>
     <AppRoutes />
   </HashRouter>,

@@ -1,5 +1,5 @@
 {
-  "name": "@xianbing/app",
+  "name": "@noa/app",
   "type": "module",
   "version": "0.0.0",
   "private": true,
@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "antd": "^5.21.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.27.0"
