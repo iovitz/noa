@@ -1,4 +1,4 @@
-import { Button, Card, Checkbox, Col, Divider, Form, Input, Row, Space } from 'antd'
+import { Button, Card, Divider, Space } from 'antd'
 import React from 'react'
 import Regsiter from './register'
 
