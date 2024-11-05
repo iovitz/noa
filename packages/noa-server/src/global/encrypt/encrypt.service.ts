@@ -2,7 +2,6 @@ import { Buffer } from 'node:buffer'
 import { createHash } from 'node:crypto'
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { compare } from 'bcrypt'
 import { AES } from 'crypto-js'
 import { gzip, ungzip } from 'pako'
 import { stringify } from 'safe-stable-stringify'
@@ -25,8 +24,8 @@ export class EncryptService {
     return Buffer.from(gzip(str, { level: 9 })).toString('base64')
   }
 
-  comparePassword(password, hash) {
-    return compare(password, hash)
+  async comparePassword(password: string, hash: string) {
+    return await this.encryptPassword(password) === hash
   }
 
   async encryptPassword(data: string) {

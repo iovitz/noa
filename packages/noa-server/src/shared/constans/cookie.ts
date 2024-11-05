@@ -1,4 +1,4 @@
 export enum CookieKeys {
-  ClientId = 'clientid',
+  ClientId = 'client-id',
   UserAgent = 'user-agent',
 }

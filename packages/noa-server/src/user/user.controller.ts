@@ -1,13 +1,20 @@
-import { Body, Controller, Post } from '@nestjs/common'
+import { Body, Controller, Inject, Post } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
+import { EncryptService } from 'src/global/encrypt/encrypt.service'
+import { CookieKeys } from 'src/shared/constans/cookie'
+import { ClientIP, Cookie } from 'src/shared/decorator/request'
 import { CreateUserDTO, CreateUserResponseDTO } from './user.dto'
 import { UserService } from './user.service'
 
 @ApiTags('User Module')
 @Controller('/api/user')
 export class UserController {
-  constructor(private userService: UserService) {}
+  @Inject(UserService)
+  userService: UserService
+
+  @Inject(EncryptService)
+  encryptService: EncryptService
 
   @Post('/create')
   @ApiOperation({
@@ -18,16 +25,18 @@ export class UserController {
     description: '登录成功的用户信息',
     type: CreateUserResponseDTO,
   })
-  async createUser(@Body(VerifyPipe) body: CreateUserDTO) {
+  async createUser(@Body(VerifyPipe) body: CreateUserDTO, @ClientIP() ip: string, @Cookie(CookieKeys.ClientId) cid: string) {
     // 校验二维码
-
-    // 加密密码
+    const verifyCodeString = `${ip}`
+    console.error(verifyCodeString)
+    console.error(cid)
 
     // 创建用户
     const user = await this.userService.createUser({
       name: body.name,
       phone: body.phone,
-      password: body.password,
+      // 密码进行MD5加密
+      password: await this.encryptService.encryptPassword(body.password),
     })
     return user
   }

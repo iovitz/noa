@@ -1,8 +1,9 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common'
+import { CookieKeys } from '../constans/cookie'
 
 // 拿到请求Tracer
 export const Tracer = createParamDecorator(
-  (_data: string, ctx: ExecutionContext) => {
+  (_: string, ctx: ExecutionContext) => {
     const req = ctx.switchToHttp().getRequest<Req>()
     return req.tracer
   },
@@ -10,8 +11,16 @@ export const Tracer = createParamDecorator(
 
 // 获取用户IP
 export const ClientIP = createParamDecorator(
-  (data: string, ctx: ExecutionContext) => {
+  (_: string, ctx: ExecutionContext) => {
     const req = ctx.switchToHttp().getRequest<Req>()
     return req.ip.match(/\d+\.\d+\.\d+\.\d+/)?.[0]
+  },
+)
+
+// 获取ClientId
+export const Cookie = createParamDecorator(
+  (cookieKey: CookieKeys, ctx: ExecutionContext) => {
+    const req = ctx.switchToHttp().getRequest<Req>()
+    return req.getCookie(cookieKey)
   },
 )
