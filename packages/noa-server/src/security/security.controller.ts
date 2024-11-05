@@ -1,5 +1,5 @@
 import { Controller, Get, Header, Headers, Inject, Query } from '@nestjs/common'
-import { ApiHeader, ApiOperation, ApiParam, ApiProduces, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { ApiOperation, ApiProduces, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { contentType } from 'mime-types'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
 import { CookieKeys } from 'src/shared/constans/cookie'
