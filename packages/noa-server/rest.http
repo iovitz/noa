@@ -1,0 +1,19 @@
+@prefix = {{host}}/api
+
+### createUser
+@username = {{$random.alphabetic(10)}}
+POST {{prefix}}/user/create
+content-type: application/json
+
+{
+    "name": "{{username}}",
+    "age": {{$randomInt 5 150}}
+}
+
+### GetVerifyCode
+GET {{prefix}}/security/verify-code
+  ?width=100
+  &height=50
+  &length=4
+  &type=login
+content-type: application/json

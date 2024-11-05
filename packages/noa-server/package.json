@@ -19,7 +19,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "compodoc": "pnpx @compodoc/compodoc -p tsconfig.json -s -o -c .compodoc.json",
-    "yac": "node_modules/.bin/httpyac -e dev -o body ./http.rest"
+    "yac": "node_modules/.bin/httpyac -e dev -o body ./rest.http"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -39,6 +39,7 @@
     "ejs": "^3.1.10",
     "express-session": "^1.18.0",
     "lodash": "^4.17.21",
+    "mime-types": "^2.1.35",
     "moment": "^2.30.1",
     "nanoid": "^3.3.7",
     "pako": "^2.1.0",
@@ -67,6 +68,7 @@
     "@types/jest": "^29.5.2",
     "@types/json-stringify-safe": "^5.0.3",
     "@types/lodash": "^4.17.7",
+    "@types/mime-types": "^2.1.4",
     "@types/node": "^20.3.1",
     "@types/pako": "^2.0.3",
     "@types/statuses": "^2.0.5",

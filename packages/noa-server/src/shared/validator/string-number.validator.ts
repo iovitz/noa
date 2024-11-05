@@ -6,13 +6,13 @@ import {
   ValidationOptions,
 } from 'class-validator'
 
-export function StringNumberMax(
+export function NumberStringMax(
   maxValue: number,
   validationOptions?: ValidationOptions,
 ) {
   return function (object: object, propertyName: string) {
     registerDecorator({
-      name: 'stringNumberMin',
+      name: 'NumberStringMin',
       target: object.constructor,
       propertyName,
       constraints: [maxValue],
@@ -31,13 +31,13 @@ export function StringNumberMax(
   }
 }
 
-export function StringNumberMin(
+export function NumberStringMin(
   minValue: number,
   validationOptions?: ValidationOptions,
 ) {
   return function (object: object, propertyName: string) {
     registerDecorator({
-      name: 'stringNumberMin',
+      name: 'NumberStringMin',
       target: object.constructor,
       propertyName,
       constraints: [minValue],

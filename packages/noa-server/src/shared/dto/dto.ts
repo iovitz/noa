@@ -1,7 +1,7 @@
 import { IsNumberString, IsOptional } from 'class-validator'
 import {
-  StringNumberMax,
-  StringNumberMin,
+  NumberStringMax,
+  NumberStringMin,
 } from '../validator/string-number.validator'
 
 export class PagingDTO {
@@ -9,14 +9,14 @@ export class PagingDTO {
   @IsNumberString({
     no_symbols: true,
   })
-  @StringNumberMin(1)
+  @NumberStringMin(1)
   page?: string
 
   @IsOptional()
   @IsNumberString({
     no_symbols: true,
   })
-  @StringNumberMin(0)
-  @StringNumberMax(1000)
+  @NumberStringMin(0)
+  @NumberStringMax(1000)
   size?: string
 }
