@@ -1,8 +1,11 @@
+import { homedir } from 'node:os'
+import { join } from 'node:path'
 import * as process from 'node:process'
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
 import { EventEmitterModule } from '@nestjs/event-emitter'
+import { TypeOrmModule } from '@nestjs/typeorm'
 import * as cookieParser from 'cookie-parser'
 import * as session from 'express-session'
 import { DefaultFilter } from './aspects/filters/default/default.filter'
@@ -39,6 +42,16 @@ import { UserModule } from './user/user.module'
         },
       ],
     }),
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: async (_configService: ConfigService) => ({
+        type: 'better-sqlite3',
+        database: join(homedir(), 'sqlite/noa.sqlite'),
+        autoLoadEntities: true,
+        synchronize: true,
+      }),
+    }),
+
     GlobalModule,
     EventEmitterModule.forRoot(),
     SocketV1Module,
