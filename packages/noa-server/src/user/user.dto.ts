@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsInt, IsString, Length, Matches, Max, Min } from 'class-validator'
+import { IsString, Length } from 'class-validator'
 import { PagingDTO } from 'src/shared/dto/dto'
 
 export class getUsersDTO extends PagingDTO {}

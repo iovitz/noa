@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Header, Param, Post, Query } from '@nestjs/common'
+import { Body, Controller, Post } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
 import { CreateUserDTO, CreateUserResponseDTO } from './user.dto'
