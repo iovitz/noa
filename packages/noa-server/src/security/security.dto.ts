@@ -7,9 +7,8 @@ export class GetVerifyCodeDTO {
   @IsString()
   @Length(1, 20)
   @ApiProperty({
-    type: 'enum',
-    examples: ['login', 'register'],
-    description: '用户的昵称',
+    example: 'login',
+    description: '验证码类型',
   })
   type: string
 
@@ -20,7 +19,7 @@ export class GetVerifyCodeDTO {
   @NumberStringMax(1000)
   @ApiProperty({
     example: '200',
-    description: '用户的密码',
+    description: '验证码宽度',
   })
   width: string
 

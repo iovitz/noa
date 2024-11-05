@@ -7,7 +7,7 @@ import { ClientIP, Cookie } from 'src/shared/decorator/request'
 import { CreateUserDTO, CreateUserResponseDTO } from './user.dto'
 import { UserService } from './user.service'
 
-@ApiTags('User Module')
+@ApiTags('登录 / 用户信息')
 @Controller('/api/user')
 export class UserController {
   @Inject(UserService)
@@ -18,7 +18,7 @@ export class UserController {
 
   @Post('/create')
   @ApiOperation({
-    description: '创建用户',
+    summary: '获取图形验证码',
   })
   @ApiResponse({
     status: 200,
