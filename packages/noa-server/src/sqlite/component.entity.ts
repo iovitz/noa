@@ -1,11 +1,10 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity('component')
 export class Component {
-  @PrimaryColumn({
-    type: 'bigint',
+  @PrimaryGeneratedColumn({
+    type: 'int',
     unsigned: true,
-    default: () => process.hrtime.bigint() + BigInt(Math.floor(Math.random() * 10000)),
     comment: '自增主键',
   })
   id: number
