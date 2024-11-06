@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import * as svgCaptcha from 'svg-captcha'
 import { Repository } from 'typeorm'
-import { VerifyCode } from './verify-code.entity'
+import { VerifyCode } from '../sqlite/verify-code.entity'
 
 @Injectable()
 export class SecurityService {

@@ -33,7 +33,7 @@ export class UserController {
 
     // 创建用户
     const user = await this.userService.createUser({
-      name: body.name,
+      nickname: body.nickname,
       phone: body.phone,
       // 密码进行MD5加密
       password: await this.encryptService.encryptPassword(body.password),

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DeepPartial, Repository } from 'typeorm'
+import { User } from '../sqlite/user.entity'
 import { namePart1, namePart2 } from './user.const'
-import { User } from './user.entity'
 
 @Injectable()
 export class UserService {

@@ -11,7 +11,7 @@ export class CreateUserDTO {
     example: 'zhangsan',
     description: '用户的昵称',
   })
-  name: string
+  nickname: string
 
   @IsString()
   @Length(2, 20)

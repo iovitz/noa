@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { VerifyCode } from '../sqlite/verify-code.entity'
 import { SecurityController } from './security.controller'
 import { SecurityService } from './security.service'
-import { VerifyCode } from './verify-code.entity'
 
 @Module({
   imports: [TypeOrmModule.forFeature([VerifyCode])],

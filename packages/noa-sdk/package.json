@@ -1,0 +1,17 @@
+{
+  "name": "noa-sdk",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "main": "index.tsx",
+  "peerDependencies": {
+    "axios": ">=1.7.7",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "dependencies": {
+    "antd": "^5.21.6"
+  }
+}

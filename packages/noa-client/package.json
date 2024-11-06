@@ -8,15 +8,18 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview"
   },
+  "peerDependencies": {
+    "@types/react": ">=18.3.10",
+    "@types/react-dom": ">=18.3.0",
+    "antd": ">=5.21.6",
+    "react": ">=18.3.1",
+    "react-dom": ">=18.3.1"
+  },
   "dependencies": {
-    "antd": "^5.21.6",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "noa-sdk": "file:../noa-sdk",
     "react-router-dom": "^6.27.0"
   },
   "devDependencies": {
-    "@types/react": "^18.3.10",
-    "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "autoprefixer": "10.4.20",
     "globals": "^15.9.0",
