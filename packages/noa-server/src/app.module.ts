@@ -45,14 +45,17 @@ import { UserModule } from './user/user.module'
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: async (_configService: ConfigService) => ({
-        type: 'better-sqlite3',
-        database: join(homedir(), 'sqlite/noa.sqlite'),
-        autoLoadEntities: true,
-        synchronize: true,
-      }),
+      useFactory: async (_configService: ConfigService) => {
+        const sqliteFilePath = join(homedir(), 'sqlite/noa.sqlite')
+        return {
+          type: 'better-sqlite3',
+          database: sqliteFilePath,
+          autoLoadEntities: true,
+          synchronize: true,
+          logging: true,
+        }
+      },
     }),
-
     GlobalModule,
     EventEmitterModule.forRoot(),
     SocketV1Module,

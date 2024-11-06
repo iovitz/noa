@@ -1,9 +1,13 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { Page } from './page.entity'
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity('user')
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn({
+    type: 'bigint',
+    unsigned: true,
+    default: () => process.hrtime.bigint() + BigInt(Math.floor(Math.random() * 10000)),
+    comment: '自增主键',
+  })
   id: number
 
   @Column({
@@ -36,7 +40,4 @@ export class User {
     comment: '修改时间',
   })
   updatedAt: Date
-
-  @OneToMany(() => Page, page => page.user)
-  pages: Page[]
 }

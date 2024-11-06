@@ -1,12 +1,22 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { Component } from './component.entity'
 import { FormValue } from './form-value.entity'
-import { User } from './user.entity'
 
 @Entity('page')
 export class Page {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn({
+    type: 'bigint',
+    unsigned: true,
+    default: () => process.hrtime.bigint() + BigInt(Math.floor(Math.random() * 10000)),
+    comment: '自增主键',
+  })
   id: number
+
+  @Column({
+    type: 'bigint',
+    unsigned: true,
+  })
+  userId: number
 
   @Column({
     type: 'varchar',
@@ -45,13 +55,4 @@ export class Page {
     comment: '修改时间',
   })
   updatedAt: Date
-
-  @ManyToOne(() => User, user => user.pages)
-  user: User
-
-  @OneToMany(() => Component, component => component.page)
-  components: Component[]
-
-  @OneToMany(() => FormValue, formValue => formValue.page)
-  formValues: FormValue[]
 }

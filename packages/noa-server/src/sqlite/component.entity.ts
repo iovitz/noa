@@ -1,10 +1,22 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { UUID } from 'typeorm/driver/mongodb/bson.typings'
 import { Page } from './page.entity'
 
 @Entity('component')
 export class Component {
-  @PrimaryGeneratedColumn('uuid')
-  id: string
+  @PrimaryColumn({
+    type: 'bigint',
+    unsigned: true,
+    default: () => process.hrtime.bigint() + BigInt(Math.floor(Math.random() * 10000)),
+    comment: '自增主键',
+  })
+  id: number
+
+  @Column({
+    type: 'bigint',
+    unsigned: true,
+  })
+  pageId: number
 
   @Column({
     type: 'varchar',
@@ -49,7 +61,4 @@ export class Component {
     comment: '修改时间',
   })
   updatedAt: Date
-
-  @ManyToOne(() => Page, page => page.components)
-  page: Page
 }

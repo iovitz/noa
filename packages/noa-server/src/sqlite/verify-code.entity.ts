@@ -1,8 +1,13 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity('verifyCode')
 export class VerifyCode {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn({
+    type: 'bigint',
+    unsigned: true,
+    default: () => process.hrtime.bigint() + BigInt(Math.floor(Math.random() * 10000)),
+    comment: '自增主键',
+  })
   id: number
 
   @Column({
