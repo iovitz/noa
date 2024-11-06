@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Page } from './page.entity'
 
 @Entity('user')
 export class User {
@@ -35,4 +36,7 @@ export class User {
     comment: '修改时间',
   })
   updatedAt: Date
+
+  @OneToMany(() => Page, page => page.user)
+  pages: Page[]
 }
