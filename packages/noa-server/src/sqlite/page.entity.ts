@@ -46,7 +46,7 @@ export class Page {
   })
   updatedAt: Date
 
-  @ManyToOne(() => User,user=> user.pages)
+  @ManyToOne(() => User, user => user.pages)
   user: User
 
   @OneToMany(() => Component, component => component.page)
