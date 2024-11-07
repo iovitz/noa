@@ -23,26 +23,7 @@ import { UserModule } from './user/user.module'
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: [
-        '.env', // 默认配置文件
-        // 选择配置类型
-        ['prod', 'pre'].includes(process.env.APP_NAME_NODE_ENV)
-          ? '.env.prod'
-          : '.env.dev', // 环境配置文件
-      ],
-      load: [
-        // 可以加载远程配置
-        async () => {
-          const isProd = process.env.NODE_ENV === 'prod'
-
-          return {
-            isProd,
-          }
-        },
-      ],
-    }),
+    GlobalModule,
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: async (_configService: ConfigService) => {
@@ -56,7 +37,6 @@ import { UserModule } from './user/user.module'
         }
       },
     }),
-    GlobalModule,
     EventEmitterModule.forRoot(),
     SocketV1Module,
     UserModule,

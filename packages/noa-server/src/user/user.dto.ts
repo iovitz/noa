@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsString, Length } from 'class-validator'
+import { IsEmail, IsString, Length } from 'class-validator'
 import { PagingDTO } from 'src/shared/dto/dto'
 
 export class getUsersDTO extends PagingDTO {}
@@ -23,11 +23,12 @@ export class CreateUserDTO {
 
   @IsString()
   @Length(11)
+  @IsEmail()
   @ApiProperty({
-    example: '13333333333',
-    description: '用户的手机号',
+    example: 'zhangsan@gmail.com',
+    description: '用户的邮箱',
   })
-  phone: string
+  email: string
 
   @IsString()
   @Length(4)

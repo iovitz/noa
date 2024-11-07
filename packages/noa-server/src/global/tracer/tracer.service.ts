@@ -64,6 +64,6 @@ class BaseTracer implements LoggerService {
 @Injectable()
 export class TracerService extends BaseTracer {
   constructor(private config: ConfigService) {
-    super(createRootLogger(config.getOrThrow('LOG_LEVEL')))
+    super(createRootLogger(config.getOrThrow('isProd') ? 'info' : 'debug'))
   }
 }
