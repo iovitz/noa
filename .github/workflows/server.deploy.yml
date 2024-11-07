@@ -3,9 +3,9 @@ name: Deploy Node Server
 on:
   push:
     branches:
-      - develop
+      - master
     paths:
-      - 'server/**'
+      - 'packages/noa-client/**'
 
 jobs:
   build:
