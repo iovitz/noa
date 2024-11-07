@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'packages/noa-client/**'
+      - 'packages/noa-server/**'
 
 jobs:
   build:
