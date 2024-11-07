@@ -40,4 +40,4 @@ jobs:
           username: ${{ secrets.CLIENT_SERVER_FTP_USERNAME }}
           password: ${{ secrets.CLIENT_SERVER_FTP_PASSWORD }}
           local-dir: packages/noa-client/dist/
-          server-dir: wwwroot/noa/
+          server-dir: wwwroot/
