@@ -19,6 +19,7 @@ export default defineConfig({
     },
   },
   server: {
+    port: 21922,
     proxy: {
       '/api': {
         target: 'http://localhost:13131', // 目标服务器地址
@@ -40,3 +41,5 @@ export default defineConfig({
     },
   },
 })
+
+console.info('App is in:', 'http://localhost:21922/noa/')

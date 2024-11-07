@@ -13,7 +13,7 @@ http.initial({
 })
 
 createRoot(document.getElementById('NOA_APP')!).render(
-  <BrowserRouter>
+  <BrowserRouter basename="noa">
     <AppRoutes />
   </BrowserRouter>,
 )
