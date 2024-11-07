@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'packages/noa-server/**'
+      - 'packages/noa-client/**'
 
 jobs:
   deploy:
