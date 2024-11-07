@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity('user')
-export class User {
+@Entity('oauth')
+export class OAuth {
   @PrimaryGeneratedColumn({
     type: 'int',
     unsigned: true,
@@ -10,27 +10,25 @@ export class User {
   id: number
 
   @Column({
-    type: 'varchar',
-    length: 11,
-    comment: '邮箱',
-    nullable: true,
+    type: 'int',
+    unsigned: true,
+    comment: '用户ID',
   })
-  email?: string
-
-  @Column({
-    type: 'varchar',
-    length: 32,
-    comment: 'MD5加密后的密码',
-    nullable: true,
-  })
-  password: string
+  userId: number
 
   @Column({
     type: 'varchar',
     length: 20,
-    comment: '用户昵称',
+    comment: '三方平台类型',
   })
-  nickname: string
+  platform: string
+
+  @Column({
+    type: 'varchar',
+    length: 20,
+    comment: '三方平台用户ID',
+  })
+  platformId: string
 
   @CreateDateColumn({
     comment: '修改时间',
