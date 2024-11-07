@@ -30,16 +30,15 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    assetsDir: 'assets',
+    assetsDir: 'noa/assets',
+    copyPublicDir: true,
     manifest: false,
     rollupOptions: {
       output: {
-        entryFileNames: `noa/assets/[name].js`,
-        chunkFileNames: `noa/assets/[name].js`,
-        assetFileNames: `noa/assets/[name].[ext]`,
+        entryFileNames: `noa/[name].js`,
+        chunkFileNames: `noa/[name].js`,
+        assetFileNames: `noa/[name].[ext]`,
       },
     },
   },
 })
-
-console.info('App is in:', 'http://localhost:21922/noa/')
