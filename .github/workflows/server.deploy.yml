@@ -16,9 +16,9 @@ jobs:
       - name: Deploy To Pre
         uses: appleboy/ssh-action@v1.1.0
         with:
-          host: '${{ secrets.PRE_SERVER_HOST }}'
-          username: ${{ secrets.PRE_SERVER_NAME }}
-          key: ${{ secrets.PRE_SERVER_SSH_KEY }}
+          host: '${{ secrets.SERVER_VPS_HOST }}'
+          username: root
+          key: ${{ secrets.SERVER_VPS_KEY }}
           script: |
             echo 'Set Environment Variable'
             export SESSION_SECRET="${{ secrets.SESSION_SECRET }}"
