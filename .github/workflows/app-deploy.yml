@@ -1,11 +1,11 @@
-name: Deploy App To H5
+name: Deploy Client
 
 on:
   push:
     branches:
-      - develop
+      - master
     paths:
-      - 'app/**'
+      - 'packages/noa-server/**'
 
 jobs:
   deploy:
@@ -21,27 +21,23 @@ jobs:
         with:
           node-version: 20.17.0
 
-      - name: CD To App Directory
-        run: |
-          cd app
-
       # 安装指定版本pnpm(避免lock文件变更)
       - name: Install pnpm
         run: |
-          npm install -g pnpm@9.9.0
 
       # 安装依赖
       - name: Install dependencies & Build
         run: |
-          cd noa-platform
+          cd packages/noa-client/
+          npm install -g pnpm@9.9.0
           pnpm install
           pnpm build
 
       - name: Sync Files To Server
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.APP_H5_FTP_HOST }}
-          username: ${{ secrets.APP_H5_FTP_USERNAME }}
-          password: ${{ secrets.APP_H5_FTP_PASSWORD }}
-          local-dir: app/dist/
-          server-dir: '${{ secrets.APP_H5_FTP_SERVER_DIR }}'
+          server: ${{ secrets.CLIENT_SERVER_HOST }}
+          username: ${{ secrets.CLIENT_SERVER_FTP_USERNAME }}
+          password: ${{ secrets.CLIENT_SERVER_FTP_PASSWORD }}
+          local-dir: packages/noa-client/dist/
+          server-dir: wwwroot/noa/
