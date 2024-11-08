@@ -8,7 +8,7 @@ import { CreateUserDTO, CreateUserResponseDTO } from './user.dto'
 import { UserService } from './user.service'
 
 @ApiTags('登录 / 用户信息')
-@Controller('/api/user')
+@Controller('api-noa/user')
 export class UserController {
   @Inject(UserService)
   userService: UserService

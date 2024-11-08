@@ -15,6 +15,7 @@ import { ResponseFormatterInterceptor } from './aspects/interceptors/response-fo
 import { InjectorMiddleware } from './aspects/middlewares/injector/injector.middleware'
 import { GlobalModule } from './global/global.module'
 import { TracerService } from './global/tracer/tracer.service'
+import { HomeModule } from './home/home.module'
 import { SecurityModule } from './security/security.module'
 import { SocketV1Module } from './socketv1/socketv1.module'
 import { StatusModule } from './status/status.module'
@@ -41,6 +42,7 @@ import { UserModule } from './user/user.module'
     UserModule,
     SecurityModule,
     StatusModule,
+    HomeModule,
   ],
   providers: [
     {

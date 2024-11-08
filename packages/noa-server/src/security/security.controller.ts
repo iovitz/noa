@@ -9,7 +9,7 @@ import { GetVerifyCodeDTO } from './security.dto'
 import { SecurityService } from './security.service'
 
 @ApiTags('认证/安全')
-@Controller('api/security')
+@Controller('api-noa/security')
 export class SecurityController {
   @Inject(SecurityService)
   securityService: SecurityService
