@@ -35,9 +35,9 @@ export default defineConfig({
     manifest: false,
     rollupOptions: {
       output: {
-        entryFileNames: `noa/[name].js`,
-        chunkFileNames: `noa/[name].js`,
-        assetFileNames: `noa/[name].[ext]`,
+        entryFileNames: `noa-files/[name].js`,
+        chunkFileNames: `noa-files/[name].js`,
+        assetFileNames: `noa-files/[name].[ext]`,
       },
     },
   },
