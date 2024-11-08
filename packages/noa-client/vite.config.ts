@@ -30,14 +30,14 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    assetsDir: 'noa-assets/assets',
+    assetsDir: 'assets-noa/assets',
     copyPublicDir: true,
     manifest: false,
     rollupOptions: {
       output: {
-        entryFileNames: `noa-assets/[name].js`,
-        chunkFileNames: `noa-assets/[name].js`,
-        assetFileNames: `noa-assets/[name].[ext]`,
+        entryFileNames: `assets-noa/[name].js`,
+        chunkFileNames: `assets-noa/[name].js`,
+        assetFileNames: `assets-noa/[name].[ext]`,
       },
     },
   },
