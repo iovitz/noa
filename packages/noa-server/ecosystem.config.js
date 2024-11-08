@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'nest-app',
+      name: 'noa',
       exec_interpreter: 'node',
       script: './dist/src/main.js',
       // 不要使用npm的方式，否则会多出一个npm start的进程
