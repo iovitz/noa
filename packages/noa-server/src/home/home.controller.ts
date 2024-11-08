@@ -1,4 +1,4 @@
-import { Controller, Get, Header, Redirect, Render } from '@nestjs/common'
+import { Controller, Get, Header } from '@nestjs/common'
 import { HeaderKeys } from 'src/shared/constans/header'
 import * as superagent from 'superagent'
 
