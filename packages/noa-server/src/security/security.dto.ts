@@ -1,6 +1,6 @@
 import { Optional } from '@nestjs/common'
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNumberString, IsString, Length, validate } from 'class-validator'
+import { IsNumberString, IsString, Length } from 'class-validator'
 import { NumberStringMax, NumberStringMin } from 'src/shared/validator/string-number.validator'
 
 export class GetVerifyCodeDTO {
