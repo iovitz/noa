@@ -16,6 +16,7 @@
     "react-dom": ">=18.3.1"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.5.1",
     "react-router-dom": "^6.27.0"
   },
   "devDependencies": {
