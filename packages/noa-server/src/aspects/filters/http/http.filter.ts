@@ -6,6 +6,8 @@ import {
   ExceptionFilter,
   HttpException,
 } from '@nestjs/common'
+import { contentType } from 'mime-types'
+import { HeaderKeys } from 'src/shared/constans/header'
 
 @Catch(HttpException)
 export class HttpFilter implements ExceptionFilter {
@@ -27,6 +29,7 @@ export class HttpFilter implements ExceptionFilter {
       cid: res.clientId,
     })
 
+    res.setHeader(HeaderKeys.ContentType, contentType('json') as string)
     res.status(status)
     res.send(errorResponse)
   }

@@ -17,7 +17,15 @@ export const ClientIP = createParamDecorator(
   },
 )
 
-// 获取ClientId
+// 获取用户IP
+export const ClientID = createParamDecorator(
+  (_: string, ctx: ExecutionContext) => {
+    const req = ctx.switchToHttp().getRequest<Req>()
+    return req.clientId
+  },
+)
+
+// 获取指定Cookie
 export const Cookie = createParamDecorator(
   (cookieKey: CookieKeys, ctx: ExecutionContext) => {
     const req = ctx.switchToHttp().getRequest<Req>()

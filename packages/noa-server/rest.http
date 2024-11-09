@@ -1,4 +1,4 @@
-@prefix = {{host}}/api
+@prefix = {{host}}/api-noa
 
 ### createUser
 @username = {{$random.alphabetic(10)}}

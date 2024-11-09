@@ -1,9 +1,7 @@
 import {
   ArgumentMetadata,
   BadRequestException,
-
   Injectable,
-
   PipeTransform,
 } from '@nestjs/common'
 import { plainToClass } from 'class-transformer'
@@ -19,7 +17,6 @@ export class VerifyPipe implements PipeTransform {
       whitelist: true,
       forbidNonWhitelisted: true,
     })
-
     if (errors.length > 0) {
       const errorMessages = this.buildErrorMessage(errors)
       throw new BadRequestException(errorMessages)
