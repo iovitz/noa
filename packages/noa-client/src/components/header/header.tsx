@@ -3,12 +3,14 @@ import { Button, Flex, Menu } from 'antd'
 import { Header } from 'antd/es/layout/layout'
 import { ItemType, MenuItemType } from 'antd/es/menu/interface'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import HeaderAvatar from './header-avatar'
 
 export default function PageHeader() {
+  const navigate = useNavigate()
   const headerLabels: ItemType<MenuItemType>[] = [
     {
-      key: 'home',
+      key: '/',
       label: '首页',
     },
     {
@@ -30,9 +32,12 @@ export default function PageHeader() {
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={['home']}
+          defaultSelectedKeys={['/']}
           items={headerLabels}
           style={{ flex: 1, minWidth: 0 }}
+          onClick={({ key }) => {
+            navigate(key)
+          }}
         />
         <Flex justify="flex-end" align="center">
           <Button type="primary" icon={<PlusOutlined />} />
