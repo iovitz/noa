@@ -5,11 +5,11 @@ import { Outlet } from 'react-router-dom'
 
 export default function Home() {
   return (
-    <Layout className="h-full">
+    <div className="h-full flex flex-col">
       <PageHeader />
-      <Layout>
+      <div className="flex-1 bg-gray-100">
         <Outlet />
-      </Layout>
-    </Layout>
+      </div>
+    </div>
   )
 }

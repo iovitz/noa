@@ -24,26 +24,24 @@ export default function PageHeader() {
   ]
 
   return (
-    <Header>
-      <Flex gap="middle">
-        <Flex align="center">
-          <Button type="link">Noa</Button>
-        </Flex>
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={['/']}
-          items={headerLabels}
-          style={{ flex: 1, minWidth: 0 }}
-          onClick={({ key }) => {
-            navigate(key)
-          }}
-        />
-        <Flex justify="flex-end" align="center">
-          <Button type="primary" icon={<PlusOutlined />} />
-        </Flex>
+
+    <div className="flex container mx-auto flex-row">
+      <div className="h-full flex items-center">
+        <Button type="link">Noa</Button>
+      </div>
+      <Menu
+        mode="horizontal"
+        defaultSelectedKeys={['/']}
+        items={headerLabels}
+        style={{ flex: 1, minWidth: 0, border: 'none', height: '50px' }}
+        onClick={({ key }) => {
+          navigate(key)
+        }}
+      />
+      <div className="flex items-end items-center">
+        <Button icon={<PlusOutlined />} className="mr-2" color="default" variant="text" />
         <HeaderAvatar />
-      </Flex>
-    </Header>
+      </div>
+    </div>
   )
 }
