@@ -1,0 +1,21 @@
+{
+  "name": "noa-sdk",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "exports": "./src/main.tsx",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "peerDependencies": {
+    "@types/react": ">=18.3.10",
+    "@types/react-dom": ">=18.3.0",
+    "antd": ">=5.21.6",
+    "react": ">=18.3.1",
+    "react-dom": ">=18.3.1"
+  }
+}
