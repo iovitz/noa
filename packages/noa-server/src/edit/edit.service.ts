@@ -4,9 +4,7 @@ import { Component } from 'react'
 import { Changeset } from 'src/sqlite/changeset.entity'
 import { Page } from 'src/sqlite/page.entity'
 import { Snapshot } from 'src/sqlite/snapshot.entity'
-import { User } from 'src/sqlite/user.entity'
 import { DeepPartial, Repository } from 'typeorm'
-import { NewEditDTO } from './edit.dto'
 
 @Injectable()
 export class EditService {
