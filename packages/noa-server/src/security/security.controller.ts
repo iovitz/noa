@@ -28,7 +28,6 @@ export class SecurityController {
   async getVerifyCode(@Query(VerifyPipe) query: GetVerifyCodeDTO, @ClientID() cid: string, @ClientIP() ip: string, @Headers(HeaderKeys.UserAgent) ua: string) {
     const { data, text } = this.securityService.getVerifyCode(Number(query.width), Number(query.height), Number(query.length ?? 4))
 
-    console.error('##', cid)
     await this.securityService.saveVerifyToDB(ip, cid, ua, text)
 
     return data
