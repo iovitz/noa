@@ -13,6 +13,7 @@ import { LogInterceptor } from './aspects/interceptors/log/log.interceptor'
 import { PreparePromiseInterceptor } from './aspects/interceptors/prepare-promise/prepare-promise.interceptor'
 import { ResponseFormatterInterceptor } from './aspects/interceptors/response-formatter/response-formatter.interceptor'
 import { InjectorMiddleware } from './aspects/middlewares/injector/injector.middleware'
+import { EditModule } from './edit/edit.module'
 import { GlobalModule } from './global/global.module'
 import { TracerService } from './global/tracer/tracer.service'
 import { HomeModule } from './home/home.module'
@@ -43,6 +44,7 @@ import { UserModule } from './user/user.module'
     SecurityModule,
     StatusModule,
     HomeModule,
+    EditModule,
   ],
   providers: [
     {
