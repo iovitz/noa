@@ -24,11 +24,11 @@ export class EncryptService {
     return Buffer.from(gzip(str, { level: 9 })).toString('base64')
   }
 
-  async comparePassword(password: string, hash: string) {
-    return await this.encryptPassword(password) === hash
+  async compareMD5(password: string, hash: string) {
+    return await this.encryptMd5(password) === hash
   }
 
-  async encryptPassword(data: string) {
+  async encryptMd5(data: string) {
     return createHash('md5').update(data).digest('hex')
   }
 
