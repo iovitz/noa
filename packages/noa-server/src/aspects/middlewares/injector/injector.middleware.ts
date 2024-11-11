@@ -1,9 +1,9 @@
 import * as process from 'node:process'
 import { Inject, Injectable, NestMiddleware } from '@nestjs/common'
 import { customAlphabet } from 'nanoid'
-import { TracerService } from 'src/global/tracer/tracer.service'
 import { CookieKeys } from 'src/shared/constans/cookie'
 import { PromiseManager } from 'src/shared/utils/promise-manager'
+import { TracerService } from 'src/util/tracer/tracer.service'
 
 @Injectable()
 export class InjectorMiddleware implements NestMiddleware {

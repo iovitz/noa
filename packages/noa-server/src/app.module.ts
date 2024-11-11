@@ -14,17 +14,17 @@ import { PreparePromiseInterceptor } from './aspects/interceptors/prepare-promis
 import { ResponseFormatterInterceptor } from './aspects/interceptors/response-formatter/response-formatter.interceptor'
 import { InjectorMiddleware } from './aspects/middlewares/injector/injector.middleware'
 import { EditModule } from './edit/edit.module'
-import { GlobalModule } from './global/global.module'
-import { TracerService } from './global/tracer/tracer.service'
 import { HomeModule } from './home/home.module'
 import { SecurityModule } from './security/security.module'
 import { SocketV1Module } from './socketv1/socketv1.module'
 import { StatusModule } from './status/status.module'
 import { UserModule } from './user/user.module'
+import { TracerService } from './util/tracer/tracer.service'
+import { UtilModule } from './util/util.module'
 
 @Module({
   imports: [
-    GlobalModule,
+    UtilModule,
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: async (_configService: ConfigService) => {

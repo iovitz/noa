@@ -1,10 +1,10 @@
 import { Body, Controller, Headers, Inject, Post } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
-import { EncryptService } from 'src/global/encrypt/encrypt.service'
 import { CookieKeys } from 'src/shared/constans/cookie'
 import { HeaderKeys } from 'src/shared/constans/header'
 import { ClientIP, Cookie } from 'src/shared/decorator/request'
+import { EncryptService } from 'src/util/encrypt/encrypt.service'
 import { CreateUserDTO, CreateUserResponseDTO } from './user.dto'
 import { UserService } from './user.service'
 

@@ -38,13 +38,13 @@ export class Changeset {
   compId: number
 
   @Column({
-    type: 'string',
+    type: 'varchar',
     comment: '变更类型',
   })
   type: string
 
   @Column({
-    type: 'jsonb',
+    type: 'blob',
     comment: '变更数据',
   })
   change: object
