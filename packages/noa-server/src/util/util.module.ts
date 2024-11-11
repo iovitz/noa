@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { EncryptService } from './encrypt/encrypt.service'
 import { HttpService } from './http/http.service'
-import { RedisModule } from './redis/redis.module'
 import { TracerService } from './tracer/tracer.service'
 
 @Module({
@@ -23,7 +22,6 @@ import { TracerService } from './tracer/tracer.service'
         },
       ],
     }),
-    RedisModule,
   ],
   // 全局使用的一些Service
   providers: [EncryptService, TracerService, HttpService],

@@ -4,6 +4,7 @@ import { contentType } from 'mime-types'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
 import { HeaderKeys } from 'src/shared/constans/header'
 import { ClientID, ClientIP } from 'src/shared/decorator/request'
+import { EncryptService } from 'src/util/encrypt/encrypt.service'
 import { GetVerifyCodeDTO } from './security.dto'
 import { SecurityService } from './security.service'
 
@@ -12,6 +13,9 @@ import { SecurityService } from './security.service'
 export class SecurityController {
   @Inject(SecurityService)
   securityService: SecurityService
+
+  @Inject(EncryptService)
+  encryptService: EncryptService
 
   @ApiOperation({
     summary: '获取图形验证码',
@@ -26,9 +30,12 @@ export class SecurityController {
   @Get('verify-code')
   @Header('content-type', contentType('svg') as string)
   async getVerifyCode(@Query(VerifyPipe) query: GetVerifyCodeDTO, @ClientID() cid: string, @ClientIP() ip: string, @Headers(HeaderKeys.UserAgent) ua: string) {
-    const { data, text } = this.securityService.getVerifyCode(Number(query.width), Number(query.height), Number(query.length ?? 4))
-
-    await this.securityService.saveVerifyToDB(ip, cid, ua, text)
+    const data = this.securityService.getVerifyCode(
+      await this.encryptService.encryptMd5(`${ip}-${ua}-${cid}`),
+      Number(query.width),
+      Number(query.height),
+      Number(query.length ?? 4),
+    )
 
     return data
   }

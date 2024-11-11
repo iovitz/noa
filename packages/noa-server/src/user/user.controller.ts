@@ -1,6 +1,7 @@
-import { Body, Controller, Headers, Inject, Post } from '@nestjs/common'
+import { Body, Controller, Headers, Inject, Post, UnprocessableEntityException } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
+import { SecurityService } from 'src/security/security.service'
 import { CookieKeys } from 'src/shared/constans/cookie'
 import { HeaderKeys } from 'src/shared/constans/header'
 import { ClientIP, Cookie } from 'src/shared/decorator/request'
@@ -17,6 +18,9 @@ export class UserController {
   @Inject(EncryptService)
   encryptService: EncryptService
 
+  @Inject(SecurityService)
+  securityService: SecurityService
+
   @Post('/create')
   @ApiOperation({
     summary: '获取图形验证码',
@@ -28,9 +32,13 @@ export class UserController {
   })
   async createUser(@Body(VerifyPipe) body: CreateUserDTO, @ClientIP() ip: string, @Headers(HeaderKeys.UserAgent) ua: string, @Cookie(CookieKeys.ClientId) cid: string) {
     // 校验二维码
-    const secretKey = this.encryptService.encryptMd5(`${ip}-${ua}-${cid}`)
-    // 进行校验
-    console.error(secretKey)
+    const verifyCodeCorrect = await this.securityService.checkVerifyCode(
+      await this.encryptService.encryptMd5(`${ip}-${ua}-${cid}`),
+      body.code,
+    )
+    if (!verifyCodeCorrect) {
+      throw new UnprocessableEntityException('验证码错误')
+    }
 
     // 创建用户
     const user = await this.userService.createUser({

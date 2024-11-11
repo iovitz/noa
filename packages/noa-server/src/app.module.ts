@@ -15,6 +15,7 @@ import { ResponseFormatterInterceptor } from './aspects/interceptors/response-fo
 import { InjectorMiddleware } from './aspects/middlewares/injector/injector.middleware'
 import { EditModule } from './edit/edit.module'
 import { HomeModule } from './home/home.module'
+import { RedisModule } from './redis/redis.module'
 import { SecurityModule } from './security/security.module'
 import { SocketV1Module } from './socketv1/socketv1.module'
 import { StatusModule } from './status/status.module'
@@ -39,12 +40,14 @@ import { UtilModule } from './util/util.module'
       },
     }),
     EventEmitterModule.forRoot(),
+    RedisModule,
     SocketV1Module,
     UserModule,
     SecurityModule,
     StatusModule,
     HomeModule,
     EditModule,
+    RedisModule,
   ],
   providers: [
     {

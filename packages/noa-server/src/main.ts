@@ -41,7 +41,6 @@ async function bootstrap() {
     .setTitle(pkg.name)
     .setDescription(pkg.description)
     .setVersion(pkg.version)
-    // .addTag('test')
     .build()
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig)
   SwaggerModule.setup('doc', app, swaggerDocument)
