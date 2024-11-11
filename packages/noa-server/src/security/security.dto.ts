@@ -1,11 +1,11 @@
 import { Optional } from '@nestjs/common'
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNumberString, IsString, Length } from 'class-validator'
+import { IsEnum, IsNumberString, IsString, Length } from 'class-validator'
 import { NumberStringMax, NumberStringMin } from 'src/shared/validator/string-number.validator'
 
 export class GetVerifyCodeDTO {
-  @IsString()
   @Length(1, 20)
+  @IsEnum(['login', 'register'])
   @ApiProperty({
     example: 'login',
     description: '验证码类型',

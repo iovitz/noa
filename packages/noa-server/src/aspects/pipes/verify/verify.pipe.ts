@@ -13,7 +13,6 @@ export class VerifyPipe implements PipeTransform {
     const { metatype } = metadata
     const object = plainToClass(metatype, value)
     const errors = await validate(object, {
-      skipMissingProperties: true,
       whitelist: true,
       forbidNonWhitelisted: true,
     })
