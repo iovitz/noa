@@ -2,21 +2,19 @@ import { ApiProperty } from '@nestjs/swagger'
 import { IsNumber, IsObject, IsString, Length } from 'class-validator'
 
 export class NewEditDTO {
-  @IsString()
-  @Length(10)
+  @IsNumber()
   @ApiProperty({
-    example: 'pagabcdefg',
+    example: 1,
     description: '页面ID',
   })
-  pageId: string
+  pageId: number
 
-  @IsString()
-  @Length(10)
+  @IsNumber()
   @ApiProperty({
-    example: 'pagabcdefg',
-    description: '页面ID',
+    example: 1,
+    description: '组件ID',
   })
-  cmpId: string
+  compId: number
 
   @IsNumber()
   @ApiProperty({

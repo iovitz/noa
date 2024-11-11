@@ -19,6 +19,13 @@ export class Changeset {
   @Column({
     type: 'int',
     unsigned: true,
+    comment: '快照版本',
+  })
+  localRev: number
+
+  @Column({
+    type: 'int',
+    unsigned: true,
     comment: '页面ID',
   })
   pageId: number
@@ -40,7 +47,7 @@ export class Changeset {
     type: 'jsonb',
     comment: '变更数据',
   })
-  change: string
+  change: object
 
   @CreateDateColumn({
     comment: '修改时间',
