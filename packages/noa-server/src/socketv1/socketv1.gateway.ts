@@ -32,7 +32,10 @@ implements OnGatewayConnection<Socket>, OnGatewayDisconnect<Socket> {
     return data
   }
 
-  @SubscribeMessage('hello')
+  /**
+   * 服务端收到了前端产生的CS
+   */
+  @SubscribeMessage('NEW_CHANGES')
   async handleMessage(client: Socket, payload: string) {
     this.log.log('socket hello', {
       payload,
