@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common'
+import { Global, Module } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import Redis from 'ioredis'
 import { TracerService } from 'src/util/tracer/tracer.service'
 
 export const REDIS_CLIENT = Symbol('REDIS_CLIENT')
 
+@Global()
 @Module({
   providers: [TracerService, {
     provide: REDIS_CLIENT,

@@ -1,9 +1,10 @@
-import { Module } from '@nestjs/common'
+import { Global, Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { EncryptService } from './encrypt/encrypt.service'
 import { HttpService } from './http/http.service'
 import { TracerService } from './tracer/tracer.service'
 
+@Global()
 @Module({
   imports: [
     ConfigModule.forRoot({

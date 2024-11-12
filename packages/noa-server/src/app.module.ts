@@ -29,6 +29,7 @@ import { UtilModule } from './util/util.module'
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: async (_configService: ConfigService) => {
+        // 放到主页目录下
         const sqliteFilePath = join(homedir(), 'sqlite/noa.sqlite')
         return {
           type: 'better-sqlite3',
