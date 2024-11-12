@@ -10,6 +10,7 @@ export const REDIS_CLIENT = Symbol('REDIS_CLIENT')
     inject: [ConfigService],
     useFactory: async (configService: ConfigService) => {
       const redis = new Redis(configService.get('REDIS_CONNECT_URL'))
+      await redis.ping() // ping 方法用于测试连接是否正常
       return redis
     },
   }],

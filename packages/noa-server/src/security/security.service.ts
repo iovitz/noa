@@ -34,6 +34,11 @@ export class SecurityService {
   async checkVerifyCode(redisKey: string, code: string) {
     console.error(redisKey, code)
     const redisCode = await this.redis.get(redisKey)
-    return redisCode?.toLowerCase() === code.toLowerCase()
+    const result = redisCode?.toLowerCase() === code.toLowerCase()
+    if (result) {
+      // 验证成功删除Key
+      await this.redis.del(redisKey)
+    }
+    return result
   }
 }
