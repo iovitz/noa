@@ -1,7 +1,10 @@
 import { Body, Controller, Headers, Inject, Post, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { InjectRepository } from '@nestjs/typeorm'
+import Redis from 'ioredis'
+import * as stringify from 'json-stringify-safe'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
+import { REDIS_CLIENT } from 'src/redis/redis.module'
 import { SecurityService } from 'src/security/security.service'
 import { CookieKeys } from 'src/shared/constans/cookie'
 import { HeaderKeys } from 'src/shared/constans/header'
@@ -9,6 +12,7 @@ import { ClientIP, Cookie } from 'src/shared/decorator/request'
 import { User } from 'src/sqlite/user.entity'
 import { EncryptService } from 'src/util/encrypt/encrypt.service'
 import { Repository } from 'typeorm'
+import { v4 } from 'uuid'
 import { CreateUserResponseDTO, LoginDTO, RegisterDTO } from './user.dto'
 import { UserService } from './user.service'
 
@@ -20,6 +24,9 @@ export class UserController {
 
   @Inject(EncryptService)
   encryptService: EncryptService
+
+  @Inject(REDIS_CLIENT)
+  redis: Redis
 
   @Inject(SecurityService)
   securityService: SecurityService
@@ -53,10 +60,17 @@ export class UserController {
       throw new UnauthorizedException('用户名不存在或密码错误')
     }
 
+    const session = v4()
+
+    // 存入Redis
+    this.redis.set(`session-${session}`, stringify({
+      id: existsUser.id,
+    }))
+
     return {
-      id: existsUser.nickname,
+      id: existsUser.id,
       nickname: existsUser.nickname,
-      session: '123123',
+      session,
     }
   }
 
@@ -81,11 +95,24 @@ export class UserController {
 
     // 创建用户
     const user = await this.userService.createUser({
-      nickname: body.nickname,
+      id: this.encryptService.genPrimaryKey('usr'),
+      nickname: this.userService.genRandomUsername(),
       email: body.email,
       // 密码进行MD5加密
       password: await this.encryptService.encryptMd5(body.password),
     })
-    return user
+
+    const session = v4()
+
+    // 存入Redis
+    this.redis.set(`session-${session}`, stringify({
+      id: user.id,
+    }))
+
+    return {
+      id: user.id,
+      nickname: user.nickname,
+      session,
+    }
   }
 }

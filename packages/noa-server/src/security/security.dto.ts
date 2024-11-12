@@ -34,7 +34,6 @@ export class GetVerifyCodeDTO {
   })
   height: string
 
-  @Optional()
   @IsNumberString({
     no_symbols: true,
   })

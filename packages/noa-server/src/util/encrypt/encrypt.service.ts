@@ -3,12 +3,21 @@ import { createHash } from 'node:crypto'
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { AES } from 'crypto-js'
+import { customAlphabet } from 'nanoid'
 import { gzip, ungzip } from 'pako'
 import { stringify } from 'safe-stable-stringify'
 
+const idGenerator = customAlphabet(
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+  7,
+)
 @Injectable()
 export class EncryptService {
   constructor(private configService: ConfigService) {}
+
+  genPrimaryKey(prefix: string) {
+    return prefix + idGenerator()
+  }
 
   ungzip(gzipBase64Str) {
     return JSON.parse(

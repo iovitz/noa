@@ -3,6 +3,7 @@ import {
   BadRequestException,
   Injectable,
   PipeTransform,
+  UnprocessableEntityException,
 } from '@nestjs/common'
 import { plainToClass } from 'class-transformer'
 import { validate, ValidationError } from 'class-validator'
@@ -17,8 +18,9 @@ export class VerifyPipe implements PipeTransform {
       forbidNonWhitelisted: true,
     })
     if (errors.length > 0) {
+      console.error(errors)
       const errorMessages = this.buildErrorMessage(errors)
-      throw new BadRequestException(errorMessages)
+      throw new UnprocessableEntityException(errorMessages)
     }
 
     return value

@@ -32,14 +32,6 @@ export class LoginDTO extends UserAccountDTO {
 
 export class RegisterDTO extends UserAccountDTO {
   @IsString()
-  @Length(2, 20)
-  @ApiProperty({
-    example: 'zhangsan',
-    description: '用户的昵称',
-  })
-  nickname: string
-
-  @IsString()
   @Length(4)
   @ApiProperty({
     example: '3333',

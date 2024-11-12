@@ -1,18 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
 import Redis from 'ioredis'
 import { REDIS_CLIENT } from 'src/redis/redis.module'
 import * as svgCaptcha from 'svg-captcha'
-import { Repository } from 'typeorm'
-import { VerifyCode } from '../sqlite/verify-code.entity'
 
 @Injectable()
 export class SecurityService {
   @Inject(REDIS_CLIENT)
   redis: Redis
-
-  @InjectRepository(VerifyCode)
-  verifyCodeRepository: Repository<VerifyCode>
 
   async getVerifyCode(redisKey: string, width: number, height: number, length = 4) {
     const { data, text } = svgCaptcha.create({

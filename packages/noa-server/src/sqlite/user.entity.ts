@@ -1,13 +1,14 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity('user')
 export class User {
-  @PrimaryGeneratedColumn({
-    type: 'int',
+  @PrimaryColumn({
+    type: 'varchar',
+    length: '15',
     unsigned: true,
     comment: '自增主键',
   })
-  id: number
+  id: string
 
   @Column({
     type: 'varchar',
