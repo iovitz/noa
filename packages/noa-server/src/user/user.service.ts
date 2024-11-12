@@ -9,6 +9,12 @@ export class UserService {
   @InjectRepository(User)
   userRepository: Repository<User>
 
+  getUserByEmail(email: string) {
+    return this.userRepository.findOneBy({
+      email,
+    })
+  }
+
   createUser(userData: DeepPartial<User>) {
     const user = this.userRepository.create({
       ...userData,

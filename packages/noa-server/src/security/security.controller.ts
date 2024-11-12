@@ -31,7 +31,7 @@ export class SecurityController {
   @Header('content-type', contentType('svg') as string)
   async getVerifyCode(@Query(VerifyPipe) query: GetVerifyCodeDTO, @ClientID() cid: string, @ClientIP() ip: string, @Headers(HeaderKeys.UserAgent) ua: string) {
     const data = this.securityService.getVerifyCode(
-      await this.encryptService.encryptMd5(`${ip}-${ua}-${cid}`),
+      await this.encryptService.encryptMd5(`verify-code-${ip}-${ua}-${cid}-${query.type}`),
       Number(query.width),
       Number(query.height),
       Number(query.length ?? 4),
