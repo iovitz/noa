@@ -1,4 +1,3 @@
-import { Optional } from '@nestjs/common'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsEnum, IsNumberString, Length } from 'class-validator'
 import { NumberStringMax, NumberStringMin } from 'src/shared/validator/string-number.validator'
