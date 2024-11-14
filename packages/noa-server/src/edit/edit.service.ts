@@ -1,13 +1,17 @@
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Component } from 'react'
 import { Changeset } from 'src/sqlite/changeset.entity'
 import { Page } from 'src/sqlite/page.entity'
 import { Snapshot } from 'src/sqlite/snapshot.entity'
+import { EncryptService } from 'src/util/encrypt/encrypt.service'
 import { DeepPartial, Repository } from 'typeorm'
 
 @Injectable()
 export class EditService {
+  @Inject(EncryptService)
+  encrypt: EncryptService
+
   @InjectRepository(Page)
   pageRepository: Repository<Page>
 
@@ -19,6 +23,15 @@ export class EditService {
 
   @InjectRepository(Snapshot)
   snapshotRepository: Repository<Snapshot>
+
+  createPage({ name, type }: DeepPartial<Page>) {
+    const page = this.pageRepository.create({
+      id: this.encrypt.genPrimaryKey('pge'),
+      name,
+      type,
+    })
+    return this.pageRepository.save(page)
+  }
 
   newEdit({ pageId, compId, type, change, localRev }: DeepPartial<Changeset>) {
     const changeset = this.changesetRepository.create({

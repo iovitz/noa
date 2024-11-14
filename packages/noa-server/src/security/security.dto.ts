@@ -6,7 +6,10 @@ export class GetVerifyCodeDTO {
   @Length(1, 20)
   @IsEnum(['login', 'register'])
   @ApiProperty({
+    minLength: 1,
+    maxLength: 20,
     example: 'login',
+    enum: ['login', 'register'],
     description: '验证码类型',
   })
   type: string
@@ -15,8 +18,10 @@ export class GetVerifyCodeDTO {
     no_symbols: true,
   })
   @NumberStringMin(0)
-  @NumberStringMax(1000)
+  @NumberStringMax(500)
   @ApiProperty({
+    minLength: 1,
+    maxLength: 20,
     example: '200',
     description: '验证码宽度',
   })
@@ -26,8 +31,10 @@ export class GetVerifyCodeDTO {
     no_symbols: true,
   })
   @NumberStringMin(0)
-  @NumberStringMax(1000)
+  @NumberStringMax(500)
   @ApiProperty({
+    minLength: 3,
+    maxLength: 1,
     example: '50',
     description: '验证码高度',
   })
@@ -37,11 +44,12 @@ export class GetVerifyCodeDTO {
     no_symbols: true,
   })
   @NumberStringMin(0)
-  @NumberStringMax(1000)
+  @NumberStringMax(6)
   @ApiProperty({
+    maxLength: 1,
+    minLength: 1,
     example: '4',
     description: '验证码高度',
-    default: '4',
   })
   length: string
 }

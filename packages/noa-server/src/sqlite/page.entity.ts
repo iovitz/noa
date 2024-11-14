@@ -27,8 +27,9 @@ export class Page {
     type: 'int',
     unsigned: true,
     comment: '页面版本',
+    default: 0,
   })
-  rev: string
+  rev: number
 
   @Column({
     type: 'varchar',
@@ -39,8 +40,8 @@ export class Page {
 
   @Column({
     type: 'boolean',
-    default: false,
     comment: '页面是否分享',
+    default: false,
   })
   shared: boolean
 

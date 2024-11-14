@@ -1,13 +1,5 @@
 # NOA Server
 
-## Entities
+## 接口约定
 
-### VerifyCode 验证码
-
-### User 用户
-
-### Template 模板
-
-### Page 页面
-
-### Component 组件
+接口使用 - 进行连接，不使用大驼峰
