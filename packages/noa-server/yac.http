@@ -1,19 +1,42 @@
 @prefix = {{host}}/api-noa
 
-### createUser
+### register
+@username = {{$random.alphabetic(10)}}
+POST {{prefix}}/user/create
+content-type: application/json
+
+{
+    "email": "{{username}}",
+    "password": {{$randomInt 5 150}},
+    "code": "0000"
+}
+
+### login
 @username = {{$random.alphabetic(10)}}
 POST {{prefix}}/user/create
 content-type: application/json
 
 {
     "name": "{{username}}",
-    "age": {{$randomInt 5 150}}
+    "password": {{$randomInt 5 150}},
+    "code": "0000"
 }
 
-### GetVerifyCode
+### getVerifyCode
 GET {{prefix}}/security/verify-code
   ?width=100
   &height=50
   &length=4
   &type=login
 content-type: application/json
+
+### createPage
+@username = {{$random.alphabetic(10)}}
+POST {{prefix}}/edit/new-page
+content-type: application/json
+
+{
+    "name": "{{username}}",
+    "password": {{$randomInt 5 150}},
+    "code": "0000"
+}

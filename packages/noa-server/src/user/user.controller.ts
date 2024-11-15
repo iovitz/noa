@@ -93,6 +93,14 @@ export class UserController {
       throw new UnprocessableEntityException('验证码错误')
     }
 
+    const existsUser = await this.userRepository.findOneBy({
+      email: body.email,
+    })
+
+    if (existsUser) {
+      throw new UnprocessableEntityException('邮箱已被注册')
+    }
+
     // 创建用户
     const user = await this.userService.createUser({
       id: this.encryptService.genPrimaryKey('usr'),

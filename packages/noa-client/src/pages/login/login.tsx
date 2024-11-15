@@ -27,7 +27,14 @@ export default function Login() {
   }
 
   return (
-    <div className="h-full w-full bg-dark-900 flex items-center justify-center">
+    <div style={{
+      height: '100%',
+      width: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}
+    >
       <Card
         style={{ width: 400 }}
         title="登录Noa"
@@ -40,7 +47,12 @@ export default function Login() {
         }
         <Divider plain>或者</Divider>
 
-        <Space direction="vertical" className="w-full">
+        <Space
+          direction="vertical"
+          style={{
+            width: '100%',
+          }}
+        >
           <Button color="default" variant="filled" block onClick={() => setIsLogin(!isLogin)}>
             {isLogin ? '前往注册' : '返回登录'}
           </Button>

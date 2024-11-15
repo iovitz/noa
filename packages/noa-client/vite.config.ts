@@ -21,8 +21,8 @@ export default defineConfig({
   server: {
     port: 21922,
     proxy: {
-      '/api': {
-        target: 'http://localhost:13131', // 目标服务器地址
+      '/api-noa': {
+        target: 'http://localhost:19001/', // 目标服务器地址
         changeOrigin: true, // 是否改变源地址
         // rewrite: path => path.replace(/^\/api/, '') // 重写路径
       },

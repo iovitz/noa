@@ -1,5 +1,5 @@
 import { http } from '@/shared/io/io'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 interface Props {
   type: string
@@ -7,29 +7,39 @@ interface Props {
 
 export default function VerifyCode(props: Props) {
   const svgContainer = useRef<HTMLDivElement>(null)
-  const refreshCode = async () => {
+  const [isLoading, setIsLoading] = useState(false)
+  const refreshCode = async (firstLoad = false) => {
+    if (isLoading) {
+      return
+    }
+    setIsLoading(true)
     const { current } = svgContainer
     if (!current) {
       return
     }
     const width = current.offsetWidth
     const height = current.offsetHeight
-    const { data } = await http.request({
+    const data = await http.request({
       method: 'get',
       url: '/security/verify-code',
       params: {
         height,
         width,
         type: props.type,
+        length: 4,
       },
     })
-    if (svgContainer.current) {
-      svgContainer.current.innerHTML = data
-    }
+
+    setTimeout(() => {
+      setIsLoading(false)
+      if (svgContainer.current) {
+        svgContainer.current.innerHTML = data
+      }
+    }, firstLoad ? 0 : 300)
   }
 
   useEffect(() => {
-    refreshCode()
+    refreshCode(true)
     return () => {
       // ...
     }
@@ -41,7 +51,11 @@ export default function VerifyCode(props: Props) {
       onClick={refreshCode}
       className="w-full h-full flex-1 text-xs"
       style={{
-        minHeight: '50px',
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        fontSize: 0,
+        opacity: isLoading ? '.3' : '1',
       }}
     />
   )

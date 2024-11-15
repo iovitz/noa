@@ -52,9 +52,7 @@
     "git-cz": "^4.9.0",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
-    "postcss": "^8",
     "sass": "^1.80.5",
-    "tailwindcss": "^3.4.1",
     "typescript": "^5",
     "typescript-plugin-css-modules": "^5.1.0"
   },

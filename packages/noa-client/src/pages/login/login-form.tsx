@@ -1,3 +1,4 @@
+import VerifyCode from '@/components/verify-code'
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd'
 import React from 'react'
 
@@ -11,7 +12,7 @@ export default function LoginForm() {
       variant="filled"
       labelAlign="left"
     >
-      <Form.Item label="手机号码" name="phone" rules={[{ required: true }]}>
+      <Form.Item label="邮箱" name="email" rules={[{ required: true }]}>
         <Input />
       </Form.Item>
       <Form.Item
@@ -27,13 +28,11 @@ export default function LoginForm() {
         rules={[{ required: true }]}
       >
         <Row gutter={12}>
-          <Col className="gutter-row" span={14}>
+          <Col span={14}>
             <Input />
           </Col>
-          <Col className="gutter-row" span={10}>
-            <Button color="default" variant="filled" block>
-              获取验证码
-            </Button>
+          <Col span={10}>
+            <VerifyCode type="login" />
           </Col>
         </Row>
       </Form.Item>
