@@ -19,7 +19,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "compodoc": "pnpx @compodoc/compodoc -p tsconfig.json -s -o -c .compodoc.json",
-    "yac": "node_modules/.bin/httpyac -e dev -o body ./rest.http"
+    "yac": "node_modules/.bin/httpyac -e dev -o body ./yac.http"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
