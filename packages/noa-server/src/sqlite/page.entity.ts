@@ -11,8 +11,17 @@ export class Page {
   id: string
 
   @Column({
+    type: 'int',
+    unsigned: true,
+    comment: '页面版本',
+    default: 0,
+  })
+  rev: number
+
+  @Column({
     type: 'bigint',
     unsigned: true,
+    comment: '所属用户',
   })
   userId: number
 
@@ -24,12 +33,20 @@ export class Page {
   name: string
 
   @Column({
-    type: 'int',
-    unsigned: true,
-    comment: '页面版本',
-    default: 0,
+    type: 'varchar',
+    length: 500,
+    comment: '页面描述',
+    nullable: true,
   })
-  rev: number
+  description: string
+
+  @Column({
+    type: 'varchar',
+    length: 100,
+    comment: '页面头图',
+    nullable: true,
+  })
+  poster: string
 
   @Column({
     type: 'varchar',
