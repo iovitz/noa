@@ -16,36 +16,6 @@ export default function RegisterForm() {
         <Input />
       </Form.Item>
       <Form.Item
-        label="图形验证码"
-        name="code"
-        rules={[{ required: true }]}
-      >
-        <Row gutter={12}>
-          <Col className="gutter-row" span={14}>
-            <Input />
-          </Col>
-          <Col className="gutter-row" span={10}>
-            <VerifyCode type="register" />
-          </Col>
-        </Row>
-      </Form.Item>
-      <Form.Item
-        label="手机验证码"
-        name="phoneCode"
-        rules={[{ required: true }]}
-      >
-        <Row gutter={12}>
-          <Col className="gutter-row" span={14}>
-            <Input />
-          </Col>
-          <Col className="gutter-row" span={10}>
-            <Button color="default" variant="filled" block>
-              获取验证码
-            </Button>
-          </Col>
-        </Row>
-      </Form.Item>
-      <Form.Item
         label="密码"
         name="password"
         rules={[{ required: true }]}
@@ -59,6 +29,22 @@ export default function RegisterForm() {
       >
         <Input />
       </Form.Item>
+
+      <Form.Item
+        label="验证码"
+        name="code"
+        rules={[{ required: true }]}
+      >
+        <Row gutter={12}>
+          <Col className="gutter-row" span={14}>
+            <Input />
+          </Col>
+          <Col className="gutter-row" span={10}>
+            <VerifyCode type="register" />
+          </Col>
+        </Row>
+      </Form.Item>
+
       <Form.Item
         name="agree"
         valuePropName="agree"

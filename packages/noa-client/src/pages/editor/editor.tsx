@@ -1,15 +1,8 @@
-import { EditorContainer, PageType } from 'noa-sdk'
 import React, { useEffect, useRef } from 'react'
 
 export default function Editor() {
   const editorRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    const container = new EditorContainer({
-      el: editorRef.current!,
-      pageId: '123',
-      pageType: PageType.Form,
-    })
-    container.render()
   }, [])
   return (
     <div className="flex h-full">

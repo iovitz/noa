@@ -1,11 +1,11 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { PageType } from './common/page'
+import { PageType } from './core'
 import BasePage from './page/base.page'
 import FormPage from './page/form.page'
 import H5Page from './page/h5.page'
 
-export class EditorContainer {
+export class Editor {
   private pageId: string
   private el: HTMLElement
   pageType: PageType

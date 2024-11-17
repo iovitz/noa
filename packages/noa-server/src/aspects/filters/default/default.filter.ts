@@ -15,8 +15,7 @@ export class DefaultFilter<Error> implements ExceptionFilter {
     const ctx = host.switchToHttp()
     const res = ctx.getResponse<Res>()
 
-    console.error(exception)
-    res.tracer.error('- ERR 500', stringify(exception))
+    res.tracer.error('- ERR 500', exception.toString())
 
     const errorResponse = {
       code: 50000,
