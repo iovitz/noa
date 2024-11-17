@@ -5,7 +5,6 @@ import {
   HttpStatus,
 } from '@nestjs/common'
 import { contentType } from 'mime-types'
-import { stringify } from 'safe-stable-stringify'
 import { HeaderKeys } from 'src/shared/constans/header'
 import * as status from 'statuses'
 
