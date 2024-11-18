@@ -1,8 +1,11 @@
 import VerifyCode from '@/components/verify-code'
+import { useUserStore } from '@/hooks/user.store.hook'
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd'
+import { observer } from 'mobx-react-lite'
 import React from 'react'
 
-export default function LoginForm() {
+const LoginForm = observer(() => {
+  const { name, login, isLogin } = useUserStore()
   return (
     <Form
       name="layout-multiple-horizontal"
@@ -44,7 +47,12 @@ export default function LoginForm() {
         <Checkbox>同意软件使用协议</Checkbox>
       </Form.Item>
 
-      <Button type="primary" block>登录</Button>
+      <Button type="primary" block onClick={login}>
+        { name }
+        {isLogin.get() ? '登录' : '未登录'}
+      </Button>
     </Form>
   )
-}
+})
+
+export default LoginForm
