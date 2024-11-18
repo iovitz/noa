@@ -8,7 +8,8 @@ interface Props {
 export default function VerifyCode(props: Props) {
   const svgContainer = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const refreshCode = async (firstLoad = false) => {
+  let firstLoad = false
+  const refreshCode = async () => {
     if (isLoading) {
       return
     }
@@ -36,10 +37,11 @@ export default function VerifyCode(props: Props) {
         svgContainer.current.innerHTML = data
       }
     }, firstLoad ? 0 : 300)
+    firstLoad = true
   }
 
   useEffect(() => {
-    refreshCode(true)
+    refreshCode()
     return () => {
       // ...
     }
