@@ -1,7 +1,6 @@
 import { ioClient } from '@/shared/io/io'
-import { appLogger } from '@/shared/logger/logger'
 import { useRequest } from 'ahooks'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 export function useImageVerifyCode(type: string) {
   const [captchaSrc, setCaptchaSrc] = useState<string>('')
