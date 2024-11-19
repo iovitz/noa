@@ -4,6 +4,7 @@ import { appLogger } from '@/shared/logger/logger'
 import { useRequest } from 'ahooks'
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd'
 import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 interface FormData {
   email: string
@@ -14,11 +15,12 @@ interface FormData {
 export default function RegisterForm() {
   const { register } = useUserStore()
   const { VerifyCode, refreshCode } = useImageVerifyCode('register')
+  const navigate = useNavigate()
   const { run, loading } = useRequest(
     ({ email, password, code }: FormData) => register(email, password, code),
     {
-      onSuccess(data, params) {
-        appLogger.log(data, params)
+      onSuccess() {
+        navigate('/')
       },
       onFinally: refreshCode,
     },
