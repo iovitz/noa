@@ -4,7 +4,7 @@ import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } fro
 export class Component {
   @PrimaryColumn({
     type: 'varchar',
-    length: '15',
+    length: 26,
     unsigned: true,
     comment: '自增主键',
   })

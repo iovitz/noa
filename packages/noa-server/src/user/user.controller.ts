@@ -103,7 +103,7 @@ export class UserController {
 
     // 创建用户
     const user = await this.userService.createUser({
-      id: this.encryptService.genPrimaryKey('usr'),
+      id: this.encryptService.genPrimaryKey(),
       nickname: this.userService.genRandomUsername(),
       email: body.email,
       // 密码进行MD5加密

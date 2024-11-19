@@ -6,17 +6,14 @@ import { AES } from 'crypto-js'
 import { customAlphabet } from 'nanoid'
 import { gzip, ungzip } from 'pako'
 import { stringify } from 'safe-stable-stringify'
+import { ulid } from 'ulid'
 
-const idGenerator = customAlphabet(
-  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
-  7,
-)
 @Injectable()
 export class EncryptService {
   constructor(private configService: ConfigService) {}
 
-  genPrimaryKey(prefix: string) {
-    return prefix + idGenerator()
+  genPrimaryKey() {
+    return ulid()
   }
 
   ungzip(gzipBase64Str) {

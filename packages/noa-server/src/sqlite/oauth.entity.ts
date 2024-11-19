@@ -1,13 +1,14 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity('oauth')
 export class OAuth {
-  @PrimaryGeneratedColumn({
-    type: 'int',
+  @PrimaryColumn({
+    type: 'varchar',
+    length: 26,
     unsigned: true,
     comment: '自增主键',
   })
-  id: number
+  id: string
 
   @Column({
     type: 'int',

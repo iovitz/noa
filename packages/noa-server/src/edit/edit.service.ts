@@ -26,7 +26,7 @@ export class EditService {
 
   createPage({ name, type }: DeepPartial<Page>) {
     const page = this.pageRepository.create({
-      id: this.encrypt.genPrimaryKey('pge'),
+      id: this.encrypt.genPrimaryKey(),
       name,
       type,
     })
