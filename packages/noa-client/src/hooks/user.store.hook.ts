@@ -18,6 +18,7 @@ const isLogin = computed(() => storeAuth.name === 'nameaaa')
 const login = action((email: string, password: string, code: string) => {
   return ioClient.request({
     url: '/user/login',
+    method: 'post',
     data: {
       email,
       password,
@@ -29,7 +30,8 @@ const login = action((email: string, password: string, code: string) => {
 // 注册
 const register = action((email: string, password: string, code: string) => {
   return ioClient.request({
-    url: '/user/login',
+    url: '/user/register',
+    method: 'post',
     data: {
       email,
       password,

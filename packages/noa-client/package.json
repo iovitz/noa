@@ -17,6 +17,8 @@
     "react-dom": ">=18.3.1"
   },
   "dependencies": {
+    "ahooks": "^3.8.1",
+    "loglevel": "^1.9.2",
     "mobx": "^6.13.5",
     "mobx-react-lite": "^4.0.7",
     "noa-sdk": "file:../noa-sdk",

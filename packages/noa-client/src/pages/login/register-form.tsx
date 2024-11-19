@@ -1,7 +1,9 @@
-import VerifyCode from '@/components/verify-code'
+import { useImageVerifyCode } from '@/hooks/image-verify-code.hook'
 import { useUserStore } from '@/hooks/user.store.hook'
+import { appLogger } from '@/shared/logger/logger'
+import { useRequest } from 'ahooks'
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 interface FormData {
   email: string
@@ -11,9 +13,21 @@ interface FormData {
 
 export default function RegisterForm() {
   const { register } = useUserStore()
-  const onFinish = ({ email, password, code }: FormData) => {
-    register(email, password, code)
-  }
+  const { VerifyCode, refreshCode } = useImageVerifyCode('register')
+  const { run, loading } = useRequest(
+    ({ email, password, code }: FormData) => register(email, password, code),
+    {
+      onSuccess(data, params) {
+        appLogger.log(data, params)
+      },
+      onFinally: refreshCode,
+    },
+  )
+
+  useEffect(() => {
+    refreshCode()
+  }, [])
+
   return (
     <Form
       layout="horizontal"
@@ -21,7 +35,7 @@ export default function RegisterForm() {
       wrapperCol={{ span: 17 }}
       variant="filled"
       labelAlign="left"
-      onFinish={onFinish}
+      onFinish={run}
       initialValues={{ agree: true }}
     >
       <Form.Item
@@ -63,7 +77,7 @@ export default function RegisterForm() {
             <Input maxLength={4} />
           </Col>
           <Col className="gutter-row" span={10}>
-            <VerifyCode type="register" />
+            <VerifyCode />
           </Col>
         </Row>
       </Form.Item>
@@ -85,7 +99,7 @@ export default function RegisterForm() {
         <Checkbox>同意《隐私策略》</Checkbox>
       </Form.Item>
 
-      <Button type="primary" htmlType="submit" block>注册</Button>
+      <Button type="primary" htmlType="submit" block loading={loading}>注册</Button>
     </Form>
   )
 }
