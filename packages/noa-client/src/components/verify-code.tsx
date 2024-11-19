@@ -1,4 +1,4 @@
-import { http } from '@/shared/io/io'
+import { ioClient } from '@/shared/io/io'
 import React, { useEffect, useRef, useState } from 'react'
 
 interface Props {
@@ -20,7 +20,7 @@ export default function VerifyCode(props: Props) {
     }
     const width = current.offsetWidth
     const height = current.offsetHeight
-    const data = await http.request({
+    const data = await ioClient.request({
       method: 'get',
       url: '/security/verify-code',
       params: {

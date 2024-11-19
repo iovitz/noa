@@ -1,43 +1,62 @@
 import VerifyCode from '@/components/verify-code'
+import { useUserStore } from '@/hooks/user.store.hook'
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd'
 import React from 'react'
 
+interface FormData {
+  email: string
+  password: string
+  code: string
+}
+
 export default function RegisterForm() {
+  const { register } = useUserStore()
+  const onFinish = ({ email, password, code }: FormData) => {
+    register(email, password, code)
+  }
   return (
     <Form
-      name="layout-multiple-horizontal"
       layout="horizontal"
       labelCol={{ span: 7 }}
       wrapperCol={{ span: 17 }}
       variant="filled"
       labelAlign="left"
+      onFinish={onFinish}
+      initialValues={{ agree: true }}
     >
       <Form.Item
         label="邮箱"
         name="email"
-        rules={[{ required: true, type: 'email', min: 6, max: 20 }]}
+        rules={[{ required: true, type: 'email', min: 6, max: 20, message: '邮箱格式错误' }]}
       >
         <Input type="email" minLength={6} maxLength={20} />
       </Form.Item>
       <Form.Item
         label="密码"
         name="password"
-        rules={[{ required: true, min: 6, max: 16 }]}
+        rules={[{ required: true, min: 6, max: 16, message: '密码格式错误' }]}
       >
-        <Input type="password" minLength={6} maxLength={16} />
+        <Input.Password minLength={6} maxLength={16} />
       </Form.Item>
       <Form.Item
         label="确认密码"
-        name="repeatPassword"
-        rules={[{ required: true, min: 6, max: 16 }]}
+        name="confirm"
+        rules={[{ required: true, min: 6, max: 16, message: '密码格式错误' }, ({ getFieldValue }) => ({
+          validator(_, value) {
+            if (!value || getFieldValue('password') === value) {
+              return Promise.resolve()
+            }
+            return Promise.reject(new Error('两次密码不匹配'))
+          },
+        })]}
       >
-        <Input type="password" minLength={6} maxLength={16} />
+        <Input.Password minLength={6} maxLength={16} />
       </Form.Item>
 
       <Form.Item
         label="验证码"
         name="code"
-        rules={[{ required: true, type: 'string', len: 4 }]}
+        rules={[{ required: true, type: 'string', len: 4, message: '验证码格式错误' }]}
       >
         <Row gutter={12}>
           <Col className="gutter-row" span={14}>
@@ -51,13 +70,22 @@ export default function RegisterForm() {
 
       <Form.Item
         name="agree"
-        valuePropName="agree"
+        valuePropName="checked"
         wrapperCol={{ offset: 7, span: 17 }}
+        rules={[
+          {
+            validator: (_, value) => {
+              return value
+                ? Promise.resolve()
+                : Promise.reject(new Error('请同意协议'))
+            },
+          },
+        ]}
       >
-        <Checkbox>同意软件使用协议</Checkbox>
+        <Checkbox>同意《隐私策略》</Checkbox>
       </Form.Item>
 
-      <Button type="primary" block>注册</Button>
+      <Button type="primary" htmlType="submit" block>注册</Button>
     </Form>
   )
 }

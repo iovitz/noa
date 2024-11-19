@@ -4,7 +4,7 @@ import axios from 'axios'
 
 type ErrorHandler = (data: unknown) => unknown
 
-export class HttpClient {
+export class IOClient {
   socket!: FeSocket
 
   axios!: AxiosInstance
@@ -34,4 +34,4 @@ export class HttpClient {
   }
 }
 
-export const http = new HttpClient()
+export const ioClient = new IOClient()
