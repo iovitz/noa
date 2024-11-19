@@ -20,6 +20,7 @@
     "ahooks": "^3.8.1",
     "loglevel": "^1.9.2",
     "mobx": "^6.13.5",
+    "mobx-persist-store": "^1.1.5",
     "mobx-react-lite": "^4.0.7",
     "noa-sdk": "file:../noa-sdk",
     "react-router-dom": "^6.27.0"

@@ -135,6 +135,9 @@ importers:
       mobx:
         specifier: ^6.13.5
         version: 6.13.5
+      mobx-persist-store:
+        specifier: ^1.1.5
+        version: 1.1.5(mobx@6.13.5)
       mobx-react-lite:
         specifier: ^4.0.7
         version: 4.0.7(mobx@6.13.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -5425,6 +5428,11 @@ packages:
 
   mlly@1.7.2:
     resolution: {integrity: sha512-tN3dvVHYVz4DhSXinXIk7u9syPYaJvio118uomkovAtWBT+RdbP6Lfh/5Lvo519YMmwBafwlh20IPTXIStscpA==}
+
+  mobx-persist-store@1.1.5:
+    resolution: {integrity: sha512-STVTfYErC4Vw58zbAiz/Em4bmwi2sa+zXudxHwRtJvwiEejrJ6W1FcFDRskZyjrGLNOcrT0dDK2VDplV2cgQig==}
+    peerDependencies:
+      mobx: '*'
 
   mobx-react-lite@4.0.7:
     resolution: {integrity: sha512-RjwdseshK9Mg8On5tyJZHtGD+J78ZnCnRaxeQDSiciKVQDUbfZcXhmld0VMxAwvcTnPEHZySGGewm467Fcpreg==}
@@ -13809,6 +13817,10 @@ snapshots:
       pathe: 1.1.2
       pkg-types: 1.2.1
       ufo: 1.5.4
+
+  mobx-persist-store@1.1.5(mobx@6.13.5):
+    dependencies:
+      mobx: 6.13.5
 
   mobx-react-lite@4.0.7(mobx@6.13.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
