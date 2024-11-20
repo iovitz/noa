@@ -1,5 +1,5 @@
 import { useImageVerifyCode } from '@/hooks/image-verify-code.hook'
-import { useUserStore } from '@/hooks/user.store.hook'
+import { useStore } from '@/hooks/store.hook'
 import { appLogger } from '@/shared/logger/logger'
 import { useRequest } from 'ahooks'
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd'
@@ -14,10 +14,10 @@ interface FormData {
 }
 
 const LoginForm = observer(() => {
-  const { register } = useUserStore()
+  const userStore = useStore('user')
   const { VerifyCode, refreshCode } = useImageVerifyCode('register')
   const { run, loading } = useRequest(
-    ({ email, password, code }: FormData) => register(email, password, code),
+    ({ email, password, code }: FormData) => userStore.login(email, password, code),
     {
       manual: true,
       onSuccess(data, params) {

@@ -1,26 +1,48 @@
-import { action, computed, makeObservable, observable } from 'mobx'
+import { ioClient } from '@/shared/io/io'
+import { makeAutoObservable } from 'mobx'
+
+interface UserInfo {
+  nickname: string
+  userId: string
+}
 
 export class UserStore {
+  nickname = ''
+  userId = ''
   constructor() {
-    // 解决数据更新页面不跟着更新的方法
-    makeObservable(this)
+    makeAutoObservable(this)
   }
 
-  @observable
-  count = 0
-
-  @action
-  increase() {
-    this.count = this.count + 1
+  async register(email: string, password: string, code: string) {
+    const data = await ioClient.request<UserInfo>({
+      url: '/user/register',
+      method: 'post',
+      data: {
+        email,
+        password,
+        code,
+      },
+    })
+    this.setUserInfo(data)
+    return data
   }
 
-  @action
-  decrease() {
-    this.count = this.count - 1
+  async login(email: string, password: string, code: string) {
+    const data = await ioClient.request<UserInfo>({
+      url: '/user/login',
+      method: 'post',
+      data: {
+        email,
+        password,
+        code,
+      },
+    })
+    this.setUserInfo(data)
+    return data
   }
 
-  @computed
-  get doubleCount() {
-    return this.count * 2
+  setUserInfo(data: UserInfo) {
+    this.nickname = data.nickname
+    this.userId = data.userId
   }
 }

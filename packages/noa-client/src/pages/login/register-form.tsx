@@ -1,7 +1,8 @@
 import { useImageVerifyCode } from '@/hooks/image-verify-code.hook'
-import { useUserStore } from '@/hooks/user.store.hook'
+import { useStore } from '@/hooks/store.hook'
 import { useRequest } from 'ahooks'
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd'
+import { observer } from 'mobx-react-lite'
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -11,13 +12,14 @@ interface FormData {
   code: string
 }
 
-export default function RegisterForm() {
-  const { register } = useUserStore()
+const RegisterForm = observer(() => {
+  const userStore = useStore('user')
   const { VerifyCode, refreshCode } = useImageVerifyCode('register')
   const navigate = useNavigate()
   const { run, loading } = useRequest(
-    ({ email, password, code }: FormData) => register(email, password, code),
+    ({ email, password, code }: FormData) => userStore.register(email, password, code),
     {
+      manual: true,
       onSuccess() {
         navigate('/')
       },
@@ -103,4 +105,5 @@ export default function RegisterForm() {
       <Button type="primary" htmlType="submit" block loading={loading}>注册</Button>
     </Form>
   )
-}
+})
+export default RegisterForm
