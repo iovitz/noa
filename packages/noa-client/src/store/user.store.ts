@@ -1,5 +1,6 @@
 import { ioClient } from '@/shared/io/io'
 import { makeAutoObservable } from 'mobx'
+import { makePersistable } from 'mobx-persist-store'
 
 interface UserInfo {
   nickname: string
@@ -11,6 +12,12 @@ export class UserStore {
   userId = ''
   constructor() {
     makeAutoObservable(this)
+    console.error(Object.keys(this) as Array<keyof typeof this>)
+    makePersistable(this, {
+      name: 'user-store',
+      properties: Object.keys(this) as Array<keyof typeof this>,
+      storage: localStorage,
+    })
   }
 
   async register(email: string, password: string, code: string) {

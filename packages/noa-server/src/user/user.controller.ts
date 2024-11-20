@@ -68,7 +68,7 @@ export class UserController {
     }))
 
     return {
-      id: existsUser.id,
+      userId: existsUser.id,
       nickname: existsUser.nickname,
       session,
     }
@@ -118,7 +118,7 @@ export class UserController {
     }))
 
     return {
-      id: user.id,
+      userId: user.id,
       nickname: user.nickname,
       session,
     }

@@ -24,8 +24,17 @@ export default function PageHeader() {
 
   return (
 
-    <div className="flex container mx-auto flex-row">
-      <div className="h-full flex items-center">
+    <div
+      style={{
+        display: 'flex',
+      }}
+    >
+      <div
+        style={{
+         display: 'flex',
+          alignItems: 'center',
+        }}
+      >
         <Button type="link">Noa</Button>
       </div>
       <Menu
@@ -37,7 +46,13 @@ export default function PageHeader() {
           navigate(key)
         }}
       />
-      <div className="flex items-end items-center">
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          alignSelf: 'end',
+        }}
+      >
         <Button icon={<PlusOutlined />} className="mr-2" color="default" variant="text" />
         <HeaderAvatar />
       </div>
