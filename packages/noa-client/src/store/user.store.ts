@@ -14,7 +14,7 @@ export class UserStore {
   }
 
   async register(email: string, password: string, code: string) {
-    const data = await ioClient.request<UserInfo>({
+    const { data } = await ioClient.request<UserInfo>({
       url: '/user/register',
       method: 'post',
       data: {
@@ -28,7 +28,7 @@ export class UserStore {
   }
 
   async login(email: string, password: string, code: string) {
-    const data = await ioClient.request<UserInfo>({
+    const { data } = await ioClient.request<UserInfo>({
       url: '/user/login',
       method: 'post',
       data: {
@@ -42,6 +42,7 @@ export class UserStore {
   }
 
   setUserInfo(data: UserInfo) {
+    console.error(data)
     this.nickname = data.nickname
     this.userId = data.userId
   }

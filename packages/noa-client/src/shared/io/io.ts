@@ -4,6 +4,12 @@ import axios from 'axios'
 
 type ErrorHandler = (data: unknown) => unknown
 
+interface Response<T> {
+  code: number
+  data: T
+  message: string
+}
+
 export class IOClient {
   socket!: FeSocket
 
@@ -30,7 +36,7 @@ export class IOClient {
     return this.axios.request(config).catch((e) => {
       this.errorHandler.forEach(fn => fn(e))
       throw e
-    }) as unknown as Promise<T>
+    }) as unknown as Promise<Response<T>>
   }
 }
 
