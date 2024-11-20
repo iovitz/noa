@@ -31,7 +31,7 @@ export default function PageHeader() {
     >
       <div
         style={{
-         display: 'flex',
+          display: 'flex',
           alignItems: 'center',
         }}
       >
