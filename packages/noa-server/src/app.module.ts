@@ -13,8 +13,8 @@ import { LogInterceptor } from './aspects/interceptors/log/log.interceptor'
 import { PreparePromiseInterceptor } from './aspects/interceptors/prepare-promise/prepare-promise.interceptor'
 import { ResponseFormatterInterceptor } from './aspects/interceptors/response-formatter/response-formatter.interceptor'
 import { InjectorMiddleware } from './aspects/middlewares/injector/injector.middleware'
-import { EditModule } from './edit/edit.module'
 import { HomeModule } from './home/home.module'
+import { PageModule } from './page/page.module'
 import { RedisModule } from './redis/redis.module'
 import { SecurityModule } from './security/security.module'
 import { SocketV1Module } from './socketv1/socketv1.module'
@@ -47,8 +47,8 @@ import { UtilModule } from './util/util.module'
     SecurityModule,
     StatusModule,
     HomeModule,
-    EditModule,
     RedisModule,
+    PageModule,
   ],
   providers: [
     {

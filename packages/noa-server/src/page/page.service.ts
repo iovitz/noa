@@ -8,7 +8,7 @@ import { EncryptService } from 'src/util/encrypt/encrypt.service'
 import { DeepPartial, Repository } from 'typeorm'
 
 @Injectable()
-export class EditService {
+export class PageService {
   @Inject(EncryptService)
   encrypt: EncryptService
 

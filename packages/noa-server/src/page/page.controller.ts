@@ -1,18 +1,18 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
-import { CreatePageDTO, NewEditDTO } from './edit.dto'
-import { EditService } from './edit.service'
+import { CreatePageDTO, NewEditDTO } from './page.dto'
+import { PageService } from './page.service'
 
-@ApiTags('Edit编辑接口')
-@Controller('edit')
-export class EditController {
-  @Inject(EditService)
-  editService: EditService
+@ApiTags('页面编辑')
+@Controller('page')
+export class PageController {
+  @Inject(PageService)
+  pageService: PageService
 
   @Post('create-page')
   async createPage(@Body(VerifyPipe) { name, type }: CreatePageDTO) {
-    const page = this.editService.createPage({
+    const page = this.pageService.createPage({
       name,
       type,
     })
@@ -22,7 +22,7 @@ export class EditController {
   @Post('new')
   async newChange(@Body(VerifyPipe) body: NewEditDTO) {
     // 保存CS
-    await this.editService.newEdit({
+    await this.pageService.newEdit({
       compId: body.compId,
       change: body.change,
     })
