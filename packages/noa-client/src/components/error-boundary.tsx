@@ -1,4 +1,3 @@
-import type { ErrorInfo } from 'react'
 import { ioClient } from '@/shared/io/io'
 import { message } from 'antd'
 import { AxiosError } from 'axios'
@@ -22,13 +21,6 @@ export function ErrorBoundary({ children }: ErrorHandlerProp) {
     })
   }
 
-
-
-
-
-
-
-  
   useEffect(() => {
     if (hasError) {
       // 清理操作(如果有的话)

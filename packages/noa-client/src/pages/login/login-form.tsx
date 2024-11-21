@@ -1,6 +1,5 @@
 import { useImageVerifyCode } from '@/hooks/image-verify-code.hook'
 import { useStore } from '@/hooks/store.hook'
-import { appLogger } from '@/shared/logger/logger'
 import { useRequest } from 'ahooks'
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd'
 import { observer } from 'mobx-react-lite'
