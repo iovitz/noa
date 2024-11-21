@@ -1,5 +1,4 @@
 import { useImageVerifyCode } from '@/hooks/image-verify-code.hook'
-import { useLogger } from '@/hooks/logger.hook'
 import { useStore } from '@/hooks/store.hook'
 import { useRequest } from 'ahooks'
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd'
