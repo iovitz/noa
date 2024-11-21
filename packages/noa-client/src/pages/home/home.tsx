@@ -4,9 +4,19 @@ import { Outlet } from 'react-router-dom'
 
 export default function Home() {
   return (
-    <div className="h-full flex flex-col">
+    <div
+      style={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <PageHeader />
-      <div className="flex-1 bg-gray-100">
+      <div
+        style={{
+          flex: 1,
+        }}
+      >
         <Outlet />
       </div>
     </div>
