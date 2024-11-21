@@ -95,7 +95,7 @@ const LoginForm = observer(() => {
         <Checkbox>同意《隐私策略》</Checkbox>
       </Form.Item>
 
-      <Button type="primary" htmlType="submit" loading={loading} block>注册</Button>
+      <Button type="primary" htmlType="submit" loading={loading} block>登录</Button>
     </Form>
   )
 })
