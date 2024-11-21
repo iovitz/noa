@@ -5,6 +5,7 @@ import { useRequest } from 'ahooks'
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 interface FormData {
   email: string
@@ -15,13 +16,16 @@ interface FormData {
 
 const LoginForm = observer(() => {
   const userStore = useStore('user')
-  const { VerifyCode, refreshCode } = useImageVerifyCode('register')
+  const navigate = useNavigate()
+  const { VerifyCode, refreshCode } = useImageVerifyCode('login')
   const { run, loading } = useRequest(
     ({ email, password, code }: FormData) => userStore.login(email, password, code),
     {
       manual: true,
-      onSuccess(data, params) {
-        appLogger.log(data, params)
+      onSuccess() {
+        navigate('/', {
+          replace: true,
+        })
       },
       onFinally: refreshCode,
     },

@@ -57,9 +57,6 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^19.5.0
         version: 19.5.0
-      '@eslint-react/eslint-plugin':
-        specifier: ^1.15.0
-        version: 1.15.2(eslint@9.13.0(jiti@1.21.6))(typescript@5.6.3)
       '@types/lodash':
         specifier: ^4.17.10
         version: 4.17.13
@@ -87,12 +84,6 @@ importers:
       eslint:
         specifier: ^9.12.0
         version: 9.13.0(jiti@1.21.6)
-      eslint-plugin-react-hooks:
-        specifier: ^5.0.0
-        version: 5.0.0(eslint@9.13.0(jiti@1.21.6))
-      eslint-plugin-react-refresh:
-        specifier: ^0.4.12
-        version: 0.4.14(eslint@9.13.0(jiti@1.21.6))
       git-cz:
         specifier: ^4.9.0
         version: 4.9.0
@@ -141,6 +132,9 @@ importers:
       mobx-react-lite:
         specifier: ^4.0.7
         version: 4.0.7(mobx@6.13.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      noa-core:
+        specifier: file:../noa-core
+        version: link:../noa-core
       noa-sdk:
         specifier: file:../noa-sdk
         version: link:../noa-sdk
@@ -166,6 +160,8 @@ importers:
       vite:
         specifier: ^5.4.8
         version: 5.4.10(@types/node@20.17.4)(less@4.2.0)(sass@1.80.5)(stylus@0.62.0)(terser@5.36.0)
+
+  packages/noa-core: {}
 
   packages/noa-sdk:
     dependencies:
@@ -8824,6 +8820,7 @@ snapshots:
       - eslint
       - supports-color
       - typescript
+    optional: true
 
   '@eslint-react/core@1.15.2(eslint@9.13.0(jiti@1.21.6))(typescript@5.6.3)':
     dependencies:
@@ -8844,6 +8841,7 @@ snapshots:
       - eslint
       - supports-color
       - typescript
+    optional: true
 
   '@eslint-react/eslint-plugin@1.15.2(eslint@9.13.0(jiti@1.21.6))(typescript@5.6.3)':
     dependencies:
@@ -8865,6 +8863,7 @@ snapshots:
       typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@eslint-react/jsx@1.15.2(eslint@9.13.0(jiti@1.21.6))(typescript@5.6.3)':
     dependencies:
@@ -8880,6 +8879,7 @@ snapshots:
       - eslint
       - supports-color
       - typescript
+    optional: true
 
   '@eslint-react/shared@1.15.2(eslint@9.13.0(jiti@1.21.6))(typescript@5.6.3)':
     dependencies:
@@ -8890,8 +8890,10 @@ snapshots:
       - eslint
       - supports-color
       - typescript
+    optional: true
 
-  '@eslint-react/tools@1.15.2': {}
+  '@eslint-react/tools@1.15.2':
+    optional: true
 
   '@eslint-react/types@1.15.2(eslint@9.13.0(jiti@1.21.6))(typescript@5.6.3)':
     dependencies:
@@ -8902,6 +8904,7 @@ snapshots:
       - eslint
       - supports-color
       - typescript
+    optional: true
 
   '@eslint-react/var@1.15.2(eslint@9.13.0(jiti@1.21.6))(typescript@5.6.3)':
     dependencies:
@@ -8916,6 +8919,7 @@ snapshots:
       - eslint
       - supports-color
       - typescript
+    optional: true
 
   '@eslint/compat@1.2.2(eslint@9.13.0(jiti@1.21.6))':
     optionalDependencies:
@@ -10618,7 +10622,8 @@ snapshots:
     dependencies:
       file-uri-to-path: 1.0.0
 
-  birecord@0.1.1: {}
+  birecord@0.1.1:
+    optional: true
 
   bl@4.1.0:
     dependencies:
@@ -11570,6 +11575,7 @@ snapshots:
       typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   eslint-plugin-react-dom@1.15.2(eslint@9.13.0(jiti@1.21.6))(typescript@5.6.3):
     dependencies:
@@ -11589,6 +11595,7 @@ snapshots:
       typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   eslint-plugin-react-hooks-extra@1.15.2(eslint@9.13.0(jiti@1.21.6))(typescript@5.6.3):
     dependencies:
@@ -11609,10 +11616,12 @@ snapshots:
       typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   eslint-plugin-react-hooks@5.0.0(eslint@9.13.0(jiti@1.21.6)):
     dependencies:
       eslint: 9.13.0(jiti@1.21.6)
+    optional: true
 
   eslint-plugin-react-naming-convention@1.15.2(eslint@9.13.0(jiti@1.21.6))(typescript@5.6.3):
     dependencies:
@@ -11632,10 +11641,12 @@ snapshots:
       typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   eslint-plugin-react-refresh@0.4.14(eslint@9.13.0(jiti@1.21.6)):
     dependencies:
       eslint: 9.13.0(jiti@1.21.6)
+    optional: true
 
   eslint-plugin-react-web-api@1.15.2(eslint@9.13.0(jiti@1.21.6))(typescript@5.6.3):
     dependencies:
@@ -11656,6 +11667,7 @@ snapshots:
       typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   eslint-plugin-react-x@1.15.2(eslint@9.13.0(jiti@1.21.6))(typescript@5.6.3):
     dependencies:
@@ -11677,6 +11689,7 @@ snapshots:
       typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   eslint-plugin-regexp@2.6.0(eslint@9.13.0(jiti@1.21.6)):
     dependencies:
@@ -12737,6 +12750,7 @@ snapshots:
       typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   is-inside-container@1.0.0:
     dependencies:
@@ -15067,7 +15081,8 @@ snapshots:
 
   shell-quote@1.8.1: {}
 
-  short-unique-id@5.2.0: {}
+  short-unique-id@5.2.0:
+    optional: true
 
   side-channel@1.0.6:
     dependencies:
@@ -15258,7 +15273,8 @@ snapshots:
       char-regex: 1.0.2
       strip-ansi: 6.0.1
 
-  string-ts@2.2.0: {}
+  string-ts@2.2.0:
+    optional: true
 
   string-width@2.1.1:
     dependencies:
@@ -15532,6 +15548,7 @@ snapshots:
     dependencies:
       minimatch: 10.0.1
       typescript: 5.6.3
+    optional: true
 
   ts-jest@29.2.5(@babel/core@7.26.0)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.0))(jest@29.7.0(@types/node@20.17.4)(ts-node@10.9.2(@swc/core@1.7.42(@swc/helpers@0.5.13))(@types/node@20.17.4)(typescript@5.6.3)))(typescript@5.6.3):
     dependencies:
@@ -15587,7 +15604,8 @@ snapshots:
     optionalDependencies:
       '@swc/core': 1.7.42(@swc/helpers@0.5.13)
 
-  ts-pattern@5.5.0: {}
+  ts-pattern@5.5.0:
+    optional: true
 
   tsconfig-paths-webpack-plugin@4.1.0:
     dependencies:

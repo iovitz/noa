@@ -1,4 +1,4 @@
-import { ioClient } from '@/shared/io/io'
+import { ioClient, ServerData } from '@/shared/io/io'
 import { makeAutoObservable } from 'mobx'
 import { makePersistable } from 'mobx-persist-store'
 
@@ -21,7 +21,7 @@ export class UserStore {
   }
 
   async register(email: string, password: string, code: string) {
-    const { data } = await ioClient.request<UserInfo>({
+    const { data } = await ioClient.request<ServerData<UserInfo>>({
       url: '/user/register',
       method: 'post',
       data: {
@@ -35,7 +35,7 @@ export class UserStore {
   }
 
   async login(email: string, password: string, code: string) {
-    const { data } = await ioClient.request<UserInfo>({
+    const { data } = await ioClient.request<ServerData<UserInfo>>({
       url: '/user/login',
       method: 'post',
       data: {

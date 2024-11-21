@@ -1,0 +1,5 @@
+export * from '.'
+export * from './form.page'
+export * from './h5.page'
+export * from './page.const'
+export * from './resume.page'

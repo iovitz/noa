@@ -1,43 +1,13 @@
-import type { AxiosInstance, AxiosRequestConfig, CreateAxiosDefaults } from 'axios'
-import type { FeSocket } from './socket'
-import axios from 'axios'
+import { IOClient } from 'noa-core'
 
-type ErrorHandler = (data: unknown) => unknown
-
-interface Response<T> {
+export interface ServerData<T> {
   code: number
   data: T
   message: string
 }
 
-export class IOClient {
-  socket!: FeSocket
-
-  axios!: AxiosInstance
-
-  errorHandler = new Set<ErrorHandler>()
-
-  initial(config: CreateAxiosDefaults) {
-    this.axios = axios.create(config)
-
-    this.axios.interceptors.response.use(({ data }) => data)
-    return this
-  }
-
-  addErrorHandler(handler: ErrorHandler) {
-    this.errorHandler.add(handler)
-  }
-
-  removeErrorHandler(handler: ErrorHandler) {
-    this.errorHandler.delete(handler)
-  }
-
-  request<T = any>(config: AxiosRequestConfig) {
-    return this.axios.request(config).catch((e) => {
-      this.errorHandler.forEach(fn => fn(e))
-      throw e
-    }) as unknown as Promise<Response<T>>
-  }
-}
-
-export const ioClient = new IOClient()
+export const ioClient = new IOClient({
+  baseURL: '/api-noa',
+  timeout: 20000,
+  socketPath: '/api-noa/ws',
+})

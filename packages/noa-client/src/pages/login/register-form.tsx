@@ -21,7 +21,9 @@ const RegisterForm = observer(() => {
     {
       manual: true,
       onSuccess() {
-        navigate('/')
+        navigate('/', {
+          replace: true,
+        })
       },
       onFinally: refreshCode,
     },

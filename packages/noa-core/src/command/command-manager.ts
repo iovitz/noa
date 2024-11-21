@@ -1,5 +1,5 @@
-import { Page } from '../pages'
-import { BaseCommand } from './commands.types'
+import { Page } from '../pages/page'
+import { BaseCommand } from './command.types'
 
 export class CommandManager {
   constructor(private page: Page) {

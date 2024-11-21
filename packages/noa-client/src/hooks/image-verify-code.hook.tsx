@@ -5,6 +5,7 @@ import { useRef, useState } from 'react'
 export function useImageVerifyCode(type: string) {
   const [captchaSrc, setCaptchaSrc] = useState<string>('')
   const svgContainer = useRef<HTMLDivElement>(null)
+
   const { run: refreshCode, loading } = useRequest(
     () => {
       const { current } = svgContainer
