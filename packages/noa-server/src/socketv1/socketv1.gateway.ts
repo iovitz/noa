@@ -10,7 +10,7 @@ import { Server, Socket } from 'socket.io'
 import { TracerService } from 'src/util/tracer/tracer.service'
 
 @WebSocketGateway({
-  path: '/socket/v1',
+  path: '/api-noa/ws',
 })
 export class SocketV1Gateway
 implements OnGatewayConnection<Socket>, OnGatewayDisconnect<Socket> {

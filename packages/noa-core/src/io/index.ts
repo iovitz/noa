@@ -32,7 +32,8 @@ export class IOClient implements PageIO {
 
     this.axios.interceptors.response.use(({ data }) => data)
 
-    this.socket = SocketClient(config.socketPath, {
+    this.socket = SocketClient('/', {
+      path: config.socketPath,
       transports: ['polling', 'websocket', 'webtransport'],
     })
     this.initEvents()
