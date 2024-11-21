@@ -1,5 +1,6 @@
 export enum CommandName {
   CompProperty = 'comp.property',
-  CompIndex = 'comp.index',
+  CompDelete = 'comp.delete',
+  CompMove = 'comp.move',
   PageProperty = 'page.property',
 }

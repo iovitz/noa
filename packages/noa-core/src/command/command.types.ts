@@ -1,5 +1,7 @@
 import { CommandName } from './command.const'
 
+export interface CommandManagerContext {}
+
 export interface BaseCommand {
   command: CommandName
   pageId: string
@@ -13,3 +15,5 @@ export interface ChangeFieldNameCommand extends BaseCommand {
     newName: string
   }
 }
+
+export type Command = ChangeFieldNameCommand

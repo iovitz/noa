@@ -1,11 +1,16 @@
-import { Page } from '../pages/page'
-import { BaseCommand } from './command.types'
+import { BaseCommand, CommandManagerContext } from './command.types'
 
 export class CommandManager {
-  constructor(private page: Page) {
+  constructor(private context: CommandManagerContext) {
   }
 
   execute(command: BaseCommand) {
     console.error(command)
   }
+
+  undo() {
+
+  }
+
+  redo() {}
 }
