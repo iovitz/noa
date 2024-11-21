@@ -10,6 +10,7 @@ interface ErrorHandlerProp {
 
 export function ErrorBoundary({ children }: ErrorHandlerProp) {
   const [hasError, setHasError] = useState(false)
+
   const [messageApi, contextHolder] = message.useMessage()
 
   const networkErrorHandler = (err: AxiosError) => {
