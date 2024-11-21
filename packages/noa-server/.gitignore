@@ -3,6 +3,9 @@
 /documentation
 /node_modules
 
+# env files (can opt-in for commiting if needed)
+.env*
+
 # Logs
 logs
 *.log

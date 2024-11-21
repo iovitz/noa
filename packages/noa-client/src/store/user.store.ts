@@ -12,7 +12,6 @@ export class UserStore {
   userId = ''
   constructor() {
     makeAutoObservable(this)
-    console.error(Object.keys(this) as Array<keyof typeof this>)
     makePersistable(this, {
       name: 'user-store',
       properties: Object.keys(this) as Array<keyof typeof this>,
@@ -49,7 +48,6 @@ export class UserStore {
   }
 
   setUserInfo(data: UserInfo) {
-    console.error(data)
     this.nickname = data.nickname
     this.userId = data.userId
   }

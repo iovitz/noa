@@ -1,3 +1,4 @@
+import { useLogger } from '@/hooks/logger.hook'
 import { ioClient } from '@/shared/io/io'
 import { message } from 'antd'
 import { AxiosError } from 'axios'
@@ -10,12 +11,14 @@ interface ErrorHandlerProp {
 
 export function ErrorBoundary({ children }: ErrorHandlerProp) {
   const [hasError, setHasError] = useState(false)
+  const logger = useLogger('error-boundary')
 
   const [messageApi, contextHolder] = message.useMessage()
 
   const networkErrorHandler = (err: AxiosError) => {
     const code = get(err, 'response.data.code')
     const message = get(err, 'response.data.message')
+    logger.error(code, message, err)
     messageApi.error({
       content: `请求失败[${code}]: ${message}`,
       duration: 1,
@@ -46,7 +49,7 @@ export function ErrorBoundary({ children }: ErrorHandlerProp) {
     )
   }
   catch (error) {
-    console.error('渲染白屏:', error)
+    logger.error('渲染白屏:', error)
     setHasError(true)
     return null
   }
