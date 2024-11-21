@@ -21,7 +21,7 @@
     "mobx-persist-store": "^1.1.5",
     "mobx-react-lite": "^4.0.7",
     "noa-core": "file:../noa-core",
-    "noa-sdk": "file:../noa-sdk",
+    "noa-ui": "file:../noa-ui",
     "react": ">=18.3.1",
     "react-dom": ">=18.3.1",
     "react-router-dom": "^6.27.0"
