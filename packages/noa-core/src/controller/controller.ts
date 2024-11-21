@@ -1,5 +1,4 @@
 import { Command, CommandManager } from '../command'
-import { BaseComp } from '../components/base.comp'
 import { Engine } from '../engine'
 import { IOClient, PageIO } from '../io'
 import { Page } from '../page'

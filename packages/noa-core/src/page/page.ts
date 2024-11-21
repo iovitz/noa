@@ -1,7 +1,6 @@
-import { CommandManager } from '../command'
 import { BaseComp } from '../components/base.comp'
 import { Engine } from '../engine'
-import { IOClient, PageIO } from '../io'
+import { PageIO } from '../io'
 
 export interface PageParams {
   id: string
