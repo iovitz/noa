@@ -9,7 +9,6 @@ export interface PageParams {
 
 export class Page {
   private comps: BaseComp [] = []
-  name: string
   id: string
   private engine: Engine
 

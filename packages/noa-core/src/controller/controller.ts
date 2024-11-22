@@ -11,7 +11,6 @@ export interface ControllerParam {
 export class Controller {
   private id: string
   private page: Page
-  private engine: Engine
   private commandManager = new CommandManager(this)
 
   constructor(params: ControllerParam) {
