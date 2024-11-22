@@ -18,19 +18,4 @@ export class PageController {
     })
     return page
   }
-
-  @Post('new')
-  async newChange(@Body(VerifyPipe) body: NewEditDTO) {
-    // 保存CS
-    await this.pageService.newEdit({
-      compId: body.compId,
-      change: body.change,
-    })
-
-    // 推送最新版本和脏区
-    return {
-      rev: 30,
-      data: !!body,
-    }
-  }
 }
