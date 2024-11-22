@@ -15,10 +15,12 @@ import { TracerService } from './tracer/tracer.service'
       load: [
         // 可以加载远程配置
         async () => {
-          const isProd = process.env.NODE_ENV === 'production'
+          const env = process.env
+          const isProd = env.NODE_ENV === 'production'
 
           return {
             isProd,
+            REDIS_CONNECT_URL: env.REDIS_CONNECT_URL,
           }
         },
       ],
