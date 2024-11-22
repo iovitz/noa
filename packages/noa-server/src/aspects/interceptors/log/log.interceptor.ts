@@ -19,7 +19,6 @@ export class LogInterceptor implements NestInterceptor {
 
     req.tracer.log(`+REQ：${method} ${originalUrl}`, {
       clientId: req.clientId,
-      userId: req.session.userId,
       body: req.body,
       query: req.query,
     })
@@ -29,7 +28,6 @@ export class LogInterceptor implements NestInterceptor {
     req.tracer.log('-SUC', {
       cost: req.getCostNs(),
       clientId: req.clientId,
-      userId: req.session.userId,
     })
 
     return data

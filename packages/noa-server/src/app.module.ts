@@ -6,7 +6,6 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import * as cookieParser from 'cookie-parser'
-import * as session from 'express-session'
 import { DefaultFilter } from './aspects/filters/default/default.filter'
 import { HttpFilter } from './aspects/filters/http/http.filter'
 import { LogInterceptor } from './aspects/interceptors/log/log.interceptor'
@@ -84,11 +83,6 @@ export class AppModule implements NestModule {
     consumer
       .apply(
         cookieParser(),
-        session({
-          secret: this.config.getOrThrow('SESSION_SECRET'),
-          resave: false,
-          saveUninitialized: false,
-        }),
         // middleware中主要用来注入工具函数
         InjectorMiddleware,
       )

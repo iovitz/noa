@@ -25,9 +25,3 @@ declare global {
     export interface Response {}
   }
 }
-
-declare module 'express-session' {
-  interface SessionData {
-    userId: string
-  }
-}

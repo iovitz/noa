@@ -21,7 +21,6 @@ jobs:
           key: ${{ secrets.SERVER_VPS_KEY }}
           script: |
             echo 'Set Environment Variable'
-            export SESSION_SECRET="${{ secrets.SESSION_SECRET }}"
             export REDIS_CONNECT_URL="${{ secrets.REDIS_CONNECT_URL }}"
 
             echo 'Update Code'
