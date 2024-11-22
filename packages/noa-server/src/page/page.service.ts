@@ -24,10 +24,10 @@ export class PageService {
   @InjectRepository(Snapshot)
   snapshotRepository: Repository<Snapshot>
 
-  createPage({ name, type }: DeepPartial<Page>) {
+  createPage(type: string, _templateId: string) {
     const page = this.pageRepository.create({
       id: this.encrypt.genPrimaryKey(),
-      name,
+      name: '未命名表单',
       type,
     })
     return this.pageRepository.save(page)

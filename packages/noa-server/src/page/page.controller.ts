@@ -11,11 +11,8 @@ export class PageController {
   pageService: PageService
 
   @Post('create-page')
-  async createPage(@Body(VerifyPipe) { name, type }: CreatePageDTO) {
-    const page = this.pageService.createPage({
-      name,
-      type,
-    })
+  async createPage(@Body(VerifyPipe) { templateId, type }: CreatePageDTO) {
+    const page = this.pageService.createPage(type, templateId)
     return page
   }
 }

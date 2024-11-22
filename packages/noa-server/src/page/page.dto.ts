@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNumber, IsObject, IsString, Length } from 'class-validator'
+import { IsString, Length } from 'class-validator'
 
 export class CreatePageDTO {
   @IsString()
@@ -15,10 +15,10 @@ export class CreatePageDTO {
   @IsString()
   @Length(1, 100)
   @ApiProperty({
-    minLength: 1,
-    maxLength: 100,
-    example: '满意度调研表',
-    description: '页面名称',
+    maxLength: 26,
+    minLength: 26,
+    example: '模板ID',
+    description: '模板ID',
   })
-  name: string
+  templateId: string
 }
