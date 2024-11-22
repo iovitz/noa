@@ -1,7 +1,7 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
-import { CreatePageDTO, NewEditDTO } from './page.dto'
+import { CreatePageDTO } from './page.dto'
 import { PageService } from './page.service'
 
 @ApiTags('页面编辑')
