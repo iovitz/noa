@@ -22,6 +22,7 @@ jobs:
           script: |
             echo 'Set Environment Variable'
             export SESSION_SECRET="${{ secrets.SESSION_SECRET }}"
+            export REDIS_CONNECT_URL="${{ secrets.REDIS_CONNECT_URL }}"
 
             echo 'Update Code'
             cd ~/apps/noa/packages/noa-server/
