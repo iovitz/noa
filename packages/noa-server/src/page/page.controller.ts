@@ -1,7 +1,7 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common'
+import { Body, Controller, Get, Inject, Param, Post, UnprocessableEntityException } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
-import { CreatePageDTO } from './page.dto'
+import { CreatePageDTO, GetPageDTO } from './page.dto'
 import { PageService } from './page.service'
 
 @ApiTags('页面编辑')
@@ -13,6 +13,19 @@ export class PageController {
   @Post('create-page')
   async createPage(@Body(VerifyPipe) { templateId, type }: CreatePageDTO) {
     const page = this.pageService.createPage(type, templateId)
+    return page
+  }
+
+  @Get('page/:pageId')
+  async getPage(@Param(VerifyPipe) param: GetPageDTO) {
+    const page = await this.pageService.pageRepository.findOneBy({
+      id: param.pageId,
+    })
+    if (!page) {
+      const error = new UnprocessableEntityException('验证码错误')
+      throw error
+    }
+    // const changesets = this.pageService.changesetRepository.find()
     return page
   }
 }

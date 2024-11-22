@@ -5,7 +5,6 @@ export class Page {
   @PrimaryColumn({
     type: 'varchar',
     length: 26,
-    unsigned: true,
     comment: '自增主键',
   })
   id: string
@@ -54,6 +53,12 @@ export class Page {
     comment: '页面类型',
   })
   type: string
+
+  @Column({
+    type: 'text',
+    comment: '快照数据',
+  })
+  snapshot: string
 
   @Column({
     type: 'boolean',

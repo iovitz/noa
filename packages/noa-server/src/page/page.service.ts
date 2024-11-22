@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Component } from 'react'
 import { Changeset } from 'src/sqlite/changeset.entity'
 import { Page } from 'src/sqlite/page.entity'
-import { Snapshot } from 'src/sqlite/snapshot.entity'
+import { Template } from 'src/sqlite/template.entity'
 import { EncryptService } from 'src/util/encrypt/encrypt.service'
 import { DeepPartial, Repository } from 'typeorm'
 
@@ -21,16 +21,30 @@ export class PageService {
   @InjectRepository(Changeset)
   changesetRepository: Repository<Changeset>
 
-  @InjectRepository(Snapshot)
-  snapshotRepository: Repository<Snapshot>
+  @InjectRepository(Template)
+  templateRepository: Repository<Template>
 
-  createPage(type: string, _templateId: string) {
-    const page = this.pageRepository.create({
+  async createPage(type: string, templateId: string) {
+    let snapshot: string
+    if (templateId) {
+      // 使用指定模板
+      const template = await this.templateRepository.findOneBy({ id: templateId })
+      if (template) {
+        snapshot = template.snapshot
+      }
+    }
+    else {
+      // 使用默认的空白模板
+    }
+
+    await this.pageRepository.save(this.pageRepository.create({
       id: this.encrypt.genPrimaryKey(),
       name: '未命名表单',
       type,
-    })
-    return this.pageRepository.save(page)
+      snapshot,
+    }))
+
+    return true
   }
 
   newEdit({ pageId, compId, type, change, localRev }: DeepPartial<Changeset>) {

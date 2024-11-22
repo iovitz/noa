@@ -1,28 +1,19 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity('snapshot')
-export class Snapshot {
+@Entity('template')
+export class Template {
   @PrimaryColumn({
     type: 'varchar',
     length: 26,
-    unsigned: true,
     comment: '自增主键',
   })
   id: string
 
   @Column({
-    type: 'int',
-    unsigned: true,
-    comment: '页面ID',
+    type: 'text',
+    comment: '快照数据',
   })
-  pageId: number
-
-  @Column({
-    type: 'int',
-    unsigned: true,
-    comment: '快照版本',
-  })
-  rev: number
+  snapshot: string
 
   @CreateDateColumn({
     comment: '修改时间',

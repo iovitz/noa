@@ -22,3 +22,15 @@ export class CreatePageDTO {
   })
   templateId: string
 }
+
+export class GetPageDTO {
+  @IsString()
+  @Length(26)
+  @ApiProperty({
+    minLength: 26,
+    maxLength: 26,
+    example: 'id',
+    description: '页面类型',
+  })
+  pageId: string
+}
