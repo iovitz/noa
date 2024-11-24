@@ -14,7 +14,7 @@ export default function Editor() {
         <div
           ref={editorRef}
           style={{
-            height: '668px',
+            height: '100%',
             width: '375px',
             background: '#fff',
           }}
@@ -27,7 +27,7 @@ export default function Editor() {
       >
         <div
           style={{
-            height: '668px',
+            height: '100%',
             width: '375px',
           }}
         />

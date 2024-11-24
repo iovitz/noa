@@ -1,24 +1,26 @@
-import PageHeader from '@/components/header/header'
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { CenterContainer } from '@/components/style/style'
+import { css } from '@emotion/css'
+import { Button, Card, Col, Row, Space } from 'antd'
 
 export default function Home() {
   return (
-    <div
-      style={{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <PageHeader />
-      <div
-        style={{
-          flex: 1,
-        }}
-      >
-        <Outlet />
-      </div>
-    </div>
+    <CenterContainer>
+      <h3>新建文件</h3>
+      <Row style={{ width: '100%' }} gutter={15}>
+        <Col span={6}>
+          <Button type="dashed" size="large" block>新建表单</Button>
+        </Col>
+        <Col span={6}>
+          <Button type="dashed" size="large" block>新建H5</Button>
+        </Col>
+        <Col span={6}>
+          <Button type="dashed" size="large" block>新建简历</Button>
+        </Col>
+        <Col span={6}>
+          <Button type="dashed" size="large" block>模板中心</Button>
+        </Col>
+      </Row>
+      <h3>文件列表</h3>
+    </CenterContainer>
   )
 }

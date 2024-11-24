@@ -4,6 +4,7 @@ export default antfu({
   react: true,
   rules: {
     'react-hooks/exhaustive-deps': 'off',
+    'react/no-useless-fragment': 0,
   },
   typescript: {
     overrides: {

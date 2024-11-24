@@ -2,6 +2,7 @@ import React from 'react'
 import { useRoutes } from 'react-router-dom'
 import Editor from './editor/editor'
 import Home from './home/home'
+import Layout from './layout'
 import Login from './login/login'
 import NotFound from './notfound/notfound'
 import Template from './template/template'
@@ -10,11 +11,11 @@ export default function AppRoutes() {
   const elements = useRoutes([
     {
       path: '/',
-      element: <Home />,
+      element: <Layout />,
       children: [
         {
           path: '/',
-          element: <h1>hhh</h1>,
+          element: <Home />,
         },
         {
           path: '/template',
