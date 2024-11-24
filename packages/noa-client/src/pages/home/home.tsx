@@ -1,6 +1,6 @@
 import { CenterContainer } from '@/components/style/style'
-import { css } from '@emotion/css'
-import { Button, Card, Col, Row, Space } from 'antd'
+import { Button, Col, Row } from 'antd'
+import { FileList } from './file-list'
 
 export default function Home() {
   return (
@@ -21,6 +21,7 @@ export default function Home() {
         </Col>
       </Row>
       <h3>文件列表</h3>
+      <FileList />
     </CenterContainer>
   )
 }

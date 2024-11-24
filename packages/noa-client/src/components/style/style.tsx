@@ -1,6 +1,5 @@
 import { css } from '@emotion/css'
 import styled from '@emotion/styled'
-import clsx from 'clsx'
 import React, { PropsWithChildren } from 'react'
 
 const Container = styled.div`
