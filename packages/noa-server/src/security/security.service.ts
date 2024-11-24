@@ -17,7 +17,6 @@ export class SecurityService {
       width, // 图片宽
       height, // 图片长
     })
-    console.error(redisKey, text)
 
     await this.redis.set(redisKey, text)
     await this.redis.expire(redisKey, 15 * 60)
@@ -26,7 +25,6 @@ export class SecurityService {
   }
 
   async checkVerifyCode(redisKey: string, code: string) {
-    console.error(redisKey, code)
     const redisCode = await this.redis.get(redisKey)
     const result = redisCode?.toLowerCase() === code.toLowerCase()
     if (result) {

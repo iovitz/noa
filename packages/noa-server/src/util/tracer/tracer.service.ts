@@ -13,6 +13,7 @@ type LogContext =
     stack?: string
     [key: string]: unknown
   }
+export const rootLogger = createRootLogger(process.env.NODE_ENV === 'production' ? 'info' : 'debug')
 
 class BaseTracer implements LoggerService {
   constructor(private logger: Logger) {}
@@ -64,6 +65,6 @@ class BaseTracer implements LoggerService {
 @Injectable()
 export class TracerService extends BaseTracer {
   constructor(private config: ConfigService) {
-    super(createRootLogger(config.getOrThrow('isProd') ? 'info' : 'debug'))
+    super(rootLogger)
   }
 }

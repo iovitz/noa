@@ -3,7 +3,13 @@ import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import * as pkg from '../package.json'
 import { AppModule } from './app.module'
-import { TracerService } from './util/tracer/tracer.service'
+import { rootLogger, TracerService } from './util/tracer/tracer.service'
+
+// 防止未捕获异常导致进程退出
+process.on('unhandledRejection', (reason, promise) => {
+  rootLogger.error('###Unhandle Rejection Promise', promise)
+  rootLogger.error('###Unhandle Rejection Reason', reason)
+})
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -44,6 +50,9 @@ async function bootstrap() {
 
   // 不要用，否则中间件会报错
   // app.setGlobalPrefix('/noa')
+
+  // eslint-disable-next-line no-new
+  new Promise((_, rej) => setTimeout(() => rej(new Error('hah')), 1000))
 
   const appPort = 19001
 
