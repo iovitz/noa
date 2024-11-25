@@ -1,7 +1,7 @@
-import { BadRequestFilter } from './bad-request.filter';
+import { BadRequestFilter } from './bad-request.filter'
 
-describe('BadRequestFilter', () => {
+describe('badRequestFilter', () => {
   it('should be defined', () => {
-    expect(new BadRequestFilter()).toBeDefined();
-  });
-});
+    expect(new BadRequestFilter()).toBeDefined()
+  })
+})
