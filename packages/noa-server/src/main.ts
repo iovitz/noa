@@ -51,9 +51,6 @@ async function bootstrap() {
   // 不要用，否则中间件会报错
   // app.setGlobalPrefix('/noa')
 
-  // eslint-disable-next-line no-new
-  new Promise((_, rej) => setTimeout(() => rej(new Error('hah')), 1000))
-
   const appPort = 19001
 
   await app.listen(appPort)

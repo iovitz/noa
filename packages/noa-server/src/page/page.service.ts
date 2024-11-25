@@ -1,9 +1,8 @@
-import { Inject, Injectable, UnprocessableEntityException } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Changeset } from 'src/sqlite/changeset.entity'
 import { Component } from 'src/sqlite/component.entity'
 import { Page } from 'src/sqlite/page.entity'
-import { Template } from 'src/sqlite/template.entity'
 import { EncryptService } from 'src/util/encrypt/encrypt.service'
 import { DeepPartial, Repository } from 'typeorm'
 

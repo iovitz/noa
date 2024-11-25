@@ -32,11 +32,9 @@ content-type: application/json
 
 ### createPage
 @username = {{$random.alphabetic(10)}}
-POST {{prefix}}/edit/new-page
+POST {{prefix}}/page/create
 content-type: application/json
 
 {
-    "name": "{{username}}",
-    "password": {{$randomInt 5 150}},
-    "code": "0000"
+  type": "form"
 }

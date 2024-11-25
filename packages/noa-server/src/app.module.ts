@@ -6,6 +6,7 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import * as cookieParser from 'cookie-parser'
+import { BadRequestFilter } from './aspects/filters/bad-request/bad-request.filter'
 import { DefaultFilter } from './aspects/filters/default/default.filter'
 import { HttpFilter } from './aspects/filters/http/http.filter'
 import { LogInterceptor } from './aspects/interceptors/log/log.interceptor'
@@ -69,6 +70,10 @@ import { UtilModule } from './util/util.module'
     {
       provide: APP_FILTER,
       useClass: HttpFilter,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: BadRequestFilter,
     },
   ],
 })

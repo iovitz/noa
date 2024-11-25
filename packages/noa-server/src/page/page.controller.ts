@@ -5,28 +5,28 @@ import { CreatePageDTO, GetPageDTO } from './page.dto'
 import { PageService } from './page.service'
 
 @ApiTags('页面编辑')
-@Controller('page')
+@Controller('api-noa/page')
 export class PageController {
   @Inject(PageService)
   pageService: PageService
 
-  @Post('create-page')
+  @Post('create')
   async createPage(@Body(VerifyPipe) { templateId, type }: CreatePageDTO) {
     const page = this.pageService.createPage(type, templateId)
     return page
   }
 
-  @Get('all')
+  @Get()
   async getAllPage() {
 
   }
 
-  @Delete('delete-page')
+  @Delete(':pageId')
   async deletePage() {
 
   }
 
-  @Get('page/:pageId')
+  @Get(':pageId')
   async getPage(@Param(VerifyPipe) param: GetPageDTO) {
     const page = await this.pageService.pageRepository.findOneBy({
       id: param.pageId,
