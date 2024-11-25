@@ -10,10 +10,11 @@ export class Template {
   id: string
 
   @Column({
-    type: 'text',
-    comment: '快照数据',
+    type: 'varchar',
+    length: 20,
+    comment: '模版名称',
   })
-  snapshot: string
+  name: string
 
   @CreateDateColumn({
     comment: '修改时间',

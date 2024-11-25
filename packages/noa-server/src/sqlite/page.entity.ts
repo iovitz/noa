@@ -18,7 +18,7 @@ export class Page {
   rev: number
 
   @Column({
-    type: 'bigint',
+    type: 'varchar',
     unsigned: true,
     comment: '所属用户',
   })
@@ -55,10 +55,11 @@ export class Page {
   type: string
 
   @Column({
-    type: 'text',
-    comment: '快照数据',
+    type: 'boolean',
+    comment: '当前页面是否被分享',
+    default: false,
   })
-  snapshot: string
+  template: boolean
 
   @Column({
     type: 'boolean',
@@ -66,6 +67,13 @@ export class Page {
     default: false,
   })
   shared: boolean
+
+  @Column({
+    type: 'boolean',
+    comment: '页面状态',
+    default: true,
+  })
+  status: boolean
 
   @CreateDateColumn({
     comment: '修改时间',

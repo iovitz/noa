@@ -10,31 +10,25 @@ export class Component {
   id: string
 
   @Column({
-    type: 'bigint',
+    type: 'varchar',
+    length: 26,
     unsigned: true,
   })
-  pageId: number
+  pageId: string
 
   @Column({
     type: 'varchar',
-    length: 20,
-    comment: '表单名称',
+    length: 50,
+    comment: '字段名称',
   })
   name: string
 
   @Column({
     type: 'varchar',
     length: 1000,
-    comment: '表单名称',
+    comment: '字段描述',
   })
   desc: string
-
-  @Column({
-    type: 'boolean',
-    default: false,
-    comment: '页面是否分享',
-  })
-  shared: boolean
 
   @Column({
     type: 'float',

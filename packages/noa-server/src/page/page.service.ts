@@ -1,7 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { Inject, Injectable, UnprocessableEntityException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Component } from 'react'
 import { Changeset } from 'src/sqlite/changeset.entity'
+import { Component } from 'src/sqlite/component.entity'
 import { Page } from 'src/sqlite/page.entity'
 import { Template } from 'src/sqlite/template.entity'
 import { EncryptService } from 'src/util/encrypt/encrypt.service'
@@ -21,30 +21,35 @@ export class PageService {
   @InjectRepository(Changeset)
   changesetRepository: Repository<Changeset>
 
-  @InjectRepository(Template)
-  templateRepository: Repository<Template>
-
   async createPage(type: string, templateId: string) {
-    let snapshot: string
-    if (templateId) {
-      // 使用指定模板
-      const template = await this.templateRepository.findOneBy({ id: templateId })
-      if (template) {
-        snapshot = template.snapshot
-      }
-    }
-    else {
-      // 使用默认的空白模板
+    const template = await this.pageRepository.findOneBy({ id: templateId })
+
+    // 校验模版是否存在以及是否被分享
+    if (!template || !template.template) {
+      return await this.pageRepository.save(this.pageRepository.create({
+        id: this.encrypt.genPrimaryKey(),
+        name: template.name,
+        type,
+      }))
     }
 
-    await this.pageRepository.save(this.pageRepository.create({
-      id: this.encrypt.genPrimaryKey(),
-      name: '未命名表单',
-      type,
-      snapshot,
-    }))
+    const templateComps = await this.compRepository.findBy({
+      pageId: template.id,
+    })
 
-    return true
+    const newPageId = this.encrypt.genPrimaryKey()
+    templateComps.forEach(item => item.pageId = newPageId)
+
+    const [page] = await Promise.all([
+      this.pageRepository.save(this.pageRepository.create({
+        id: newPageId,
+        name: template.name,
+        type,
+      })),
+      this.pageRepository.save(templateComps),
+    ])
+
+    return page
   }
 
   newEdit({ pageId, compId, type, change, localRev }: DeepPartial<Changeset>) {
