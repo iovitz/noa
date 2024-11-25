@@ -9,12 +9,12 @@ import { HeaderKeys } from 'src/shared/constans/header'
 import * as status from 'statuses'
 
 @Catch(Error)
-export class DefaultFilter<Error> implements ExceptionFilter {
+export class DefaultFilter implements ExceptionFilter {
   catch(exception: Error, host: ArgumentsHost) {
     const ctx = host.switchToHttp()
     const res = ctx.getResponse<Res>()
 
-    res.tracer.error('- ERR 500', exception.toString())
+    res.tracer.error('-ERR 500', exception)
 
     const errorResponse = {
       code: 50000,

@@ -27,7 +27,7 @@ export class PageService {
     if (!template || !template.template) {
       return await this.pageRepository.save(this.pageRepository.create({
         id: this.encrypt.genPrimaryKey(),
-        name: template.name,
+        name: '未命名页面',
         type,
       }))
     }

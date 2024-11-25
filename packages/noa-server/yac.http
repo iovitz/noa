@@ -36,5 +36,5 @@ POST {{prefix}}/page/create
 content-type: application/json
 
 {
-  type": "form"
+  "type": "form"
 }

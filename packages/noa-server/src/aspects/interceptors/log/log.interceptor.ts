@@ -25,7 +25,7 @@ export class LogInterceptor implements NestInterceptor {
 
     const data = await next.handle()
 
-    req.tracer.log('-SUC', {
+    req.tracer.log('-REQ', {
       cost: req.getCostNs(),
       clientId: req.clientId,
     })

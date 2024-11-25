@@ -12,7 +12,7 @@ export class PageController {
 
   @Post('create')
   async createPage(@Body(VerifyPipe) { templateId, type }: CreatePageDTO) {
-    const page = this.pageService.createPage(type, templateId)
+    const page = await this.pageService.createPage(type, templateId)
     return page
   }
 
