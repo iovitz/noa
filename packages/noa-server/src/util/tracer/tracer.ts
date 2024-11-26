@@ -2,6 +2,7 @@ import type { DailyRotateFileTransportOptions } from 'winston-daily-rotate-file'
 import { homedir } from 'node:os'
 import * as path from 'node:path'
 import * as process from 'node:process'
+import * as chalk from 'chalk'
 import { isEmpty, omit } from 'lodash'
 import * as pkg from 'package.json'
 import { stringify } from 'safe-stable-stringify'
@@ -12,6 +13,13 @@ import 'winston-daily-rotate-file'
 
 const ERROR = Symbol('ERROR')
 const isProd = process.env.NODE_ENV === 'production'
+
+const logLevelColors = {
+  debug: chalk.bgGray,
+  info: chalk.bgBlue,
+  warn: chalk.bgYellow,
+  error: chalk.bgRed,
+}
 
 export const appLogger = createRootLogger()
 export function createRootLogger() {
@@ -53,7 +61,8 @@ export function createRootLogger() {
             } = omit(info, ERROR, SPLAT, LEVEL, MESSAGE)
             // 错误日志特别输出
             const restStr = isEmpty(rest) ? '' : stringify(rest)
-            return `${timestamp}${insertOutput(pid)}${insertOutput(level)}${insertOutput(scope)}${insertOutput(name)}${insertOutput(message)}${insertOutput(payload)}${insertOutput(
+            const levelChalk = logLevelColors[level as string] ?? chalk.blue
+            return `${levelChalk(level)} ${chalk.gray(timestamp)}${chalk.blue(insertOutput(scope))}${chalk.green(insertOutput(name))}${insertOutput(message)}${insertOutput(payload)}${insertOutput(
               stack,
             )}${insertOutput(restStr)}`
           }),
@@ -119,7 +128,7 @@ function formatOutput(info: LogInfo) {
   )}${insertOutput(restStr)}`
 }
 
-export function formatNestJSLog(context?: LogContext): FormatedContext {
+export function formatLogContext(context?: LogContext): FormatedContext {
   if (context === void 0) {
     return {
       payload: '',

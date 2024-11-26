@@ -3,12 +3,12 @@ import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import * as pkg from '../package.json'
 import { AppModule } from './app.module'
-import { appLogger } from './util/tracer/tracer'
+import { appLogger, formatLogContext } from './util/tracer/tracer'
 import { TracerService } from './util/tracer/tracer.service'
 
 // 防止未捕获异常导致进程退出
-process.on('unhandledRejection', (reason) => {
-  appLogger.error('###Unhandle Rejection Promise', reason)
+process.on('unhandledRejection', (reason: Error) => {
+  appLogger.error('###Unhandle Rejection Promise', formatLogContext(reason))
 })
 
 async function bootstrap() {

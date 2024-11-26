@@ -8,6 +8,7 @@ export type LogContext =
   }
 
 export type FormatedContext = {
+  level: string
   name: string
   message: string
   stack: string

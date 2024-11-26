@@ -1,7 +1,7 @@
 import { Injectable, LoggerService } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { Logger } from 'winston'
-import { appLogger, formatNestJSLog } from './tracer'
+import { appLogger, formatLogContext } from './tracer'
 import { LogContext } from './tracer.types'
 import 'winston-daily-rotate-file'
 
@@ -9,19 +9,19 @@ class BaseTracer implements LoggerService {
   constructor(private logger: Logger) {}
 
   log(message: string, context?: LogContext) {
-    this.logger.info(message, formatNestJSLog(context))
+    this.logger.info(message, formatLogContext(context))
   }
 
   error(message: string, context?: LogContext) {
-    this.logger.error(message, formatNestJSLog(context))
+    this.logger.error(message, formatLogContext(context))
   }
 
   warn(message: string, context?: LogContext) {
-    this.logger.warn(message, formatNestJSLog(context))
+    this.logger.warn(message, formatLogContext(context))
   }
 
   debug(message: string, context?: LogContext) {
-    this.logger.debug(message, formatNestJSLog(context))
+    this.logger.debug(message, formatLogContext(context))
   }
 
   child(scope: string) {
