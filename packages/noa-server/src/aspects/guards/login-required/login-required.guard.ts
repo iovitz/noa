@@ -1,6 +1,5 @@
 import { CanActivate, ExecutionContext, Inject, Injectable, UnauthorizedException } from '@nestjs/common'
 import Redis from 'ioredis'
-import { Observable } from 'rxjs'
 import { REDIS_CLIENT } from 'src/redis/redis.module'
 import { CookieKeys } from 'src/shared/constans/cookie'
 
