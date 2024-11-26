@@ -14,6 +14,7 @@ export class HttpFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp()
     const res = ctx.getResponse<Res>()
+    const req = ctx.getRequest<Req>()
 
     const status = exception.getStatus()
 
@@ -27,6 +28,7 @@ export class HttpFilter implements ExceptionFilter {
       code: errorResponse.code,
       cost: res.getCostNs(),
       cid: res.clientId,
+      path: req.path,
     })
 
     res.setHeader(HeaderKeys.ContentType, contentType('json') as string)
