@@ -7,9 +7,8 @@ import { AppModule } from './app.module'
 import { rootLogger, TracerService } from './util/tracer/tracer.service'
 
 // 防止未捕获异常导致进程退出
-process.on('unhandledRejection', (reason, promise) => {
-  rootLogger.error('###Unhandle Rejection Promise', promise)
-  rootLogger.error('###Unhandle Rejection Reason', reason)
+process.on('unhandledRejection', (reason) => {
+  rootLogger.error('###Unhandle Rejection Promise', reason)
 })
 
 async function bootstrap() {
@@ -48,11 +47,6 @@ async function bootstrap() {
     .build()
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig)
   SwaggerModule.setup('doc', app, swaggerDocument)
-
-  rootTracer.error('niubi', new Error('fafa'))
-  rootTracer.error('niubi', new UnauthorizedException('fafa'))
-  rootTracer.error('niubi', new UnprocessableEntityException('fafa'))
-  rootTracer.error('niubi', new BadRequestException('fafa'))
 
   // 不要用，否则中间件会报错
   // app.setGlobalPrefix('/noa')
