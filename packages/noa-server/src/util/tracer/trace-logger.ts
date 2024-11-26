@@ -7,20 +7,9 @@ import { stringify } from 'safe-stable-stringify'
 import { LEVEL, MESSAGE, SPLAT } from 'triple-beam'
 import { createLogger, format, transports } from 'winston'
 import { DailyRotateFileTransportOptions } from 'winston-daily-rotate-file'
+import { Format, FormatedContext, LogContext, LogInfo } from './tracer.types'
 
 const ERROR = Symbol('ERROR')
-
-type Format = ReturnType<typeof format.timestamp>
-
-interface LogInfo {
-  name?: string
-  pid?: number
-  traceInfo?: string
-  msgPrefix?: string
-  stack?: string
-  payload?: string
-  [key: string | symbol]: unknown
-}
 
 export function createRootLogger(level: string) {
   const rootLogger = createLogger({
@@ -90,9 +79,13 @@ function getCommonRotateFileOption(
 }
 
 function insertOutput(v: unknown) {
-  if (!v)
+  if (v === void 0) {
     return ''
-  const content = typeof v === 'object' ? stringify(v) : v
+  }
+  else if (v === null) {
+    return 'null'
+  }
+  const content = v !== null && typeof v === 'object' ? stringify(v) : v
   return ` ${content}`
 }
 
@@ -115,4 +108,24 @@ function formatOutput(info: LogInfo) {
   return `${[timestamp]}${insertOutput(pid)} ${level}${insertOutput(scope)}${insertOutput(name)}${insertOutput(message)}${insertOutput(payload)}${insertOutput(
     stack,
   )}${insertOutput(restStr)}`
+}
+
+export function formatNestJSLog(context?: LogContext): FormatedContext {
+  // 兼容NestJS的日志风格
+  if (typeof context === 'string') {
+    return {
+      name: context,
+    }
+  }
+  if (context instanceof Error) {
+    return {
+      name: context.name,
+      message: context.message,
+      // 尽量吧错误都放在同一行方便日志按行过滤查看
+      stack: context.stack?.split('\n').join('\\n'),
+    }
+  }
+  return {
+    payload: isEmpty(context) ? `${context}` : stringify(context),
+  }
 }

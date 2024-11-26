@@ -1,11 +1,12 @@
+type PromiseKeys = 'GET_USER_INFO'
 export class PromiseManager {
-  private promiseMap = new Map<string, Promise<any>>()
+  private promiseMap = new Map<PromiseKeys, Promise<any>>()
 
-  add(key: string, promise: Promise<any>) {
+  add(key: PromiseKeys, promise: Promise<any>) {
     this.promiseMap.set(key, promise)
   }
 
-  get(key: string) {
+  get(key: PromiseKeys) {
     return this.promiseMap.get(key)
   }
 }

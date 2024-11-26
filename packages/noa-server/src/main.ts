@@ -1,4 +1,5 @@
 import type { NestExpressApplication } from '@nestjs/platform-express'
+import { BadRequestException, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import * as pkg from '../package.json'
@@ -47,6 +48,11 @@ async function bootstrap() {
     .build()
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig)
   SwaggerModule.setup('doc', app, swaggerDocument)
+
+  rootTracer.error('niubi', new Error('fafa'))
+  rootTracer.error('niubi', new UnauthorizedException('fafa'))
+  rootTracer.error('niubi', new UnprocessableEntityException('fafa'))
+  rootTracer.error('niubi', new BadRequestException('fafa'))
 
   // 不要用，否则中间件会报错
   // app.setGlobalPrefix('/noa')

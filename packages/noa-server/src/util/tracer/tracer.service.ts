@@ -1,56 +1,29 @@
 import { Injectable, LoggerService } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { Logger } from 'winston'
-import { createRootLogger } from './trace-logger'
+import { createRootLogger, formatNestJSLog } from './trace-logger'
+import { LogContext } from './tracer.types'
 import 'winston-daily-rotate-file'
 
-type LogContext =
-  | string
-  | Error
-  | {
-    name?: string
-    err?: string
-    stack?: string
-    [key: string]: unknown
-  }
 export const rootLogger = createRootLogger(process.env.NODE_ENV === 'production' ? 'info' : 'debug')
 
 class BaseTracer implements LoggerService {
   constructor(private logger: Logger) {}
 
-  private formatContext(context?: LogContext) {
-    if (!context)
-      return
-    if (context instanceof Error) {
-      return {
-        name: context.name,
-        message: context.message,
-        // 尽量吧错误都放在同一行方便日志按行过滤查看
-        stack: context.stack?.split('\n').join('\\n'),
-      }
-    }
-    if (typeof context === 'object') {
-      return context
-    }
-    return {
-      name: context,
-    }
+  log(message: string, context?: LogContext) {
+    this.logger.info(message, formatNestJSLog(context))
   }
 
-  log(message: any, context?: LogContext) {
-    this.logger.info(message, this.formatContext(context))
+  error(message: string, context?: LogContext) {
+    this.logger.error(message, formatNestJSLog(context))
   }
 
-  error(message: any, context?: LogContext) {
-    this.logger.error(message, this.formatContext(context))
+  warn(message: string, context?: LogContext) {
+    this.logger.warn(message, formatNestJSLog(context))
   }
 
-  warn(message: any, context?: LogContext) {
-    this.logger.warn(message, this.formatContext(context))
-  }
-
-  debug(message: any, context?: LogContext) {
-    this.logger.debug(message, this.formatContext(context))
+  debug(message: string, context?: LogContext) {
+    this.logger.debug(message, formatNestJSLog(context))
   }
 
   child(scope: string) {

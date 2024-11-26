@@ -1,4 +1,4 @@
-import { Body, Controller, Headers, Inject, Post, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common'
+import { Body, Controller, Headers, Inject, Post, Response, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { InjectRepository } from '@nestjs/typeorm'
 import Redis from 'ioredis'
@@ -43,7 +43,13 @@ export class UserController {
     description: '登录成功的用户信息',
     type: CreateUserResponseDTO,
   })
-  async login(@Body(VerifyPipe) body: LoginDTO, @ClientIP() ip: string, @Headers(HeaderKeys.UserAgent) ua: string, @Cookie(CookieKeys.ClientId) cid: string) {
+  async login(
+    @Body(VerifyPipe) body: LoginDTO,
+    @ClientIP() ip: string,
+    @Headers(HeaderKeys.UserAgent) ua: string,
+    @Cookie(CookieKeys.ClientId) cid: string,
+    @Response({ passthrough: true }) res: Res,
+  ) {
     // 校验二维码
     const verifyCodeCorrect = await this.securityService.checkVerifyCode(
       await this.encryptService.encryptMd5(`verify-code-${ip}-${ua}-${cid}-login`),
@@ -67,6 +73,8 @@ export class UserController {
       id: existsUser.id,
     }))
 
+    res.setCookie(CookieKeys.Session, session)
+
     return {
       userId: existsUser.id,
       nickname: existsUser.nickname,
@@ -83,7 +91,13 @@ export class UserController {
     description: '登录成功的用户信息',
     type: CreateUserResponseDTO,
   })
-  async register(@Body(VerifyPipe) body: RegisterDTO, @ClientIP() ip: string, @Headers(HeaderKeys.UserAgent) ua: string, @Cookie(CookieKeys.ClientId) cid: string) {
+  async register(
+    @Body(VerifyPipe) body: RegisterDTO,
+    @ClientIP() ip: string,
+    @Headers(HeaderKeys.UserAgent) ua: string,
+    @Cookie(CookieKeys.ClientId) cid: string,
+    @Response({ passthrough: true }) res: Res,
+  ) {
     // 校验二维码
     const verifyCodeCorrect = await this.securityService.checkVerifyCode(
       await this.encryptService.encryptMd5(`verify-code-${ip}-${ua}-${cid}-register`),
@@ -116,6 +130,8 @@ export class UserController {
     this.redis.set(`session-${session}`, stringify({
       id: user.id,
     }))
+
+    res.setCookie(CookieKeys.Session, session)
 
     return {
       userId: user.id,
