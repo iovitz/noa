@@ -1,7 +1,7 @@
 import { Injectable, LoggerService } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { Logger } from 'winston'
-import { createRootLogger, formatNestJSLog } from './trace-logger'
+import { createRootLogger, formatNestJSLog } from './tracer'
 import { LogContext } from './tracer.types'
 import 'winston-daily-rotate-file'
 
