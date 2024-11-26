@@ -25,7 +25,10 @@ jobs:
 
             echo 'Update Code'
             cd ~/apps/noa/packages/noa-server/
+
             git reset --hard
+            git clean -fd
+
             git pull
 
             echo 'Install Dependence & Build'
