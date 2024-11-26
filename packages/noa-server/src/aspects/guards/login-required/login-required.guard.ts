@@ -16,12 +16,13 @@ export class LoginRequiredGuard implements CanActivate {
     const session = req.getCookie(CookieKeys.Session)
     if (session) {
       await req.promiseManager.add('GET_USER_INFO', this.redis.get(`session-${session}`).then((v) => {
-        req.tracer.log('Get User Info Promise', undefined)
+        req.tracer.log('Get User Info Promise')
         if (v) {
           const userInfo = JSON.parse(v)
           req.userId = userInfo.id
         }
         else {
+          console.error(v)
           req.tracer.log('Invalid Session', { session })
           throw new UnauthorizedException()
         }

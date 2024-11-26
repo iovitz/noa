@@ -31,10 +31,20 @@ GET {{prefix}}/security/verify-code
 content-type: application/json
 
 ### createPage
-@username = {{$random.alphabetic(10)}}
 POST {{prefix}}/page/create
 content-type: application/json
 
 {
   "type": "form"
 }
+
+### getPages
+GET {{prefix}}/page
+  ?page=1
+  &size=5
+  &type=form
+content-type: application/json
+
+### deletePage
+DELETE {{prefix}}/page/01JDM8MMD6BVS0QTEWZJ11NW6C
+content-type: application/json
