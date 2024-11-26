@@ -1,7 +1,7 @@
-import { InejctUtilsMiddleware } from './inejct-utils.middleware';
+import { InejctUtilsMiddleware } from './inejct-utils.middleware'
 
-describe('InejctUtilsMiddleware', () => {
+describe('inejctUtilsMiddleware', () => {
   it('should be defined', () => {
-    expect(new InejctUtilsMiddleware()).toBeDefined();
-  });
-});
+    expect(new InejctUtilsMiddleware()).toBeDefined()
+  })
+})
