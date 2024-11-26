@@ -1,5 +1,6 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { Inject, Injectable, UseGuards } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { LoginRequiredGuard } from 'src/aspects/guards/login-required/login-required.guard'
 import { Changeset } from 'src/sqlite/changeset.entity'
 import { Component } from 'src/sqlite/component.entity'
 import { Page } from 'src/sqlite/page.entity'
@@ -20,7 +21,8 @@ export class PageService {
   @InjectRepository(Changeset)
   changesetRepository: Repository<Changeset>
 
-  async createPage(type: string, templateId: string) {
+  @UseGuards(LoginRequiredGuard)
+  async createPage(userId: string, type: string, templateId: string) {
     const template = await this.pageRepository.findOneBy({ id: templateId })
 
     // 校验模版是否存在以及是否被分享
@@ -28,6 +30,7 @@ export class PageService {
       return await this.pageRepository.save(this.pageRepository.create({
         id: this.encrypt.genPrimaryKey(),
         name: '未命名页面',
+        userId,
         type,
       }))
     }
@@ -37,7 +40,10 @@ export class PageService {
     })
 
     const newPageId = this.encrypt.genPrimaryKey()
-    templateComps.forEach(item => item.pageId = newPageId)
+    templateComps.forEach((item) => {
+      item.pageId = newPageId
+      item.id = this.encrypt.genPrimaryKey()
+    })
 
     const [page] = await Promise.all([
       this.pageRepository.save(this.pageRepository.create({

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, UnprocessableEntityException } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Inject, Param, Post, Request, UnprocessableEntityException } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
 import { CreatePageDTO, GetPageDTO } from './page.dto'
@@ -11,8 +11,12 @@ export class PageController {
   pageService: PageService
 
   @Post('create')
-  async createPage(@Body(VerifyPipe) { templateId, type }: CreatePageDTO) {
-    const page = await this.pageService.createPage(type, templateId)
+  async createPage(
+    @Body(VerifyPipe) { templateId, type }: CreatePageDTO,
+    @Request() req: Req,
+  ) {
+    const { userId } = req
+    const page = await this.pageService.createPage(userId, type, templateId)
     return page
   }
 

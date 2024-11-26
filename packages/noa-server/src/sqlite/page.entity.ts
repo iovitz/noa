@@ -22,7 +22,7 @@ export class Page {
     unsigned: true,
     comment: '所属用户',
   })
-  userId: number
+  userId: string
 
   @Column({
     type: 'varchar',

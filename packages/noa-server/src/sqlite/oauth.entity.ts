@@ -14,7 +14,7 @@ export class OAuth {
     unsigned: true,
     comment: '用户ID',
   })
-  userId: number
+  userId: string
 
   @Column({
     type: 'varchar',

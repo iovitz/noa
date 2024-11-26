@@ -1,3 +1,4 @@
+import type { DailyRotateFileTransportOptions } from 'winston-daily-rotate-file'
 import { homedir } from 'node:os'
 import * as path from 'node:path'
 import * as process from 'node:process'
@@ -6,16 +7,33 @@ import * as pkg from 'package.json'
 import { stringify } from 'safe-stable-stringify'
 import { LEVEL, MESSAGE, SPLAT } from 'triple-beam'
 import { createLogger, format, transports } from 'winston'
-import { DailyRotateFileTransportOptions } from 'winston-daily-rotate-file'
 import { Format, FormatedContext, LogContext, LogInfo } from './tracer.types'
+import 'winston-daily-rotate-file'
 
 const ERROR = Symbol('ERROR')
+const isProd = process.env.NODE_ENV === 'production'
 
-export function createRootLogger(level: string) {
+export const appLogger = createRootLogger()
+export function createRootLogger() {
   const rootLogger = createLogger({
     transports: [
+      new transports.DailyRotateFile({
+        ...getCommonRotateFileOption('info'),
+      }),
+      new transports.DailyRotateFile({
+        ...getCommonRotateFileOption('warn'),
+      }),
+      new transports.DailyRotateFile({
+        ...getCommonRotateFileOption('error'),
+      }),
+    ],
+  })
+
+  // 开发环境启用控制台日志
+  if (!isProd) {
+    rootLogger.add(
       new transports.Console({
-        level,
+        level: 'debug',
         // 使用时间戳和nest样式
         format: format.combine(
           format.timestamp({ format: 'HH:mm:ss.SSS' }),
@@ -41,17 +59,8 @@ export function createRootLogger(level: string) {
           }),
         ),
       }),
-      new transports.DailyRotateFile({
-        ...getCommonRotateFileOption('info'),
-      }),
-      new transports.DailyRotateFile({
-        ...getCommonRotateFileOption('warn'),
-      }),
-      new transports.DailyRotateFile({
-        ...getCommonRotateFileOption('error'),
-      }),
-    ],
-  })
+    )
+  }
   return rootLogger.child({
     pid: process.pid,
   })
@@ -111,6 +120,11 @@ function formatOutput(info: LogInfo) {
 }
 
 export function formatNestJSLog(context?: LogContext): FormatedContext {
+  if (context === void 0) {
+    return {
+      payload: '',
+    }
+  }
   // 兼容NestJS的日志风格
   if (typeof context === 'string') {
     return {
