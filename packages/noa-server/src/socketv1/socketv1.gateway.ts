@@ -20,11 +20,11 @@ implements OnGatewayConnection<Socket>, OnGatewayDisconnect<Socket> {
   users = 0
 
   async handleConnection(client: Socket) {
-    this.log.log('开始连接', { id: client.id })
+    this.log.log('Socket Connect', { id: client.id })
   }
 
   async handleDisconnect(client: Socket) {
-    this.log.log('取消连接', { id: client.id })
+    this.log.log('Socket disconnect', { id: client.id })
   }
 
   @SubscribeMessage('events')

@@ -82,7 +82,7 @@ function getCommonRotateFileOption(
     datePattern: 'YYYY-MM-DD',
     zippedArchive: true,
     maxSize: '20m',
-    maxFiles: '7d',
+    maxFiles: '3d',
     format: format.combine(...getCommonStyleFormat()),
   }
 }
