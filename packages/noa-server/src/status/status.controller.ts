@@ -1,4 +1,4 @@
-import { Controller, Get, Render } from '@nestjs/common'
+import { Controller, Get } from '@nestjs/common'
 
 @Controller('api-noa/status')
 export class StatusController {
