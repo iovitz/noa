@@ -38,7 +38,7 @@ export class PageController {
       id: param.pageId,
     })
     if (!page) {
-      const error = new UnprocessableEntityException('验证码错误')
+      const error = new UnprocessableEntityException('页面不存在')
       throw error
     }
     // const changesets = this.pageService.changesetRepository.find()

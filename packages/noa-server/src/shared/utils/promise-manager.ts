@@ -4,6 +4,7 @@ export class PromiseManager {
 
   add(key: PromiseKeys, promise: Promise<any>) {
     this.promiseMap.set(key, promise)
+    return promise
   }
 
   get(key: PromiseKeys) {
