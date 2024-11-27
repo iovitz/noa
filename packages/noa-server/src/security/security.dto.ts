@@ -21,7 +21,7 @@ export class GetVerifyCodeDTO {
   @NumberStringMax(500)
   @ApiProperty({
     minLength: 1,
-    maxLength: 20,
+    maxLength: 3,
     example: '200',
     description: '验证码宽度',
   })
@@ -33,8 +33,8 @@ export class GetVerifyCodeDTO {
   @NumberStringMin(0)
   @NumberStringMax(500)
   @ApiProperty({
-    minLength: 3,
-    maxLength: 1,
+    minLength: 1,
+    maxLength: 3,
     example: '50',
     description: '验证码高度',
   })

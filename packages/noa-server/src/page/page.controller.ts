@@ -73,12 +73,12 @@ export class PageController {
   @Get(':pageId')
   @UseGuards(LoginRequiredGuard)
   @ApiOperation({
-    summary: '删除一个页面',
+    summary: '获取指定页面的数据',
   })
-  @ApiCookieAuth('session')
   async getPage(@Param(VerifyPipe) param: GetPageDTO) {
     const page = await this.pageService.pageRepository.findOneBy({
       id: param.pageId,
+      status: true,
     })
     if (!page) {
       const error = new UnprocessableEntityException('页面不存在')

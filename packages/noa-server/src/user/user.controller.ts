@@ -46,13 +46,12 @@ export class UserController {
   async login(
     @Body(VerifyPipe) body: LoginDTO,
     @ClientIP() ip: string,
-    @Headers(HeaderKeys.UserAgent) ua: string,
     @Cookie(CookieKeys.ClientId) cid: string,
     @Response({ passthrough: true }) res: Res,
   ) {
     // 校验二维码
     const verifyCodeCorrect = await this.securityService.checkVerifyCode(
-      await this.encryptService.encryptMd5(`verify-code-${ip}-${ua}-${cid}-login`),
+      await this.encryptService.encryptMd5(`verify-code-${ip}-${cid}-login`),
       body.code,
     )
     if (!verifyCodeCorrect) {
@@ -94,13 +93,12 @@ export class UserController {
   async register(
     @Body(VerifyPipe) body: RegisterDTO,
     @ClientIP() ip: string,
-    @Headers(HeaderKeys.UserAgent) ua: string,
     @Cookie(CookieKeys.ClientId) cid: string,
     @Response({ passthrough: true }) res: Res,
   ) {
     // 校验二维码
     const verifyCodeCorrect = await this.securityService.checkVerifyCode(
-      await this.encryptService.encryptMd5(`verify-code-${ip}-${ua}-${cid}-register`),
+      await this.encryptService.encryptMd5(`verify-code-${ip}-${cid}-register`),
       body.code,
     )
     if (!verifyCodeCorrect) {

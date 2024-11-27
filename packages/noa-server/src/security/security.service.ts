@@ -21,7 +21,10 @@ export class SecurityService {
     await this.redis.set(redisKey, text)
     await this.redis.expire(redisKey, 15 * 60)
 
-    return data
+    return {
+      data,
+      text,
+    }
   }
 
   async checkVerifyCode(redisKey: string, code: string) {

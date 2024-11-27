@@ -20,7 +20,7 @@ export class CreatePageDTO {
     maxLength: 26,
     minLength: 26,
     required: false,
-    example: '模板ID',
+    example: '01JDPPNHG28YMVDDNF5PK0MQJA',
     description: '模板ID',
   })
   templateId?: string
@@ -32,7 +32,7 @@ export class GetPageDTO {
   @ApiProperty({
     minLength: 26,
     maxLength: 26,
-    example: 'id',
+    example: '01JDPPNHG28YMVDDNF5PK0MQJA',
     description: '页面类型',
   })
   pageId: string
@@ -57,7 +57,7 @@ export class DeletePageDTO {
   @ApiProperty({
     minLength: 26,
     maxLength: 26,
-    example: 'id',
+    example: '01JDPPNHG28YMVDDNF5PK0MQJA',
     description: '页面类型',
   })
   pageId: string

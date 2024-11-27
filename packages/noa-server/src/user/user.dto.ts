@@ -8,7 +8,7 @@ class UserAccountDTO {
   @ApiProperty({
     minLength: 6,
     maxLength: 30,
-    example: 'zhangsan@gmail.com',
+    example: 'noa@gmail.com',
     description: '用户的邮箱',
   })
   email: string
@@ -18,7 +18,7 @@ class UserAccountDTO {
   @ApiProperty({
     minLength: 6,
     maxLength: 16,
-    example: '123456',
+    example: '123123',
     description: '用户的密码',
   })
   password: string
