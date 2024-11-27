@@ -1,4 +1,4 @@
-import { IsNumberString, IsOptional } from 'class-validator'
+import { IsNumberString } from 'class-validator'
 import {
   NumberStringMax,
   NumberStringMin,

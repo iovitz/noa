@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post, Query, Request, UnprocessableEntityException, UseGuards } from '@nestjs/common'
-import { ApiTags } from '@nestjs/swagger'
+import { ApiCookieAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { LoginRequiredGuard } from 'src/aspects/guards/login-required/login-required.guard'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
 import { CreatePageDTO, DeletePageDTO, GetPageDTO, GetPagesDTO } from './page.dto'
@@ -13,6 +13,9 @@ export class PageController {
 
   @Post('create')
   @UseGuards(LoginRequiredGuard)
+  @ApiOperation({
+    summary: '创建新页面',
+  })
   async createPage(
     @Body(VerifyPipe) { templateId, type }: CreatePageDTO,
     @Request() req: Req,
@@ -24,6 +27,9 @@ export class PageController {
 
   @Get()
   @UseGuards(LoginRequiredGuard)
+  @ApiOperation({
+    summary: '获取页面列表',
+  })
   async getPages(@Query(VerifyPipe) query: GetPagesDTO, @Request() req: Req) {
     const page = Number.parseInt(query.page)
     const size = Number.parseInt(query.size)
@@ -44,6 +50,9 @@ export class PageController {
 
   @Delete(':pageId')
   @UseGuards(LoginRequiredGuard)
+  @ApiOperation({
+    summary: '获取单个页面的快照',
+  })
   async deletePage(@Param(VerifyPipe) params: DeletePageDTO, @Request() req: Req) {
     const page = await this.pageService.pageRepository.findOneBy({
       userId: req.userId,
@@ -63,6 +72,10 @@ export class PageController {
 
   @Get(':pageId')
   @UseGuards(LoginRequiredGuard)
+  @ApiOperation({
+    summary: '删除一个页面',
+  })
+  @ApiCookieAuth('session')
   async getPage(@Param(VerifyPipe) param: GetPageDTO) {
     const page = await this.pageService.pageRepository.findOneBy({
       id: param.pageId,

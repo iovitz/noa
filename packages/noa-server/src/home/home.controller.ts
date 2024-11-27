@@ -11,7 +11,6 @@ export class HomeController {
   @ApiResponse({
     status: 200,
     description: '登录成功的用户信息',
-    type: 'html',
   })
   @Render('index')
   async getIndex() {
