@@ -41,7 +41,7 @@ export class PageController {
       },
       skip: (page - 1) * size,
       take: size,
-      select: { id: true, name: true, shared: true, template: true, description: true },
+      select: { id: true, name: true, shared: true, template: true, description: true, type: true, like: true },
       // 按照更新时间降序排序
       order: { updatedAt: 'DESC' },
     })

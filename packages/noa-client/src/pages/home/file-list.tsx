@@ -2,12 +2,14 @@ import type { TableProps } from 'antd'
 import { useLogger } from '@/hooks/logger.hook'
 import { ioClient, ServerData } from '@/shared/io/io'
 import { useRequest } from 'ahooks'
-import { Button, Space, Table } from 'antd'
+import { Button, Rate, Space, Table, Tag } from 'antd'
+import { PageType } from 'noa-core'
 import React, { useState } from 'react'
 
 interface PageResponse {
   id: string
   key: string
+  type: PageType
   name: string
   description: string | null
   template: boolean
@@ -16,18 +18,34 @@ interface PageResponse {
 
 const columns: TableProps<PageResponse>['columns'] = [
   {
+    title: '收藏',
+    dataIndex: 'name',
+    width: 50,
+    render: like => <Rate count={1} value={like ? 0 : 1} />,
+  },
+  {
     title: '名称',
     dataIndex: 'name',
     width: 200,
     render: text => <a>{text}</a>,
   },
   {
-    title: '描述',
-    dataIndex: 'description',
-    render: (_, record) => record.description ? <p>{record.description}</p> : <p>暂无描述</p>,
+    title: '页面类型',
+    dataIndex: 'type',
+    width: 100,
+    render: type => (
+      <>
+        <Tag>{type}</Tag>
+      </>
+    ),
   },
   {
-    title: '标签',
+    title: '描述',
+    dataIndex: 'description',
+    render: description => description ? <p>{description}</p> : <p>暂无描述</p>,
+  },
+  {
+    title: '操作',
     width: 200,
     render: (_, record) => (
       <Space size="middle">
