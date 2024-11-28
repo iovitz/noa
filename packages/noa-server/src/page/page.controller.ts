@@ -45,7 +45,11 @@ export class PageController {
       // 按照更新时间降序排序
       order: { updatedAt: 'DESC' },
     })
-    return pages
+    const total = await this.pageService.pageRepository.countBy({
+      userId: req.userId,
+      status: true,
+    })
+    return { pages, total }
   }
 
   @Delete(':pageId')
