@@ -4,6 +4,15 @@ import { useRequest } from 'ahooks'
 import { Button, Space, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
 
+interface PageResponse {
+  id: string
+  key: string
+  name: string
+  description: string | null
+  template: boolean
+  shared: boolean
+}
+
 const columns: TableProps<PageResponse>['columns'] = [
   {
     title: '名称',
@@ -31,15 +40,6 @@ const columns: TableProps<PageResponse>['columns'] = [
     ),
   },
 ]
-
-interface PageResponse {
-  id: string
-  key: string
-  name: string
-  description: string | null
-  template: boolean
-  shared: boolean
-}
 
 export const FileList: React.FC = () => {
   const [pages, setPages] = useState<PageResponse[]>([])
