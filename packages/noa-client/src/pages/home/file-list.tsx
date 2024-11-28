@@ -1,89 +1,91 @@
 import type { TableProps } from 'antd'
-import { Space, Table, Tag } from 'antd'
-import React from 'react'
+import { ioClient, ServerData } from '@/shared/io/io'
+import { useRequest } from 'ahooks'
+import { Button, Space, Table } from 'antd'
+import React, { useEffect, useState } from 'react'
 
-interface DataType {
-  key: string
-  name: string
-  age: number
-  address: string
-  tags: string[]
-}
-
-const columns: TableProps<DataType>['columns'] = [
+const columns: TableProps<PageResponse>['columns'] = [
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: 'Name',
+    title: '名称',
     dataIndex: 'name',
-    key: 'name',
+    width: 200,
     render: text => <a>{text}</a>,
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: '描述',
+    dataIndex: 'description',
+    render: (_, record) => record.description ? <p>{record.description}</p> : <p>暂无描述</p>,
   },
   {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? 'geekblue' : 'green'
-          if (tag === 'loser') {
-            color = 'volcano'
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          )
-        })}
-      </>
-    ),
-  },
-  {
-    title: 'Action',
-    key: 'action',
+    title: '标签',
+    width: 200,
     render: (_, record) => (
       <Space size="middle">
-        <a>
-          Invite
-          {record.name}
-        </a>
-        <a>Delete</a>
+        {
+          record.shared ? <Button type="link">已分享</Button> : <Button type="primary">分享</Button>
+        }
+        <Button color="danger" variant="solid">
+          删除
+        </Button>
       </Space>
     ),
   },
 ]
 
-const data: DataType[] = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-]
+interface PageResponse {
+  id: string
+  key: string
+  name: string
+  description: string | null
+  template: boolean
+  shared: boolean
+}
 
-export const FileList: React.FC = () => <Table<DataType> columns={columns} dataSource={data} />
+export const FileList: React.FC = () => {
+  const [pages, setPages] = useState<PageResponse[]>([])
+  const [total, setTotal] = useState(0)
+
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+
+  const { run, loading } = useRequest<ServerData<{
+    total: number
+    pages: PageResponse[]
+  }>, []>(
+    () => {
+      return ioClient.request({
+        method: 'get',
+        url: '/page',
+        params: {
+          page,
+          size: pageSize,
+        },
+      })
+    },
+    {
+      onSuccess({ data: { pages, total } }) {
+        pages.forEach(item => item.key = item.id)
+        setPages(pages)
+        setTotal(total)
+      },
+    },
+  )
+
+  useEffect(run, [page, pageSize])
+
+  return (
+    <Table<PageResponse>
+      columns={columns}
+      dataSource={pages}
+      loading={loading}
+      pagination={{
+        pageSize,
+        total,
+        onChange(page, pageSize) {
+          setPage(page)
+          setPageSize(pageSize)
+        },
+      }}
+    />
+  )
+}
