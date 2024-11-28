@@ -4,6 +4,7 @@ import { message } from 'antd'
 import { AxiosError } from 'axios'
 import { get } from 'lodash'
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 interface ErrorHandlerProp {
   children: JSX.Element
@@ -12,12 +13,16 @@ interface ErrorHandlerProp {
 export function ErrorBoundary({ children }: ErrorHandlerProp) {
   const [hasError, setHasError] = useState(false)
   const logger = useLogger('error-boundary')
+  const navigate = useNavigate()
 
   const [messageApi, contextHolder] = message.useMessage()
 
-  const networkErrorHandler = (err: AxiosError) => {
+  const requestErrorHandler = (err: AxiosError) => {
     const code = get(err, 'response.data.code')
     const message = get(err, 'response.data.message')
+    if (err.status === 401) {
+      navigate('/login')
+    }
     logger.error(code, message, err)
     messageApi.error({
       content: `请求失败[${code}]: ${message}`,
@@ -32,8 +37,8 @@ export function ErrorBoundary({ children }: ErrorHandlerProp) {
   }, [hasError])
 
   useEffect(() => {
-    ioClient.addErrorHandler(networkErrorHandler)
-    return () => ioClient.removeErrorHandler(networkErrorHandler)
+    ioClient.addErrorHandler(requestErrorHandler)
+    return () => ioClient.removeErrorHandler(requestErrorHandler)
   }, [])
 
   if (hasError) {

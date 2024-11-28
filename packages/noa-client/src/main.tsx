@@ -12,12 +12,12 @@ logger.info('APP Running!')
 
 createRoot(document.getElementById('NOA_APP')!).render(
   <React.StrictMode>
-    <ErrorBoundary>
-      <RootStoreContext.Provider value={rootStore}>
-        <BrowserRouter basename="noa">
+    <BrowserRouter basename="noa">
+      <ErrorBoundary>
+        <RootStoreContext.Provider value={rootStore}>
           <AppRoutes />
-        </BrowserRouter>
-      </RootStoreContext.Provider>
-    </ErrorBoundary>
+        </RootStoreContext.Provider>
+      </ErrorBoundary>
+    </BrowserRouter>
   </React.StrictMode>,
 )

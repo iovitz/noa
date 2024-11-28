@@ -1,8 +1,9 @@
 import type { TableProps } from 'antd'
+import { useLogger } from '@/hooks/logger.hook'
 import { ioClient, ServerData } from '@/shared/io/io'
 import { useRequest } from 'ahooks'
 import { Button, Space, Table } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 interface PageResponse {
   id: string
@@ -42,17 +43,22 @@ const columns: TableProps<PageResponse>['columns'] = [
 ]
 
 export const FileList: React.FC = () => {
+  const logger = useLogger('file-table')
   const [pages, setPages] = useState<PageResponse[]>([])
   const [total, setTotal] = useState(0)
 
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
 
-  const { run, loading } = useRequest<ServerData<{
+  const { loading } = useRequest<ServerData<{
     total: number
     pages: PageResponse[]
   }>, []>(
     () => {
+      logger.debug('拉取数据', {
+        page,
+        pageSize,
+      })
       return ioClient.request({
         method: 'get',
         url: '/page',
@@ -63,7 +69,10 @@ export const FileList: React.FC = () => {
       })
     },
     {
+      refreshDeps: [page, pageSize],
       onSuccess({ data: { pages, total } }) {
+        logger.debug('获取当前页面数据成功', pages)
+        logger.debug('数据总条数', total)
         pages.forEach(item => item.key = item.id)
         setPages(pages)
         setTotal(total)
@@ -71,11 +80,12 @@ export const FileList: React.FC = () => {
     },
   )
 
-  useEffect(run, [page, pageSize])
+  // useEffect(run, [page, pageSize])
 
   return (
     <Table<PageResponse>
       columns={columns}
+      size="small"
       dataSource={pages}
       loading={loading}
       pagination={{

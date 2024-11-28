@@ -37,7 +37,7 @@ export class PageController {
       where: {
         userId: req.userId,
         type: query.type,
-        status: true,
+        deleted: false,
       },
       skip: (page - 1) * size,
       take: size,
@@ -47,7 +47,7 @@ export class PageController {
     })
     const total = await this.pageService.pageRepository.countBy({
       userId: req.userId,
-      status: true,
+      deleted: false,
     })
     return { pages, total }
   }
@@ -61,14 +61,14 @@ export class PageController {
     const page = await this.pageService.pageRepository.findOneBy({
       userId: req.userId,
       id: params.pageId,
-      status: true,
+      deleted: false,
     })
     if (!page) {
       throw new UnprocessableEntityException('Page not exists')
     }
 
     // 假删除
-    page.status = false
+    page.deleted = true
     await this.pageService.pageRepository.save(page)
 
     return true
@@ -82,7 +82,7 @@ export class PageController {
   async getPage(@Param(VerifyPipe) param: GetPageDTO) {
     const page = await this.pageService.pageRepository.findOneBy({
       id: param.pageId,
-      status: true,
+      deleted: true,
     })
     if (!page) {
       const error = new UnprocessableEntityException('页面不存在')

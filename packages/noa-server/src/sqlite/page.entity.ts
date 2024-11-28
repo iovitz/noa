@@ -63,6 +63,13 @@ export class Page {
 
   @Column({
     type: 'boolean',
+    comment: '是否收藏',
+    default: false,
+  })
+  like: boolean
+
+  @Column({
+    type: 'boolean',
     comment: '页面是否分享',
     default: false,
   })
@@ -71,9 +78,9 @@ export class Page {
   @Column({
     type: 'boolean',
     comment: '页面状态',
-    default: true,
+    default: false,
   })
-  status: boolean
+  deleted: boolean
 
   @CreateDateColumn({
     comment: '修改时间',
