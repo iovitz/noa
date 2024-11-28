@@ -22,14 +22,18 @@ export class PageService {
   changesetRepository: Repository<Changeset>
 
   @UseGuards(LoginRequiredGuard)
-  async createPage(userId: string, type: string, templateId: string) {
-    const template = await this.pageRepository.findOneBy({ id: templateId })
+  async createPage(userId: string, type: string, templateId?: string, name = '未命名页面') {
+    let template: Page
 
     // 校验模版是否存在以及是否被分享
-    if (!template || !template.template) {
+    if (
+      !template
+      // eslint-disable-next-line no-cond-assign
+      || !(template = await this.pageRepository.findOneBy({ id: templateId })).template
+    ) {
       return await this.pageRepository.save(this.pageRepository.create({
         id: this.encrypt.genPrimaryKey(),
-        name: '未命名页面',
+        name: template?.name ?? name,
         userId,
         type,
       }))
@@ -48,7 +52,7 @@ export class PageService {
     const [page] = await Promise.all([
       this.pageRepository.save(this.pageRepository.create({
         id: newPageId,
-        name: template.name,
+        name: template?.name ?? name,
         type,
       })),
       this.pageRepository.save(templateComps),

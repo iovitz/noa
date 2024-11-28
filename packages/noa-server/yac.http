@@ -1,23 +1,21 @@
 @prefix = {{host}}/api-noa
 
 ### register
-@username = {{$random.alphabetic(10)}}
 POST {{prefix}}/user/create
 content-type: application/json
 
 {
-    "email": "{{username}}",
+    "email": "{{$random.alphabetic(10)}}",
     "password": {{$randomInt 5 150}},
     "code": "0000"
 }
 
 ### login
-@username = {{$random.alphabetic(10)}}
 POST {{prefix}}/user/create
 content-type: application/json
 
 {
-    "name": "{{username}}",
+    "name": "{{$random.alphabetic(10)}}",
     "password": {{$randomInt 5 150}},
     "code": "0000"
 }
@@ -35,7 +33,8 @@ POST {{prefix}}/page/create
 content-type: application/json
 
 {
-  "type": "form"
+  "type": "form",
+  "name": "页面{{$random.alphabetic(10)}}{{$randomInt 5 150}}"
 }
 
 ### getPages

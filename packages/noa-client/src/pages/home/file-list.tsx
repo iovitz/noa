@@ -46,9 +46,12 @@ const columns: TableProps<PageResponse>['columns'] = [
   },
   {
     title: '操作',
-    width: 200,
+    width: 250,
     render: (_, record) => (
       <Space size="middle">
+        <Button color="default">
+          统计
+        </Button>
         {
           record.shared ? <Button type="link">已分享</Button> : <Button type="primary">分享</Button>
         }

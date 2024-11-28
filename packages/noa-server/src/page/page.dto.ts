@@ -14,6 +14,18 @@ export class CreatePageDTO {
   type: string
 
   @IsString()
+  @Length(1, 30)
+  @IsOptional()
+  @ApiProperty({
+    minLength: 1,
+    maxLength: 30,
+    required: false,
+    example: '软件工程师婚恋情况调查表',
+    description: '页面名称',
+  })
+  name?: string
+
+  @IsString()
   @Length(1, 100)
   @IsOptional()
   @ApiProperty({

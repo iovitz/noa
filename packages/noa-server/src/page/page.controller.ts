@@ -17,11 +17,10 @@ export class PageController {
     summary: '创建新页面',
   })
   async createPage(
-    @Body(VerifyPipe) { templateId, type }: CreatePageDTO,
-    @Request() req: Req,
+    @Body(VerifyPipe) { templateId, type, name }: CreatePageDTO,
+    @Request() { userId }: Req,
   ) {
-    const { userId } = req
-    const page = await this.pageService.createPage(userId, type, templateId)
+    const page = await this.pageService.createPage(userId, type, templateId, name)
     return page
   }
 
