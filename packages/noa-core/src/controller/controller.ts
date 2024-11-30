@@ -1,38 +1,39 @@
-import { Command, CommandManager } from '../command'
-import { IOClient, PageIO } from '../io'
+import type { PageIO } from '../io'
+import { executeCommand } from '../command'
+import { CommandOption } from '../command/component.option'
+import { Engine } from '../engine'
 import { Page } from '../page'
 
 export interface ControllerParam {
   id: string
   io: PageIO
+  needWatch: boolean
 }
 
 export class Controller {
-  private id: string
+  public id: string
   private page: Page
-  private commandManager = new CommandManager(this)
+  private engine: Engine
 
   constructor(params: ControllerParam) {
     this.id = params.id
     this.page = new Page({
       id: params.id,
-      io: params.io ?? new IOClient({
-        baseURL: '/api-noa',
-        timeout: 20000,
-        socketPath: '/api-noa/ws',
-      }),
     })
+    if (params.needWatch) {
+      this.engine = new Engine(this, {
+        io: params.io,
+      })
+    }
   }
 
-  execute(command: Command) {
-    this.commandManager.execute(command)
+  operate(operate: CommandOption) {
+    executeCommand(this.page, operate)
   }
 
   undo() {
-    this.commandManager.undo()
   }
 
   redo() {
-    this.commandManager.redo()
   }
 }

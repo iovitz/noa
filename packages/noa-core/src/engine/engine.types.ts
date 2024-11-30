@@ -1,7 +1,9 @@
 import { PageIO } from '../io'
 
+export interface EngineContext {
+  id: string
+}
 export interface EngineParams {
-  pageId: string
   io: PageIO
 }
 

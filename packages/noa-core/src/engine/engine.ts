@@ -1,13 +1,11 @@
 import { PageIO } from '../io'
-import { ChangeSetEvent, EngineParams } from './engine.types'
+import { ChangeSetEvent, EngineContext, EngineParams } from './engine.types'
 
 export class Engine {
-  pageId: string
   io: PageIO
 
-  constructor(params: EngineParams) {
+  constructor(private context: EngineContext, params: EngineParams) {
     this.io = params.io
-    this.pageId = params.pageId
   }
 
   async start() {
@@ -17,6 +15,10 @@ export class Engine {
 
   stop() {
     this.unwatch()
+  }
+
+  get pageId() {
+    return this.context.id
   }
 
   async fetchPageData() {

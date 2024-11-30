@@ -1,10 +1,9 @@
 import { BaseComp } from '../components/base.comp'
 import { Engine } from '../engine'
-import { PageIO } from '../io'
 
 export interface PageParams {
   id: string
-  io: PageIO
+  // type: PageType
 }
 
 export class Page {
@@ -14,14 +13,14 @@ export class Page {
 
   constructor(params: PageParams) {
     this.id = params.id
-    this.engine = new Engine({
-      pageId: params.id,
-      io: params.io,
-    })
   }
 
-  addComponent(comp: BaseComp) {
+  addComp(comp: BaseComp) {
     this.comps.push(comp)
+  }
+
+  delComp(id: string) {
+    return id
   }
 
   fromJSON() {
