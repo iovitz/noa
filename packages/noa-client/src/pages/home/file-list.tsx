@@ -2,13 +2,13 @@ import type { TableProps } from 'antd'
 import { useLogger } from '@/hooks/logger.hook'
 import { ioClient, ServerData } from '@/shared/io/io'
 import { useRequest } from 'ahooks'
-import { Button, Rate, Space, Table, Tag } from 'antd'
+import { Button, Empty, Popconfirm, Rate, Space, Switch, Table, Tag } from 'antd'
 import { PageType } from 'noa-core'
 import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 interface PageResponse {
   id: string
-  key: string
   type: PageType
   name: string
   description: string | null
@@ -25,9 +25,10 @@ const columns: TableProps<PageResponse>['columns'] = [
   },
   {
     title: '名称',
-    dataIndex: 'name',
     width: 200,
-    render: text => <a>{text}</a>,
+    render(_, data) {
+      return <Link to={`/editor/${data.id}`}>{data.name}</Link>
+    },
   },
   {
     title: '页面类型',
@@ -45,6 +46,12 @@ const columns: TableProps<PageResponse>['columns'] = [
     render: description => description ? <p>{description}</p> : <p>暂无描述</p>,
   },
   {
+    title: '开启分享',
+    dataIndex: 'description',
+    width: 100,
+    render: () => <Switch defaultChecked onChange={() => {}} />,
+  },
+  {
     title: '操作',
     width: 250,
     render: (_, record) => (
@@ -55,9 +62,20 @@ const columns: TableProps<PageResponse>['columns'] = [
         {
           record.shared ? <Button type="link">已分享</Button> : <Button type="primary">分享</Button>
         }
-        <Button color="danger" variant="solid">
-          删除
-        </Button>
+
+        <Popconfirm
+          title="删除表单"
+          description="确认要删除表单？"
+          onConfirm={() => {
+            console.error('删除')
+          }}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button color="danger" variant="solid">
+            删除
+          </Button>
+        </Popconfirm>
       </Space>
     ),
   },
@@ -94,7 +112,6 @@ export const FileList: React.FC = () => {
       onSuccess({ data: { pages, total } }) {
         logger.debug('获取当前页面数据成功', pages)
         logger.debug('数据总条数', total)
-        pages.forEach(item => item.key = item.id)
         setPages(pages)
         setTotal(total)
       },
@@ -104,19 +121,24 @@ export const FileList: React.FC = () => {
   // useEffect(run, [page, pageSize])
 
   return (
-    <Table<PageResponse>
-      columns={columns}
-      size="small"
-      dataSource={pages}
-      loading={loading}
-      pagination={{
-        pageSize,
-        total,
-        onChange(page, pageSize) {
-          setPage(page)
-          setPageSize(pageSize)
-        },
-      }}
-    />
+    pages.length || loading
+      ? (
+          <Table<PageResponse>
+            columns={columns}
+            size="small"
+            dataSource={pages}
+            loading={loading}
+            pagination={{
+              pageSize,
+              total,
+              onChange(page, pageSize) {
+                setPage(page)
+                setPageSize(pageSize)
+              },
+            }}
+            rowKey={({ id }) => id}
+          />
+        )
+      : <Empty />
   )
 }

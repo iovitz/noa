@@ -22,7 +22,7 @@ export default function AppRoutes() {
           element: <Template />,
         },
         {
-          path: '/editor',
+          path: '/editor/:page',
           element: <Editor />,
         },
       ],

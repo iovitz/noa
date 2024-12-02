@@ -22,6 +22,6 @@ const addCompExecutor: CommandExecutor<AddCompOption> = {
 
 export function addCommandExecutor() {}
 
-export const ExecutorMap = {
+export const ExecutorMap: Record<CommandName, CommandExecutor> = {
   [CommandName.CompAdd]: addCompExecutor,
 }

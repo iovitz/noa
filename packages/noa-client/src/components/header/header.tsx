@@ -13,10 +13,6 @@ export default function PageHeader() {
       key: '/',
       label: '文件中心',
     },
-    {
-      key: 'editor',
-      label: '编辑器',
-    },
   ]
 
   return (

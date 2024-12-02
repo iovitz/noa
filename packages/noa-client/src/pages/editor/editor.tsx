@@ -1,7 +1,10 @@
 import React, { useEffect, useRef } from 'react'
+import { useLocation, useParams } from 'react-router-dom'
 
 export default function Editor() {
   const editorRef = useRef<HTMLDivElement>(null)
+  const pageId = useParams().page
+  console.error(pageId)
   useEffect(() => {
   }, [])
   return (
