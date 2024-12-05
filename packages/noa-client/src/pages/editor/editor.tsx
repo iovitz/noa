@@ -1,9 +1,14 @@
+import { ioClient } from '@/shared/io/io'
+import { Controller } from 'noa-core'
 import React, { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
+import CompList from './comp-list'
+import PageCanvas from './page-canvas/page-canvas'
 
 export default function Editor() {
   const editorRef = useRef<HTMLDivElement>(null)
-  const pageId = useParams().page
+  const pageId = useParams().page as string
+
   console.error(pageId)
   useEffect(() => {
   }, [])
@@ -18,22 +23,29 @@ export default function Editor() {
           ref={editorRef}
           style={{
             height: '100%',
-            width: '375px',
+            width: '200px',
             background: '#fff',
+            boxSizing: 'border-box',
+            padding: '15px',
           }}
-        />
+        >
+          <CompList />
+        </div>
       </div>
       <div
         style={{
-          width: '250px',
+          flex: 1,
         }}
       >
-        <div
-          style={{
-            height: '100%',
-            width: '375px',
-          }}
-        />
+        <PageCanvas />
+      </div>
+      <div
+        style={{
+          height: '100%',
+          width: '375px',
+        }}
+      >
+        f
       </div>
     </div>
   )

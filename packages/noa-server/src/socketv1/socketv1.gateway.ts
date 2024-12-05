@@ -20,6 +20,7 @@ implements OnGatewayConnection<Socket>, OnGatewayDisconnect<Socket> {
   users = 0
 
   async handleConnection(client: Socket) {
+    // 鉴权
     this.log.log('Socket Connect', { id: client.id })
   }
 

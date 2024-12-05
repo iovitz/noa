@@ -13,7 +13,7 @@ export interface ControllerParam {
 export class Controller {
   public id: string
   private page: Page
-  private engine: Engine
+  private engine?: Engine
 
   constructor(params: ControllerParam) {
     this.id = params.id
