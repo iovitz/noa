@@ -1,4 +1,4 @@
-import type { Component, ComponentType } from '../components'
+import { ComponentParams, FormComponent } from '../components'
 import { CommandName } from './command.const'
 
 export interface CommandOptionBase {
@@ -8,7 +8,7 @@ export interface CommandOptionBase {
 
 export interface AddCompOption extends CommandOptionBase {
   command: CommandName.CompAdd
-  type: ComponentType
+  type: FormComponent
 }
 
 export interface MoveCompOption extends CommandOptionBase {
@@ -19,7 +19,7 @@ export interface MoveCompOption extends CommandOptionBase {
 
 export interface UpdateCompOption {
   command: CommandName.CompUpdate
-  property: Partial<Component>
+  property: Partial<ComponentParams>
 }
 
-export type CommandOption = AddCompOption | MoveCompOption
+export type CommandOption = AddCompOption | MoveCompOption | UpdateCompOption

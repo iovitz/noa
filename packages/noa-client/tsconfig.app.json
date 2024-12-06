@@ -32,6 +32,7 @@
   },
   "include": [
     "src",
-    "../noa-shared/core"
+    "../noa-shared/core",
+    "../noa-core/src/components"
   ]
 }

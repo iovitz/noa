@@ -1,10 +1,10 @@
-export enum ComponentType {
+export enum FormComponent {
   // Form
   Input = 10000,
-  Select = 10001,
+  Checkbox = 10001,
 }
 
-export interface ComponentBase<T extends ComponentType = any, P extends Record<string, unknown> = Record<string, any>> {
+export interface ComponentBase<T extends FormComponent = any, P extends Record<string, unknown> = Record<string, any>> {
   id: string
   name: string
   description: string
@@ -16,29 +16,13 @@ export interface ComponentBase<T extends ComponentType = any, P extends Record<s
   } & P
 }
 
-export interface InputComp extends ComponentBase<ComponentType.Input, {
+export interface InputComp extends ComponentBase<FormComponent.Input, {
   maxLength: number
   minLength: number
 }> {
 }
 
-export const defaultInputComp: InputComp = {
-  id: '1',
-  name: 'Input',
-  description: 'Input',
-  index: 0,
-  hidden: false,
-  type: ComponentType.Input,
-  property: {
-    marginLeft: 0,
-    maxLength: 10,
-    minLength: 0,
-  },
-}
-
-export interface SelectComp extends ComponentBase<ComponentType.Select, {
+export interface CheckboxComponent extends ComponentBase<FormComponent.Checkbox, {
   options: string[]
 }> {
 }
-
-export type FormComponent = InputComp | SelectComp

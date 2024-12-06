@@ -1,5 +1,3 @@
-import { ioClient } from '@/shared/io/io'
-import { Controller } from 'noa-core'
 import React, { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import CompList from './comp-list'

@@ -1,19 +1,24 @@
-import { ioClient, ServerData } from '@/shared/io/io'
+import { ioClient } from '@/shared/io/io'
 import { makeAutoObservable } from 'mobx'
-import { ComponentBase } from './editor.types'
+import { FormPageController } from 'noa-core'
 
 export class EditorStore {
-  compList: ComponentBase[] = []
-  name = ''
+  controller?: FormPageController
 
   constructor() {
     makeAutoObservable(this)
   }
 
   reset() {
-    this.compList = []
-    this.name = ''
+    this.controller = void 0
   }
 
-  loadPage() {}
+  loadPage(pageId: string) {
+    const controller = new FormPageController({
+      id: pageId,
+      io: ioClient,
+      needWatch: true,
+    })
+    this.controller = controller
+  }
 }

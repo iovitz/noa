@@ -3,13 +3,11 @@ import { useLogger } from '@/hooks/logger.hook'
 import { ioClient, ServerData } from '@/shared/io/io'
 import { useRequest } from 'ahooks'
 import { Button, Empty, Popconfirm, Rate, Space, Switch, Table, Tag } from 'antd'
-import { PageType } from 'noa-core'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 interface PageResponse {
   id: string
-  type: PageType
   name: string
   description: string | null
   template: boolean

@@ -1,4 +1,4 @@
-import type { Page } from '../page'
+import type { FormPage } from '../page'
 import { CommandName } from './command.const'
 
 export interface CommandManagerContext {}
@@ -7,9 +7,9 @@ export interface BaseCommand {
   command: CommandName
   pageId: string
   compId: string
-  execute: (page: Page) => {
-    undo: (page: Page) => BaseCommand
-    redo: (page: Page) => BaseCommand
+  execute: (page: FormPage) => {
+    undo: (page: FormPage) => BaseCommand
+    redo: (page: FormPage) => BaseCommand
     res: boolean
   }
 }

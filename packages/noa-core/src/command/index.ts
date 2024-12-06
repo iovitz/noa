@@ -1,15 +1,16 @@
-import { Page } from '../page'
-import { CommandExecutor, ExecutorMap } from './component.executor'
+import { FormPage } from '../page'
+import { ExecutorMap } from './component.executor'
 import { CommandOption } from './component.option'
 
 export * from './command.const'
 export * from './command.types'
 
-export function executeCommand(page: Page, option: CommandOption) {
+export function executeCommand(page: FormPage, option: CommandOption) {
   const { command } = option
-  const executor: CommandExecutor = ExecutorMap[command]
+  const executor = ExecutorMap[command]
   if (!command) {
     return false
   }
-  return executor.execute(page, option)
+  // 返回脏区组件列表
+  return executor.execute(page, option as never)
 }
