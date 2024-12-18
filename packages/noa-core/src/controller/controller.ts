@@ -16,7 +16,7 @@ export class FormPageController {
   public name = ''
   public id: string
   private page: FormPage
-  private engine?: Engine
+  private engine: Engine
   private eventManager = new Emittery({
     debug: {
       name: 'editor',
@@ -28,11 +28,10 @@ export class FormPageController {
     this.page = new FormPage({
       id: params.id,
     })
-    if (params.needWatch) {
-      this.engine = new Engine(this, {
-        io: params.io,
-      })
-    }
+    this.engine = new Engine(this, {
+      io: params.io,
+    })
+    this.engine.loadPage()
   }
 
   operate(operate: CommandOption) {

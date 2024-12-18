@@ -8,11 +8,6 @@ export class Engine {
     this.io = params.io
   }
 
-  async start() {
-    await this.fetchPageData()
-    this.watch()
-  }
-
   stop() {
     this.unwatch()
   }
@@ -21,12 +16,10 @@ export class Engine {
     return this.context.id
   }
 
-  async fetchPageData() {
+  async loadPage() {
     const { data } = await this.io.request({
-      method: 'post',
-      data: {
-        id: this.pageId,
-      },
+      url: `/page/${this.pageId}`,
+      method: 'get',
     })
     return data
   }
