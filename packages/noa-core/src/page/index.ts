@@ -1,5 +1,7 @@
-import { BaseComp } from '../components/base.comp'
-import { Engine } from '../engine'
+import { ComponentParams } from '../components'
+import { FormSnapshot } from './page.types'
+
+export * from './page.types'
 
 export interface PageParams {
   id: string
@@ -7,24 +9,34 @@ export interface PageParams {
 }
 
 export class FormPage {
-  private comps: BaseComp [] = []
   id: string
-  private engine: Engine
+
+  name: string = ''
+
+  private comps: ComponentParams [] = []
 
   constructor(params: PageParams) {
     this.id = params.id
   }
 
-  addComp(comp: BaseComp) {
+  addComp(comp: ComponentParams) {
     this.comps.push(comp)
+  }
+
+  hasComp(compId: string) {
+    return this.comps.some(({ id }) => id === compId)
   }
 
   delComp(id: string) {
     return id
   }
 
-  fromJSON() {
-    return {}
+  fromJSON(data: FormSnapshot) {
+    this.name = data.name
+    this.id = data.id
+    data.components.forEach((comp) => {
+      this.addComp(comp)
+    })
   }
 
   toJSON() {

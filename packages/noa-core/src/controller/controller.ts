@@ -13,35 +13,54 @@ export interface ControllerParam {
 }
 
 export class FormPageController {
-  public name = ''
   public id: string
+
   private page: FormPage
+
   private engine: Engine
-  private eventManager = new Emittery({
+
+  eventManager = new Emittery({
     debug: {
       name: 'editor',
     },
   })
+
+  get pageId() {
+    return this.id
+  }
+
+  get pageName() {
+    return this.page.name
+  }
 
   constructor(params: ControllerParam) {
     this.id = params.id
     this.page = new FormPage({
       id: params.id,
     })
-    this.engine = new Engine(this, {
+    this.engine = new Engine(this.page, {
       io: params.io,
     })
     this.engine.loadPage()
   }
 
-  operate(operate: CommandOption) {
-    executeCommand(this.page, operate)
+  unwatch() {
+    this.engine.unwatch()
+  }
+
+  watch() {
+    this.engine.watch()
+  }
+
+  do(operate: CommandOption) {
+    return executeCommand(this.page, operate)
   }
 
   undo() {
   }
 
   redo() {
+
   }
 
   on<T extends EventName>(eventName: T, fn: (eventData: EventContext[T]) => void | Promise<void>) {

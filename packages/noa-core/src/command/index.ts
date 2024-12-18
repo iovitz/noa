@@ -8,7 +8,7 @@ export * from './command.types'
 export function executeCommand(page: FormPage, option: CommandOption) {
   const { command } = option
   const executor = ExecutorMap[command]
-  if (!command) {
+  if (!executor) {
     return false
   }
   // 返回脏区组件列表

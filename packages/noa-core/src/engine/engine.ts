@@ -1,10 +1,10 @@
 import { PageIO } from '../io'
-import { ChangeSetEvent, EngineContext, EngineParams } from './engine.types'
+import { ChangeSetEvent, EngineParams, PageModel } from './engine.types'
 
 export class Engine {
   io: PageIO
 
-  constructor(private context: EngineContext, params: EngineParams) {
+  constructor(private context: PageModel, params: EngineParams) {
     this.io = params.io
   }
 
@@ -21,6 +21,7 @@ export class Engine {
       url: `/page/${this.pageId}`,
       method: 'get',
     })
+    this.context.fromJSON(data)
     return data
   }
 

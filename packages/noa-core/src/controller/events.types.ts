@@ -1,10 +1,10 @@
 export enum EventName {
-  ComponentChange = 'ComponentChange',
+  ComponentUpdate = 'ComponentUpdate',
   PageLoaded = 'PageLoaded',
 }
 
 export interface EventContext {
-  [EventName.ComponentChange]: {
+  [EventName.ComponentUpdate]: {
     compId: string
   }
   [EventName.PageLoaded]: void

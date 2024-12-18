@@ -1,6 +1,6 @@
 export enum CommandName {
-  CompUpdate = 'comp.u',
-  CompDelete = 'comp.d',
-  CompMove = 'comp.m',
-  CompAdd = 'comp.c',
+  CompUpdate = 'Comp.Update',
+  CompDelete = 'Comp.Delete',
+  CompMove = 'Comp.Move',
+  CompAdd = 'Comp.Add',
 }

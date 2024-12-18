@@ -1,7 +1,9 @@
 import { PageIO } from '../io'
+import { FormSnapshot } from '../page'
 
-export interface EngineContext {
+export interface PageModel {
   id: string
+  fromJSON: (data: FormSnapshot) => void
 }
 export interface EngineParams {
   io: PageIO
