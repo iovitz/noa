@@ -56,11 +56,8 @@ export class PageController {
   @ApiOperation({
     summary: '获取单个页面的快照',
   })
-  async deletePage(@Param(VerifyPipe) params: DeletePageDTO, @Request() req: Req) {
+  async deletePage(@Param(VerifyPipe) _params: DeletePageDTO, @Request() _req: Req) {
     const page = await this.pageService.pageRepository.findOneBy({
-      userId: req.userId,
-      id: params.pageId,
-      deleted: false,
     })
     if (!page) {
       throw new UnprocessableEntityException('Page not exists')
@@ -81,7 +78,7 @@ export class PageController {
   async getPage(@Param(VerifyPipe) param: GetPageDTO) {
     const page = await this.pageService.pageRepository.findOneBy({
       id: param.pageId,
-      deleted: true,
+      deleted: false,
     })
     if (!page) {
       const error = new UnprocessableEntityException('页面不存在')

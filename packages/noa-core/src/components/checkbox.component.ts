@@ -1,5 +1,5 @@
 import { ulid } from 'ulid'
-import { FormComponent } from '../../../noa-client/src/store/editor/editor.types'
+import { FormComponent } from '../../../noa-client/src/store/page/page.types'
 
 export function genCheckboxComp() {
   return {

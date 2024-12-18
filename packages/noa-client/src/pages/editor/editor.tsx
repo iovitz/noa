@@ -1,14 +1,18 @@
+import { useStore } from '@/hooks/store.hook'
+import { observer } from 'mobx-react-lite'
 import React, { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import CompList from './comp-list'
 import PageCanvas from './page-canvas/page-canvas'
 
-export default function Editor() {
+const Editor = observer(() => {
   const editorRef = useRef<HTMLDivElement>(null)
   const pageId = useParams().page as string
+  const pageStore = useStore('page')
 
-  console.error(pageId)
   useEffect(() => {
+    pageStore.loadPage(pageId)
+    console.error(pageId)
   }, [])
   return (
     <div style={{
@@ -47,4 +51,6 @@ export default function Editor() {
       </div>
     </div>
   )
-}
+})
+
+export default Editor

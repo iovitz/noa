@@ -1,18 +1,30 @@
 import { ioClient } from '@/shared/io/io'
 import { logger } from '@/shared/logger/logger'
+import { action, makeObservable, observable } from 'mobx'
 import { FormPageController } from 'noa-core'
 import { CommandOption } from 'noa-core/src/command/component.option'
 
-export class EditorStore {
+export class PageStore {
+  name = 0
+
   controller?: FormPageController
+
   private logger = logger.getLogger('EditorStore')
 
   constructor() {
+    makeObservable(this, {
+      name: observable,
+      setName: action,
+    })
   }
 
   reset() {
     this.logger.info('reset')
     this.controller = void 0
+  }
+
+  setName() {
+    this.name++
   }
 
   loadPage(pageId: string) {

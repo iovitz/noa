@@ -1,10 +1,10 @@
 import { createContext } from 'react'
-import { EditorStore } from './editor/editor.store'
+import { PageStore } from './page/page.store'
 import { UserStore } from './user.store'
 
 export class RootStore {
   user = new UserStore()
-  eidtor = new EditorStore()
+  page = new PageStore()
 }
 
 export const rootStore = new RootStore()
