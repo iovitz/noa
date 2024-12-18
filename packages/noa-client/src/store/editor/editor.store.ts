@@ -1,6 +1,5 @@
 import { ioClient } from '@/shared/io/io'
 import { logger } from '@/shared/logger/logger'
-import { get, makeAutoObservable } from 'mobx'
 import { FormPageController } from 'noa-core'
 import { CommandOption } from 'noa-core/src/command/component.option'
 
