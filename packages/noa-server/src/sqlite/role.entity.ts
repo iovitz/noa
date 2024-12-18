@@ -1,7 +1,7 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity('template')
-export class Template {
+@Entity('role')
+export class Role {
   @PrimaryColumn({
     type: 'varchar',
     length: 26,
@@ -12,9 +12,16 @@ export class Template {
   @Column({
     type: 'varchar',
     length: 20,
-    comment: '模版名称',
+    comment: '规则名称',
   })
   name: string
+
+  @Column({
+    type: 'varchar',
+    length: 100,
+    comment: '规则描述',
+  })
+  description: string
 
   @CreateDateColumn({
     comment: '修改时间',

@@ -5,7 +5,7 @@ export class OAuth {
   @PrimaryColumn({
     type: 'varchar',
     length: 26,
-    comment: '自增主键',
+    comment: 'ulid主键',
   })
   id: string
 
