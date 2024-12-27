@@ -18,6 +18,13 @@ export class Permission {
 
   @Column({
     type: 'varchar',
+    length: 26,
+    comment: 'ulid主键',
+  })
+  entityId: string
+
+  @Column({
+    type: 'varchar',
     length: 100,
     comment: '权限名称',
   })

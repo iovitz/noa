@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post, Query, Request, UnprocessableEntityException, UseGuards } from '@nestjs/common'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { LoginRequiredGuard } from 'src/aspects/guards/login-required/login-required.guard'
+import { PagePermissionGuard } from 'src/aspects/guards/page-permission/page-permission.guard'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
 import { CreatePageDTO, DeletePageDTO, GetPageDTO, GetPagesDTO } from './page.dto'
 import { PageService } from './page.service'
@@ -71,7 +72,7 @@ export class PageController {
   }
 
   @Get(':pageId')
-  @UseGuards(LoginRequiredGuard)
+  @UseGuards(LoginRequiredGuard, PagePermissionGuard)
   @ApiOperation({
     summary: '获取指定页面的数据',
   })

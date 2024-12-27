@@ -1,5 +1,9 @@
+import { homedir } from 'node:os'
+import { join } from 'node:path'
 import { Global, Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { typeOrmLogger } from 'src/shared/tracer/typeorm.tracer'
 import { EncryptService } from './encrypt/encrypt.service'
 import { HttpService } from './http/http.service'
 import { TracerService } from './tracer/tracer.service'
@@ -24,6 +28,21 @@ import { TracerService } from './tracer/tracer.service'
           }
         },
       ],
+    }),
+    TypeOrmModule.forRootAsync({
+      useFactory: async () => {
+        // 放到主页目录下
+        const sqliteFilePath = join(homedir(), 'sqlite/noa.sqlite')
+
+        return {
+          type: 'better-sqlite3',
+          database: sqliteFilePath,
+          autoLoadEntities: true,
+          synchronize: true,
+          logging: true,
+          logger: typeOrmLogger,
+        }
+      },
     }),
   ],
   // 全局使用的一些Service

@@ -1,6 +1,5 @@
-import { Inject, Injectable, UseGuards } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { LoginRequiredGuard } from 'src/aspects/guards/login-required/login-required.guard'
 import { Changeset } from 'src/sqlite/changeset.entity'
 import { Component } from 'src/sqlite/component.entity'
 import { Page } from 'src/sqlite/page.entity'
@@ -21,7 +20,6 @@ export class PageService {
   @InjectRepository(Changeset)
   changesetRepository: Repository<Changeset>
 
-  @UseGuards(LoginRequiredGuard)
   async createPage(userId: string, type: string, templateId?: string, name = '未命名页面') {
     let template: Page
 

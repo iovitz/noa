@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity('userRole')
-export class userRole {
+export class UserRole {
   @PrimaryColumn({
     type: 'varchar',
     length: 26,
@@ -15,6 +15,20 @@ export class userRole {
     comment: 'User ID',
   })
   userId: string
+
+  @Column({
+    type: 'varchar',
+    length: 50,
+    comment: '实体类型',
+  })
+  entityType: string
+
+  @Column({
+    type: 'varchar',
+    length: 26,
+    comment: '实体ID',
+  })
+  entityId: string
 
   @Column({
     type: 'varchar',

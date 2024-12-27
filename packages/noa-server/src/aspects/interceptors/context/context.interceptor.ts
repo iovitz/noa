@@ -6,16 +6,19 @@ import {
 
   NestInterceptor,
 } from '@nestjs/common'
+import { get } from 'lodash'
 import { Observable } from 'rxjs'
 
 @Injectable()
-export class LogInterceptor implements NestInterceptor {
+export class ContextInterceptor implements NestInterceptor {
   async intercept(
     context: ExecutionContext,
     next: CallHandler,
   ): Promise<Observable<any>> {
     const req: Req = context.switchToHttp().getRequest()
     const { method, originalUrl } = req
+
+    req.pageId = get(req, 'params.pageId', null)
 
     req.tracer.log(`+REQ：${method} ${originalUrl}`, {
       clientId: req.clientId,

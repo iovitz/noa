@@ -16,6 +16,9 @@ declare global {
   interface Req extends Request, MiddlewareInjected {
     user?: any
     userId?: string
+    tenantId?: string
+    pageId?: string
+    pagePermission: string[]
   }
   interface Res extends Response, MiddlewareInjected {}
 
