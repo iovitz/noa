@@ -19,6 +19,7 @@ import { StatusModule } from './status/status.module'
 import { UserModule } from './user/user.module'
 import { TracerService } from './util/tracer/tracer.service'
 import { UtilModule } from './util/util.module'
+import { PermissionModule } from './permission/permission.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { UtilModule } from './util/util.module'
     HomeModule,
     RedisModule,
     PageModule,
+    PermissionModule,
   ],
   providers: [
     {

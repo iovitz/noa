@@ -29,6 +29,6 @@ export class LoginRequiredGuard implements CanActivate {
     }
     req.tracer.log('Request Without Session')
     res.cookie(CookieKeys.Session, '', { expires: new Date(0) })
-    throw new UnauthorizedException()
+    return false
   }
 }

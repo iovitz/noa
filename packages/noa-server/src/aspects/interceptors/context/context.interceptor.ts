@@ -18,6 +18,7 @@ export class ContextInterceptor implements NestInterceptor {
     const req: Req = context.switchToHttp().getRequest()
     const { method, originalUrl } = req
 
+    // 注入PageId
     req.pageId = get(req, 'params.pageId', null)
 
     req.tracer.log(`+REQ：${method} ${originalUrl}`, {

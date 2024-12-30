@@ -44,6 +44,10 @@ GET {{prefix}}/page
   &type=form
 content-type: application/json
 
+### getPage
+GET {{prefix}}/page/01JGAV4MSDWSFXZYAH2V60SSE2
+content-type: application/json
+
 ### deletePage
-DELETE {{prefix}}/page/01JDM8MMD6BVS0QTEWZJ11NW6C
+DELETE {{prefix}}/page/01JGAV4MSDWSFXZYAH2V60SSE2
 content-type: application/json

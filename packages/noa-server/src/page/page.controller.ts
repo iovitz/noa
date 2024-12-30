@@ -3,6 +3,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { LoginRequiredGuard } from 'src/aspects/guards/login-required/login-required.guard'
 import { PagePermissionGuard } from 'src/aspects/guards/page-permission/page-permission.guard'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
+import { PermissionService } from 'src/permission/permission.service'
 import { CreatePageDTO, DeletePageDTO, GetPageDTO, GetPagesDTO } from './page.dto'
 import { PageService } from './page.service'
 
@@ -11,6 +12,9 @@ import { PageService } from './page.service'
 export class PageController {
   @Inject(PageService)
   pageService: PageService
+
+  @Inject(PermissionService)
+  permissionService: PermissionService
 
   @Post('create')
   @UseGuards(LoginRequiredGuard)
@@ -22,6 +26,8 @@ export class PageController {
     @Request() { userId }: Req,
   ) {
     const page = await this.pageService.createPage(userId, type, templateId, name)
+    // 初始化Owner的权限
+    await this.permissionService.initialPagePermission(userId, page.id)
     return page
   }
 

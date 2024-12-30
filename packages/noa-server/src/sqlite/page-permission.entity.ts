@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity('permission')
-export class Permission {
+@Entity('page-permission')
+export class PagePermission {
   @PrimaryColumn({
     type: 'varchar',
     length: 26,
@@ -11,22 +11,29 @@ export class Permission {
 
   @Column({
     type: 'varchar',
-    length: 20,
-    comment: '权限名称',
+    length: 26,
+    comment: '用户ID 或 文档ID，当为文档ID时，为所有人的权限',
   })
-  name: string
+  userId: string
 
   @Column({
     type: 'varchar',
     length: 26,
-    comment: 'ulid主键',
+    comment: '页面ID',
   })
-  entityId: string
+  pageId: string
+
+  @Column({
+    type: 'integer',
+    comment: '权限名称',
+  })
+  permission: number
 
   @Column({
     type: 'varchar',
     length: 100,
     comment: '权限名称',
+    nullable: true,
   })
   description: string
 

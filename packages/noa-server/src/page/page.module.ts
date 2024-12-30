@@ -1,18 +1,18 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { PermissionModule } from 'src/permission/permission.module'
 import { Changeset } from 'src/sqlite/changeset.entity'
 import { Component } from 'src/sqlite/component.entity'
 import { Page } from 'src/sqlite/page.entity'
-import { Permission } from 'src/sqlite/permission.entity'
-import { RolePermission } from 'src/sqlite/role-permission.entity'
+import { PagePermission } from 'src/sqlite/page-permission.entity'
 import { Template } from 'src/sqlite/template.entity'
-import { UserRole } from 'src/sqlite/user-role.entity'
 import { PageController } from './page.controller'
 import { PageService } from './page.service'
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Page, Component, Changeset, Template, UserRole, RolePermission, Permission]),
+    PermissionModule,
+    TypeOrmModule.forFeature([Page, Component, Changeset, Template, PagePermission]),
   ],
   controllers: [PageController],
   providers: [PageService],

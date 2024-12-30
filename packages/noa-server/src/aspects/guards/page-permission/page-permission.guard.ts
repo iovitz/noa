@@ -1,21 +1,18 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { get } from 'lodash'
-import { Permission } from 'src/sqlite/permission.entity'
-import { RolePermission } from 'src/sqlite/role-permission.entity'
-import { UserRole } from 'src/sqlite/user-role.entity'
-import { Repository } from 'typeorm'
+import { PermissionTypes } from 'src/shared/constans/permission'
+import { Page } from 'src/sqlite/page.entity'
+import { PagePermission } from 'src/sqlite/page-permission.entity'
+import { In, Repository } from 'typeorm'
 
 @Injectable()
 export class PagePermissionGuard implements CanActivate {
-  @InjectRepository(UserRole)
-  userRole: Repository<UserRole>
+  @InjectRepository(PagePermission)
+  pagePermission: Repository<PagePermission>
 
-  @InjectRepository(RolePermission)
-  userPermission: Repository<RolePermission>
-
-  @InjectRepository(Permission)
-  permission: Repository<Permission>
+  @InjectRepository(Page)
+  page: Repository<Page>
 
   async canActivate(
     context: ExecutionContext,
@@ -25,12 +22,16 @@ export class PagePermissionGuard implements CanActivate {
     const req = http.getRequest<Req>()
     const pageId = get(req, 'params.pageId', null)
     if (pageId) {
-      const role = await this.userRole.findOneBy({
-        userId: req.userId,
-        entityType: 'page',
-        entityId: pageId,
+      const permission = await this.pagePermission.findBy({
+        pageId,
+        userId: In([req.userId, pageId]),
       })
-      req.tracer.log('info', JSON.stringify(role))
+      // 无权限
+      if (!permission.length || !permission.some(item => item.permission > PermissionTypes.None)) {
+        return false
+      }
+
+      req.tracer.log('info', JSON.stringify(permission))
       return true
     }
     return false

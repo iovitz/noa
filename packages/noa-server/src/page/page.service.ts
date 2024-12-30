@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { PermissionService } from 'src/permission/permission.service'
 import { Changeset } from 'src/sqlite/changeset.entity'
 import { Component } from 'src/sqlite/component.entity'
 import { Page } from 'src/sqlite/page.entity'
