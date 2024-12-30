@@ -1,7 +1,7 @@
-import { PageExistsGuard } from './page-exists.guard';
+import { PageExistsGuard } from './page-exists.guard'
 
-describe('PageExistsGuard', () => {
+describe('pageExistsGuard', () => {
   it('should be defined', () => {
-    expect(new PageExistsGuard()).toBeDefined();
-  });
-});
+    expect(new PageExistsGuard()).toBeDefined()
+  })
+})

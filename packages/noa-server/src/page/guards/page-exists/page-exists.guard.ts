@@ -1,6 +1,5 @@
 import { CanActivate, ExecutionContext, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { get } from 'lodash'
-import { Observable } from 'rxjs'
 import { PageService } from 'src/page/page.service'
 
 @Injectable()
