@@ -45,9 +45,9 @@ GET {{prefix}}/page
 content-type: application/json
 
 ### getPage
-GET {{prefix}}/page/01JGAV4MSDWSFXZYAH2V60SSE2
+GET {{prefix}}/page/01JGB7ZFR6YCF9N49HDQ7S1H5G
 content-type: application/json
 
 ### deletePage
-DELETE {{prefix}}/page/01JGAV4MSDWSFXZYAH2V60SSE2
+DELETE {{prefix}}/page/01JGB7ZFR6YCF9N49HDQ7S1H5G
 content-type: application/json

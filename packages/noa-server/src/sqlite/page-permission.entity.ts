@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity('page-permission')
-export class PagePermission {
+export class PageAccessPermission {
   @PrimaryColumn({
     type: 'varchar',
     length: 26,

@@ -20,6 +20,16 @@ export class PageService {
   @InjectRepository(Changeset)
   changesetRepository: Repository<Changeset>
 
+  getPage(pageId: string) {
+    return this.pageRepository.findOne({
+      where: {
+        id: pageId,
+        deleted: false,
+      },
+      select: ['id', 'rev', 'name', 'description', 'poster', 'type', 'template', 'like', 'shared'],
+    })
+  }
+
   async createPage(userId: string, type: string, templateId?: string, name = '未命名页面') {
     let template: Page
 
