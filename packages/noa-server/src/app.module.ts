@@ -12,6 +12,7 @@ import { ResponseFormatterInterceptor } from './aspects/interceptors/response-fo
 import { InejctUtilsMiddleware } from './aspects/middlewares/inejct-utils/inejct-utils.middleware'
 import { HomeModule } from './home/home.module'
 import { PageModule } from './page/page.module'
+import { PermissionModule } from './permission/permission.module'
 import { RedisModule } from './redis/redis.module'
 import { SecurityModule } from './security/security.module'
 import { SocketV1Module } from './socketv1/socketv1.module'
@@ -19,7 +20,6 @@ import { StatusModule } from './status/status.module'
 import { UserModule } from './user/user.module'
 import { TracerService } from './util/tracer/tracer.service'
 import { UtilModule } from './util/util.module'
-import { PermissionModule } from './permission/permission.module';
 
 @Module({
   imports: [
