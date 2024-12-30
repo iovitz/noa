@@ -24,7 +24,7 @@ export class PagePermissionGuard implements CanActivate {
     if (pageId) {
       const permission = await this.pagePermission.findBy({
         pageId,
-        userId: In([req.userId, pageId]),
+        userId: In([req.userId, 'EVERY_ONE']),
       })
       // 无权限
       if (!permission.length || !permission.some(item => item.permission > PermissionTypes.None)) {

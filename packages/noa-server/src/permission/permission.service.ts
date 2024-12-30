@@ -26,7 +26,7 @@ export class PermissionService {
       // 默认权限
       {
         id: this.encryptService.genPrimaryKey(),
-        userId: pageId,
+        userId: 'EVERYONE',
         pageId,
         permission: PermissionTypes.None,
       },
