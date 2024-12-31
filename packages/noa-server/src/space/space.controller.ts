@@ -21,7 +21,7 @@ export class SpaceController {
   @Inject(PermissionService)
   permissionService: PermissionService
 
-  @Get('files-list')
+  @Get('file-list')
   async getSpaceFiles(@Query(VerifyPipe) query: GetFilesDTO, @RequestUser() userId: string) {
     const page = Number.parseInt(query.page)
     const size = Number.parseInt(query.size)

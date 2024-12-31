@@ -89,7 +89,7 @@ export const FileList: React.FC = () => {
 
   const { loading } = useRequest<ServerData<{
     total: number
-    pages: PageResponse[]
+    files: PageResponse[]
   }>, []>(
     () => {
       logger.debug('拉取数据', {
@@ -98,7 +98,7 @@ export const FileList: React.FC = () => {
       })
       return ioClient.request({
         method: 'get',
-        url: '/page',
+        url: '/space/file-list',
         params: {
           page,
           size: pageSize,
@@ -107,10 +107,10 @@ export const FileList: React.FC = () => {
     },
     {
       refreshDeps: [page, pageSize],
-      onSuccess({ data: { pages, total } }) {
-        logger.debug('获取当前页面数据成功', pages)
+      onSuccess({ data: { files, total } }) {
+        logger.debug('获取当前页面数据成功', files)
         logger.debug('数据总条数', total)
-        setPages(pages)
+        setPages(files)
         setTotal(total)
       },
     },

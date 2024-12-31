@@ -18,7 +18,7 @@ export class Engine {
 
   async loadPage() {
     const { data } = await this.io.request({
-      url: `/page/${this.pageId}`,
+      url: `/space/${this.pageId}`,
       method: 'get',
     })
     this.context.fromJSON(data)
