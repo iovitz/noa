@@ -4,19 +4,15 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { get } from 'lodash'
 import { PermissionService } from 'src/permission/permission.service'
 import { PermissionTypes } from 'src/shared/constans/permission'
-import { Page } from 'src/sqlite/page.entity'
-import { PageAccessPermission } from 'src/sqlite/page-permission.entity'
+import { FormPage } from 'src/sqlite/form-page.entity'
 import { Repository } from 'typeorm'
 
 const PAGE_PERMISSION_KEY = Symbol('PAGE_PERMISSION_KEY')
 
 @Injectable()
 export class PagePermissionGuard implements CanActivate {
-  @InjectRepository(PageAccessPermission)
-  pageAccessPermission: Repository<PageAccessPermission>
-
-  @InjectRepository(Page)
-  page: Repository<Page>
+  @InjectRepository(FormPage)
+  page: Repository<FormPage>
 
   @Inject(PermissionService)
   permissionService: PermissionService

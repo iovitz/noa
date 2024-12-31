@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity('page')
-export class Page {
+@Entity('space-file')
+export class SpaceFile {
   @PrimaryColumn({
     type: 'varchar',
     length: 26,
@@ -10,19 +10,10 @@ export class Page {
   id: string
 
   @Column({
-    type: 'int',
-    unsigned: true,
-    comment: '页面版本',
-    default: 0,
-  })
-  rev: number
-
-  @Column({
     type: 'varchar',
-    unsigned: true,
-    comment: '所属用户',
+    comment: '所属用户的ID',
   })
-  userId: string
+  ownerId: string
 
   @Column({
     type: 'varchar',
@@ -41,14 +32,6 @@ export class Page {
 
   @Column({
     type: 'varchar',
-    length: 100,
-    comment: '页面头图',
-    nullable: true,
-  })
-  poster: string
-
-  @Column({
-    type: 'varchar',
     length: '20',
     comment: '页面类型',
   })
@@ -56,24 +39,10 @@ export class Page {
 
   @Column({
     type: 'boolean',
-    comment: '当前页面是否被分享',
-    default: false,
-  })
-  template: boolean
-
-  @Column({
-    type: 'boolean',
-    comment: '是否收藏',
+    comment: '收藏文件',
     default: false,
   })
   like: boolean
-
-  @Column({
-    type: 'boolean',
-    comment: '页面是否分享',
-    default: false,
-  })
-  shared: boolean
 
   @Column({
     type: 'boolean',

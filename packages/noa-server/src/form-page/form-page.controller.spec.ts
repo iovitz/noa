@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { PageController } from './page.controller'
+import { FormPageController } from './form-page.controller'
 
-describe('pageController', () => {
-  let controller: PageController
+describe('formPageController', () => {
+  let controller: FormPageController
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [PageController],
+      controllers: [FormPageController],
     }).compile()
 
-    controller = module.get<PageController>(PageController)
+    controller = module.get<FormPageController>(FormPageController)
   })
 
   it('should be defined', () => {

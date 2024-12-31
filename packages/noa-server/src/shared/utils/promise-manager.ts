@@ -1,4 +1,4 @@
-type PromiseKeys = 'GET_USER_INFO' | 'GET_PAGE' | 'GET_PAGE_PERMISSION'
+type PromiseKeys = 'GET_USER_INFO' | 'GET_FILE' | 'GET_PAGE_PERMISSION'
 export class PromiseManager {
   private promiseMap = new Map<PromiseKeys, Promise<any>>()
 

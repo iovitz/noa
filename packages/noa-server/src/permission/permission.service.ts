@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { PermissionTypes } from 'src/shared/constans/permission'
-import { PageAccessPermission } from 'src/sqlite/page-permission.entity'
+import { FilePermission } from 'src/sqlite/file-permission.entity'
 import { EncryptService } from 'src/util/encrypt/encrypt.service'
 import { In, Repository } from 'typeorm'
 
@@ -10,13 +10,13 @@ export class PermissionService {
   @Inject(EncryptService)
   encryptService: EncryptService
 
-  @InjectRepository(PageAccessPermission)
-  pageAccessPermission: Repository<PageAccessPermission>
+  @InjectRepository(FilePermission)
+  filePermission: Repository<FilePermission>
 
   // 创建页面权限
   async initialPagePermission(userId: string, pageId: string) {
     // 创建基本权限
-    await this.pageAccessPermission.save([
+    await this.filePermission.save([
       {
         id: this.encryptService.genPrimaryKey(),
         userId,
@@ -35,7 +35,7 @@ export class PermissionService {
   }
 
   async getPagePermission(userId: string, pageId: string) {
-    return this.pageAccessPermission.findBy({
+    return this.filePermission.findBy({
       pageId,
       userId: In([userId, 'EVERY_ONE']),
     }).then((permission) => {

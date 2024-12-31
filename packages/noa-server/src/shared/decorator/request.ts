@@ -18,6 +18,14 @@ export const ClientIP = createParamDecorator(
 )
 
 // 获取用户IP
+export const RequestUser = createParamDecorator(
+  (_: string, ctx: ExecutionContext) => {
+    const req = ctx.switchToHttp().getRequest<Req>()
+    return req.userId
+  },
+)
+
+// 获取用户IP
 export const ClientID = createParamDecorator(
   (_: string, ctx: ExecutionContext) => {
     const req = ctx.switchToHttp().getRequest<Req>()

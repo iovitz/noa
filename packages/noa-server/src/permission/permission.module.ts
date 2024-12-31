@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { PageAccessPermission } from 'src/sqlite/page-permission.entity'
+import { FilePermission } from 'src/sqlite/file-permission.entity'
 import { PermissionController } from './permission.controller'
 import { PermissionService } from './permission.service'
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([PageAccessPermission]),
+    TypeOrmModule.forFeature([FilePermission]),
   ],
   controllers: [PermissionController],
   providers: [PermissionService],

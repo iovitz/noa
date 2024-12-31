@@ -28,8 +28,8 @@ GET {{prefix}}/security/verify-code
   &type=login
 content-type: application/json
 
-### createPage
-POST {{prefix}}/page/create
+### createForm
+POST {{prefix}}/space/create
 content-type: application/json
 
 {
@@ -37,10 +37,10 @@ content-type: application/json
   "name": "页面{{$random.alphabetic(10)}}{{$randomInt 5 150}}"
 }
 
-### getPages
-GET {{prefix}}/page
+### getFiles
+GET {{prefix}}/space/files-list
   ?page=1
-  &size=5
+  &size=2
   &type=form
 content-type: application/json
 
@@ -49,5 +49,5 @@ GET {{prefix}}/page/01JGB7ZFR6YCF9N49HDQ7S1H5G
 content-type: application/json
 
 ### deletePage
-DELETE {{prefix}}/page/01JGB7ZFR6YCF9N49HDQ7S1H5G
+DELETE {{prefix}}/space/01JGDR43SWT7YYGJ3F24YTMPZS
 content-type: application/json

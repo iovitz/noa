@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity('page-permission')
-export class PageAccessPermission {
+@Entity('form-input-component')
+export class FormInputComponent {
   @PrimaryColumn({
     type: 'varchar',
     length: 26,
@@ -12,30 +12,36 @@ export class PageAccessPermission {
   @Column({
     type: 'varchar',
     length: 26,
-    comment: '用户ID 或 文档ID，当为文档ID时，为所有人的权限',
-  })
-  userId: string
-
-  @Column({
-    type: 'varchar',
-    length: 26,
-    comment: '页面ID',
+    unsigned: true,
   })
   pageId: string
 
   @Column({
-    type: 'integer',
-    comment: '权限名称',
+    type: 'varchar',
+    length: 50,
+    comment: '字段名称',
   })
-  permission: number
+  name: string
 
   @Column({
     type: 'varchar',
-    length: 100,
-    comment: '权限名称',
-    nullable: true,
+    length: 1000,
+    comment: '字段描述',
   })
-  description: string
+  desc: string
+
+  @Column({
+    type: 'float',
+    default: 100000,
+    comment: '组件在页面中的顺序',
+  })
+  rank: number
+
+  @Column({
+    type: 'json',
+    comment: '组件属性',
+  })
+  props: string
 
   @CreateDateColumn({
     comment: '修改时间',

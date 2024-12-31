@@ -7,16 +7,10 @@ export default function Home() {
     <CenterContainer>
       <h3>新建文件</h3>
       <Row style={{ width: '100%' }} gutter={15}>
-        <Col span={6}>
+        <Col span={12}>
           <Button type="dashed" size="large" block>新建表单</Button>
         </Col>
-        <Col span={6}>
-          <Button type="dashed" size="large" block>新建H5</Button>
-        </Col>
-        <Col span={6}>
-          <Button type="dashed" size="large" block>新建简历</Button>
-        </Col>
-        <Col span={6}>
+        <Col span={12}>
           <Button type="dashed" size="large" block>模板中心</Button>
         </Col>
       </Row>
