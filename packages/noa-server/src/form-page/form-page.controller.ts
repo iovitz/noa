@@ -4,7 +4,6 @@ import { LoginRequiredGuard } from 'src/aspects/guards/login-required/login-requ
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
 import { FileApiPermission, FilePermissionGuard } from 'src/permission/guards/file-permission/file-permission.guard'
 import { PermissionTypes } from 'src/shared/constans/permission'
-import { FilePermission } from 'src/sqlite/file-permission.entity'
 import { GetFormPageDTO } from './form-page.dto'
 import { FormPageService } from './form-page.service'
 
