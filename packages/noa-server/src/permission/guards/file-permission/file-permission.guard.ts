@@ -1,19 +1,16 @@
 import { CanActivate, ExecutionContext, Inject, Injectable, SetMetadata } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
-import { InjectRepository } from '@nestjs/typeorm'
 import { get } from 'lodash'
 import { PermissionService } from 'src/permission/permission.service'
+import { FILE_PERMISSION_KEY } from 'src/shared/constans/meta-keys'
 import { PermissionTypes } from 'src/shared/constans/permission'
-import { FormPage } from 'src/sqlite/form-page.entity'
-import { Repository } from 'typeorm'
 
-const PAGE_PERMISSION_KEY = Symbol('PAGE_PERMISSION_KEY')
+export function FileApiPermission(permission: PermissionTypes) {
+  return SetMetadata(FILE_PERMISSION_KEY, permission)
+}
 
 @Injectable()
-export class PagePermissionGuard implements CanActivate {
-  @InjectRepository(FormPage)
-  page: Repository<FormPage>
-
+export class FilePermissionGuard implements CanActivate {
   @Inject(PermissionService)
   permissionService: PermissionService
 
@@ -25,12 +22,12 @@ export class PagePermissionGuard implements CanActivate {
     // 获取UserID
     const http = context.switchToHttp()
     const req = http.getRequest<Req>()
-    const pageId = get(req, 'params.pageId', null)
-    const apiPermission = this.reflector.get<string>(PAGE_PERMISSION_KEY, context.getHandler())
+    const fileId = get(req, 'params.fileId', null)
+    const apiPermission = this.reflector.get<string>(FILE_PERMISSION_KEY, context.getHandler())
     if (!apiPermission) {
-      throw new Error('`PagePermissionGuard` must use `PageApiPermission` to set permissions')
+      throw new Error('`PagePermissionGuard` must use `FileApiPermission` to set permissions')
     }
-    const permission = await req.promiseManager.add('GET_PAGE_PERMISSION', this.permissionService.getPagePermission(req.userId, pageId))
+    const permission = await req.promiseManager.add('GET_PAGE_PERMISSION', this.permissionService.getPagePermission(req.userId, fileId))
 
     // 无权限
     if (!permission.length || !permission.some(p => p >= Number(apiPermission))) {
@@ -40,8 +37,4 @@ export class PagePermissionGuard implements CanActivate {
     req.tracer.log('info', JSON.stringify(permission))
     return true
   }
-}
-
-export function PageApiPermission(permission: PermissionTypes) {
-  return SetMetadata(PAGE_PERMISSION_KEY, permission)
 }

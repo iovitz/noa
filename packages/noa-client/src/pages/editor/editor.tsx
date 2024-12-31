@@ -12,7 +12,6 @@ const Editor = observer(() => {
 
   useEffect(() => {
     pageStore.loadPage(pageId)
-    console.error(pageId)
   }, [])
   return (
     <div style={{

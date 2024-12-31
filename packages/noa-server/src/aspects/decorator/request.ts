@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common'
-import { CookieKeys } from '../constans/cookie'
+import { CookieKeys } from '../../shared/constans/cookie'
 
 // 拿到请求Tracer
 export const Tracer = createParamDecorator(

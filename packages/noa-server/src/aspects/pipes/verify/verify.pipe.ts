@@ -17,7 +17,6 @@ export class VerifyPipe implements PipeTransform {
       forbidNonWhitelisted: true,
     })
     if (errors.length > 0) {
-      console.error(errors)
       const errorMessages = this.buildErrorMessage(errors)
       throw new UnprocessableEntityException(errorMessages)
     }

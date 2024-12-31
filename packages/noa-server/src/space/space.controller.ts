@@ -1,15 +1,19 @@
-import { Body, Controller, Delete, Get, Inject, Post, Query, Req, UnprocessableEntityException, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Inject, Patch, Post, Put, Query, Req, UnprocessableEntityException, UseGuards } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
+import { RequestUser } from 'src/aspects/decorator/request'
 import { LoginRequiredGuard } from 'src/aspects/guards/login-required/login-required.guard'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
+import { FileApiPermission, FilePermissionGuard } from 'src/permission/guards/file-permission/file-permission.guard'
 import { PermissionService } from 'src/permission/permission.service'
-import { RequestUser } from 'src/shared/decorator/request'
+import { PermissionTypes } from 'src/shared/constans/permission'
+import { FileIDQueryDTO } from 'src/shared/dto/dto'
 import { FileExistsGuard } from './guards/file-exists/file-exists.guard'
-import { CreateFileDTO, GetFilesDTO } from './space.dto'
+import { CreateFileDTO, GetFilesDTO, PatchFileDTO } from './space.dto'
 import { SpaceService } from './space.service'
 
 @ApiTags('文件空间')
 @Controller('api-noa/space')
+@UseGuards(LoginRequiredGuard)
 export class SpaceController {
   @Inject(SpaceService)
   spaceService: SpaceService
@@ -18,7 +22,6 @@ export class SpaceController {
   permissionService: PermissionService
 
   @Get('files-list')
-  @UseGuards(LoginRequiredGuard)
   async getSpaceFiles(@Query(VerifyPipe) query: GetFilesDTO, @RequestUser() userId: string) {
     const page = Number.parseInt(query.page)
     const size = Number.parseInt(query.size)
@@ -47,22 +50,30 @@ export class SpaceController {
   }
 
   @Post('create')
-  @UseGuards(LoginRequiredGuard)
+  @UseGuards()
   async createFile(@Body(VerifyPipe) query: CreateFileDTO, @RequestUser() userId: string) {
     const file = await this.spaceService.createFile(userId, query.type, query.templateId)
-    console.error(file)
+    await this.permissionService.initialPagePermission(userId, file.id)
+    return file
+  }
+
+  @Patch('update')
+  @UseGuards(FileExistsGuard, FilePermissionGuard)
+  async updateFileInfo(@Query(VerifyPipe) query: FileIDQueryDTO, @Body(VerifyPipe) body: PatchFileDTO) {
+    const file = await this.spaceService.spaceFileRepository.findOneBy({
+      id: query.fileId,
+    })
+    file.name = body.name
+    await this.spaceService.spaceFileRepository.save(file)
     return file
   }
 
   @Delete(':fileId')
-  @UseGuards(LoginRequiredGuard, FileExistsGuard)
+  @FileApiPermission(PermissionTypes.Manageable)
+  @UseGuards(FileExistsGuard, FilePermissionGuard)
   async deleteFile(@Req() req: Req) {
     const file = await req.promiseManager.get('GET_FILE')
-    if (!file) {
-      throw new UnprocessableEntityException('Page not exists')
-    }
 
-    // 假删除
     file.deleted = true
     await this.spaceService.spaceFileRepository.save(file)
 

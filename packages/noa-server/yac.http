@@ -45,9 +45,9 @@ GET {{prefix}}/space/files-list
 content-type: application/json
 
 ### getPage
-GET {{prefix}}/page/01JGB7ZFR6YCF9N49HDQ7S1H5G
+GET {{prefix}}/page/01JGDV1F0CD94RKGJQS3C3CB9C
 content-type: application/json
 
 ### deletePage
-DELETE {{prefix}}/space/01JGDR43SWT7YYGJ3F24YTMPZS
+DELETE {{prefix}}/space/01JGDV1F0CD94RKGJQS3C3CB9C
 content-type: application/json

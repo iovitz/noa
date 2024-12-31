@@ -15,6 +15,20 @@ export class GetFilesDTO extends PagingDTO {
   type?: string
 }
 
+export class PatchFileDTO {
+  @IsString()
+  @Length(1, 30)
+  @IsOptional()
+  @ApiProperty({
+    minLength: 1,
+    maxLength: 30,
+    required: false,
+    example: '文件名称',
+    description: '页面名称',
+  })
+  name?: string
+}
+
 export class CreateFileDTO {
   @IsString()
   @Length(1, 30)
