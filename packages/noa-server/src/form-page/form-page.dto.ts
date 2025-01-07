@@ -10,5 +10,5 @@ export class GetFormPageDTO {
     example: '01JDPPNHG28YMVDDNF5PK0MQJA',
     description: '页面类型',
   })
-  pageId: string
+  fileId: string
 }

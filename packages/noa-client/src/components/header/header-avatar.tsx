@@ -25,7 +25,7 @@ export default function HeaderAvatar() {
   return (
     <Flex justify="flex-end" align="center">
       <Dropdown menu={{ items }} trigger={['click']}>
-        <Avatar className="cursor-pointer" src="https://api.dicebear.com/7.x/miniavs/svg?seed=1" />
+        <Avatar className="cursor-pointer" size="large" src="https://api.dicebear.com/7.x/miniavs/svg?seed=1" />
       </Dropdown>
     </Flex>
   )

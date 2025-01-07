@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import CompList from './comp-list'
 import PageCanvas from './page-canvas/page-canvas'
 
-const Editor = observer(() => {
+const FormEditor = observer(() => {
   const editorRef = useRef<HTMLDivElement>(null)
   const pageId = useParams().page as string
   const pageStore = useStore('page')
@@ -24,7 +24,7 @@ const Editor = observer(() => {
           ref={editorRef}
           style={{
             height: '100%',
-            width: '200px',
+            width: '300px',
             background: '#fff',
             boxSizing: 'border-box',
             padding: '15px',
@@ -52,4 +52,4 @@ const Editor = observer(() => {
   )
 })
 
-export default Editor
+export default FormEditor

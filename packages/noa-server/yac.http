@@ -37,6 +37,10 @@ content-type: application/json
   "name": "页面{{$random.alphabetic(10)}}{{$randomInt 5 150}}"
 }
 
+### getFormPage
+GET {{prefix}}/form-page/01JH025E7KT81EW1VN3HGKBQ6W
+content-type: application/json
+
 ### getFiles
 GET {{prefix}}/space/files-list
   ?page=1

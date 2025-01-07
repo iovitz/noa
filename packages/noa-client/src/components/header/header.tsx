@@ -1,54 +1,53 @@
-import { PlusOutlined } from '@ant-design/icons'
-import { Button, Menu } from 'antd'
-import { ItemType, MenuItemType } from 'antd/es/menu/interface'
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
+import { Button, Space, theme, Typography } from 'antd'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { CenterContainer } from '../style/style'
 import HeaderAvatar from './header-avatar'
 
+const { Title } = Typography
+const { useToken } = theme
+
 export default function PageHeader() {
-  const navigate = useNavigate()
-  const headerLabels: ItemType<MenuItemType>[] = [
-    {
-      key: '/',
-      label: '文件中心',
-    },
-  ]
+  const { token } = useToken()
 
   return (
-    <CenterContainer>
+    <div
+      style={{
+        display: 'flex',
+        width: '100%',
+        boxSizing: 'border-box',
+        background: token.colorFillQuaternary,
+      }}
+    >
       <div
         style={{
           display: 'flex',
+          alignItems: 'center',
         }}
       >
-        <div
+        <Title
+          level={3}
           style={{
-            display: 'flex',
-            alignItems: 'center',
+            margin: 0,
+            paddingTop: 12,
+            paddingBottom: 12,
+            marginLeft: 10,
           }}
         >
-          <Button type="link">Noa</Button>
-        </div>
-        <Menu
-          mode="horizontal"
-          defaultSelectedKeys={['/']}
-          items={headerLabels}
-          style={{ flex: 1, border: 'none', lineHeight: '50px' }}
-          onClick={({ key }) => {
-            navigate(key)
-          }}
-        />
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <Button icon={<PlusOutlined />} className="mr-2" color="primary" variant="text" />
-          <HeaderAvatar />
-        </div>
+          诺亚
+        </Title>
       </div>
-    </CenterContainer>
+      <Space
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          marginLeft: 'auto',
+          marginRight: 10,
+        }}
+      >
+        <Button icon={<SearchOutlined />} className="mr-2" size="large" color="primary" variant="text" />
+        <Button icon={<PlusOutlined />} className="mr-2" size="large" color="primary" variant="text" />
+        <HeaderAvatar />
+      </Space>
+    </div>
   )
 }

@@ -25,7 +25,7 @@ const columns: TableProps<PageResponse>['columns'] = [
     title: '名称',
     width: 200,
     render(_, data) {
-      return <Link to={`/editor/${data.id}`}>{data.name}</Link>
+      return <Link to={`/form-editor/${data.id}`}>{data.name}</Link>
     },
   },
   {

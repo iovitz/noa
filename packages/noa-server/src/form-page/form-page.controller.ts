@@ -19,7 +19,7 @@ export class FormPageController {
   @FileApiPermission(PermissionTypes.Readable)
   @UseGuards(LoginRequiredGuard, FilePermissionGuard)
   async getFormPage(@Param(VerifyPipe) param: GetFormPageDTO) {
-    const page = await this.pageService.formPageRepository.findOneBy({ id: param.pageId })
+    const page = await this.pageService.formPageRepository.findOneBy({ id: param.fileId })
     return page
   }
 }
