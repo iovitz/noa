@@ -56,3 +56,7 @@ export class PageStore {
     return this.controller?.unwatch()
   }
 }
+
+export const pageStore = new PageStore()
+
+export const usePageStore = () => pageStore

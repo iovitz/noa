@@ -1,9 +1,9 @@
-import { useStore } from '@/hooks/store.hook'
+import { useUserStore } from '@/store/user.store'
 import { Avatar, Dropdown, Flex, MenuProps } from 'antd'
 import React from 'react'
 
 export default function HeaderAvatar() {
-  const userStore = useStore('user')
+  const userStore = useUserStore()
   const items: MenuProps['items'] = [
     {
       label: userStore.nickname,

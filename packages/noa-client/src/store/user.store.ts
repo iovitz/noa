@@ -52,3 +52,7 @@ export class UserStore {
     this.userId = data.userId
   }
 }
+
+export const userStore = new UserStore()
+
+export const useUserStore = () => userStore

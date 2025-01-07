@@ -1,5 +1,5 @@
 import { useImageVerifyCode } from '@/hooks/image-verify-code.hook'
-import { useStore } from '@/hooks/store.hook'
+import { useUserStore } from '@/store/user.store'
 import { useRequest } from 'ahooks'
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd'
 import { observer } from 'mobx-react-lite'
@@ -13,7 +13,7 @@ interface FormData {
 }
 
 const RegisterForm = observer(() => {
-  const userStore = useStore('user')
+  const userStore = useUserStore()
   const { VerifyCode, refreshCode } = useImageVerifyCode('register')
   const navigate = useNavigate()
   const { run, loading } = useRequest(
