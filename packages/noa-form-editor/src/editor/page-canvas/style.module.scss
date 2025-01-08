@@ -9,6 +9,9 @@
   .page-canvas {
     height: 667px;
     width: 375px;
+    box-sizing: border-box;
     background-color: #fff;
+    padding: 20px 10px;
+    overflow-y: scroll;
   }
 }

@@ -1,19 +1,20 @@
-import { usePageStore } from '@/store/page/page.store'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useRef } from 'react'
-import { useParams } from 'react-router-dom'
-import CompList from './comp-list'
+import CompList from './component-list'
 import PageCanvas from './page-canvas/page-canvas'
 import { formEditorStore } from './store/editor.store'
 
-const FormEditor = observer(() => {
+interface FormEditorProps {
+  fileId: string
+}
+
+export const FormEditor = observer((props: FormEditorProps) => {
   const editorRef = useRef<HTMLDivElement>(null)
-  const pageId = useParams().page as string
-  const pageStore = usePageStore()
 
   useEffect(() => {
-    pageStore.loadPage(pageId)
+    //
   }, [])
+
   return (
     <div style={{
       height: '100%',
@@ -47,11 +48,9 @@ const FormEditor = observer(() => {
           width: '375px',
         }}
       >
-        {formEditorStore.name}
+        {props.fileId}
         <button onClick={() => formEditorStore.changeName()}>保存</button>
       </div>
     </div>
   )
 })
-
-export default FormEditor

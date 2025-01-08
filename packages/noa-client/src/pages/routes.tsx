@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRoutes } from 'react-router-dom'
-import FormEditor from './form-editor/editor'
+import Form from './form/form'
 import Home from './home/home'
 import Layout from './layout'
 import Login from './login/login'
@@ -22,8 +22,8 @@ export default function AppRoutes() {
           element: <Template />,
         },
         {
-          path: '/form-editor/:page',
-          element: <FormEditor />,
+          path: '/form-editor/:fileId',
+          element: <Form />,
         },
       ],
     },

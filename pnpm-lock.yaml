@@ -114,12 +114,6 @@ importers:
       '@emotion/styled':
         specifier: ^11.13.5
         version: 11.13.5(@emotion/react@11.13.5(@types/react@18.3.12)(react@18.3.1))(@types/react@18.3.12)(react@18.3.1)
-      '@types/react':
-        specifier: '>=18.3.10'
-        version: 18.3.12
-      '@types/react-dom':
-        specifier: '>=18.3.0'
-        version: 18.3.1
       ahooks:
         specifier: ^3.8.1
         version: 3.8.1(react@18.3.1)
@@ -147,12 +141,9 @@ importers:
       mobx-react-lite:
         specifier: ^4.0.7
         version: 4.0.7(mobx@6.13.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      noa-core:
-        specifier: file:../noa-core
-        version: link:../noa-core
-      noa-ui:
-        specifier: file:../noa-ui
-        version: link:../noa-ui
+      noa-form-editor:
+        specifier: file:../noa-form-editor
+        version: link:../noa-form-editor
       react:
         specifier: '>=18.3.1'
         version: 18.3.1
@@ -177,6 +168,93 @@ importers:
         version: 5.4.10(@types/node@20.17.4)(less@4.2.0)(sass@1.80.5)(stylus@0.62.0)(terser@5.36.0)
 
   packages/noa-core: {}
+
+  packages/noa-form-editor:
+    dependencies:
+      '@ant-design/icons':
+        specifier: '>=5.0.0'
+        version: 5.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@emotion/css':
+        specifier: '>=11.0.0'
+        version: 11.13.5
+      '@emotion/styled':
+        specifier: '>=11.0.0'
+        version: 11.13.5(@emotion/react@11.13.5(@types/react@18.3.12)(react@18.3.1))(@types/react@18.3.12)(react@18.3.1)
+      '@types/react':
+        specifier: '>=18.0.0'
+        version: 18.3.12
+      '@types/react-dom':
+        specifier: '>=18.0.0'
+        version: 18.3.1
+      antd:
+        specifier: '>=5.0.0'
+        version: 5.21.6(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      clsx:
+        specifier: '>=2.0.0'
+        version: 2.1.1
+      mobx:
+        specifier: '>=6.0.0'
+        version: 6.13.5
+      mobx-persist-store:
+        specifier: '>=1.0.0'
+        version: 1.1.5(mobx@6.13.5)
+      mobx-react-lite:
+        specifier: '>=4.0.0'
+        version: 4.0.7(mobx@6.13.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      noa-form-ui:
+        specifier: file:../noa-form-ui
+        version: link:../noa-form-ui
+      react:
+        specifier: '>=18.0.0'
+        version: 18.3.1
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 18.3.1(react@18.3.1)
+      react-router-dom:
+        specifier: '>=6.0.0'
+        version: 6.27.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+
+  packages/noa-form-ui:
+    dependencies:
+      '@ant-design/icons':
+        specifier: '>=5.0.0'
+        version: 5.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@emotion/css':
+        specifier: '>=11.0.0'
+        version: 11.13.5
+      '@emotion/styled':
+        specifier: '>=11.0.0'
+        version: 11.13.5(@emotion/react@11.13.5(@types/react@18.3.12)(react@18.3.1))(@types/react@18.3.12)(react@18.3.1)
+      '@types/react':
+        specifier: '>=18.0.0'
+        version: 18.3.12
+      '@types/react-dom':
+        specifier: '>=18.0.0'
+        version: 18.3.1
+      antd:
+        specifier: '>=5.0.0'
+        version: 5.21.6(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      clsx:
+        specifier: '>=2.0.0'
+        version: 2.1.1
+      mobx:
+        specifier: '>=6.0.0'
+        version: 6.13.5
+      mobx-persist-store:
+        specifier: '>=1.0.0'
+        version: 1.1.5(mobx@6.13.5)
+      mobx-react-lite:
+        specifier: '>=4.0.0'
+        version: 4.0.7(mobx@6.13.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react:
+        specifier: '>=18.0.0'
+        version: 18.3.1
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 18.3.1(react@18.3.1)
+      react-router-dom:
+        specifier: '>=6.0.0'
+        version: 6.27.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   packages/noa-server:
     dependencies:
@@ -376,27 +454,6 @@ importers:
       typescript:
         specifier: ^5.1.3
         version: 5.6.3
-
-  packages/noa-ui:
-    dependencies:
-      '@ant-design/icons':
-        specifier: ^5.5.1
-        version: 5.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@types/react':
-        specifier: '>=18.3.10'
-        version: 18.3.12
-      '@types/react-dom':
-        specifier: '>=18.3.0'
-        version: 18.3.1
-      antd:
-        specifier: '>=5.21.6'
-        version: 5.21.6(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react:
-        specifier: '>=18.3.1'
-        version: 18.3.1
-      react-dom:
-        specifier: '>=18.3.1'
-        version: 18.3.1(react@18.3.1)
 
 packages:
 

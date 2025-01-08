@@ -12,8 +12,6 @@
     "@ant-design/icons": "^5.5.1",
     "@emotion/css": "^11.13.5",
     "@emotion/styled": "^11.13.5",
-    "@types/react": ">=18.3.10",
-    "@types/react-dom": ">=18.3.0",
     "ahooks": "^3.8.1",
     "antd": ">=5.21.6",
     "chalk": "^5.3.0",
@@ -23,8 +21,7 @@
     "mobx": "^6.13.5",
     "mobx-persist-store": "^1.1.5",
     "mobx-react-lite": "^4.0.7",
-    "noa-core": "file:../noa-core",
-    "noa-ui": "file:../noa-ui",
+    "noa-form-editor": "file:../noa-form-editor",
     "react": ">=18.3.1",
     "react-dom": ">=18.3.1",
     "react-router-dom": "^6.27.0"
