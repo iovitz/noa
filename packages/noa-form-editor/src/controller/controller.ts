@@ -41,6 +41,13 @@ export class FormPageController {
     this.engine = new Engine(this.page, {
       io: params.io,
     })
+  }
+
+  loadPage() {
+    this.engine.loadPage()
+  }
+
+  destroy() {
     this.engine.loadPage()
   }
 
