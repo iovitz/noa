@@ -2,7 +2,6 @@ import { observer } from 'mobx-react-lite'
 import React, { useEffect, useRef } from 'react'
 import CompList from './component-list'
 import PageCanvas from './page-canvas/page-canvas'
-import { formEditorStore } from './store/editor.store'
 
 interface FormEditorProps {
   fileId: string
@@ -49,7 +48,6 @@ export const FormEditor = observer((props: FormEditorProps) => {
         }}
       >
         {props.fileId}
-        <button onClick={() => formEditorStore.changeName()}>保存</button>
       </div>
     </div>
   )

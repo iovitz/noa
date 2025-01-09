@@ -8,13 +8,19 @@ interface FormInputProps {
 }
 
 export function NoaFormInput(props: FormInputProps) {
+  const {
+    question,
+    placeholder = 'Please input...',
+    rows = 4,
+
+  } = props
   return (
     <div>
-      <Typography.Paragraph>{props.question}</Typography.Paragraph>
+      <Typography.Paragraph>{question}</Typography.Paragraph>
       <Input.TextArea
         defaultValue=""
-        placeholder={props.placeholder ?? 'Please input...'}
-        rows={props.rows ?? 4}
+        placeholder={placeholder}
+        rows={rows ?? 4}
         style={{
           resize: 'none',
         }}

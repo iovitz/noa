@@ -1,7 +1,7 @@
 import { ulid } from 'ulid'
-import { FormComponent } from '../../../noa-client/src/store/page/page.types'
+import { FormComponent } from '..'
 
-export function genCheckboxComp() {
+export function genInputComp() {
   return {
     id: ulid(),
     name: 'Input',
@@ -10,9 +10,10 @@ export function genCheckboxComp() {
     hidden: false,
     type: FormComponent.Input,
     property: {
-      options: [],
+      maxLength: 10,
+      minLength: 0,
     },
   } as const
 }
 
-export type CheckboxParams = ReturnType<typeof genCheckboxComp>
+export type InputParams = ReturnType<typeof genInputComp>

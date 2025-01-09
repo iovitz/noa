@@ -1,4 +1,4 @@
-import { IOClient } from 'noa-core'
+import { IOClient } from 'noa-form-editor'
 
 export interface ServerData<T> {
   code: number
