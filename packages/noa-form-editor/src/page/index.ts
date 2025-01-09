@@ -5,7 +5,6 @@ export * from './page.types'
 
 export interface PageParams {
   id: string
-  // type: PageType
 }
 
 export class FormPage {

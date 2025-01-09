@@ -8,7 +8,7 @@ interface FormTitleProps {
   subTitle?: string
 }
 
-export function FormTitle(props: FormTitleProps) {
+export function NoaFormTitle(props: FormTitleProps) {
   const { title, subTitle } = props
 
   return (

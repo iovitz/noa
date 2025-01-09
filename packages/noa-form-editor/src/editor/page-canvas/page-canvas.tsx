@@ -1,5 +1,5 @@
 import { Space } from 'antd'
-import { FormTitle, NoaFormInput } from 'noa-form-ui'
+import { NoaFormInput, NoaFormTitle } from 'noa-form-ui'
 import React from 'react'
 import style from './style.module.scss'
 
@@ -8,7 +8,7 @@ export default function PageCanvas() {
     <div className={style['page-canvas-wrapper']}>
       <div className={style['page-canvas']}>
         <Space direction="vertical" size={40}>
-          <FormTitle title="表单标题" subTitle="表单副标题" />
+          <NoaFormTitle title="表单标题" subTitle="表单副标题" />
           <NoaFormInput
             question="在现代社会中，时间管理变得越来越重要。许多人会感到忙碌，却常常感到没有完成多少重要的事情。有效的时间管理方法有哪些？如何确定优先级，避免拖延，并合理分配时间来完成工作、学习以及个人生活中的任务？你认为哪些时间管理技巧在日常生活中最为实用，能够帮助我们提高效率，减少压力？"
           />

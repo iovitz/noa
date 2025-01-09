@@ -1,4 +1,5 @@
-import { Button, Space } from 'antd'
+import { Button, Card, Space } from 'antd'
+import { NoaFormInput, NoaFormTitle } from 'noa-form-ui'
 import React from 'react'
 
 export default function CompList() {
@@ -9,9 +10,12 @@ export default function CompList() {
         width: '100%',
       }}
     >
-      <Button type="dashed" block>
-        单行输入
-      </Button>
+      <Card bordered size="small">
+        <NoaFormTitle title="标题" />
+      </Card>
+      <Card bordered size="small">
+        <NoaFormInput question="问题是这个" />
+      </Card>
       <Button type="dashed" block>
         多行输入
       </Button>

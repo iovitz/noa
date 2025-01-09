@@ -1,8 +1,8 @@
-import { ioClient } from '@/shared/io/io'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useRef } from 'react'
 import { FormPageController } from '../controller'
 import { IOClient } from '../io'
+import { useFormEditorStore } from '../store/editor.store'
 import CompList from './component-list'
 import PageCanvas from './page-canvas/page-canvas'
 
@@ -14,16 +14,12 @@ interface FormEditorProps {
 
 export const FormEditor = observer((props: FormEditorProps) => {
   const editorRef = useRef<HTMLDivElement>(null)
-  const formPageController = new FormPageController({
-    id: props.fileId,
-    io: props.io,
-    needWatch: props.needWatch,
-  })
+  const editorStore = useFormEditorStore()
 
   useEffect(() => {
-    formPageController.loadPage()
+    editorStore.loadPage(props.fileId, props.io)
     return () => {
-      formPageController.destroy()
+      editorStore.destroy()
     }
   }, [])
 
