@@ -1,4 +1,3 @@
-import { logger } from '@/shared/logger/logger'
 import { makeAutoObservable } from 'mobx'
 import { FormPageController } from '../controller'
 import { EventContext, EventName } from '../controller/events.types'

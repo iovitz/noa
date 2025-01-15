@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useRef } from 'react'
-import { FormPageController } from '../controller'
 import { IOClient } from '../io'
 import { useFormEditorStore } from '../store/editor.store'
 import CompList from './component-list'
@@ -34,7 +33,7 @@ export const FormEditor = observer((props: FormEditorProps) => {
           ref={editorRef}
           style={{
             height: '100%',
-            width: '300px',
+            width: '350px',
             background: '#fff',
             boxSizing: 'border-box',
             padding: '15px',
