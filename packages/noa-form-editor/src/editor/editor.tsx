@@ -2,8 +2,8 @@ import { observer } from 'mobx-react-lite'
 import React, { useEffect, useRef } from 'react'
 import { IOClient } from '../io'
 import { useFormEditorStore } from '../store/editor.store'
-import CompList from './component-list'
 import PageCanvas from './page-canvas/page-canvas'
+import CompList from './widget-list'
 
 interface FormEditorProps {
   fileId: string

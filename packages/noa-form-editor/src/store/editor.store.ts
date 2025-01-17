@@ -2,6 +2,7 @@ import { makeAutoObservable } from 'mobx'
 import { FormPageController } from '../controller'
 import { EventContext, EventName } from '../controller/events.types'
 import { IOClient } from '../io'
+import { WidgetTypes } from '../widgets'
 
 export class FormEditorStore {
   formPageController?: FormPageController
@@ -30,6 +31,10 @@ export class FormEditorStore {
 
   unbindEvent() {
     this.formPageController?.off(EventName.WidgetUpdate, this.handleWidgetUpdate)
+  }
+
+  addWidget(type: WidgetTypes) {
+    console.error('add widget: ', type)
   }
 
   handleWidgetUpdate = (info: EventContext[EventName.WidgetUpdate]) => {
