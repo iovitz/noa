@@ -55,3 +55,7 @@ content-type: application/json
 ### deletePage
 DELETE {{prefix}}/space/01JGDV1F0CD94RKGJQS3C3CB9C
 content-type: application/json
+
+### getWidgetTypes
+GET {{prefix}}/form-page/widget
+content-type: application/json

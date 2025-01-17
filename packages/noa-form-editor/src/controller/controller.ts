@@ -1,7 +1,7 @@
 import type { PageIO } from '../io'
 import Emittery from 'emittery'
 import { executeCommand } from '../command'
-import { CommandOption } from '../command/component.option'
+import { CommandOption } from '../command/widget.option'
 import { Engine } from '../engine'
 import { FormPage } from '../page'
 import { EventContext, EventName } from './events.types'

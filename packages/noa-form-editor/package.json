@@ -28,5 +28,8 @@
   "dependencies": {
     "noa-form-ui": "file:../noa-form-ui",
     "react-icons": "^5.4.0"
+  },
+  "devDependencies": {
+    "@types/react-icons": "^3.0.0"
   }
 }

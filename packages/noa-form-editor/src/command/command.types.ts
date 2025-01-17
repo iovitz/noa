@@ -1,7 +1,7 @@
 import type { FormPage } from '../page'
 import { CommandName } from './command.const'
-import { CommandExecuteResult } from './component.executor'
-import { CommandOption } from './component.option'
+import { CommandExecuteResult } from './widget.executor'
+import { CommandOption } from './widget.option'
 
 export interface CommandManagerContext {}
 
@@ -18,7 +18,7 @@ export interface ExecuteCommandFailResult {
 export interface BaseCommand {
   command: CommandName
   pageId: string
-  compId: string
+  id: string
   execute: (page: FormPage) => {
     undo: (page: FormPage) => BaseCommand
     redo: (page: FormPage) => BaseCommand
@@ -27,7 +27,7 @@ export interface BaseCommand {
 }
 
 export interface ChangeFieldNameCommand extends BaseCommand {
-  command: CommandName.CompUpdate
+  command: CommandName.WidgetAdd
   data: {
     oldName: string
     newName: string

@@ -1,5 +1,5 @@
 import { findIndex } from 'lodash'
-import { ComponentUnionType } from '../components'
+import { WidgetUnionType } from '../widgets'
 import { FormSnapshot } from './page.types'
 
 export * from './page.types'
@@ -13,58 +13,58 @@ export class FormPage {
 
   name: string = ''
 
-  private comps: ComponentUnionType [] = []
+  private widgets: WidgetUnionType [] = []
 
   constructor(params: PageParams) {
     this.id = params.id
   }
 
-  addComp(comp: ComponentUnionType) {
-    this.comps.push(comp)
+  addWidget(widget: WidgetUnionType) {
+    this.widgets.push(widget)
   }
 
-  hasComp(compId: string) {
-    return this.comps.some(({ id }) => id === compId)
+  hasWidget(widgetId: string) {
+    return this.widgets.some(({ id }) => id === widgetId)
   }
 
-  getComp(compId: string) {
-    return this.comps.find(({ id }) => id === compId)
+  getWidget(widgetId: string) {
+    return this.widgets.find(({ id }) => id === widgetId)
   }
 
-  updateComp(compId: string, { property, ..._restParams }: Partial<ComponentUnionType>) {
-    const comp = this.getComp(compId)
-    if (!comp) {
+  updateWidget(widgetId: string, { property, ..._restParams }: Partial<WidgetUnionType>) {
+    const widget = this.getWidget(widgetId)
+    if (!widget) {
       return false
     }
     if (property) {
-      comp.property = {
-        ...comp.property,
+      widget.property = {
+        ...widget.property,
         ...property,
       }
     }
   }
 
-  getAllComp(sort: boolean) {
+  getAllWidget(sort: boolean) {
     if (!sort) {
-      return [...this.comps]
+      return [...this.widgets]
     }
-    return this.comps.sort((a, b) => a.rank - b.rank)
+    return this.widgets.sort((a, b) => a.rank - b.rank)
   }
 
-  delComp(id: string) {
-    const index = findIndex(this.comps, item => item.id === id)
+  delWidget(id: string) {
+    const index = findIndex(this.widgets, item => item.id === id)
     if (!index) {
       return false
     }
-    this.comps.splice(index, 1)
+    this.widgets.splice(index, 1)
     return true
   }
 
   fromJSON(data: FormSnapshot) {
     this.name = data.name
     this.id = data.id
-    data.components.forEach((comp) => {
-      this.addComp(comp)
+    data.widgets.forEach((widget) => {
+      this.addWidget(widget)
     })
   }
 

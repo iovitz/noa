@@ -1,0 +1,9 @@
+services:
+  nest-app-redis:
+    image: bitnami/redis:latest
+    container_name: noa-redis
+    restart: always
+    environment:
+      - REDIS_PASSWORD=noa
+    ports:
+      - 6379:6379

@@ -1,12 +1,12 @@
-import { FormComponentType } from './const'
+import { WidgetTypes } from './widget.const'
 
-export interface ComponentCommon<PropertyType = unknown> {
+export interface WidgetCommon<PropertyType = unknown> {
   id: string
   name: string
   description: string
   rank: number
   hidden: boolean
-  type: FormComponentType
+  type: WidgetTypes
   property: PropertyType
 }
 

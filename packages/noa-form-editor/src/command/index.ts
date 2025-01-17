@@ -1,6 +1,6 @@
 import { FormPage } from '../page'
-import { ExecutorMap } from './component.executor'
-import { CommandOption } from './component.option'
+import { ExecutorMap } from './widget.executor'
+import { CommandOption } from './widget.option'
 
 export * from './command.const'
 export * from './command.types'

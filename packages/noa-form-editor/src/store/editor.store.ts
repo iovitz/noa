@@ -25,15 +25,15 @@ export class FormEditorStore {
   }
 
   initEvent() {
-    this.formPageController?.on(EventName.ComponentUpdate, this.handleComponentUpdate)
+    this.formPageController?.on(EventName.WidgetUpdate, this.handleWidgetUpdate)
   }
 
   unbindEvent() {
-    this.formPageController?.off(EventName.ComponentUpdate, this.handleComponentUpdate)
+    this.formPageController?.off(EventName.WidgetUpdate, this.handleWidgetUpdate)
   }
 
-  handleComponentUpdate = (compInfo: EventContext[EventName.ComponentUpdate]) => {
-    console.error('update: ', compInfo)
+  handleWidgetUpdate = (info: EventContext[EventName.WidgetUpdate]) => {
+    console.error('update: ', info)
   }
 
   destroy() {

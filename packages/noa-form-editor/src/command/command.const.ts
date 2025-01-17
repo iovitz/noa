@@ -1,6 +1,6 @@
 export enum CommandName {
-  CompUpdate = 'Comp.Update',
-  CompDelete = 'Comp.Delete',
-  CompMove = 'Comp.Move',
-  CompAdd = 'Comp.Add',
+  WidgetUpdate = 'Widget.Update',
+  WidgetDelete = 'Widget.Delete',
+  WidgetMove = 'Widget.Move',
+  WidgetAdd = 'Widget.Add',
 }
