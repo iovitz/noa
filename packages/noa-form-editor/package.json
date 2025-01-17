@@ -26,6 +26,7 @@
     "react-router-dom": ">=6.0.0"
   },
   "dependencies": {
-    "noa-form-ui": "file:../noa-form-ui"
+    "noa-form-ui": "file:../noa-form-ui",
+    "react-icons": "^5.4.0"
   }
 }

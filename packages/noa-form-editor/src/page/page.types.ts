@@ -1,8 +1,8 @@
-import { ComponentParams } from '../components'
+import { ComponentUnionType } from '../components'
 
 export interface FormSnapshot {
   id: string
   name: string
   shareUrl: string
-  components: ComponentParams[]
+  components: ComponentUnionType[]
 }

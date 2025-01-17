@@ -1,23 +1,29 @@
-import { CheckboxParams, genCheckboxComp } from './checkbox.component'
-import { genInputComp, InputParams } from './input.component'
+import { ulid } from 'ulid'
+import { FormComponentType } from './const'
+import { ComponentCommon, MultiSelectProperty, SingleSelectProperty, TextProperty } from './types'
 
-export enum FormComponent {
-  // Form
-  Input = 10000,
-  Checkbox = 10001,
+export * from './const'
+export * from './types'
+
+export interface ComponentPropertyTypeMap {
+  [FormComponentType.Text]: TextProperty
+  [FormComponentType.SingleSelect]: SingleSelectProperty
+  [FormComponentType.MultiSelect]: MultiSelectProperty
 }
 
+export type ComponentPropertyUnionType = ComponentPropertyTypeMap[keyof ComponentPropertyTypeMap]
+export type ComponentUnionType = ComponentCommon<ComponentPropertyUnionType>
+
 export class ComponentFactory {
-  static createComp(compType: FormComponent) {
-    switch (compType) {
-      case FormComponent.Input:
-        return genInputComp()
-      case FormComponent.Checkbox:
-        return genCheckboxComp()
-      default:
-        throw new Error('Unknown component type')
+  static createComp<T extends keyof ComponentPropertyTypeMap>(compType: T, property: ComponentPropertyTypeMap[T]): ComponentCommon<ComponentPropertyTypeMap[T]> {
+    return {
+      id: ulid(),
+      name: '',
+      description: '',
+      rank: 0,
+      hidden: false,
+      type: compType,
+      property,
     }
   }
 }
-
-export type ComponentParams = InputParams | CheckboxParams

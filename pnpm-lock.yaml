@@ -143,7 +143,7 @@ importers:
         version: 4.0.7(mobx@6.13.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       noa-form-editor:
         specifier: file:../noa-form-editor
-        version: link:../noa-form-editor
+        version: file:packages/noa-form-editor(@ant-design/icons@5.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@emotion/css@11.13.5)(@emotion/styled@11.13.5(@emotion/react@11.13.5(@types/react@18.3.12)(react@18.3.1))(@types/react@18.3.12)(react@18.3.1))(@types/react-dom@18.3.1)(@types/react@18.3.12)(antd@5.21.6(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(clsx@2.1.1)(mobx-persist-store@1.1.5(mobx@6.13.5))(mobx-react-lite@4.0.7(mobx@6.13.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(mobx@6.13.5)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.27.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       react:
         specifier: '>=18.3.1'
         version: 18.3.1
@@ -210,6 +210,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 18.3.1(react@18.3.1)
+      react-icons:
+        specifier: ^5.4.0
+        version: 5.4.0(react@18.3.1)
       react-router-dom:
         specifier: '>=6.0.0'
         version: 6.27.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -378,7 +381,7 @@ importers:
         version: 10.4.5(@swc/core@1.7.42(@swc/helpers@0.5.13))
       '@nestjs/schematics':
         specifier: ^10.0.0
-        version: 10.2.3(chokidar@4.0.1)(typescript@5.6.3)
+        version: 10.2.3(chokidar@3.6.0)(typescript@5.6.3)
       '@nestjs/testing':
         specifier: ^10.0.0
         version: 10.4.6(@nestjs/common@10.4.6(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.1))(@nestjs/core@10.4.6)(@nestjs/platform-express@10.4.6)
@@ -5693,6 +5696,40 @@ packages:
     resolution: {integrity: sha512-Z4SmBUweYa09+o6pG+eASabEpP6QkQ70yHj351pQoEXIs8uHbaU2DWVmzBANKgflPa47A50PtB2+NgRpQvr7vA==}
     engines: {node: '>= 10'}
 
+  noa-form-component@file:packages/noa-form-ui:
+    resolution: {directory: packages/noa-form-ui, type: directory}
+    peerDependencies:
+      '@ant-design/icons': '>=5.0.0'
+      '@emotion/css': '>=11.0.0'
+      '@emotion/styled': '>=11.0.0'
+      '@types/react': '>=18.0.0'
+      '@types/react-dom': '>=18.0.0'
+      antd: '>=5.0.0'
+      clsx: '>=2.0.0'
+      mobx: '>=6.0.0'
+      mobx-persist-store: '>=1.0.0'
+      mobx-react-lite: '>=4.0.0'
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
+      react-router-dom: '>=6.0.0'
+
+  noa-form-editor@file:packages/noa-form-editor:
+    resolution: {directory: packages/noa-form-editor, type: directory}
+    peerDependencies:
+      '@ant-design/icons': '>=5.0.0'
+      '@emotion/css': '>=11.0.0'
+      '@emotion/styled': '>=11.0.0'
+      '@types/react': '>=18.0.0'
+      '@types/react-dom': '>=18.0.0'
+      antd: '>=5.0.0'
+      clsx: '>=2.0.0'
+      mobx: '>=6.0.0'
+      mobx-persist-store: '>=1.0.0'
+      mobx-react-lite: '>=4.0.0'
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
+      react-router-dom: '>=6.0.0'
+
   node-abi@3.71.0:
     resolution: {integrity: sha512-SZ40vRiy/+wRTf21hxkkEjPJZpARzUMVcJoQse2EF8qkUWbbO2z7vd5oA/H6bVH6SZQ5STGcu0KRDS7biNRfxw==}
     engines: {node: '>=10'}
@@ -6382,6 +6419,11 @@ packages:
 
   react-fast-compare@3.2.2:
     resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==}
+
+  react-icons@5.4.0:
+    resolution: {integrity: sha512-7eltJxgVt7X64oHh6wSWNwwbKTCtMfK35hcjvJS0yxEAhPM8oUKdS3+kqaW1vicIltw+kR2unHaa12S9pPALoQ==}
+    peerDependencies:
+      react: '*'
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -7724,17 +7766,6 @@ snapshots:
     optionalDependencies:
       chokidar: 3.6.0
 
-  '@angular-devkit/core@17.3.11(chokidar@4.0.1)':
-    dependencies:
-      ajv: 8.12.0
-      ajv-formats: 2.1.1(ajv@8.12.0)
-      jsonc-parser: 3.2.1
-      picomatch: 4.0.1
-      rxjs: 7.8.1
-      source-map: 0.7.4
-    optionalDependencies:
-      chokidar: 4.0.1
-
   '@angular-devkit/core@17.3.8(chokidar@3.6.0)':
     dependencies:
       ajv: 8.12.0
@@ -7771,16 +7802,6 @@ snapshots:
   '@angular-devkit/schematics@17.3.11(chokidar@3.6.0)':
     dependencies:
       '@angular-devkit/core': 17.3.11(chokidar@3.6.0)
-      jsonc-parser: 3.2.1
-      magic-string: 0.30.8
-      ora: 5.4.1
-      rxjs: 7.8.1
-    transitivePeerDependencies:
-      - chokidar
-
-  '@angular-devkit/schematics@17.3.11(chokidar@4.0.1)':
-    dependencies:
-      '@angular-devkit/core': 17.3.11(chokidar@4.0.1)
       jsonc-parser: 3.2.1
       magic-string: 0.30.8
       ora: 5.4.1
@@ -9727,10 +9748,10 @@ snapshots:
     transitivePeerDependencies:
       - chokidar
 
-  '@nestjs/schematics@10.2.3(chokidar@4.0.1)(typescript@5.6.3)':
+  '@nestjs/schematics@10.2.3(chokidar@3.6.0)(typescript@5.6.3)':
     dependencies:
-      '@angular-devkit/core': 17.3.11(chokidar@4.0.1)
-      '@angular-devkit/schematics': 17.3.11(chokidar@4.0.1)
+      '@angular-devkit/core': 17.3.11(chokidar@3.6.0)
+      '@angular-devkit/schematics': 17.3.11(chokidar@3.6.0)
       comment-json: 4.2.5
       jsonc-parser: 3.3.1
       pluralize: 8.0.0
@@ -14278,6 +14299,39 @@ snapshots:
 
   neotraverse@0.6.18: {}
 
+  noa-form-component@file:packages/noa-form-ui(@ant-design/icons@5.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@emotion/css@11.13.5)(@emotion/styled@11.13.5(@emotion/react@11.13.5(@types/react@18.3.12)(react@18.3.1))(@types/react@18.3.12)(react@18.3.1))(@types/react-dom@18.3.1)(@types/react@18.3.12)(antd@5.21.6(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(clsx@2.1.1)(mobx-persist-store@1.1.5(mobx@6.13.5))(mobx-react-lite@4.0.7(mobx@6.13.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(mobx@6.13.5)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.27.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@ant-design/icons': 5.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@emotion/css': 11.13.5
+      '@emotion/styled': 11.13.5(@emotion/react@11.13.5(@types/react@18.3.12)(react@18.3.1))(@types/react@18.3.12)(react@18.3.1)
+      '@types/react': 18.3.12
+      '@types/react-dom': 18.3.1
+      antd: 5.21.6(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      clsx: 2.1.1
+      mobx: 6.13.5
+      mobx-persist-store: 1.1.5(mobx@6.13.5)
+      mobx-react-lite: 4.0.7(mobx@6.13.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-router-dom: 6.27.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+
+  noa-form-editor@file:packages/noa-form-editor(@ant-design/icons@5.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@emotion/css@11.13.5)(@emotion/styled@11.13.5(@emotion/react@11.13.5(@types/react@18.3.12)(react@18.3.1))(@types/react@18.3.12)(react@18.3.1))(@types/react-dom@18.3.1)(@types/react@18.3.12)(antd@5.21.6(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(clsx@2.1.1)(mobx-persist-store@1.1.5(mobx@6.13.5))(mobx-react-lite@4.0.7(mobx@6.13.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(mobx@6.13.5)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.27.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@ant-design/icons': 5.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@emotion/css': 11.13.5
+      '@emotion/styled': 11.13.5(@emotion/react@11.13.5(@types/react@18.3.12)(react@18.3.1))(@types/react@18.3.12)(react@18.3.1)
+      '@types/react': 18.3.12
+      '@types/react-dom': 18.3.1
+      antd: 5.21.6(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      clsx: 2.1.1
+      mobx: 6.13.5
+      mobx-persist-store: 1.1.5(mobx@6.13.5)
+      mobx-react-lite: 4.0.7(mobx@6.13.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      noa-form-ui: noa-form-component@file:packages/noa-form-ui(@ant-design/icons@5.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@emotion/css@11.13.5)(@emotion/styled@11.13.5(@emotion/react@11.13.5(@types/react@18.3.12)(react@18.3.1))(@types/react@18.3.12)(react@18.3.1))(@types/react-dom@18.3.1)(@types/react@18.3.12)(antd@5.21.6(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(clsx@2.1.1)(mobx-persist-store@1.1.5(mobx@6.13.5))(mobx-react-lite@4.0.7(mobx@6.13.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(mobx@6.13.5)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.27.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-router-dom: 6.27.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+
   node-abi@3.71.0:
     dependencies:
       semver: 7.6.3
@@ -15039,6 +15093,10 @@ snapshots:
       scheduler: 0.23.2
 
   react-fast-compare@3.2.2: {}
+
+  react-icons@5.4.0(react@18.3.1):
+    dependencies:
+      react: 18.3.1
 
   react-is@16.13.1: {}
 

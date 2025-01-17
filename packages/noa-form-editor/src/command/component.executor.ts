@@ -3,7 +3,7 @@ import { ComponentFactory } from '../components'
 import { FormPage } from '../page'
 import { CommandName } from './command.const'
 import { ExecuteCommandFailResult, ExecuteCommandSuccessResult } from './command.types'
-import { AddCompOption, CommandOption, MoveCompOption } from './component.option'
+import { AddCompOption, CommandOption, DelCompOption, MoveCompOption, UpdateCompOption } from './component.option'
 
 export enum CommandExecuteResult {
   Success = 'success',
@@ -27,7 +27,8 @@ const addCompExecutor: CommandExecutor<AddCompOption> = {
       }
     }
 
-    const newComp = ComponentFactory.createComp(option.type)
+    const newComp = ComponentFactory.createComp(option.type, option.property as any)
+
     page.addComp(newComp)
 
     return {
@@ -41,7 +42,7 @@ const addCompExecutor: CommandExecutor<AddCompOption> = {
   },
 }
 
-const updateCompExecutor: CommandExecutor<AddCompOption> = {
+const updateCompExecutor: CommandExecutor<UpdateCompOption> = {
   execute(page, option) {
     const compId = ulid()
     // page.addComponent()
@@ -53,8 +54,7 @@ const updateCompExecutor: CommandExecutor<AddCompOption> = {
       }
     }
 
-    const newComp = ComponentFactory.createComp(option.type)
-    page.addComp(newComp)
+    page.updateComp(option.property)
 
     return {
       undoCommand: {
@@ -67,26 +67,36 @@ const updateCompExecutor: CommandExecutor<AddCompOption> = {
   },
 }
 
-const delCompExecutor: CommandExecutor<AddCompOption> = {
+const delCompExecutor: CommandExecutor<DelCompOption> = {
   execute(page, option) {
     const compId = ulid()
     // page.addComponent()
     // option.type
-    if (page.hasComp(compId)) {
+    const comp = page.getComp(compId)
+    if (!comp) {
       return {
         result: CommandExecuteResult.Fail,
-        reason: 'comp already exist',
+        reason: 'comp not exist',
       }
     }
 
-    const newComp = ComponentFactory.createComp(option.type)
-    page.addComp(newComp)
+    page.delComp(option.compId)
 
     return {
       undoCommand: {
-        command: CommandName.CompDelete,
+        command: CommandName.CompAdd,
         compId,
-      },
+        type: comp.type,
+        property: {
+          id: compId,
+          name: comp.name,
+          description: comp.description,
+          rank: comp.rank,
+          hidden: comp.hidden,
+          type: comp.type,
+          property: comp.property,
+        },
+      } as AddCompOption,
       redoCommand: option,
       result: CommandExecuteResult.Success,
     }
