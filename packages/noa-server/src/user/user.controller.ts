@@ -9,10 +9,11 @@ import { REDIS_CLIENT } from 'src/redis/redis.module'
 import { SecurityService } from 'src/security/security.service'
 import { CookieKeys } from 'src/shared/constans/cookie'
 import { User } from 'src/sqlite/user.entity'
-import { EncryptService } from 'src/util/encrypt/encrypt.service'
+import { EncryptService } from 'src/utils/encrypt/encrypt.service'
+import { IoService } from 'src/utils/io/io/io.service'
 import { Repository } from 'typeorm'
 import { v4 } from 'uuid'
-import { CreateUserResponseDTO, LoginDTO, RegisterDTO } from './user.dto'
+import { CreateUserResponseDTO, GithubLoginDTO, LoginDTO, RegisterDTO } from './user.dto'
 import { UserService } from './user.service'
 
 @ApiTags('登录 / 用户信息')
@@ -20,6 +21,9 @@ import { UserService } from './user.service'
 export class UserController {
   @Inject(UserService)
   userService: UserService
+
+  @Inject(IoService)
+  ioService: IoService
 
   @Inject(EncryptService)
   encryptService: EncryptService
@@ -135,5 +139,21 @@ export class UserController {
       nickname: user.nickname,
       session,
     }
+  }
+
+  @Post('/github-login')
+  @ApiOperation({
+    summary: '使用GitHub登录',
+  })
+  @ApiResponse({
+    status: 200,
+    description: '登录成功的用户信息',
+    type: CreateUserResponseDTO,
+  })
+  async githubLogin(
+    // @Body(VerifyPipe) body: GithubLoginDTO,
+  ) {
+    // 校验二维码
+    // this.ioService.get('')
   }
 }

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { FormInputComponent } from 'src/sqlite/form-input-component.entity'
 import { FormPage } from 'src/sqlite/form-page.entity'
 import { WidgetTypes } from 'src/sqlite/widget-types.entity'
-import { EncryptService } from 'src/util/encrypt/encrypt.service'
+import { EncryptService } from 'src/utils/encrypt/encrypt.service'
 import { Repository } from 'typeorm'
 
 @Injectable()

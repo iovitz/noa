@@ -4,7 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import * as pkg from '../package.json'
 import { AppModule } from './app.module'
 import { appLogger, formatLogContext } from './shared/tracer/tracer'
-import { TracerService } from './util/tracer/tracer.service'
+import { TracerService } from './utils/tracer/tracer.service'
 
 // 防止未捕获异常导致进程退出
 process.on('unhandledRejection', (reason: Error) => {

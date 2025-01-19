@@ -6,8 +6,20 @@
   "author": "",
   "license": "ISC",
   "keywords": [],
-  "main": "src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
+    "build": "unbuild",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
@@ -26,10 +38,10 @@
     "react-router-dom": ">=6.0.0"
   },
   "dependencies": {
-    "noa-form-ui": "file:../noa-form-ui",
     "react-icons": "^5.4.0"
   },
   "devDependencies": {
-    "@types/react-icons": "^3.0.0"
+    "@types/react-icons": "^3.0.0",
+    "unbuild": "^3.3.1"
   }
 }

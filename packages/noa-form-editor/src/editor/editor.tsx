@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react'
 import { IOClient } from '../io'
 import { useFormEditorStore } from '../store/editor.store'
 import PageCanvas from './page-canvas/page-canvas'
+import PropsPanel from './props-panel/props-panel'
 import CompList from './widget-list'
 
 interface FormEditorProps {
@@ -55,7 +56,7 @@ export const FormEditor = observer((props: FormEditorProps) => {
           width: '375px',
         }}
       >
-        {props.fileId}
+        <PropsPanel />
       </div>
     </div>
   )

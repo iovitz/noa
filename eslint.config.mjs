@@ -1,7 +1,11 @@
 import antfu from '@antfu/eslint-config'
 
 export default antfu({
-  react: true,
+  react: {
+    overrides: {
+      'react/prefer-destructuring-assignment': 0
+    }
+  },
   rules: {
     'react-hooks/exhaustive-deps': 'off',
     'react/no-useless-fragment': 0,

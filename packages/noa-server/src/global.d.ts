@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { PromiseManager } from './shared/utils/promise-manager'
-import { TracerService } from './util/tracer/tracer.service'
+import { TracerService } from './utils/tracer/tracer.service'
 
 declare global {
   interface MiddlewareInjected {

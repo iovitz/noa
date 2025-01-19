@@ -1,7 +1,7 @@
 import { Global, Module } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import Redis from 'ioredis'
-import { TracerService } from 'src/util/tracer/tracer.service'
+import { TracerService } from 'src/utils/tracer/tracer.service'
 
 export const REDIS_CLIENT = Symbol('REDIS_CLIENT')
 

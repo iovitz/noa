@@ -13,7 +13,10 @@
     "baseUrl": ".",
     "module": "ESNext",
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "bundler", // 设置基础路径为项目根目录
+    "paths": {
+      "src/*": ["src/*"] // 确保使用相对路径
+    },
     "allowImportingTsExtensions": true,
     /* Linting */
     "strict": true,

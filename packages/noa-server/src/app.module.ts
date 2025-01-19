@@ -19,8 +19,9 @@ import { SocketV1Module } from './socketv1/socketv1.module'
 import { SpaceModule } from './space/space.module'
 import { StatusModule } from './status/status.module'
 import { UserModule } from './user/user.module'
-import { TracerService } from './util/tracer/tracer.service'
-import { UtilModule } from './util/util.module'
+import { IoService } from './utils/io/io/io.service'
+import { TracerService } from './utils/tracer/tracer.service'
+import { UtilModule } from './utils/util.module'
 
 @Module({
   imports: [
@@ -62,6 +63,7 @@ import { UtilModule } from './util/util.module'
       provide: APP_FILTER,
       useClass: BadRequestFilter,
     },
+    IoService,
   ],
 })
 export class AppModule implements NestModule {

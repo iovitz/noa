@@ -63,7 +63,7 @@ export default function Login() {
             onClick={() => {
               githubOauthAuthorize({
                 login: 'github',
-                redirect_uri: 'http://localhost:5173/login?auth=github',
+                redirect_uri: 'http://localhost:21922/noa/login?auth=github',
                 state: 'true',
               })
             }}

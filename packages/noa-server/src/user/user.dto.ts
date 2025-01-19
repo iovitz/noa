@@ -41,3 +41,7 @@ export class RegisterDTO extends UserAccountDTO {
 }
 
 export class CreateUserResponseDTO {}
+
+export class GithubLoginDTO {
+  code: string
+}

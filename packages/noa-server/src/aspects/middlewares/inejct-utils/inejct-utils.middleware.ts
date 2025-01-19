@@ -2,7 +2,7 @@ import { Inject, Injectable, NestMiddleware } from '@nestjs/common'
 import { customAlphabet } from 'nanoid'
 import { CookieKeys } from 'src/shared/constans/cookie'
 import { PromiseManager } from 'src/shared/utils/promise-manager'
-import { TracerService } from 'src/util/tracer/tracer.service'
+import { TracerService } from 'src/utils/tracer/tracer.service'
 
 @Injectable()
 export class InejctUtilsMiddleware implements NestMiddleware {

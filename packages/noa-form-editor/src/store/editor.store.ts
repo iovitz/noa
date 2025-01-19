@@ -1,4 +1,6 @@
 import { makeAutoObservable } from 'mobx'
+import { CommandName } from '../command'
+import { AddWidgetOption } from '../command/widget.option'
 import { FormPageController } from '../controller'
 import { EventContext, EventName } from '../controller/events.types'
 import { IOClient } from '../io'
@@ -8,6 +10,8 @@ export class FormEditorStore {
   formPageController?: FormPageController
 
   currentFileId = ''
+
+  activeWidgetId = ''
 
   componentList: any[] = []
 
@@ -29,12 +33,22 @@ export class FormEditorStore {
     this.formPageController?.on(EventName.WidgetUpdate, this.handleWidgetUpdate)
   }
 
+  setActiveWidgetId(id: string) {
+    this.activeWidgetId = id
+  }
+
   unbindEvent() {
     this.formPageController?.off(EventName.WidgetUpdate, this.handleWidgetUpdate)
   }
 
   addWidget(type: WidgetTypes) {
     console.error('add widget: ', type)
+    this.formPageController?.do({
+      command: CommandName.WidgetAdd,
+      id: this.currentFileId,
+      type,
+      property: {},
+    } as AddWidgetOption)
   }
 
   handleWidgetUpdate = (info: EventContext[EventName.WidgetUpdate]) => {

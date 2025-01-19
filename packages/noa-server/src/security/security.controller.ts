@@ -3,8 +3,8 @@ import { ApiOperation, ApiProduces, ApiResponse, ApiTags } from '@nestjs/swagger
 import { contentType } from 'mime-types'
 import { ClientID, ClientIP, Tracer } from 'src/aspects/decorator/request'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
-import { EncryptService } from 'src/util/encrypt/encrypt.service'
-import { TracerService } from 'src/util/tracer/tracer.service'
+import { EncryptService } from 'src/utils/encrypt/encrypt.service'
+import { TracerService } from 'src/utils/tracer/tracer.service'
 import { GetVerifyCodeDTO } from './security.dto'
 import { SecurityService } from './security.service'
 

@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { typeOrmLogger } from 'src/shared/tracer/typeorm.tracer'
 import { EncryptService } from './encrypt/encrypt.service'
 import { HttpService } from './http/http.service'
+import { IoService } from './io/io/io.service'
 import { TracerService } from './tracer/tracer.service'
 
 @Global()
@@ -46,7 +47,7 @@ import { TracerService } from './tracer/tracer.service'
     }),
   ],
   // 全局使用的一些Service
-  providers: [EncryptService, TracerService, HttpService],
-  exports: [EncryptService, TracerService, HttpService],
+  providers: [EncryptService, TracerService, HttpService, IoService],
+  exports: [EncryptService, TracerService, HttpService, IoService],
 })
 export class UtilModule {}

@@ -39,18 +39,18 @@ export class IOClient implements PageIO {
     this.initEvents()
   }
 
-  send(event: string, data: unknown) {
+  send(event: string, data: unknown): any {
     return this.socket.send({
       event,
       data,
     })
   }
 
-  on<T>(event: string, callback: (data: T) => void) {
+  on<T>(event: string, callback: (data: T) => void): any {
     return this.socket.on(event, callback)
   }
 
-  off<T>(event: string, callback: (data: T) => void) {
+  off<T>(event: string, callback: (data: T) => void): any {
     return this.socket.off(event, callback)
   }
 
