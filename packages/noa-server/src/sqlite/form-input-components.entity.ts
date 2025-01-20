@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity('widget-type')
-export class WidgetTypes {
+@Entity('form-input-components')
+export class FormInputComponents {
   @PrimaryColumn({
     type: 'varchar',
     length: 26,
@@ -11,32 +11,37 @@ export class WidgetTypes {
 
   @Column({
     type: 'varchar',
-    length: 10,
-    comment: '组件名称',
+    length: 26,
+    unsigned: true,
+  })
+  pageId: string
+
+  @Column({
+    type: 'varchar',
+    length: 50,
+    comment: '字段名称',
   })
   name: string
 
   @Column({
     type: 'varchar',
-    length: 20,
-    comment: '组件名称',
-    nullable: true,
+    length: 1000,
+    comment: '字段描述',
   })
   desc: string
 
   @Column({
-    type: 'varchar',
-    length: 20,
-    comment: '组件类型',
+    type: 'float',
+    default: 100000,
+    comment: '组件在页面中的顺序',
   })
-  type: string
+  rank: number
 
   @Column({
-    type: 'int',
-    comment: '页面权重',
-    default: 0,
+    type: 'json',
+    comment: '组件属性',
   })
-  weight: string
+  props: string
 
   @CreateDateColumn({
     comment: '修改时间',

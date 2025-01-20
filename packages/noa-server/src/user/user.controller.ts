@@ -8,9 +8,8 @@ import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
 import { REDIS_CLIENT } from 'src/redis/redis.module'
 import { SecurityService } from 'src/security/security.service'
 import { CookieKeys } from 'src/shared/constans/cookie'
-import { User } from 'src/sqlite/user.entity'
+import { Users } from 'src/sqlite/users.entity'
 import { EncryptService } from 'src/utils/encrypt/encrypt.service'
-import { IoService } from 'src/utils/io/io/io.service'
 import { Repository } from 'typeorm'
 import { v4 } from 'uuid'
 import { CreateUserResponseDTO, GithubLoginDTO, LoginDTO, RegisterDTO } from './user.dto'
@@ -22,9 +21,6 @@ export class UserController {
   @Inject(UserService)
   userService: UserService
 
-  @Inject(IoService)
-  ioService: IoService
-
   @Inject(EncryptService)
   encryptService: EncryptService
 
@@ -34,8 +30,8 @@ export class UserController {
   @Inject(SecurityService)
   securityService: SecurityService
 
-  @InjectRepository(User)
-  userRepository: Repository<User>
+  @InjectRepository(Users)
+  userRepository: Repository<Users>
 
   @Post('/login')
   @ApiOperation({
@@ -117,13 +113,7 @@ export class UserController {
     }
 
     // 创建用户
-    const user = await this.userService.createUser({
-      id: this.encryptService.genPrimaryKey(),
-      nickname: this.userService.genRandomUsername(),
-      email: body.email,
-      // 密码进行MD5加密
-      password: await this.encryptService.encryptMd5(body.password),
-    })
+    const user = await this.userService.createUser(await this.userService.createNewUserInfo(body.email, void 0, body.password))
 
     const session = v4()
 
@@ -151,9 +141,11 @@ export class UserController {
     type: CreateUserResponseDTO,
   })
   async githubLogin(
-    // @Body(VerifyPipe) body: GithubLoginDTO,
+    @Body(VerifyPipe) body: GithubLoginDTO,
   ) {
+    const res = await this.userService.getGithubAuthResult(body.code)
+    console.error(res)
     // 校验二维码
-    // this.ioService.get('')
+    return res
   }
 }

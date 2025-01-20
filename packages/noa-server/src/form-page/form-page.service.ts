@@ -1,8 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { FormInputComponent } from 'src/sqlite/form-input-component.entity'
-import { FormPage } from 'src/sqlite/form-page.entity'
-import { WidgetTypes } from 'src/sqlite/widget-types.entity'
+import { FormInputComponents } from 'src/sqlite/form-input-components.entity'
+import { FormPages } from 'src/sqlite/form-pages.entity'
 import { EncryptService } from 'src/utils/encrypt/encrypt.service'
 import { Repository } from 'typeorm'
 
@@ -11,14 +10,11 @@ export class FormPageService {
   @Inject(EncryptService)
   encryptService: EncryptService
 
-  @InjectRepository(FormPage)
-  formPageRepository: Repository<FormPage>
+  @InjectRepository(FormPages)
+  formPageRepository: Repository<FormPages>
 
-  @InjectRepository(FormInputComponent)
-  formInputComponentRepository: Repository<FormInputComponent>
-
-  @InjectRepository(WidgetTypes)
-  widgetTypesRepository: Repository<WidgetTypes>
+  @InjectRepository(FormInputComponents)
+  formInputComponentRepository: Repository<FormInputComponents>
 
   getComponents(pageId: string) {
     return this.formInputComponentRepository.findBy({
@@ -27,7 +23,7 @@ export class FormPageService {
   }
 
   public async createFormPage(ownerId: string, fileId: string, templateId: string) {
-    let template: FormPage
+    let template: FormPages
 
     if (templateId) {
       template = await this.formPageRepository.findOneBy({
@@ -56,9 +52,5 @@ export class FormPageService {
       ownerId,
     })
     return this.formPageRepository.save(newFormPage)
-  }
-
-  getWidgetTypes() {
-    return this.widgetTypesRepository.find()
   }
 }

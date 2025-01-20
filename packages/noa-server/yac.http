@@ -20,6 +20,14 @@ content-type: application/json
     "code": "0000"
 }
 
+### githubLogin
+POST {{prefix}}/user/github-login
+content-type: application/json
+
+{
+    "code": "--------------------"
+}
+
 ### getVerifyCode
 GET {{prefix}}/security/verify-code
   ?width=100

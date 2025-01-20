@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity('formValue')
-export class FormValue {
+@Entity('form-values')
+export class FormValues {
   @PrimaryColumn({
     type: 'varchar',
     length: 26,

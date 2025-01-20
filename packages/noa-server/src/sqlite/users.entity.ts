@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity('template')
-export class Template {
+@Entity('users')
+export class Users {
   @PrimaryColumn({
     type: 'varchar',
     length: 26,
@@ -11,10 +11,26 @@ export class Template {
 
   @Column({
     type: 'varchar',
-    length: 20,
-    comment: '模版名称',
+    length: 11,
+    comment: '邮箱',
+    nullable: true,
   })
-  name: string
+  email?: string
+
+  @Column({
+    type: 'varchar',
+    length: 32,
+    comment: 'MD5加密后的密码',
+    nullable: true,
+  })
+  password: string
+
+  @Column({
+    type: 'varchar',
+    length: 20,
+    comment: '用户昵称',
+  })
+  nickname: string
 
   @CreateDateColumn({
     comment: '修改时间',

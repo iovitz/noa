@@ -1,16 +1,28 @@
 import { IncomingHttpHeaders } from 'node:http'
-import { Inject, Injectable } from '@nestjs/common'
-import { REQUEST } from '@nestjs/core'
+import { Injectable } from '@nestjs/common'
 import * as superagent from 'superagent'
 
 @Injectable()
 export class IoService {
-  private client = superagent
+  client = superagent
 
-  @Inject(REQUEST)
-  request: Req
+  get(url: string, query?: Record<string, any> | string, headers?: IncomingHttpHeaders) {
+    return this.client.get(url).query(query).set(headers)
+  }
 
-  post(url: string, body: Record<string, unknown>, header: IncomingHttpHeaders) {
-    return this.client.post(url).send(body).set(header)
+  post(url: string, body: Record<string, unknown>, headers: IncomingHttpHeaders = {}, type: 'post' | 'put' | 'patch' | 'delete' = 'post') {
+    return this.client[type](url).send(body).set(headers)
+  }
+
+  patch(url: string, body: Record<string, unknown>, headers: IncomingHttpHeaders) {
+    return this.post(url, body, headers, 'patch')
+  }
+
+  put(url: string, body: Record<string, unknown>, headers: IncomingHttpHeaders) {
+    return this.post(url, body, headers, 'put')
+  }
+
+  delete(url: string, body: Record<string, unknown>, headers: IncomingHttpHeaders) {
+    return this.post(url, body, headers, 'delete')
   }
 }

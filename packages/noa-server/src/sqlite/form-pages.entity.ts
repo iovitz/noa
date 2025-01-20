@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity('user')
-export class User {
+@Entity('form-pages')
+export class FormPages {
   @PrimaryColumn({
     type: 'varchar',
     length: 26,
@@ -10,27 +10,25 @@ export class User {
   id: string
 
   @Column({
-    type: 'varchar',
-    length: 11,
-    comment: '邮箱',
-    nullable: true,
+    type: 'int',
+    unsigned: true,
+    comment: '页面版本',
+    default: 0,
   })
-  email?: string
+  rev: number
 
   @Column({
     type: 'varchar',
-    length: 32,
-    comment: 'MD5加密后的密码',
-    nullable: true,
+    comment: '所属用户的ID',
   })
-  password: string
+  ownerId: string
 
   @Column({
-    type: 'varchar',
-    length: 20,
-    comment: '用户昵称',
+    type: 'boolean',
+    comment: '页面是否分享',
+    default: false,
   })
-  nickname: string
+  shared: boolean
 
   @CreateDateColumn({
     comment: '修改时间',

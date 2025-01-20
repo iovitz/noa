@@ -3,6 +3,7 @@ import { useRoutes } from 'react-router-dom'
 import Form from './form/form'
 import Home from './home/home'
 import Layout from './layout'
+import GithubLogin from './login/github-login'
 import Login from './login/login'
 import NotFound from './notfound/notfound'
 import Template from './template/template'
@@ -30,6 +31,10 @@ export default function AppRoutes() {
     {
       path: '/login',
       element: <Login />,
+    },
+    {
+      path: '/github-login',
+      element: <GithubLogin />,
     },
     {
       path: '*',

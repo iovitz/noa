@@ -43,5 +43,13 @@ export class RegisterDTO extends UserAccountDTO {
 export class CreateUserResponseDTO {}
 
 export class GithubLoginDTO {
+  @IsString()
+  @Length(4)
+  @ApiProperty({
+    minLength: 20,
+    maxLength: 20,
+    example: '483c38d356aa3fbdadw1',
+    description: 'Github给的Code',
+  })
   code: string
 }

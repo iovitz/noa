@@ -25,7 +25,7 @@ export class OAuth {
 
   @Column({
     type: 'varchar',
-    length: 20,
+    length: 40,
     comment: '三方平台用户ID',
   })
   platformId: string

@@ -1,13 +1,39 @@
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable, UnprocessableEntityException } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import { InjectRepository } from '@nestjs/typeorm'
+import { OAuth } from 'src/sqlite/oauth.entity'
+import { EncryptService } from 'src/utils/encrypt/encrypt.service'
+import { IoService } from 'src/utils/io/io/io.service'
 import { DeepPartial, Repository } from 'typeorm'
-import { User } from '../sqlite/user.entity'
+import { Users } from '../sqlite/users.entity'
 import { namePart1, namePart2 } from './user.const'
 
 @Injectable()
 export class UserService {
-  @InjectRepository(User)
-  userRepository: Repository<User>
+  @InjectRepository(Users)
+  userRepository: Repository<Users>
+
+  @InjectRepository(OAuth)
+  oauthRepository: Repository<OAuth>
+
+  @Inject(EncryptService)
+  encryptService: EncryptService
+
+  @Inject(IoService)
+  io: IoService
+
+  @Inject(ConfigService)
+  config: ConfigService
+
+  async createNewUserInfo(email: string, nickname?: string, password?: string) {
+    return {
+      id: this.encryptService.genPrimaryKey(),
+      nickname: nickname ?? this.genRandomUsername(),
+      email,
+      // 密码进行MD5加密
+      password: password ? await this.encryptService.encryptMd5(password) : void 0,
+    }
+  }
 
   getUserByEmail(email: string) {
     return this.userRepository.findOneBy({
@@ -15,7 +41,7 @@ export class UserService {
     })
   }
 
-  createUser(userData: DeepPartial<User>) {
+  createUser(userData: DeepPartial<Users>) {
     const user = this.userRepository.create({
       ...userData,
     })
@@ -29,5 +55,42 @@ export class UserService {
     const part2 = namePart2[Math.floor(Math.random() * len2)]
     const part3 = `${Math.floor(Math.random() * 100)}`.padStart(2, '0')
     return `${part1}的${part2}${part3}`
+  }
+
+  async getGithubAuthResult(code: string) {
+    const res = await this.io.post('https://github.com/login/oauth/access_token', {
+      code,
+      client_id: this.config.get('GITHUB_CLIENT_ID'),
+      client_secret: this.config.get('GITHUB_CLIENT_SECRET'),
+    })
+    console.error(res.body)
+    if (res.body.error) {
+      throw new UnprocessableEntityException(res.body)
+    }
+
+    const token = res.body.access_token
+    const githubUser = (await this.io.client.get('https://api.github.com/user').set('Authorization', `Bearer ${token}`).set('User-Agent', 'Noa/1.0')).body
+    const email = githubUser.email
+    const existsOauthRecord = await this.oauthRepository.findOneBy({
+      platform: 'github',
+      platformId: githubUser.id,
+    })
+    if (existsOauthRecord) {
+      const user = await this.userRepository.findOneBy({ id: existsOauthRecord.userId })
+      return user
+    }
+    else {
+      const newUserRecord = await this.createNewUserInfo(email, githubUser.name)
+      const newOauthRecord = this.oauthRepository.create({
+        userId: newUserRecord.id,
+        platform: 'github',
+        platformId: githubUser.id,
+      })
+      await this.oauthRepository.save(newOauthRecord)
+
+      const user = await this.createUser(newUserRecord)
+      await this.oauthRepository.save(user)
+      return user
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity('form-input-component')
-export class FormInputComponent {
+@Entity('space-files')
+export class SpaceFile {
   @PrimaryColumn({
     type: 'varchar',
     length: 26,
@@ -11,37 +11,45 @@ export class FormInputComponent {
 
   @Column({
     type: 'varchar',
-    length: 26,
-    unsigned: true,
+    comment: '所属用户的ID',
   })
-  pageId: string
+  ownerId: string
 
   @Column({
     type: 'varchar',
-    length: 50,
-    comment: '字段名称',
+    length: 20,
+    comment: '页面名称',
   })
   name: string
 
   @Column({
     type: 'varchar',
-    length: 1000,
-    comment: '字段描述',
+    length: 500,
+    comment: '页面描述',
+    nullable: true,
   })
-  desc: string
+  description: string
 
   @Column({
-    type: 'float',
-    default: 100000,
-    comment: '组件在页面中的顺序',
+    type: 'varchar',
+    length: '20',
+    comment: '页面类型',
   })
-  rank: number
+  type: string
 
   @Column({
-    type: 'json',
-    comment: '组件属性',
+    type: 'boolean',
+    comment: '收藏文件',
+    default: false,
   })
-  props: string
+  like: boolean
+
+  @Column({
+    type: 'boolean',
+    comment: '页面状态',
+    default: false,
+  })
+  deleted: boolean
 
   @CreateDateColumn({
     comment: '修改时间',

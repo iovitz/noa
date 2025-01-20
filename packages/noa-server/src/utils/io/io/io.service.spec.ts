@@ -1,18 +1,18 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { IoService } from './io.service';
+import { Test, TestingModule } from '@nestjs/testing'
+import { IoService } from './io.service'
 
-describe('IoService', () => {
-  let service: IoService;
+describe('ioService', () => {
+  let service: IoService
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [IoService],
-    }).compile();
+    }).compile()
 
-    service = module.get<IoService>(IoService);
-  });
+    service = module.get<IoService>(IoService)
+  })
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-});
+    expect(service).toBeDefined()
+  })
+})
