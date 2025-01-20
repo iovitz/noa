@@ -1,10 +1,14 @@
 import { Inject, Injectable, UnprocessableEntityException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { InjectRepository } from '@nestjs/typeorm'
+import Redis from 'ioredis'
+import stringify from 'safe-stable-stringify'
+import { REDIS_CLIENT } from 'src/redis/redis.module'
 import { OAuth } from 'src/sqlite/oauth.entity'
 import { EncryptService } from 'src/utils/encrypt/encrypt.service'
 import { IoService } from 'src/utils/io/io/io.service'
 import { DeepPartial, Repository } from 'typeorm'
+import { v4 } from 'uuid'
 import { Users } from '../sqlite/users.entity'
 import { namePart1, namePart2 } from './user.const'
 
@@ -18,6 +22,9 @@ export class UserService {
 
   @Inject(EncryptService)
   encryptService: EncryptService
+
+  @Inject(REDIS_CLIENT)
+  redis: Redis
 
   @Inject(IoService)
   io: IoService
@@ -39,6 +46,17 @@ export class UserService {
     return this.userRepository.findOneBy({
       email,
     })
+  }
+
+  genUserSession(id: string) {
+    const session = v4()
+
+    // 存入Redis
+    this.redis.set(`session-${session}`, stringify({
+      id,
+    }))
+
+    return session
   }
 
   createUser(userData: DeepPartial<Users>) {

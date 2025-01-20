@@ -1,11 +1,9 @@
 import { Body, Controller, Inject, Post, Response, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { InjectRepository } from '@nestjs/typeorm'
-import Redis from 'ioredis'
 import * as stringify from 'json-stringify-safe'
 import { ClientIP, Cookie } from 'src/aspects/decorator/request'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
-import { REDIS_CLIENT } from 'src/redis/redis.module'
 import { SecurityService } from 'src/security/security.service'
 import { CookieKeys } from 'src/shared/constans/cookie'
 import { Users } from 'src/sqlite/users.entity'
@@ -23,9 +21,6 @@ export class UserController {
 
   @Inject(EncryptService)
   encryptService: EncryptService
-
-  @Inject(REDIS_CLIENT)
-  redis: Redis
 
   @Inject(SecurityService)
   securityService: SecurityService
@@ -64,12 +59,7 @@ export class UserController {
       throw new UnauthorizedException('用户名不存在或密码错误')
     }
 
-    const session = v4()
-
-    // 存入Redis
-    this.redis.set(`session-${session}`, stringify({
-      id: existsUser.id,
-    }))
+    const session = this.userService.genUserSession(existsUser.id)
 
     res.setCookie(CookieKeys.Session, session)
 
@@ -114,13 +104,7 @@ export class UserController {
 
     // 创建用户
     const user = await this.userService.createUser(await this.userService.createNewUserInfo(body.email, void 0, body.password))
-
-    const session = v4()
-
-    // 存入Redis
-    this.redis.set(`session-${session}`, stringify({
-      id: user.id,
-    }))
+    const session = this.userService.genUserSession(user.id)
 
     res.setCookie(CookieKeys.Session, session)
 
