@@ -2,15 +2,21 @@ import {
   CallHandler,
   ExecutionContext,
 
+  Inject,
+
   Injectable,
 
   NestInterceptor,
 } from '@nestjs/common'
 import { get } from 'lodash'
 import { Observable } from 'rxjs'
+import { REQUEST_TRACER, TracerService } from 'src/utils/tracer/tracer.service'
 
 @Injectable()
 export class ContextInterceptor implements NestInterceptor {
+  @Inject(REQUEST_TRACER)
+  tracer: TracerService
+
   async intercept(
     context: ExecutionContext,
     next: CallHandler,
@@ -21,7 +27,7 @@ export class ContextInterceptor implements NestInterceptor {
     // 注入PageId
     req.pageId = get(req, 'params.pageId', null)
 
-    req.tracer.log(`+REQ：${method} ${originalUrl}`, {
+    this.tracer.log(`+REQ：${method} ${originalUrl}`, {
       clientId: req.clientId,
       body: req.body,
       query: req.query,
@@ -29,7 +35,7 @@ export class ContextInterceptor implements NestInterceptor {
 
     const data = await next.handle()
 
-    req.tracer.log('-REQ', {
+    this.tracer.log('-REQ', {
       cost: req.getCostNs(),
       clientId: req.clientId,
     })

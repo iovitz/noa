@@ -1,10 +1,10 @@
 import { Controller, Get, Header, Inject, Query } from '@nestjs/common'
 import { ApiOperation, ApiProduces, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { contentType } from 'mime-types'
-import { ClientID, ClientIP, Tracer } from 'src/aspects/decorator/request'
+import { ClientID, ClientIP } from 'src/aspects/decorator/request'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
 import { EncryptService } from 'src/utils/encrypt/encrypt.service'
-import { TracerService } from 'src/utils/tracer/tracer.service'
+import { REQUEST_TRACER, TracerService } from 'src/utils/tracer/tracer.service'
 import { GetVerifyCodeDTO } from './security.dto'
 import { SecurityService } from './security.service'
 
@@ -16,6 +16,9 @@ export class SecurityController {
 
   @Inject(EncryptService)
   encryptService: EncryptService
+
+  @Inject(REQUEST_TRACER)
+  tracer: TracerService
 
   @ApiOperation({
     summary: '获取图形验证码',
@@ -29,14 +32,14 @@ export class SecurityController {
   @ApiProduces(contentType('svg') as string)
   @Get('verify-code')
   @Header('content-type', contentType('svg') as string)
-  async getVerifyCode(@Query(VerifyPipe) query: GetVerifyCodeDTO, @ClientID() cid: string, @ClientIP() ip: string, @Tracer() tracer: TracerService) {
+  async getVerifyCode(@Query(VerifyPipe) query: GetVerifyCodeDTO, @ClientID() cid: string, @ClientIP() ip: string) {
     const { data, text } = await this.securityService.getVerifyCode(
       await this.encryptService.encryptMd5(`verify-code-${ip}-${cid}-${query.type}`),
       Number(query.width),
       Number(query.height),
       Number(query.length ?? 4),
     )
-    tracer.log('get verify code', { code: text })
+    this.tracer.log('get verify code', { code: text })
     return data
   }
 }

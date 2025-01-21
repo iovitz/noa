@@ -4,6 +4,7 @@ import { get } from 'lodash'
 import { PermissionService } from 'src/permission/permission.service'
 import { FILE_PERMISSION_KEY } from 'src/shared/constans/meta-keys'
 import { PermissionTypes } from 'src/shared/constans/permission'
+import { REQUEST_TRACER, TracerService } from 'src/utils/tracer/tracer.service'
 
 export function FileApiPermission(permission: PermissionTypes) {
   return SetMetadata(FILE_PERMISSION_KEY, permission)
@@ -13,6 +14,9 @@ export function FileApiPermission(permission: PermissionTypes) {
 export class FilePermissionGuard implements CanActivate {
   @Inject(PermissionService)
   permissionService: PermissionService
+
+  @Inject(REQUEST_TRACER)
+  tracer: TracerService
 
   constructor(private reflector: Reflector) {}
 
@@ -34,7 +38,7 @@ export class FilePermissionGuard implements CanActivate {
       return false
     }
 
-    req.tracer.log('info', JSON.stringify(permission))
+    this.tracer.log('info', JSON.stringify(permission))
     return true
   }
 }
