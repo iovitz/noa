@@ -1,5 +1,5 @@
 type PromiseKeys = 'GET_USER_INFO' | 'GET_FILE' | 'GET_PAGE_PERMISSION'
-export class PromiseManager {
+export class SyncManager {
   private promiseMap = new Map<PromiseKeys, Promise<any>>()
 
   add<T = unknown>(key: PromiseKeys, promise: Promise<T>) {

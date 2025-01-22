@@ -1,7 +1,6 @@
 import { Inject, Injectable, NestMiddleware } from '@nestjs/common'
 import { customAlphabet } from 'nanoid'
 import { CookieKeys } from 'src/shared/constans/cookie'
-import { PromiseManager } from 'src/shared/utils/promise-manager'
 import { TracerService } from 'src/utils/tracer/tracer.service'
 
 @Injectable()
@@ -9,13 +8,10 @@ export class InejctUtilsMiddleware implements NestMiddleware {
   @Inject(TracerService)
   private readonly tracer: TracerService
 
-  constructor() {}
-
   use(req: Req, res: Res, next: () => void) {
     this.useCost(req, res)
     this.useCookie(req, res)
     this.useClientId(req, res)
-    this.usePromiseManager(req, res)
     // 获取请求耗时（ns）
     next()
   }
@@ -65,12 +61,5 @@ export class InejctUtilsMiddleware implements NestMiddleware {
       sameSite: 'strict',
       httpOnly: true,
     })
-  }
-
-  /**
-   * 使用PromiseManager管理异步请求
-   */
-  usePromiseManager(req: Req, res: Res) {
-    res.promiseManager = req.promiseManager = new PromiseManager()
   }
 }

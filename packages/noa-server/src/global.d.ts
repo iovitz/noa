@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { PromiseManager } from './shared/utils/promise-manager'
+import { SyncManager } from './utils/sync-manager/sync-manager'
 import { TracerService } from './utils/tracer/tracer.service'
 
 declare global {
@@ -7,7 +7,7 @@ declare global {
     // 中间注入的对象，不一定真的存在，注意调用时间
     stime: bigint
     clientId: string
-    promiseManager: PromiseManager
+    syncManager: SyncManager
     tracer: TracerService
     getCostNs: () => string
     getCookie: (key: CookieKeys) => string | undefined

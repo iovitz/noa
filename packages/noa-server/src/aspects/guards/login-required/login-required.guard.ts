@@ -2,6 +2,8 @@ import { CanActivate, ExecutionContext, Inject, Injectable } from '@nestjs/commo
 import Redis from 'ioredis'
 import { REDIS_CLIENT } from 'src/redis/redis.module'
 import { CookieKeys } from 'src/shared/constans/cookie'
+import { SyncManager } from 'src/utils/sync-manager/sync-manager'
+import { SYNC_MANAGER } from 'src/utils/sync-manager/sync-manager.service'
 import { REQUEST_TRACER, TracerService } from 'src/utils/tracer/tracer.service'
 
 @Injectable()
@@ -11,6 +13,9 @@ export class LoginRequiredGuard implements CanActivate {
 
   @Inject(REQUEST_TRACER)
   tracer: TracerService
+
+  @Inject(SYNC_MANAGER)
+  syncManager: SyncManager
 
   async canActivate(
     context: ExecutionContext,
@@ -24,7 +29,7 @@ export class LoginRequiredGuard implements CanActivate {
     if (
       session
       // eslint-disable-next-line no-cond-assign
-      && (redisResult = await req.promiseManager.add('GET_USER_INFO', this.redis.get(`session-${session}`)))
+      && (redisResult = await this.syncManager.add('GET_USER_INFO', this.redis.get(`session-${session}`)))
     ) {
       this.tracer.log('Valid Session', { session })
       const userInfo = JSON.parse(redisResult)

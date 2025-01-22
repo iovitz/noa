@@ -4,6 +4,8 @@ import { get } from 'lodash'
 import { PermissionService } from 'src/permission/permission.service'
 import { FILE_PERMISSION_KEY } from 'src/shared/constans/meta-keys'
 import { PermissionTypes } from 'src/shared/constans/permission'
+import { SyncManager } from 'src/utils/sync-manager/sync-manager'
+import { SYNC_MANAGER } from 'src/utils/sync-manager/sync-manager.service'
 import { REQUEST_TRACER, TracerService } from 'src/utils/tracer/tracer.service'
 
 export function FileApiPermission(permission: PermissionTypes) {
@@ -18,6 +20,9 @@ export class FilePermissionGuard implements CanActivate {
   @Inject(REQUEST_TRACER)
   tracer: TracerService
 
+  @Inject(SYNC_MANAGER)
+  syncManager: SyncManager
+
   constructor(private reflector: Reflector) {}
 
   async canActivate(
@@ -31,7 +36,7 @@ export class FilePermissionGuard implements CanActivate {
     if (!apiPermission) {
       throw new Error('`PagePermissionGuard` must use `FileApiPermission` to set permissions')
     }
-    const permission = await req.promiseManager.add('GET_PAGE_PERMISSION', this.permissionService.getPagePermission(req.userId, fileId))
+    const permission = await this.syncManager.add('GET_PAGE_PERMISSION', this.permissionService.getPagePermission(req.userId, fileId))
 
     // 无权限
     if (!permission.length || !permission.some(p => p >= Number(apiPermission))) {

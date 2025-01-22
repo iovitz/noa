@@ -7,6 +7,8 @@ import { FileApiPermission, FilePermissionGuard } from 'src/permission/guards/fi
 import { PermissionService } from 'src/permission/permission.service'
 import { PermissionTypes } from 'src/shared/constans/permission'
 import { FileIDQueryDTO } from 'src/shared/dto/dto'
+import { SyncManager } from 'src/utils/sync-manager/sync-manager'
+import { SYNC_MANAGER } from 'src/utils/sync-manager/sync-manager.service'
 import { FileExistsGuard } from './guards/file-exists/file-exists.guard'
 import { CreateFileDTO, GetFilesDTO, PatchFileDTO } from './space.dto'
 import { SpaceService } from './space.service'
@@ -20,6 +22,9 @@ export class SpaceController {
 
   @Inject(PermissionService)
   permissionService: PermissionService
+
+  @Inject(SYNC_MANAGER)
+  syncManager: SyncManager
 
   @Get('file-list')
   async getSpaceFiles(@Query(VerifyPipe) query: GetFilesDTO, @RequestUser() userId: string) {
@@ -72,7 +77,7 @@ export class SpaceController {
   @FileApiPermission(PermissionTypes.Manageable)
   @UseGuards(FileExistsGuard, FilePermissionGuard)
   async deleteFile(@Req() req: Req) {
-    const file = await req.promiseManager.get('GET_FILE')
+    const file = await req.syncManager.get('GET_FILE')
 
     file.deleted = true
     await this.spaceService.spaceFileRepository.save(file)

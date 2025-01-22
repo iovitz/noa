@@ -17,7 +17,7 @@ export class FileExistsGuard implements CanActivate {
       throw new NotFoundException('File not exists')
     }
 
-    const file = await req.promiseManager.add('GET_FILE', this.spaceService.getFileById(fileId))
+    const file = await req.syncManager.add('GET_FILE', this.spaceService.getFileById(fileId))
 
     if (!file) {
       throw new UnprocessableEntityException('File not exists')
