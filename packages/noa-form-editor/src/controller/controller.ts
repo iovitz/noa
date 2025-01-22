@@ -1,9 +1,9 @@
-import type { PageIO } from '../io'
+import { executeCommand } from '@/command'
+import { CommandOption } from '@/command/widget.option'
+import { Engine } from '@/engine'
+import { PageIO } from '@/io'
+import { FormPage } from '@/page'
 import Emittery from 'emittery'
-import { executeCommand } from '../command'
-import { CommandOption } from '../command/widget.option'
-import { Engine } from '../engine'
-import { FormPage } from '../page'
 import { EventContext, EventName } from './events.types'
 
 export interface ControllerParam {

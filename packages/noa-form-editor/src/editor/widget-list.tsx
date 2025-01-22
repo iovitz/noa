@@ -1,8 +1,8 @@
+import { useFormEditorStore } from '@/store/editor.store'
+import { WidgetTypes } from '@/widgets'
 import { Button, Col, Row, Space, Typography } from 'antd'
 import React from 'react'
 import { MdAttachFile, MdCheck, MdDateRange, MdGpsFixed, MdInfoOutline, MdInsertChartOutlined, MdLocalPhone, MdMoney, MdNumbers, MdOutlineCheckBox, MdOutlineCheckCircle, MdOutlineHorizontalRule, MdOutlineImage, MdOutlineInput, MdOutlinePercent, MdOutlineStarOutline, MdOutlineTextFields, MdOutlineVideocam } from 'react-icons/md'
-import { useFormEditorStore } from '../store/editor.store'
-import { WidgetTypes } from '../widgets'
 
 const { Title } = Typography
 

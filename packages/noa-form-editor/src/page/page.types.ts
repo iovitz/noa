@@ -1,4 +1,4 @@
-import { WidgetUnionType } from '../widgets'
+import { WidgetUnionType } from '@/widgets'
 
 export interface FormSnapshot {
   id: string

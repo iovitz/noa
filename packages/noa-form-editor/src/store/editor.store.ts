@@ -1,10 +1,10 @@
+import { CommandName } from '@/command'
+import { AddWidgetOption } from '@/command/widget.option'
+import { FormPageController } from '@/controller'
+import { EventContext, EventName } from '@/controller/events.types'
+import { IOClient } from '@/io'
+import { WidgetTypes } from '@/widgets'
 import { makeAutoObservable } from 'mobx'
-import { CommandName } from '../command'
-import { AddWidgetOption } from '../command/widget.option'
-import { FormPageController } from '../controller'
-import { EventContext, EventName } from '../controller/events.types'
-import { IOClient } from '../io'
-import { WidgetTypes } from '../widgets'
 
 export class FormEditorStore {
   formPageController?: FormPageController

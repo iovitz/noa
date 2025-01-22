@@ -15,7 +15,7 @@
     /* Bundler mode */
     "moduleResolution": "bundler", // 设置基础路径为项目根目录
     "paths": {
-      "src/*": ["src/*"] // 确保使用相对路径
+      "@/*": ["src/*"] // 确保使用相对路径
     },
     "allowImportingTsExtensions": true,
     /* Linting */
@@ -28,5 +28,15 @@
         "name": "typescript-plugin-css-modules"
       }
     ]
-  }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build"
+  ]
 }

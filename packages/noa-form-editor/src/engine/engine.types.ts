@@ -1,5 +1,5 @@
-import { PageIO } from '../io'
-import { FormSnapshot } from '../page'
+import { PageIO } from '@/io'
+import { FormSnapshot } from '@/page'
 
 export interface PageModel {
   id: string

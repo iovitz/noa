@@ -1,10 +1,10 @@
+import { IOClient } from '@/io'
+import { useFormEditorStore } from '@/store/editor.store'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useRef } from 'react'
-import { IOClient } from '../io'
-import { useFormEditorStore } from '../store/editor.store'
 import PageCanvas from './page-canvas/page-canvas'
 import PropsPanel from './props-panel/props-panel'
-import CompList from './widget-list'
+import WidgetList from './widget-list'
 
 interface FormEditorProps {
   fileId: string
@@ -40,7 +40,7 @@ export const FormEditor = observer((props: FormEditorProps) => {
             padding: '15px',
           }}
         >
-          <CompList />
+          <WidgetList />
         </div>
       </div>
       <div

@@ -1,5 +1,5 @@
+import { WidgetUnionType } from '@/widgets'
 import { findIndex } from 'lodash'
-import { WidgetUnionType } from '../widgets'
 import { FormSnapshot } from './page.types'
 
 export * from './page.types'

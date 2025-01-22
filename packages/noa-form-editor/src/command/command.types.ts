@@ -1,4 +1,4 @@
-import type { FormPage } from '../page'
+import type { FormPage } from '@/page'
 import { CommandName } from './command.const'
 import { CommandExecuteResult } from './widget.executor'
 import { CommandOption } from './widget.option'

@@ -1,4 +1,4 @@
-import { PageIO } from '../io'
+import { PageIO } from '@/io'
 import { ChangeSetEvent, EngineParams, PageModel } from './engine.types'
 
 export class Engine {

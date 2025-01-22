@@ -1,9 +1,9 @@
+import FormImage from '@/widget-ui/form-image'
+import FormNotice from '@/widget-ui/form-notice'
+import FormVideo from '@/widget-ui/form-video'
+import WidgetOperator from '@/widget-ui/widget-operator'
 import { Space } from 'antd'
 import React from 'react'
-import FormImage from '../../widget-ui/form-image'
-import FormNotice from '../../widget-ui/form-notice'
-import FormVideo from '../../widget-ui/form-video'
-import WidgetOperator from '../../widget-ui/widget-operator'
 
 export default function PageCanvas() {
   return (

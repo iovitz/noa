@@ -81,7 +81,6 @@ export class UserService {
       client_id: this.config.get('GITHUB_CLIENT_ID'),
       client_secret: this.config.get('GITHUB_CLIENT_SECRET'),
     })
-    console.error(res.body)
     if (res.body.error) {
       throw new UnprocessableEntityException(res.body)
     }
@@ -98,7 +97,9 @@ export class UserService {
       return user
     }
     else {
+      // TODO：可能和email已经被注册过了，此时会无法注册，需要处理
       const newUserRecord = await this.createNewUserInfo(email, githubUser.name)
+
       const newOauthRecord = this.oauthRepository.create({
         userId: newUserRecord.id,
         platform: 'github',
