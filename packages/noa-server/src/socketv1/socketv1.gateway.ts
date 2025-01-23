@@ -7,25 +7,25 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets'
 import { Server, Socket } from 'socket.io'
-import { TracerService } from 'src/utils/tracer/tracer.service'
+import { Tracer } from 'src/utils/tracer/tracer.service'
 
 @WebSocketGateway({
   path: '/api-noa/ws',
 })
 export class SocketV1Gateway
 implements OnGatewayConnection<Socket>, OnGatewayDisconnect<Socket> {
-  constructor(private readonly log: TracerService) {}
+  private tracer = new Tracer(SocketV1Gateway.name)
 
   @WebSocketServer() server: Server
   users = 0
 
   async handleConnection(client: Socket) {
     // 鉴权
-    this.log.log('Socket Connect', { id: client.id })
+    this.tracer.log('Socket Connect', { id: client.id })
   }
 
   async handleDisconnect(client: Socket) {
-    this.log.log('Socket disconnect', { id: client.id })
+    this.tracer.log('Socket disconnect', { id: client.id })
   }
 
   @SubscribeMessage('events')
@@ -38,7 +38,7 @@ implements OnGatewayConnection<Socket>, OnGatewayDisconnect<Socket> {
    */
   @SubscribeMessage('NEW_CHANGES')
   async handleMessage(client: Socket, payload: string) {
-    this.log.log('socket hello', {
+    this.tracer.log('socket hello', {
       payload,
     })
 

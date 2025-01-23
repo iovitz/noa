@@ -4,7 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import * as pkg from '../package.json'
 import { AppModule } from './app.module'
 import { appLogger, formatLogContext } from './shared/tracer/tracer'
-import { TracerService } from './utils/tracer/tracer.service'
+import { Tracer } from './utils/tracer/tracer.service'
 
 // 防止未捕获异常导致进程退出
 process.on('unhandledRejection', (reason: Error) => {
@@ -17,9 +17,7 @@ async function bootstrap() {
     bufferLogs: true,
   })
 
-  const rootTracer = app.get(TracerService)
-
-  const appTracer = rootTracer.child('APP')
+  const appTracer = new Tracer('APP')
 
   app.useLogger(appTracer)
 

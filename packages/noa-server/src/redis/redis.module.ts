@@ -1,22 +1,23 @@
 import { Global, Module } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import Redis from 'ioredis'
-import { TracerService } from 'src/utils/tracer/tracer.service'
+import { Tracer } from 'src/utils/tracer/tracer.service'
 
 export const REDIS_CLIENT = Symbol('REDIS_CLIENT')
 
 @Global()
 @Module({
-  providers: [TracerService, {
+  providers: [{
     provide: REDIS_CLIENT,
-    inject: [ConfigService, TracerService],
-    useFactory: async (configService: ConfigService, tracerService: TracerService) => {
+    inject: [ConfigService],
+    useFactory: async (configService: ConfigService) => {
+      const tracer = new Tracer(RedisModule.name)
       const redis = new Redis({
-        host: '127.0.0.1',
-        password: 'noa',
+        host: configService.getOrThrow('REDIS_HOST'),
+        password: configService.get('REDIS_PASS'),
       })
       await redis.ping() // ping 方法用于测试连接是否正常
-      tracerService.log('Redis Ready')
+      tracer.log('Redis Ready')
       return redis
     },
   }],

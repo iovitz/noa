@@ -1,5 +1,4 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 import * as cookieParser from 'cookie-parser'
@@ -20,7 +19,6 @@ import { SpaceModule } from './space/space.module'
 import { StatusModule } from './status/status.module'
 import { UserModule } from './user/user.module'
 import { IoService } from './utils/io/io/io.service'
-import { TracerService } from './utils/tracer/tracer.service'
 import { UtilModule } from './utils/util.module'
 
 @Module({
@@ -67,13 +65,7 @@ import { UtilModule } from './utils/util.module'
   ],
 })
 export class AppModule implements NestModule {
-  constructor(
-    private config: ConfigService,
-    private tracer: TracerService,
-  ) {}
-
   configure(consumer: MiddlewareConsumer) {
-    this.tracer.log('Initial middlewares')
     consumer
       .apply(
         cookieParser(),

@@ -2,8 +2,6 @@ import {
   CallHandler,
   ExecutionContext,
 
-  Inject,
-
   Injectable,
 
   NestInterceptor,
@@ -12,7 +10,7 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { HeaderKeys } from 'src/shared/constans/header'
 import { SKIP_RESPONSE_FORMAT_KEY } from 'src/shared/constans/meta-keys'
-import { REQUEST_TRACER, Tracer, TracerService } from 'src/utils/tracer/tracer.service'
+import { Tracer } from 'src/utils/tracer/tracer.service'
 
 @Injectable()
 export class ResponseFormatterInterceptor implements NestInterceptor {

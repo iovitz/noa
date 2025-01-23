@@ -4,7 +4,7 @@ import { REDIS_CLIENT } from 'src/redis/redis.module'
 import { CookieKeys } from 'src/shared/constans/cookie'
 import { SyncManager } from 'src/utils/sync-manager/sync-manager'
 import { SYNC_MANAGER } from 'src/utils/sync-manager/sync-manager.service'
-import { REQUEST_TRACER, TracerService } from 'src/utils/tracer/tracer.service'
+import { REQUEST_TRACER, Tracer } from 'src/utils/tracer/tracer.service'
 
 @Injectable()
 export class LoginRequiredGuard implements CanActivate {
@@ -12,7 +12,7 @@ export class LoginRequiredGuard implements CanActivate {
   redis: Redis
 
   @Inject(REQUEST_TRACER)
-  tracer: TracerService
+  tracer: Tracer
 
   @Inject(SYNC_MANAGER)
   syncManager: SyncManager

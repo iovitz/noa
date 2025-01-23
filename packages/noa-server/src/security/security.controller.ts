@@ -4,7 +4,7 @@ import { contentType } from 'mime-types'
 import { ClientID, ClientIP } from 'src/aspects/decorator/request'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
 import { EncryptService } from 'src/utils/encrypt/encrypt.service'
-import { REQUEST_TRACER, TracerService } from 'src/utils/tracer/tracer.service'
+import { REQUEST_TRACER, Tracer } from 'src/utils/tracer/tracer.service'
 import { GetVerifyCodeDTO } from './security.dto'
 import { SecurityService } from './security.service'
 
@@ -18,7 +18,7 @@ export class SecurityController {
   encryptService: EncryptService
 
   @Inject(REQUEST_TRACER)
-  tracer: TracerService
+  tracer: Tracer
 
   @ApiOperation({
     summary: '获取图形验证码',

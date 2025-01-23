@@ -6,7 +6,7 @@ import { FILE_PERMISSION_KEY } from 'src/shared/constans/meta-keys'
 import { PermissionTypes } from 'src/shared/constans/permission'
 import { SyncManager } from 'src/utils/sync-manager/sync-manager'
 import { SYNC_MANAGER } from 'src/utils/sync-manager/sync-manager.service'
-import { REQUEST_TRACER, TracerService } from 'src/utils/tracer/tracer.service'
+import { REQUEST_TRACER, Tracer } from 'src/utils/tracer/tracer.service'
 
 export function FileApiPermission(permission: PermissionTypes) {
   return SetMetadata(FILE_PERMISSION_KEY, permission)
@@ -18,7 +18,7 @@ export class FilePermissionGuard implements CanActivate {
   permissionService: PermissionService
 
   @Inject(REQUEST_TRACER)
-  tracer: TracerService
+  tracer: Tracer
 
   @Inject(SYNC_MANAGER)
   syncManager: SyncManager
