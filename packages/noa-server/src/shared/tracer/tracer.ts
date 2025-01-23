@@ -3,12 +3,12 @@ import { homedir } from 'node:os'
 import * as path from 'node:path'
 import * as process from 'node:process'
 import * as chalk from 'chalk'
-import { isEmpty, omit } from 'lodash'
+import { isEmpty, isNil, omit } from 'lodash'
 import * as pkg from 'package.json'
 import { stringify } from 'safe-stable-stringify'
 import { LEVEL, MESSAGE, SPLAT } from 'triple-beam'
 import { createLogger, format, transports } from 'winston'
-import { Format, FormatedContext, LogContext, LogInfo } from './tracer.types'
+import { ErrorContext, Format, FormatedContext, LogContext, LogInfo } from './tracer.types'
 import 'winston-daily-rotate-file'
 
 const ERROR = Symbol('ERROR')
@@ -54,6 +54,7 @@ export function createRootLogger() {
               message,
               pid,
               name,
+              tracerId,
               scope,
               stack,
               payload,
@@ -62,7 +63,7 @@ export function createRootLogger() {
             // 错误日志特别输出
             const restStr = isEmpty(rest) ? '' : stringify(rest)
             const levelChalk = logLevelColors[level as string] ?? chalk.blue
-            return `${levelChalk(level)} ${chalk.gray(timestamp)}${chalk.blue(insertOutput(scope))}${chalk.green(insertOutput(name))}${insertOutput(message)}${insertOutput(payload)}${insertOutput(
+            return `${levelChalk(level)} ${chalk.gray(timestamp)}${chalk.blue(insertOutput(scope))}${chalk.yellow(insertOutput(tracerId))}${chalk.green(insertOutput(name))}${insertOutput(message)}${insertOutput(payload)}${insertOutput(
               stack,
             )}${insertOutput(restStr)}`
           }),
@@ -118,18 +119,31 @@ function formatOutput(info: LogInfo) {
     pid,
     scope,
     stack,
+    tracerId,
     payload,
     ...rest
   } = omit(info, ERROR, SPLAT, LEVEL, MESSAGE)
   // 错误日志特别输出
   const restStr = isEmpty(rest) ? '' : stringify(rest)
-  return `${[timestamp]}${insertOutput(pid)} ${level}${insertOutput(scope)}${insertOutput(name)}${insertOutput(message)}${insertOutput(payload)}${insertOutput(
+  return `${[timestamp]}${insertOutput(pid)} ${level}${insertOutput(scope)}${insertOutput(tracerId)}${insertOutput(name)}${insertOutput(message)}${insertOutput(payload)}${insertOutput(
     stack,
   )}${insertOutput(restStr)}`
 }
 
+const objectToString = (obj: unknown) => {
+  if (isEmpty(obj)) {
+    return JSON.stringify(obj)
+  }
+  return Object.entries(obj).reduce((prev, [key, value]) => {
+    if (typeof value === 'object' && value !== null) {
+      return `${prev}[${key}:${objectToString(value)}]`
+    }
+    return `${prev}[${key}:${value}]`
+  }, '')
+}
+
 export function formatLogContext(context?: LogContext): FormatedContext {
-  if (context === void 0) {
+  if (isNil(context)) {
     return {
       payload: '',
     }
@@ -140,15 +154,23 @@ export function formatLogContext(context?: LogContext): FormatedContext {
       name: context,
     }
   }
-  if (context instanceof Error) {
+
+  // 错误对象处理
+  if (context instanceof Error || context.error instanceof Error) {
+    const errorContext: ErrorContext = context instanceof Error ? { error: context } : context as ErrorContext
+    const { error, ...rest } = errorContext
     return {
-      name: context.name,
-      message: context.message,
+      name: error.name,
+      message: error.message,
       // 尽量吧错误都放在同一行方便日志按行过滤查看
-      stack: context.stack?.split('\n').join('\\n'),
+      stack: error.stack?.split('\n').join('\\n'),
+      ...rest,
     }
   }
+  const { tracerId, ...payload } = context
+
   return {
-    payload: isEmpty(context) ? `${context}` : stringify(context),
+    tracerId,
+    payload: isEmpty(payload) ? void 0 : objectToString(payload),
   }
 }

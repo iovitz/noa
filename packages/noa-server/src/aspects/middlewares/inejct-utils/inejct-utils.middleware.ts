@@ -12,6 +12,7 @@ export class InejctUtilsMiddleware implements NestMiddleware {
     this.useCost(req, res)
     this.useCookie(req, res)
     this.useClientId(req, res)
+    this.useTracerId(req, res)
     // 获取请求耗时（ns）
     next()
   }
@@ -47,6 +48,13 @@ export class InejctUtilsMiddleware implements NestMiddleware {
         httpOnly: true,
       })
     }
+  }
+
+  /**
+   * 使用链路追踪ID
+   */
+  useTracerId(req: Req, res: Res) {
+    req.tracerId = res.tracerId = this.idGenerator()
   }
 
   /**

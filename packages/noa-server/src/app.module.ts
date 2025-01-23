@@ -41,11 +41,11 @@ import { UtilModule } from './utils/util.module'
   providers: [
     {
       provide: APP_INTERCEPTOR,
-      useClass: ResponseFormatterInterceptor,
+      useClass: ContextInterceptor,
     },
     {
       provide: APP_INTERCEPTOR,
-      useClass: ContextInterceptor,
+      useClass: ResponseFormatterInterceptor,
     },
     {
       provide: APP_INTERCEPTOR,

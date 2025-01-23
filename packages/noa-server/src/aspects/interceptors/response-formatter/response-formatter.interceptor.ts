@@ -12,14 +12,13 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { HeaderKeys } from 'src/shared/constans/header'
 import { SKIP_RESPONSE_FORMAT_KEY } from 'src/shared/constans/meta-keys'
-import { REQUEST_TRACER, TracerService } from 'src/utils/tracer/tracer.service'
+import { REQUEST_TRACER, Tracer, TracerService } from 'src/utils/tracer/tracer.service'
 
 @Injectable()
 export class ResponseFormatterInterceptor implements NestInterceptor {
   constructor() {}
 
-  @Inject(REQUEST_TRACER)
-  tracer: TracerService
+  private tracer = new Tracer(ResponseFormatterInterceptor.name)
 
   intercept(ctx: ExecutionContext, next: CallHandler): Observable<any> {
     const handler = ctx.getHandler()
@@ -29,7 +28,9 @@ export class ResponseFormatterInterceptor implements NestInterceptor {
       map((data) => {
         // 跳过format
         if (skipFormat || res.getHeader(HeaderKeys.ContentType)) {
-          this.tracer.log(`Skip Response Format`)
+          this.tracer.log(`Skip Response Format`, {
+            tracerId: res.tracerId,
+          })
           return data
         }
         return {

@@ -6,8 +6,12 @@ import { appLogger, formatLogContext } from '../../shared/tracer/tracer'
 import { LogContext } from '../../shared/tracer/tracer.types'
 import 'winston-daily-rotate-file'
 
-class BaseTracer implements LoggerService {
-  constructor(private logger: Logger) {}
+export class Tracer implements LoggerService {
+  private logger: Logger
+
+  constructor(scope?: string) {
+    this.logger = scope ? appLogger.child({ scope }) : appLogger
+  }
 
   log(message: string, context?: LogContext) {
     this.logger.info(message, formatLogContext(context))
@@ -26,18 +30,14 @@ class BaseTracer implements LoggerService {
   }
 
   child(scope: string) {
-    return new BaseTracer(
-      this.logger.child({
-        scope,
-      }),
-    ) as TracerService
+    return new Tracer(scope) as TracerService
   }
 }
 
 @Injectable()
-export class TracerService extends BaseTracer {
-  constructor(private config: ConfigService) {
-    super(appLogger)
+export class TracerService extends Tracer {
+  constructor() {
+    super()
   }
 }
 
@@ -49,7 +49,7 @@ export const RequestTracerProvider: Provider = {
   inject: [REQUEST, TracerService],
   useFactory: (req: Req, tracer: TracerService) => {
     if (!req.tracer) {
-      req.tracer = tracer.child(req.clientId ?? 'UNKNOWN_CLIENT_ID')
+      req.tracer = tracer.child(req.tracerId ?? 'UNKNOWN_CLIENT_ID')
     }
     return req.tracer
   },
