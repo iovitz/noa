@@ -10,8 +10,7 @@ export class OAuth {
   id: string
 
   @Column({
-    type: 'int',
-    unsigned: true,
+    type: 'varchar',
     comment: '用户ID',
   })
   userId: string

@@ -38,7 +38,6 @@ export class FormPageService {
       await this.formInputComponentRepository.save(
         comps.map((item) => {
           item.pageId = fileId
-          item.id = this.encryptService.genPrimaryKey()
           this.formInputComponentRepository.findBy({
             pageId: template.id,
           })

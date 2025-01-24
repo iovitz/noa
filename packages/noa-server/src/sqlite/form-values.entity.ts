@@ -23,7 +23,6 @@ export class FormValues {
 
   @Column({
     type: 'varchar',
-    length: 50,
     comment: '用户IP',
   })
   ip: string

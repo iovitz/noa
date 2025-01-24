@@ -99,8 +99,10 @@ export class UserService {
     else {
       // TODO：可能和email已经被注册过了，此时会无法注册，需要处理
       const newUserRecord = await this.createNewUserInfo(email, githubUser.name)
+      console.error(newUserRecord)
 
       const newOauthRecord = this.oauthRepository.create({
+        id: this.encryptService.genPrimaryKey(),
         userId: newUserRecord.id,
         platform: 'github',
         platformId: githubUser.id,
