@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { EncryptService } from 'src/services/encrypt/encrypt.service'
 import { PermissionTypes } from 'src/shared/constans/permission'
 import { FilePermission } from 'src/sqlite/file-permission.entity'
-import { EncryptService } from 'src/services/encrypt/encrypt.service'
 import { In, Repository } from 'typeorm'
 
 @Injectable()

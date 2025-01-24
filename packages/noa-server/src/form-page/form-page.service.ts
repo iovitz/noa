@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { EncryptService } from 'src/services/encrypt/encrypt.service'
 import { FormInputComponents } from 'src/sqlite/form-input-components.entity'
 import { FormPages } from 'src/sqlite/form-pages.entity'
-import { EncryptService } from 'src/services/encrypt/encrypt.service'
 import { Repository } from 'typeorm'
 
 @Injectable()
