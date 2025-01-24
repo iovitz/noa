@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev:server": "pnpm --filter noa-server dev",
-    "dev:client": "pnpm --filter noa-client dev",
+    "dev:client": "concurrently \"pnpm --filter noa-client dev\" \"pnpm --filter noa-form-editor dev\"",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint-staged": "pnpm lint:fix",

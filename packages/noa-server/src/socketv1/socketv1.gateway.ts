@@ -22,14 +22,20 @@ implements OnGatewayConnection<Socket>, OnGatewayDisconnect<Socket> {
   async handleConnection(client: Socket) {
     // 鉴权
     this.tracer.log('Socket Connect', { id: client.id })
+    client.onAny(this.handleAnyEvent)
   }
 
   async handleDisconnect(client: Socket) {
     this.tracer.log('Socket disconnect', { id: client.id })
   }
 
+  handleAnyEvent = (event: string, ...args: any[]) => {
+    this.tracer.log(`got event ${event}`, { args })
+  }
+
   @SubscribeMessage('events')
   async handleEvent(client: Socket, data: string) {
+    this.tracer.log('###', data)
     return data
   }
 

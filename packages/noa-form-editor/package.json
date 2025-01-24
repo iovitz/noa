@@ -19,8 +19,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "unbuild -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node_modules/.bin/nodemon",
+    "build": "unbuild -w"
   },
   "peerDependencies": {
     "@ant-design/icons": "5.5.1",
@@ -42,8 +42,10 @@
     "ulid": "2.3.0"
   },
   "devDependencies": {
+    "@types/lodash": "4.17.7",
     "@types/react": "19.0.7",
     "@types/react-dom": "19.0.3",
+    "nodemon": "^3.1.9",
     "unbuild": "^3.3.1"
   }
 }

@@ -36,7 +36,7 @@ export const RequestTracerProvider: Provider = {
   inject: [REQUEST],
   useFactory: (req: Req) => {
     if (!req.tracer) {
-      req.tracer = new Tracer(req.tracerId ? `Tracer${req.tracerId}` : 'UNKNOWN_CLIENT_ID')
+      req.tracer = new Tracer(req.tracerId ? `Tracer-${req.tracerId}` : 'CLIENT_ID')
     }
     return req.tracer
   },

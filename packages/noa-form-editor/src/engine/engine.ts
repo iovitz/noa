@@ -21,8 +21,13 @@ export class Engine {
       url: `/form-page/${this.pageId}`,
       method: 'get',
     })
+    this.sendChangeset()
     this.context.fromJSON(data)
     return data
+  }
+
+  sendChangeset() {
+    this.io.send(this.pageId, { name: 'zhagnsan' })
   }
 
   watch() {

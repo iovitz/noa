@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Param, UseGuards } from '@nestjs/common'
+import { Controller, Get, Inject, Param, Patch, Post, UseGuards } from '@nestjs/common'
 import { ApiOperation } from '@nestjs/swagger'
 import { LoginRequiredGuard } from 'src/aspects/guards/login-required/login-required.guard'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
@@ -12,7 +12,7 @@ export class FormPageController {
   @Inject(FormPageService)
   pageService: FormPageService
 
-  @Get(':fileId')
+  @Get(':fileId/snapshot')
   @ApiOperation({
     summary: '获表表单的快照数据',
   })
