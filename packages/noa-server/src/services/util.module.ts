@@ -7,7 +7,7 @@ import { typeOrmLogger } from 'src/shared/tracer/typeorm.tracer'
 import { EncryptService } from './encrypt/encrypt.service'
 import { HttpService } from './http/http.service'
 import { IoService } from './io/io/io.service'
-import { SyncManagerProvider } from './sync-manager/sync-manager.service'
+import { SyncManagerService } from './sync-manager/sync-manager.service'
 import { RequestTracerProvider } from './tracer/tracer.service'
 
 @Global()
@@ -48,7 +48,7 @@ import { RequestTracerProvider } from './tracer/tracer.service'
     }),
   ],
   // 全局使用的一些Service
-  providers: [EncryptService, RequestTracerProvider, HttpService, IoService, SyncManagerProvider],
-  exports: [EncryptService, RequestTracerProvider, HttpService, IoService, SyncManagerProvider],
+  providers: [EncryptService, RequestTracerProvider, HttpService, IoService, SyncManagerService],
+  exports: [EncryptService, RequestTracerProvider, HttpService, IoService, SyncManagerService],
 })
 export class UtilModule {}

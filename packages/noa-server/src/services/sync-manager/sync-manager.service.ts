@@ -1,17 +1,53 @@
-import { Provider, Scope } from '@nestjs/common'
-import { REQUEST } from '@nestjs/core'
-import { SyncManager } from './sync-manager'
+import { Injectable } from '@nestjs/common'
+import { Tracer } from '../tracer/tracer.service'
 
-export const SYNC_MANAGER = Symbol('SYNC_MANAGER')
+class SyncManager {
+  private tracer = new Tracer(SyncManager.name)
+  private promiseMap = new Map<PromiseKeys, Promise<any>>()
 
-export const SyncManagerProvider: Provider = {
-  provide: SYNC_MANAGER,
-  scope: Scope.REQUEST, // 确保每个请求都会生成一个新的实例
-  inject: [REQUEST],
-  useFactory: (req: Req) => {
-    if (!req.syncManager) {
-      req.syncManager = new SyncManager()
+  add<T = unknown>(key: PromiseKeys, promise: Promise<T>) {
+    if (this.get(key)) {
+      this.tracer.warn('Promise Already Exists', key)
     }
-    return req.tracer
-  },
+    const newPromise = promise.then((res) => {
+      this.tracer.log('Promise Resolved', key)
+      return res
+    }).catch((err) => {
+      this.tracer.error('Promise Rejected', {
+        key,
+        error: err,
+      })
+      throw err
+    })
+    this.promiseMap.set(key, newPromise)
+    return newPromise
+  }
+
+  get(key: PromiseKeys) {
+    return this.promiseMap.get(key)
+  }
 }
+
+@Injectable()
+export class SyncManagerService {
+  private requestSyncMap = new WeakMap<Req, SyncManager>()
+  private tracer = new Tracer(SyncManagerService.name)
+
+  get(req: Req, key: PromiseKeys) {
+    const requestMap = this.requestSyncMap.get(req) || new SyncManager()
+    this.requestSyncMap.set(req, requestMap)
+    const promise = requestMap.get(key)
+    if (!promise) {
+      this.tracer.warn('Promise Not Fount', key)
+    }
+    return promise
+  }
+
+  add<T>(req: Req, key: PromiseKeys, promise: Promise<T>): Promise<T> {
+    const requestMap = this.requestSyncMap.get(req) || new SyncManager()
+    this.requestSyncMap.set(req, requestMap)
+    return requestMap.add(key, promise)
+  }
+}
+
+type PromiseKeys = 'GET_USER_INFO' | 'GET_FILE' | 'GET_PAGE_PERMISSION'

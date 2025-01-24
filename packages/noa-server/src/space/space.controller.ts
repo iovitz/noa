@@ -5,8 +5,7 @@ import { LoginRequiredGuard } from 'src/aspects/guards/login-required/login-requ
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
 import { FileApiPermission, FilePermissionGuard } from 'src/permission/guards/file-permission/file-permission.guard'
 import { PermissionService } from 'src/permission/permission.service'
-import { SyncManager } from 'src/services/sync-manager/sync-manager'
-import { SYNC_MANAGER } from 'src/services/sync-manager/sync-manager.service'
+import { SyncManagerService } from 'src/services/sync-manager/sync-manager.service'
 import { PermissionTypes } from 'src/shared/constans/permission'
 import { FileIDQueryDTO } from 'src/shared/dto/dto'
 import { FileExistsGuard } from './guards/file-exists/file-exists.guard'
@@ -23,8 +22,8 @@ export class SpaceController {
   @Inject(PermissionService)
   permissionService: PermissionService
 
-  @Inject(SYNC_MANAGER)
-  syncManager: SyncManager
+  @Inject(SyncManagerService)
+  syncManager: SyncManagerService
 
   @Get('file-list')
   async getSpaceFiles(@Query(VerifyPipe) query: GetFilesDTO, @RequestUser() userId: string) {
@@ -77,7 +76,7 @@ export class SpaceController {
   @FileApiPermission(PermissionTypes.Manageable)
   @UseGuards(FileExistsGuard, FilePermissionGuard)
   async deleteFile(@Req() req: Req) {
-    const file = await req.syncManager.get('GET_FILE')
+    const file = await this.syncManager.get(req, 'GET_FILE')
 
     file.deleted = true
     await this.spaceService.spaceFileRepository.save(file)

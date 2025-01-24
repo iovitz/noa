@@ -2,8 +2,7 @@ import { CanActivate, ExecutionContext, Inject, Injectable, SetMetadata } from '
 import { Reflector } from '@nestjs/core'
 import { get } from 'lodash'
 import { PermissionService } from 'src/permission/permission.service'
-import { SyncManager } from 'src/services/sync-manager/sync-manager'
-import { SYNC_MANAGER } from 'src/services/sync-manager/sync-manager.service'
+import { SyncManagerService } from 'src/services/sync-manager/sync-manager.service'
 import { REQUEST_TRACER, Tracer } from 'src/services/tracer/tracer.service'
 import { FILE_PERMISSION_KEY } from 'src/shared/constans/meta-keys'
 import { PermissionTypes } from 'src/shared/constans/permission'
@@ -20,8 +19,8 @@ export class FilePermissionGuard implements CanActivate {
   @Inject(REQUEST_TRACER)
   tracer: Tracer
 
-  @Inject(SYNC_MANAGER)
-  syncManager: SyncManager
+  @Inject(SyncManagerService)
+  syncManager: SyncManagerService
 
   constructor(private reflector: Reflector) {}
 
@@ -36,7 +35,7 @@ export class FilePermissionGuard implements CanActivate {
     if (!apiPermission) {
       throw new Error('`PagePermissionGuard` must use `FileApiPermission` to set permissions')
     }
-    const permission = await this.syncManager.add('GET_PAGE_PERMISSION', this.permissionService.getPagePermission(req.userId, fileId))
+    const permission = await this.syncManager.add(req, 'GET_PAGE_PERMISSION', this.permissionService.getPagePermission(req.userId, fileId))
 
     // 无权限
     if (!permission.length || !permission.some(p => p >= Number(apiPermission))) {

@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-import { SyncManager } from './services/sync-manager/sync-manager'
 import { Tracer } from './services/tracer/tracer.service'
 
 declare global {
@@ -8,7 +7,6 @@ declare global {
     stime: bigint
     clientId: string
     tracerId: string
-    syncManager: SyncManager
     tracer: Tracer
     getCostNs: () => string
     getCookie: (key: CookieKeys) => string | undefined
