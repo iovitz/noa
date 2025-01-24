@@ -1,10 +1,10 @@
 import { CanActivate, ExecutionContext, Inject, Injectable } from '@nestjs/common'
 import Redis from 'ioredis'
 import { REDIS_CLIENT } from 'src/redis/redis.module'
+import { SyncManager } from 'src/services/sync-manager/sync-manager'
+import { SYNC_MANAGER } from 'src/services/sync-manager/sync-manager.service'
+import { REQUEST_TRACER, Tracer } from 'src/services/tracer/tracer.service'
 import { CookieKeys } from 'src/shared/constans/cookie'
-import { SyncManager } from 'src/utils/sync-manager/sync-manager'
-import { SYNC_MANAGER } from 'src/utils/sync-manager/sync-manager.service'
-import { REQUEST_TRACER, Tracer } from 'src/utils/tracer/tracer.service'
 
 @Injectable()
 export class LoginRequiredGuard implements CanActivate {

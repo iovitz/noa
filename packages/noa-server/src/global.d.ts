@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { SyncManager } from './utils/sync-manager/sync-manager'
-import { Tracer } from './utils/tracer/tracer.service'
+import { SyncManager } from './services/sync-manager/sync-manager'
+import { Tracer } from './services/tracer/tracer.service'
 
 declare global {
   interface MiddlewareInjected {

@@ -7,7 +7,7 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets'
 import { Server, Socket } from 'socket.io'
-import { Tracer } from 'src/utils/tracer/tracer.service'
+import { Tracer } from 'src/services/tracer/tracer.service'
 
 @WebSocketGateway({
   path: '/api-noa/ws',

@@ -22,7 +22,6 @@ export class HttpFilter implements ExceptionFilter {
       code: status * 100,
       message: exception.message,
     }
-    console.error(exception)
 
     res.tracer.log(`-ERR[${status}] ${exception.message}`, {
       status,

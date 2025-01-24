@@ -5,8 +5,8 @@ import {
   HttpStatus,
 } from '@nestjs/common'
 import { contentType } from 'mime-types'
+import { Tracer } from 'src/services/tracer/tracer.service'
 import { HeaderKeys } from 'src/shared/constans/header'
-import { Tracer } from 'src/utils/tracer/tracer.service'
 import * as status from 'statuses'
 
 @Catch(Error)
@@ -19,6 +19,7 @@ export class DefaultFilter implements ExceptionFilter {
 
     this.tracer.error('-ERR 500', {
       error: exception,
+      tracerId: res.tracerId,
     })
 
     const errorResponse = {

@@ -2,11 +2,11 @@ import { CanActivate, ExecutionContext, Inject, Injectable, SetMetadata } from '
 import { Reflector } from '@nestjs/core'
 import { get } from 'lodash'
 import { PermissionService } from 'src/permission/permission.service'
+import { SyncManager } from 'src/services/sync-manager/sync-manager'
+import { SYNC_MANAGER } from 'src/services/sync-manager/sync-manager.service'
+import { REQUEST_TRACER, Tracer } from 'src/services/tracer/tracer.service'
 import { FILE_PERMISSION_KEY } from 'src/shared/constans/meta-keys'
 import { PermissionTypes } from 'src/shared/constans/permission'
-import { SyncManager } from 'src/utils/sync-manager/sync-manager'
-import { SYNC_MANAGER } from 'src/utils/sync-manager/sync-manager.service'
-import { REQUEST_TRACER, Tracer } from 'src/utils/tracer/tracer.service'
 
 export function FileApiPermission(permission: PermissionTypes) {
   return SetMetadata(FILE_PERMISSION_KEY, permission)

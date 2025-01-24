@@ -10,7 +10,7 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { HeaderKeys } from 'src/shared/constans/header'
 import { SKIP_RESPONSE_FORMAT_KEY } from 'src/shared/constans/meta-keys'
-import { Tracer } from 'src/utils/tracer/tracer.service'
+import { Tracer } from 'src/services/tracer/tracer.service'
 
 @Injectable()
 export class ResponseFormatterInterceptor implements NestInterceptor {

@@ -14,12 +14,12 @@ import { HomeModule } from './home/home.module'
 import { PermissionModule } from './permission/permission.module'
 import { RedisModule } from './redis/redis.module'
 import { SecurityModule } from './security/security.module'
+import { IoService } from './services/io/io/io.service'
+import { UtilModule } from './services/util.module'
 import { SocketV1Module } from './socketv1/socketv1.module'
 import { SpaceModule } from './space/space.module'
 import { StatusModule } from './status/status.module'
 import { UserModule } from './user/user.module'
-import { IoService } from './utils/io/io/io.service'
-import { UtilModule } from './utils/util.module'
 
 @Module({
   imports: [

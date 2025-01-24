@@ -2,7 +2,7 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { FormPageService } from 'src/form-page/form-page.service'
 import { SpaceFile } from 'src/sqlite/space-files.entity'
-import { EncryptService } from 'src/utils/encrypt/encrypt.service'
+import { EncryptService } from 'src/services/encrypt/encrypt.service'
 import { Repository } from 'typeorm'
 
 @Injectable()
