@@ -7,7 +7,7 @@ export type LogContext =
     error?: Error
     tracerId?: string
     [key: string]: unknown
-  }
+  } | unknown []
 
 export type FormatedContext = {
   level: string

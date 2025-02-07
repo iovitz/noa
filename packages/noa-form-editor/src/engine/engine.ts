@@ -18,11 +18,11 @@ export class Engine {
 
   async loadPage() {
     const { data } = await this.io.request({
-      url: `/form-page/${this.pageId}`,
+      url: `/form-page/${this.pageId}/snapshot`,
       method: 'get',
     })
     this.sendChangeset()
-    this.context.fromJSON(data)
+    // this.context.fromJSON(data)
     return data
   }
 

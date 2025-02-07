@@ -42,7 +42,6 @@ export class FormEditorStore {
   }
 
   addWidget(type: WidgetTypes) {
-    console.error('add widget: ', type)
     this.formPageController?.do({
       command: CommandName.WidgetAdd,
       id: this.currentFileId,

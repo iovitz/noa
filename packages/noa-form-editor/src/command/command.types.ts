@@ -15,6 +15,8 @@ export interface ExecuteCommandFailResult {
   result: CommandExecuteResult.Fail
 }
 
+export type ExecuteResult = ExecuteCommandSuccessResult | ExecuteCommandFailResult
+
 export interface BaseCommand {
   command: CommandName
   pageId: string

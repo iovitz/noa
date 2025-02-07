@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { PermissionModule } from 'src/permission/permission.module'
-import { FormInputComponents } from 'src/sqlite/form-input-components.entity'
 import { FormPages } from 'src/sqlite/form-pages.entity'
+import { FormWidgets } from 'src/sqlite/form-widget.entity'
 import { FormPageController } from './form-page.controller'
 import { FormPageService } from './form-page.service'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([FormPages, FormInputComponents]), PermissionModule],
+  imports: [TypeOrmModule.forFeature([FormPages, FormWidgets]), PermissionModule],
   controllers: [FormPageController],
   providers: [FormPageService],
   exports: [FormPageService],

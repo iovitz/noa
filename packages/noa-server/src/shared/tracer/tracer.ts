@@ -131,7 +131,7 @@ function formatOutput(info: LogInfo) {
 }
 
 const objectToString = (obj: unknown) => {
-  if (isEmpty(obj)) {
+  if (isEmpty(obj) || typeof obj !== 'object') {
     return JSON.stringify(obj)
   }
   return Object.entries(obj).reduce((prev, [key, value]) => {
@@ -152,6 +152,11 @@ export function formatLogContext(context?: LogContext): FormatedContext {
   if (typeof context === 'string') {
     return {
       name: context,
+    }
+  }
+  if (Array.isArray(context)) {
+    return {
+      payload: context.toString(),
     }
   }
 

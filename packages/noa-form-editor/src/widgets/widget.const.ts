@@ -18,6 +18,7 @@ export enum WidgetTypes {
   File = 'File', // 文件
 
   // 内容
+  Title = 'Title', // 文本
   Text = 'Text', // 文本
   Image = 'Image', // 图片
   Video = 'Video', // 视频

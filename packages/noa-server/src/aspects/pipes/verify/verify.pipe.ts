@@ -6,9 +6,11 @@ import {
 } from '@nestjs/common'
 import { plainToClass } from 'class-transformer'
 import { validate, ValidationError } from 'class-validator'
+import { Tracer } from 'src/services/tracer/tracer.service'
 
 @Injectable()
 export class VerifyPipe implements PipeTransform {
+  private tracer = new Tracer(VerifyPipe.name)
   async transform(value: any, metadata: ArgumentMetadata) {
     const { metatype } = metadata
     const object = plainToClass(metatype, value)
@@ -18,6 +20,7 @@ export class VerifyPipe implements PipeTransform {
     })
     if (errors.length > 0) {
       const errorMessages = this.buildErrorMessage(errors)
+      this.tracer.debug('Params Error', errors)
       throw new UnprocessableEntityException(errorMessages)
     }
 

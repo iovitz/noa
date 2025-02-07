@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity('form-input-components')
-export class FormInputComponents {
+@Entity('form-input-widget')
+export class FormWidgets {
   @PrimaryColumn({
     type: 'varchar',
     length: 26,
@@ -14,25 +14,33 @@ export class FormInputComponents {
     length: 26,
     unsigned: true,
   })
-  pageId: string
+  fileId: string
 
   @Column({
     type: 'varchar',
     length: 50,
     comment: '字段名称',
+    nullable: true,
   })
   name: string
 
   @Column({
     type: 'varchar',
+    length: 50,
+    comment: '字段类型',
+  })
+  type: string
+
+  @Column({
+    type: 'varchar',
     length: 1000,
     comment: '字段描述',
+    nullable: true,
   })
   desc: string
 
   @Column({
     type: 'float',
-    default: 100000,
     comment: '组件在页面中的顺序',
   })
   rank: number

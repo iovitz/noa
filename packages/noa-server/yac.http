@@ -61,9 +61,14 @@ GET {{prefix}}/page/01JGDV1F0CD94RKGJQS3C3CB9C
 content-type: application/json
 
 ### deletePage
-DELETE {{prefix}}/space/01JGDV1F0CD94RKGJQS3C3CB9C
+DELETE {{prefix}}/space/01JGDV1F0CD94RKGJQS3C3CB93
 content-type: application/json
 
-### getWidgetTypes
-GET {{prefix}}/form-page/widget
+### createFormWidget
+POST {{prefix}}/form-page/01JJBSHDPC12E2P9RFGJFJ98PS/widget
 content-type: application/json
+
+{
+  "widgetId": "01JDPPNHG28YMVDDNF5PK0MQJA",
+  "type": "Text"
+}

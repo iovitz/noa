@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { EncryptService } from 'src/services/encrypt/encrypt.service'
-import { FormInputComponents } from 'src/sqlite/form-input-components.entity'
 import { FormPages } from 'src/sqlite/form-pages.entity'
+import { FormWidgets } from 'src/sqlite/form-widget.entity'
 import { Repository } from 'typeorm'
 
 @Injectable()
@@ -13,13 +13,30 @@ export class FormPageService {
   @InjectRepository(FormPages)
   formPageRepository: Repository<FormPages>
 
-  @InjectRepository(FormInputComponents)
-  formInputComponentRepository: Repository<FormInputComponents>
+  @InjectRepository(FormWidgets)
+  formWidgets: Repository<FormWidgets>
 
-  getComponents(pageId: string) {
-    return this.formInputComponentRepository.findBy({
-      pageId,
+  getWidget(id: string, fileId?: string) {
+    return this.formWidgets.findOneBy({
+      id,
+      fileId,
     })
+  }
+
+  getPage(fileId: string) {
+    return this.formPageRepository.findBy({
+      id: fileId,
+    })
+  }
+
+  createWidget(fileId: string, widgetId: string, type: string, props: string) {
+    const widget = this.formWidgets.create({
+      id: widgetId,
+      fileId,
+      type,
+      props,
+    })
+    return this.formWidgets.save(widget)
   }
 
   public async createFormPage(ownerId: string, fileId: string, templateId: string) {
@@ -33,13 +50,13 @@ export class FormPageService {
 
     if (template) {
       // 通过模板创建页面
-      const comps = await this.getComponents(template.id)
+      const comps = await this.formWidgets.findBy({ id: template.id })
       // 更改ID
-      await this.formInputComponentRepository.save(
+      await this.formWidgets.save(
         comps.map((item) => {
-          item.pageId = fileId
-          this.formInputComponentRepository.findBy({
-            pageId: template.id,
+          item.fileId = fileId
+          this.formWidgets.findBy({
+            fileId: template.id,
           })
           return item
         }),

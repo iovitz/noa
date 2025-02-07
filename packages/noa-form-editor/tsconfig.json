@@ -32,7 +32,8 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
-    "src/**/*.d.ts"
+    "src/**/*.d.ts",
+    "build.config.ts"
   ],
   "exclude": [
     "node_modules",
