@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Inject, Param, Post, UnprocessableEntityException, UseGuards } from '@nestjs/common'
+import { Body, Controller, Get, Inject, Param, Post, UnprocessableEntityException, UseGuards } from '@nestjs/common'
 import { ApiOperation } from '@nestjs/swagger'
 import { LoginRequiredGuard } from 'src/aspects/guards/login-required/login-required.guard'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'

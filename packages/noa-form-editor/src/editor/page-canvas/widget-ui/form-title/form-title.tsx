@@ -1,4 +1,4 @@
-import { Image, Typography } from 'antd'
+import { Typography } from 'antd'
 import React, { PropsWithChildren } from 'react'
 
 const { Title } = Typography
