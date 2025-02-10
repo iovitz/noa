@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import { InjectRepository } from '@nestjs/typeorm'
 import { EncryptService } from 'src/services/encrypt/encrypt.service'
 import { FormPages } from 'src/sqlite/form-pages.entity'
@@ -14,10 +15,13 @@ export class FormPageService {
   formPageRepository: Repository<FormPages>
 
   @InjectRepository(FormWidgets)
-  formWidgets: Repository<FormWidgets>
+  formWidgetsRepository: Repository<FormWidgets>
+
+  @Inject(ConfigService)
+  config: ConfigService
 
   getWidget(id: string, fileId?: string) {
-    return this.formWidgets.findOneBy({
+    return this.formWidgetsRepository.findOneBy({
       id,
       fileId,
     })
@@ -30,13 +34,13 @@ export class FormPageService {
   }
 
   createWidget(fileId: string, widgetId: string, type: string, props: string) {
-    const widget = this.formWidgets.create({
+    const widget = this.formWidgetsRepository.create({
       id: widgetId,
       fileId,
       type,
       props,
     })
-    return this.formWidgets.save(widget)
+    return this.formWidgetsRepository.save(widget)
   }
 
   public async createFormPage(ownerId: string, fileId: string, templateId: string) {
@@ -50,12 +54,12 @@ export class FormPageService {
 
     if (template) {
       // 通过模板创建页面
-      const comps = await this.formWidgets.findBy({ id: template.id })
+      const comps = await this.formWidgetsRepository.findBy({ id: template.id })
       // 更改ID
-      await this.formWidgets.save(
+      await this.formWidgetsRepository.save(
         comps.map((item) => {
           item.fileId = fileId
-          this.formWidgets.findBy({
+          this.formWidgetsRepository.findBy({
             fileId: template.id,
           })
           return item
@@ -68,5 +72,17 @@ export class FormPageService {
       ownerId,
     })
     return this.formPageRepository.save(newFormPage)
+  }
+
+  async isWidgetNumberWillOversize(fileId: string) {
+    const maxWidgetNumber = Number(this.config.get('MAX_WIDGET_NUMBER') ?? 0)
+    const existsWidgetsNumber = await this.formWidgetsRepository.countBy({
+      fileId,
+      deleted: false,
+    })
+    if (existsWidgetsNumber + 1 > maxWidgetNumber) {
+      return false
+    }
+    return true
   }
 }

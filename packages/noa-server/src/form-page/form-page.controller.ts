@@ -1,14 +1,18 @@
-import { Body, Controller, Get, Inject, Param, Post, UnprocessableEntityException, UseGuards } from '@nestjs/common'
+import { Body, Controller, Get, Inject, Param, Patch, Post, UnprocessableEntityException, UseGuards } from '@nestjs/common'
 import { ApiOperation } from '@nestjs/swagger'
 import { LoginRequiredGuard } from 'src/aspects/guards/login-required/login-required.guard'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
 import { FileApiPermission, FilePermissionGuard } from 'src/permission/guards/file-permission/file-permission.guard'
+import { REQUEST_TRACER, Tracer } from 'src/services/tracer/tracer.service'
 import { PermissionTypes } from 'src/shared/constans/permission'
-import { CreateWidgetDTO, FormPageQueryDTO, GetWidgetInfoDTO } from './form-page.dto'
+import { CreateWidgetDTO, FormFileIdParamsDTO, FormWidgetParamsDTO, UpdateWidgetPropertyDTO } from './form-page.dto'
 import { FormPageService } from './form-page.service'
 
 @Controller('api-noa/form-page')
 export class FormPageController {
+  @Inject(REQUEST_TRACER)
+  tracer: Tracer
+
   @Inject(FormPageService)
   formPageService: FormPageService
 
@@ -18,34 +22,59 @@ export class FormPageController {
   })
   @FileApiPermission(PermissionTypes.Readable)
   @UseGuards(LoginRequiredGuard, FilePermissionGuard)
-  async getFormPage(@Param(VerifyPipe) param: FormPageQueryDTO) {
-    const page = await this.formPageService.formPageRepository.findOneBy({ id: param.fileId })
+  async getFormPage(@Param(VerifyPipe) params: FormFileIdParamsDTO) {
+    const page = await this.formPageService.formPageRepository.findOneBy({ id: params.fileId })
     return page
   }
 
-  @Get(':fileId/widget/:recordId')
+  @Get(':fileId/widget/:widgetId')
   @ApiOperation({
     summary: '获取Widget信息',
   })
   @FileApiPermission(PermissionTypes.Readable)
   @UseGuards(LoginRequiredGuard, FilePermissionGuard)
-  async getWidget(@Param(VerifyPipe) param: GetWidgetInfoDTO) {
-    const page = await this.formPageService.formPageRepository.findOneBy({ id: param.type })
-    return page
+  async getWidget(@Param(VerifyPipe) params: FormWidgetParamsDTO) {
+    const widget = await this.formPageService.formPageRepository.findOneBy({ id: params.widgetId })
+    return widget
   }
 
-  @Post(':fileId/widget')
+  @Patch(':fileId/widget/:widgetId')
+  @ApiOperation({
+    summary: '更新Widget信息',
+  })
+  @FileApiPermission(PermissionTypes.Readable)
+  @UseGuards(LoginRequiredGuard, FilePermissionGuard)
+  async updateWidget(@Param(VerifyPipe) params: FormWidgetParamsDTO, @Body(VerifyPipe) body: UpdateWidgetPropertyDTO) {
+    const widget = await this.formPageService.formWidgetsRepository.findOneBy({ id: params.widgetId, fileId: params.fileId })
+
+    // 传入了Props才变更数据库
+    if (body.props) {
+      try {
+        // 尝试序列化props，避免数据错误
+        JSON.stringify(body.props)
+        widget.props = body.props
+      }
+      catch (err) {
+        this.tracer.error('序列化数据异常', err)
+        throw new UnprocessableEntityException('组件属性数据有误')
+      }
+    }
+    await this.formPageService.formWidgetsRepository.save(widget)
+    return widget
+  }
+
+  @Post(':fileId/widget/:widgetId')
   @ApiOperation({
     summary: '创建Widget',
   })
   @FileApiPermission(PermissionTypes.Editable)
   @UseGuards(LoginRequiredGuard, FilePermissionGuard)
-  async createWidget(@Param(VerifyPipe) param: FormPageQueryDTO, @Body(VerifyPipe) body: CreateWidgetDTO) {
-    const existsWidget = await this.formPageService.getWidget(body.widgetId, param.fileId)
+  async createWidget(@Param(VerifyPipe) params: FormFileIdParamsDTO, @Body(VerifyPipe) body: CreateWidgetDTO) {
+    const existsWidget = await this.formPageService.getWidget(body.widgetId, params.fileId)
     if (existsWidget) {
       throw new UnprocessableEntityException('Widget is already exists!')
     }
-    const widget = await this.formPageService.createWidget(param.fileId, body.widgetId, body.type, JSON.stringify(body.props ?? {}))
+    const widget = await this.formPageService.createWidget(params.fileId, body.widgetId, body.type, JSON.stringify(body.props ?? {}))
     return widget
   }
 }

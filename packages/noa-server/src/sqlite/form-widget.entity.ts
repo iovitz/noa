@@ -4,7 +4,7 @@ import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } fro
 export class FormWidgets {
   @PrimaryColumn({
     type: 'varchar',
-    length: 26,
+    length: 10,
     comment: 'ulid主键',
   })
   id: string
@@ -50,6 +50,13 @@ export class FormWidgets {
     comment: '组件属性',
   })
   props: string
+
+  @Column({
+    type: 'boolean',
+    comment: '组件是否被删除',
+    default: false,
+  })
+  deleted: boolean
 
   @CreateDateColumn({
     comment: '修改时间',
