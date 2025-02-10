@@ -1,7 +1,8 @@
-import { Body, Controller, Inject, Post, Response, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common'
+import { Body, Controller, Inject, Post, Request, Response, UnauthorizedException, UnprocessableEntityException, UseGuards } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { InjectRepository } from '@nestjs/typeorm'
 import { ClientIP, Cookie } from 'src/aspects/decorator/request'
+import { LoginRequiredGuard } from 'src/aspects/guards/login-required/login-required.guard'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
 import { SecurityService } from 'src/security/security.service'
 import { EncryptService } from 'src/services/encrypt/encrypt.service'
@@ -66,6 +67,25 @@ export class UserController {
       nickname: existsUser.nickname,
       session,
     }
+  }
+
+  @Post('/logout')
+  @ApiOperation({
+    summary: '登出',
+  })
+  @ApiResponse({
+    status: 200,
+    description: '是否登出成功',
+    type: Boolean,
+  })
+  @UseGuards(LoginRequiredGuard)
+  async logout(@Cookie(CookieKeys.Session) session: string, @Response({ passthrough: true }) res: Res) {
+    // 删除Session
+    res.cookie(CookieKeys.Session, '', { expires: new Date(0) })
+    this.userService.destroyUserSession(session)
+
+    // 返回401，401进行处理
+    throw new UnauthorizedException('退出登录成功')
   }
 
   @Post('/register')

@@ -59,6 +59,11 @@ export class UserService {
     return session
   }
 
+  destroyUserSession(session: string) {
+    this.redis.del(`session-${session}`)
+    return true
+  }
+
   createUser(userData: DeepPartial<Users>) {
     const user = this.userRepository.create({
       ...userData,
