@@ -55,7 +55,7 @@ export class UpdateWidgetPropertyDTO {
   @IsString()
   @ApiProperty({
     minLength: 0,
-    maxLength: 50,
+    maxLength: 5000,
     example: '{}',
     description: '组件属性JSON字符串',
   })
