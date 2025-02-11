@@ -10,6 +10,7 @@ export default antfu({
   rules: {
     'react-hooks/exhaustive-deps': 'off',
     'react/no-useless-fragment': 0,
+    'no-case-declarations': 0,
   },
   typescript: {
     overrides: {

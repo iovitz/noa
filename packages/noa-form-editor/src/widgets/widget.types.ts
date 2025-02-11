@@ -1,30 +1,33 @@
 import { WidgetTypes } from './widget.const'
 
-export interface WidgetCommon<PropertyType = unknown> {
+export interface WidgetProps<PropertyType extends WidgetCommonProps> {
   id: string
-  name: string
-  description: string
-  rank: number
-  hidden: boolean
   type: WidgetTypes
   property: PropertyType
 }
 
-export interface TextProperty {
+export interface WidgetCommonProps {
+  name?: string
+  description?: string
+  rank: number
+  hidden: boolean
+}
+
+export interface TextProperty extends WidgetCommonProps {
   maxLength: number
   minLength: 0
   question: string
   placeholder?: string
 }
 
-export interface SingleSelectProperty {
+export interface SingleSelectProperty extends WidgetCommonProps {
   options: {
     label: string
     value: string
   }[]
 }
 
-export interface MultiSelectProperty {
+export interface MultiSelectProperty extends WidgetCommonProps {
   options: {
     label: string
     value: string

@@ -47,7 +47,6 @@ export class FormWidgets {
 
   @Column({
     type: 'json',
-    length: 5000,
     comment: '组件属性',
   })
   props: string

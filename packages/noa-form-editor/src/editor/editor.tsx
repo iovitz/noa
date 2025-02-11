@@ -1,5 +1,5 @@
 import { IOClient } from '@/io'
-import { useFormEditorStore } from '@/store/editor.store'
+import { useFormEditorStore } from '@/store/editor/editor.store'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useRef } from 'react'
 import PageCanvas from './page-canvas/page-canvas'
@@ -17,6 +17,7 @@ export const FormEditor = observer((props: FormEditorProps) => {
   const editorStore = useFormEditorStore()
 
   useEffect(() => {
+    editorStore.setIO(props.io)
     editorStore.loadPage(props.fileId, props.io)
     return () => {
       editorStore.destroy()

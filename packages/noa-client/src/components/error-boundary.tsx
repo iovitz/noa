@@ -3,7 +3,7 @@ import { ioClient } from '@/shared/io/io'
 import { message } from 'antd'
 import { AxiosError } from 'axios'
 import { get } from 'lodash'
-import React, { useEffect, useState } from 'react'
+import React, { JSX, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 interface ErrorHandlerProp {
@@ -20,10 +20,15 @@ export function ErrorBoundary({ children }: ErrorHandlerProp) {
   const requestErrorHandler = (err: AxiosError) => {
     const code = get(err, 'response.data.code')
     const message = get(err, 'response.data.message')
+    logger.error(code, message, err)
     if (err.status === 401) {
       navigate('/login')
+      messageApi.error({
+        content: '请重新登录',
+        duration: 1,
+      })
+      return
     }
-    logger.error(code, message, err)
     messageApi.error({
       content: `请求失败[${code}]: ${message}`,
       duration: 1,

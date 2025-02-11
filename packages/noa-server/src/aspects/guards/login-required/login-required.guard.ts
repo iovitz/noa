@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Inject, Injectable } from '@nestjs/common'
+import { CanActivate, ExecutionContext, Inject, Injectable, UnauthorizedException } from '@nestjs/common'
 import Redis from 'ioredis'
 import { REDIS_CLIENT } from 'src/redis/redis.module'
 import { SyncManagerService } from 'src/services/sync-manager/sync-manager.service'
@@ -36,6 +36,6 @@ export class LoginRequiredGuard implements CanActivate {
       return true
     }
     res.cookie(CookieKeys.Session, '', { expires: new Date(0) })
-    return false
+    throw new UnauthorizedException('请重新登录')
   }
 }

@@ -1,4 +1,4 @@
-import { useFormEditorStore } from '@/store/editor.store'
+import { useFormEditorStore } from '@/store/editor/editor.store'
 import { WidgetTypes } from '@/widgets'
 import { Button, Col, Row, Space, Typography } from 'antd'
 import React from 'react'

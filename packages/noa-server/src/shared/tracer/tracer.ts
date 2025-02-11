@@ -65,7 +65,7 @@ export function createRootLogger() {
             const levelChalk = logLevelColors[level as string] ?? chalk.blue
             return `${levelChalk(level)} ${chalk.gray(timestamp)}${chalk.blue(insertOutput(scope))}${chalk.yellow(insertOutput(tracerId))}${chalk.green(insertOutput(name))}${insertOutput(message)}${insertOutput(payload)}${insertOutput(
               stack,
-            )}${insertOutput(restStr)}`
+            )}${insertOutput(restStr)}`.replace(/[\r\n]+/g, '↵')
           }),
         ),
       }),
@@ -127,7 +127,7 @@ function formatOutput(info: LogInfo) {
   const restStr = isEmpty(rest) ? '' : stringify(rest)
   return `${[timestamp]}${insertOutput(pid)} ${level}${insertOutput(scope)}${insertOutput(tracerId)}${insertOutput(name)}${insertOutput(message)}${insertOutput(payload)}${insertOutput(
     stack,
-  )}${insertOutput(restStr)}`
+  )}${insertOutput(restStr)}`.replace(/[\r\n]+/g, '↵')
 }
 
 const objectToString = (obj: unknown) => {
@@ -156,7 +156,7 @@ export function formatLogContext(context?: LogContext): FormatedContext {
   }
   if (Array.isArray(context)) {
     return {
-      payload: context.toString(),
+      payload: `[${context.map(c => c?.toString()).join(',')}]`,
     }
   }
 
@@ -168,7 +168,7 @@ export function formatLogContext(context?: LogContext): FormatedContext {
       name: error.name,
       message: error.message,
       // 尽量吧错误都放在同一行方便日志按行过滤查看
-      stack: error.stack?.split('\n').join('\\n'),
+      stack: error.stack,
       ...rest,
     }
   }

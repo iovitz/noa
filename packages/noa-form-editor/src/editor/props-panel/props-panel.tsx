@@ -1,4 +1,4 @@
-import { useFormEditorStore } from '@/store/editor.store'
+import { useFormEditorStore } from '@/store/editor/editor.store'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 

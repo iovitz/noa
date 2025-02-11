@@ -1,12 +1,12 @@
 @prefix = {{host}}/api-noa
 
 ### register
-POST {{prefix}}/user/create
+POST {{prefix}}/user/register
 content-type: application/json
 
 {
-    "email": "{{$random.alphabetic(10)}}",
-    "password": {{$randomInt 5 150}},
+    "email": "{{$random.alphabetic(10)}}@noa.com",
+    "password": 123123,
     "code": "0000"
 }
 
@@ -16,7 +16,7 @@ content-type: application/json
 
 {
     "name": "{{$random.alphabetic(10)}}",
-    "password": {{$randomInt 5 150}},
+    "password": "123123",
     "code": "0000"
 }
 

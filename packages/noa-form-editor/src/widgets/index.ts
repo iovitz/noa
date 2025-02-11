@@ -1,6 +1,6 @@
 import { ulid } from 'ulid'
 import { WidgetTypes } from './widget.const'
-import { MultiSelectProperty, SingleSelectProperty, TextProperty, WidgetCommon } from './widget.types'
+import { MultiSelectProperty, SingleSelectProperty, TextProperty, WidgetProps } from './widget.types'
 
 export * from './widget.const'
 export * from './widget.types'
@@ -11,17 +11,13 @@ export interface WidgetPropertyTypeMap {
   [WidgetTypes.MultiSelect]: MultiSelectProperty
 }
 
-export type WidgetPropertyUnionType = WidgetPropertyTypeMap[keyof WidgetPropertyTypeMap]
-export type WidgetUnionType = WidgetCommon<WidgetPropertyUnionType>
+export type WidgetProperty = WidgetPropertyTypeMap[keyof WidgetPropertyTypeMap]
+export type Widget = WidgetProps<WidgetProperty>
 
 export class WidgetFactory {
-  static createWidget<T extends keyof WidgetPropertyTypeMap>(compType: T, property: WidgetPropertyTypeMap[T]): WidgetCommon<WidgetPropertyTypeMap[T]> {
+  static createWidget<T extends keyof WidgetPropertyTypeMap>(compType: T, property: WidgetPropertyTypeMap[T]): WidgetProps<WidgetPropertyTypeMap[T]> {
     return {
       id: ulid(),
-      name: '',
-      description: '',
-      rank: 0,
-      hidden: false,
       type: compType,
       property,
     }

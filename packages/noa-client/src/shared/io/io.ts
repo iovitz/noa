@@ -1,10 +1,6 @@
 import { IOClient } from 'noa-form-editor'
 
-export interface ServerData<T> {
-  code: number
-  data: T
-  message: string
-}
+export { type ServerData } from 'noa-form-editor'
 
 export const ioClient = new IOClient({
   baseURL: '/api-noa',

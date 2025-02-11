@@ -51,6 +51,15 @@ export class UserStore {
     this.nickname = data.nickname
     this.userId = data.userId
   }
+
+  async logOut() {
+    const { data } = await ioClient.request<ServerData<UserInfo>>({
+      url: '/user/logout',
+      method: 'post',
+    })
+    this.setUserInfo(data)
+    return data
+  }
 }
 
 export const userStore = new UserStore()

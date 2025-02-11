@@ -4,6 +4,11 @@ import axios from 'axios'
 import SocketClient from 'socket.io-client'
 
 type SocketReturnType = ReturnType<Socket['on']>
+export interface ServerData<T = any> {
+  code: number
+  data: T
+  message: string
+}
 
 export interface PageIO {
   on: <T>(event: string, callback: (data: T) => void) => SocketReturnType

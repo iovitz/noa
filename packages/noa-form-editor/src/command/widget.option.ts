@@ -1,4 +1,4 @@
-import { WidgetPropertyTypeMap, WidgetUnionType } from '../widgets'
+import { WidgetPropertyTypeMap, Widget } from '../widgets'
 import { CommandName } from './command.const'
 
 export interface CommandOptionBase {
@@ -10,7 +10,7 @@ export interface AddWidgetOption extends CommandOptionBase {
   command: CommandName.WidgetAdd
   id: string
   type: keyof WidgetPropertyTypeMap
-  property: WidgetUnionType
+  property: Widget
 }
 
 export interface DelWidgetOption extends CommandOptionBase {
@@ -28,7 +28,7 @@ export interface MoveWidgetOption extends CommandOptionBase {
 export interface UpdateWidgetOption extends CommandOptionBase {
   command: CommandName.WidgetUpdate
   id: string
-  property: Partial<WidgetUnionType>
+  property: Partial<Widget>
 }
 
 export type CommandOption = AddWidgetOption | DelWidgetOption | MoveWidgetOption | UpdateWidgetOption

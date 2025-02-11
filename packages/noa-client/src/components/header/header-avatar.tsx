@@ -19,6 +19,9 @@ export default function HeaderAvatar() {
     {
       label: '登出',
       key: 'logout',
+      onClick: () => {
+        userStore.logOut()
+      },
     },
   ]
 

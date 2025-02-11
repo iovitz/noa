@@ -5,9 +5,10 @@ import {
 
   ExceptionFilter,
   HttpException,
+  Inject,
 } from '@nestjs/common'
 import { contentType } from 'mime-types'
-import { Tracer } from 'src/services/tracer/tracer.service'
+import { REQUEST_TRACER, Tracer } from 'src/services/tracer/tracer.service'
 import { HeaderKeys } from 'src/shared/constans/header'
 
 @Catch(HttpException)
@@ -28,9 +29,10 @@ export class HttpFilter implements ExceptionFilter {
 
     this.tracer.log(`-ERR[${status}] ${exception.message}`, {
       status,
+      tracerId: req.tracerId,
       code: errorResponse.code,
       cost: res.getCostNs(),
-      cid: res.clientId,
+      cid: req.clientId,
       path: req.path,
     })
 

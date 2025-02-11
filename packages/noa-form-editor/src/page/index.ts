@@ -1,4 +1,4 @@
-import { WidgetUnionType } from '@/widgets'
+import { Widget } from '@/widgets'
 import { findIndex } from 'lodash'
 import { FormSnapshot } from './page.types'
 
@@ -13,13 +13,13 @@ export class FormPage {
 
   name: string = ''
 
-  private widgets: WidgetUnionType [] = []
+  private widgets: Widget [] = []
 
   constructor(params: PageParams) {
     this.id = params.id
   }
 
-  addWidget(widget: WidgetUnionType) {
+  addWidget(widget: Widget) {
     this.widgets.push(widget)
   }
 
@@ -31,7 +31,7 @@ export class FormPage {
     return this.widgets.find(({ id }) => id === widgetId)
   }
 
-  updateWidget(widgetId: string, { property, ..._restParams }: Partial<WidgetUnionType>) {
+  updateWidget(widgetId: string, { property, ..._restParams }: Partial<Widget>) {
     const widget = this.getWidget(widgetId)
     if (!widget) {
       return false
