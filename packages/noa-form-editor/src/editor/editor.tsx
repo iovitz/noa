@@ -18,7 +18,7 @@ export const FormEditor = observer((props: FormEditorProps) => {
 
   useEffect(() => {
     editorStore.setIO(props.io)
-    editorStore.loadPage(props.fileId, props.io)
+    editorStore.loadPage(props.fileId)
     return () => {
       editorStore.destroy()
     }

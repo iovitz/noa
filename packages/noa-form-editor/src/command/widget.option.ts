@@ -1,4 +1,4 @@
-import { WidgetPropertyTypeMap, Widget } from '../widgets'
+import { Widget, WidgetPropertyTypeMap } from '../widgets'
 import { CommandName } from './command.const'
 
 export interface CommandOptionBase {

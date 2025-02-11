@@ -1,10 +1,9 @@
-import { FormPageController } from '@/controller'
 import { EventContext, EventName } from '@/controller/events.types'
 import { IOClient } from '@/io'
 import { Widget, WidgetProperty, WidgetPropertyTypeMap } from '@/widgets'
 import { makeAutoObservable } from 'mobx'
 import { ulid } from 'ulid'
-import { WidgetChange, WidgetCommandTypes } from './editor.store.types'
+import { WidgetCommandTypes } from './editor.store.types'
 import { EditorChangesetManager } from './editor-changeset-manager'
 
 export class FormEditorStore {

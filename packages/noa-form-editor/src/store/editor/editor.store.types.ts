@@ -1,4 +1,4 @@
-import { Widget, WidgetProperty, WidgetTypes } from '@/widgets'
+import { WidgetProperty, WidgetTypes } from '@/widgets'
 
 export enum WidgetCommandTypes {
   Add = 'Add',
