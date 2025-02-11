@@ -15,10 +15,9 @@ export type WidgetProperty = WidgetPropertyTypeMap[keyof WidgetPropertyTypeMap]
 export type Widget = WidgetProps<WidgetProperty>
 
 export class WidgetFactory {
-  static createWidget<T extends keyof WidgetPropertyTypeMap>(compType: T, property: WidgetPropertyTypeMap[T]): WidgetProps<WidgetPropertyTypeMap[T]> {
+  static createWidget<T extends keyof WidgetPropertyTypeMap>(property: WidgetPropertyTypeMap[T]): WidgetProps<WidgetPropertyTypeMap[T]> {
     return {
       id: ulid(),
-      type: compType,
       property,
     }
   }

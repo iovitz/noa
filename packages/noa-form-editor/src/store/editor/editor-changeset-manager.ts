@@ -20,6 +20,8 @@ export class EditorChangesetManager {
     switch (firstChange.command) {
       case WidgetCommandTypes.Add:
         return firstChange
+      case WidgetCommandTypes.Delete:
+        return firstChange
       case WidgetCommandTypes.Edit:
         const sameWidgetChanges = this.widgetChangeRecords.filter(({ widgetId: id }) => id === firstChange.widgetId) as EditWidgetRecord[]
 

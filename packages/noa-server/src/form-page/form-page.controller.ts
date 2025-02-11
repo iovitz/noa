@@ -5,7 +5,7 @@ import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
 import { FileApiPermission, FilePermissionGuard } from 'src/permission/guards/file-permission/file-permission.guard'
 import { REQUEST_TRACER, Tracer } from 'src/services/tracer/tracer.service'
 import { PermissionTypes } from 'src/shared/constans/permission'
-import { CreateWidgetDTO, FormFileIdParamsDTO, FormWidgetParamsDTO, UpdateWidgetPropertyDTO } from './form-page.dto'
+import { FormFileIdParamsDTO, FormWidgetParamsDTO, UpdateWidgetPropertyDTO } from './form-page.dto'
 import { FormPageService } from './form-page.service'
 
 @Controller('api-noa/form-page')
@@ -48,11 +48,11 @@ export class FormPageController {
     const widget = await this.formPageService.formWidgetsRepository.findOneBy({ id: params.widgetId, fileId: params.fileId })
 
     // 传入了Props才变更数据库
-    if (body.props) {
+    if (body.property) {
       try {
         // 尝试序列化props，避免数据错误
-        JSON.stringify(body.props)
-        widget.props = body.props
+        JSON.stringify(body.property)
+        widget.props = body.property
       }
       catch (err) {
         this.tracer.error('序列化数据异常', err)
@@ -69,12 +69,12 @@ export class FormPageController {
   })
   @FileApiPermission(PermissionTypes.Editable)
   @UseGuards(LoginRequiredGuard, FilePermissionGuard)
-  async createWidget(@Param(VerifyPipe) params: FormFileIdParamsDTO, @Body(VerifyPipe) body: CreateWidgetDTO) {
-    const existsWidget = await this.formPageService.getWidget(body.widgetId, params.fileId)
+  async createWidget(@Param(VerifyPipe) params: FormWidgetParamsDTO, @Body(VerifyPipe) body: UpdateWidgetPropertyDTO) {
+    const existsWidget = await this.formPageService.getWidget(params.widgetId, params.fileId)
     if (existsWidget) {
       throw new UnprocessableEntityException('Widget is already exists!')
     }
-    const widget = await this.formPageService.createWidget(params.fileId, body.widgetId, body.type, JSON.stringify(body.props ?? {}))
+    const widget = await this.formPageService.createWidget(params.fileId, params.widgetId, JSON.stringify(body.property ?? {}))
     return widget
   }
 }

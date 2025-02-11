@@ -33,11 +33,10 @@ export class FormPageService {
     })
   }
 
-  createWidget(fileId: string, widgetId: string, type: string, props: string) {
+  createWidget(fileId: string, widgetId: string, props: string) {
     const widget = this.formWidgetsRepository.create({
       id: widgetId,
       fileId,
-      type,
       props,
     })
     return this.formWidgetsRepository.save(widget)

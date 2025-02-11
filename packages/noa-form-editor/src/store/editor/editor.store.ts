@@ -3,7 +3,7 @@ import { IOClient } from '@/io'
 import { Widget, WidgetProperty, WidgetPropertyTypeMap } from '@/widgets'
 import { makeAutoObservable } from 'mobx'
 import { ulid } from 'ulid'
-import { WidgetCommandTypes } from './editor.store.types'
+import { WidgetCommandTypes, WidgetRequestMethod } from './editor.store.types'
 import { EditorChangesetManager } from './editor-changeset-manager'
 
 export class FormEditorStore {
@@ -29,13 +29,12 @@ export class FormEditorStore {
     this.currentFileId = id
   }
 
-  async addWidget<T extends keyof WidgetPropertyTypeMap>(type: T, property: WidgetPropertyTypeMap[T]) {
+  async addWidget<T extends keyof WidgetPropertyTypeMap>(property: WidgetPropertyTypeMap[T]) {
     const widgetId = ulid()
 
     this.changeManager.add({
       command: WidgetCommandTypes.Add,
       widgetId,
-      type,
       property,
     })
     this.batchUpdate()
@@ -55,29 +54,17 @@ export class FormEditorStore {
     if (!change)
       return
 
+    this.syncing = true
     try {
-      this.syncing = true
-      switch (change.command) {
-        case WidgetCommandTypes.Add:
-          await this.io.request({
-            url: `/form-page/${this.currentFileId}/widget/${change.widgetId}`,
-            method: 'post',
-            data: {
-              type: change.type,
+      await this.io.request({
+        url: `/form-page/${this.currentFileId}/widget/${change.widgetId}`,
+        method: WidgetRequestMethod[change.command],
+        data: change.command === WidgetCommandTypes.Delete
+          ? null
+          : {
               property: JSON.stringify(change.property),
             },
-          })
-          break
-        case WidgetCommandTypes.Edit:
-          await this.io.request({
-            url: `/form-page/${this.currentFileId}/widget/${change.widgetId}`,
-            method: 'patch',
-            data: {
-              property: JSON.stringify(change.property),
-            },
-          })
-          break
-      }
+      })
     }
     catch (e) {
       console.error('syncing fail...', e)

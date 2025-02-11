@@ -17,35 +17,6 @@ export class FormWidgets {
   fileId: string
 
   @Column({
-    type: 'varchar',
-    length: 50,
-    comment: '字段名称',
-    nullable: true,
-  })
-  name: string
-
-  @Column({
-    type: 'varchar',
-    length: 50,
-    comment: '字段类型',
-  })
-  type: string
-
-  @Column({
-    type: 'varchar',
-    length: 1000,
-    comment: '字段描述',
-    nullable: true,
-  })
-  desc: string
-
-  @Column({
-    type: 'float',
-    comment: '组件在页面中的顺序',
-  })
-  rank: number
-
-  @Column({
     type: 'json',
     comment: '组件属性',
   })
