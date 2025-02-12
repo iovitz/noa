@@ -18,14 +18,14 @@ export class PermissionService {
     // 创建基本权限
     await this.filePermission.save([
       {
-        id: this.encryptService.genPrimaryKey(),
+        id: this.encryptService.genPrimaryKey('perm'),
         userId,
         pageId,
         permission: PermissionTypes.Manageable,
       },
       // 默认权限
       {
-        id: this.encryptService.genPrimaryKey(),
+        id: this.encryptService.genPrimaryKey('perm'),
         userId: 'EVERYONE',
         pageId,
         permission: PermissionTypes.None,

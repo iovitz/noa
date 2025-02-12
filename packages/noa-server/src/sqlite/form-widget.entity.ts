@@ -4,14 +4,14 @@ import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } fro
 export class FormWidgets {
   @PrimaryColumn({
     type: 'varchar',
-    length: 10,
+    length: 30,
     comment: 'ulid主键',
   })
   id: string
 
   @Column({
     type: 'varchar',
-    length: 26,
+    length: 30,
     unsigned: true,
   })
   fileId: string

@@ -4,7 +4,7 @@ import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } fro
 export class FormValues {
   @PrimaryColumn({
     type: 'varchar',
-    length: 26,
+    length: 30,
     comment: 'ulid主键',
   })
   id: string

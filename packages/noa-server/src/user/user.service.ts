@@ -34,7 +34,7 @@ export class UserService {
 
   async createNewUserInfo(email: string, nickname?: string, password?: string) {
     return {
-      id: this.encryptService.genPrimaryKey(),
+      id: this.encryptService.genPrimaryKey('user'),
       nickname: nickname ?? this.genRandomUsername(),
       email,
       // 密码进行MD5加密
@@ -107,7 +107,7 @@ export class UserService {
       console.error(newUserRecord)
 
       const newOauthRecord = this.oauthRepository.create({
-        id: this.encryptService.genPrimaryKey(),
+        id: this.encryptService.genPrimaryKey('auth'),
         userId: newUserRecord.id,
         platform: 'github',
         platformId: githubUser.id,

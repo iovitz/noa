@@ -4,21 +4,21 @@ import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } fro
 export class FilePermission {
   @PrimaryColumn({
     type: 'varchar',
-    length: 26,
+    length: 30,
     comment: 'ulid主键',
   })
   id: string
 
   @Column({
     type: 'varchar',
-    length: 26,
+    length: 30,
     comment: '用户ID 或 文档ID，当为文档ID时，为所有人的权限',
   })
   userId: string
 
   @Column({
     type: 'varchar',
-    length: 26,
+    length: 30,
     comment: '页面ID',
   })
   pageId: string

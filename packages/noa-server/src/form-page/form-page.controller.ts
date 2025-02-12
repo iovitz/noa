@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Param, Patch, Post, UnprocessableEntityException, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, UnprocessableEntityException, UseGuards } from '@nestjs/common'
 import { ApiOperation } from '@nestjs/swagger'
 import { LoginRequiredGuard } from 'src/aspects/guards/login-required/login-required.guard'
 import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
@@ -16,7 +16,7 @@ export class FormPageController {
   @Inject(FormPageService)
   formPageService: FormPageService
 
-  @Get(':fileId/snapshot')
+  @Get(':fileId/data')
   @ApiOperation({
     summary: '获表表单的快照数据',
   })
@@ -24,7 +24,11 @@ export class FormPageController {
   @UseGuards(LoginRequiredGuard, FilePermissionGuard)
   async getFormPage(@Param(VerifyPipe) params: FormFileIdParamsDTO) {
     const page = await this.formPageService.formPageRepository.findOneBy({ id: params.fileId })
-    return page
+    const widgets = await this.formPageService.formWidgetsRepository.findOneBy({ fileId: params.fileId })
+    return {
+      ...page,
+      widgets,
+    }
   }
 
   @Get(':fileId/widget/:widgetId')
@@ -34,7 +38,7 @@ export class FormPageController {
   @FileApiPermission(PermissionTypes.Readable)
   @UseGuards(LoginRequiredGuard, FilePermissionGuard)
   async getWidget(@Param(VerifyPipe) params: FormWidgetParamsDTO) {
-    const widget = await this.formPageService.formPageRepository.findOneBy({ id: params.widgetId })
+    const widget = await this.formPageService.formWidgetsRepository.findOneBy({ id: params.widgetId })
     return widget
   }
 
@@ -76,5 +80,21 @@ export class FormPageController {
     }
     const widget = await this.formPageService.createWidget(params.fileId, params.widgetId, JSON.stringify(body.property ?? {}))
     return widget
+  }
+
+  @Delete(':fileId/widget/:widgetId')
+  @ApiOperation({
+    summary: '删除Widget',
+  })
+  @FileApiPermission(PermissionTypes.Editable)
+  @UseGuards(LoginRequiredGuard, FilePermissionGuard)
+  async deleteWidget(@Param(VerifyPipe) params: FormWidgetParamsDTO) {
+    const existsWidget = await this.formPageService.getWidget(params.widgetId, params.fileId)
+    if (existsWidget) {
+      throw new UnprocessableEntityException('Widget is already exists!')
+    }
+    existsWidget.deleted = true
+    await this.formPageService.formWidgetsRepository.save(existsWidget)
+    return true
   }
 }

@@ -11,8 +11,8 @@ import { ulid } from 'ulid'
 export class EncryptService {
   constructor(private configService: ConfigService) {}
 
-  genPrimaryKey() {
-    return ulid()
+  genPrimaryKey(prefix: string) {
+    return prefix + ulid()
   }
 
   ungzip(gzipBase64Str) {

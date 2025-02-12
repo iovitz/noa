@@ -36,7 +36,7 @@ export class SpaceService {
         throw new BadRequestException('Template not found')
       }
     }
-    const id = this.encryptService.genPrimaryKey()
+    const id = this.encryptService.genPrimaryKey('spac')
 
     // 创建业务侧的文件
     switch (type) {
