@@ -13,7 +13,7 @@ export class FormEditorStore {
 
   io!: IOClient
 
-  widgetList: Widget[] = []
+  widgetMap = new Map<string, Widget>()
 
   changeManager = new EditorChangesetManager()
 
@@ -31,6 +31,10 @@ export class FormEditorStore {
 
   async addWidget<T extends keyof WidgetPropertyTypeMap>(property: WidgetPropertyTypeMap[T]) {
     const widgetId = ulid()
+    this.widgetMap.set(widgetId, {
+      id: widgetId,
+      property,
+    })
 
     this.changeManager.add({
       command: WidgetCommandTypes.Add,
@@ -74,12 +78,17 @@ export class FormEditorStore {
     }
   }
 
+  getWidgetById(id: string) {
+    return this.widgetMap.get(id)
+  }
+
   handleWidgetUpdate = (info: EventContext[EventName.WidgetUpdate]) => {
     console.error('update: ', info)
   }
 
   destroy() {
     this.changeManager.clear()
+    this.widgetMap.clear()
   }
 }
 

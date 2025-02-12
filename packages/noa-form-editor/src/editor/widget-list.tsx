@@ -27,6 +27,7 @@ export default function WidgetList() {
               type: WidgetTypes.Input,
               rank: 0,
               hidden: false,
+              text: '牛逼啊兄弟',
             })}
             size="large"
           >

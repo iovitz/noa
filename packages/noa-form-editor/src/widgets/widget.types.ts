@@ -14,6 +14,7 @@ export interface WidgetCommonProps {
 }
 
 export interface TextProperty extends WidgetCommonProps {
+  text?: string
   maxLength?: number
   minLength?: number
   question?: string

@@ -1,15 +1,15 @@
-import FormImage from '@/editor/page-canvas/widget-ui/form-image'
-import FormNotice from '@/editor/page-canvas/widget-ui/form-notice'
 import FormTitle from '@/editor/page-canvas/widget-ui/form-title/form-title'
-import FormVideo from '@/editor/page-canvas/widget-ui/form-video'
-import WidgetOperator from '@/editor/page-canvas/widget-ui/widget-operator'
+import { useFormEditorStore } from '@/store/editor/editor.store'
 import { Space, theme } from 'antd'
+import { observer } from 'mobx-react-lite'
 import React from 'react'
+import { WidgetWrapper } from './widget-wrapper'
 
 const { useToken } = theme
 
-export default function PageCanvas() {
+const PageCanvas = observer(() => {
   const { token } = useToken()
+  const editorStore = useFormEditorStore()
   return (
     <div style={{
       height: '100%',
@@ -28,14 +28,15 @@ export default function PageCanvas() {
       }}
       >
         <Space direction="vertical" size={10} style={{ width: '100%' }}>
+          {
+            [...editorStore.widgetMap.values()].map(widget => (
+              <WidgetWrapper key={widget.id} id={widget.id} />
+            ))
+          }
           <FormTitle>调查问卷哈哈哈</FormTitle>
-          <FormNotice text="123123" title="123123" />
-          <FormVideo poster="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" src="https://mdn.alipayobjects.com/huamei_iwk9zp/afts/file/A*uYT7SZwhJnUAAAAAAAAAAAAADgCCAQ"></FormVideo>
-          <WidgetOperator name="123">
-            <FormImage src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"></FormImage>
-          </WidgetOperator>
         </Space>
       </div>
     </div>
   )
-}
+})
+export default PageCanvas
