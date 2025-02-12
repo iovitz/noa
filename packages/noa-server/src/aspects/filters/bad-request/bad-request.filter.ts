@@ -1,9 +1,12 @@
 import { ArgumentsHost, BadRequestException, Catch, ExceptionFilter } from '@nestjs/common'
 import { contentType } from 'mime-types'
+import { Tracer } from 'src/services/tracer/tracer.service'
 import { HeaderKeys } from 'src/shared/constans/header'
 
 @Catch(BadRequestException)
 export class BadRequestFilter implements ExceptionFilter {
+  private tracer = new Tracer(BadRequestFilter.name)
+
   /**
    * 这个函数里不要有任何中间件注入的对象
    * 在客户端发送格式错误的请求时，会走不到中间件的逻辑，直接在这里catch到
@@ -18,6 +21,8 @@ export class BadRequestFilter implements ExceptionFilter {
       code: status * 100,
       message: exception.message,
     }
+
+    this.tracer.log('request fail', exception)
 
     res.setHeader(HeaderKeys.ContentType, contentType('json') as string)
     res.status(status)

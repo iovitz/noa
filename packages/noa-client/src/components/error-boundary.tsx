@@ -18,8 +18,8 @@ export function ErrorBoundary({ children }: ErrorHandlerProp) {
   const [messageApi, contextHolder] = message.useMessage()
 
   const requestErrorHandler = (err: AxiosError) => {
-    const code = get(err, 'response.data.code')
-    const message = get(err, 'response.data.message')
+    const code = get(err, ['response', 'data', 'code'], get(err, 'code')) ?? 'UNKNOWN ERROR'
+    const message = get(err, ['response', 'data', 'message'], get(err, ['message']))
     logger.error(code, message, err)
     if (err.status === 401) {
       navigate('/login')

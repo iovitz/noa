@@ -1,5 +1,4 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
-import { ulid } from 'ulid'
 
 @Entity('oauth')
 export class OAuth {
@@ -7,7 +6,6 @@ export class OAuth {
     type: 'varchar',
     length: 30,
     comment: 'ulid主键',
-    default: () => `auth${ulid()}`,
   })
   id: string
 

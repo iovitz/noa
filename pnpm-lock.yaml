@@ -108,6 +108,9 @@ importers:
         specifier: ^11.0.2
         version: 11.0.2
     devDependencies:
+      '@types/lodash':
+        specifier: 4.17.7
+        version: 4.17.7
       '@types/react':
         specifier: 19.0.7
         version: 19.0.7

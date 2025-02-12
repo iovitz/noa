@@ -55,7 +55,7 @@ export class UserController {
     })
 
     if (!existsUser || await this.encryptService.encryptMd5(body.password) !== existsUser.password) {
-      throw new UnauthorizedException('用户名不存在或密码错误')
+      throw new UnprocessableEntityException('用户名不存在或密码错误')
     }
 
     const session = this.userService.genUserSession(existsUser.id)

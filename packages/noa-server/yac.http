@@ -1,4 +1,5 @@
 @prefix = {{host}}/api-noa
+@fileId = spac01JKW451WX07C7C0HJJZ1GZM2K
 
 ### register
 POST {{prefix}}/user/register
@@ -36,7 +37,7 @@ GET {{prefix}}/security/verify-code
   &type=login
 content-type: application/json
 
-### createForm
+### createFormFile
 POST {{prefix}}/space/create
 content-type: application/json
 
@@ -46,29 +47,33 @@ content-type: application/json
 }
 
 ### getFormPage
-GET {{prefix}}/form-page/01JH025E7KT81EW1VN3HGKBQ6W
+GET {{prefix}}/form-page/{{fileId}}/data
 content-type: application/json
 
 ### getFiles
-GET {{prefix}}/space/files-list
+GET {{prefix}}/space/file-list
   ?page=1
   &size=2
   &type=form
 content-type: application/json
 
-### getPage
-GET {{prefix}}/page/01JGDV1F0CD94RKGJQS3C3CB9C
-content-type: application/json
 
 ### deletePage
-DELETE {{prefix}}/space/01JGDV1F0CD94RKGJQS3C3CB93
+DELETE {{prefix}}/space/{{fileId}}
 content-type: application/json
 
+
 ### createFormWidget
-POST {{prefix}}/form-page/01JJBSHDPC12E2P9RFGJFJ98PS/widget
+{{
+  const {ulid} = require('ulid');
+  exports.widgetId = `widg${ulid()}`;
+  exports.property = JSON.stringify({
+    type: 'Form'
+  });
+}}
+POST {{prefix}}/form-page/{{fileId}}/widget/{{widgetId}}
 content-type: application/json
 
 {
-  "widgetId": "01JDPPNHG28YMVDDNF5PK0MQJA",
-  "type": "Text"
+  "property": "{{property}}"
 }
