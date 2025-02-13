@@ -29,7 +29,8 @@ const PageCanvas = observer(() => {
       >
         <Space direction="vertical" size={10} style={{ width: '100%' }}>
           {
-            [...editorStore.widgetMap.values()].map(widget => (
+            // TODO 这里可能有性能损耗
+            [...editorStore.widgetMap.values()].sort((a, b) => a.property.rank - b.property.rank).map(widget => (
               <WidgetWrapper key={widget.id} id={widget.id} />
             ))
           }

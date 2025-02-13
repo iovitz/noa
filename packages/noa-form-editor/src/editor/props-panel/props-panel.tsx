@@ -21,7 +21,7 @@ const PropsPanel = observer(() => {
       <div>{widget.property.type}</div>
 
       {
-        propsFields.map(field => <PropertyUIWrapper key={field} field={field} />)
+        propsFields.map(field => <PropertyUIWrapper key={field} field={field} widgetId={widgetStore.selectedWidgetId} />)
       }
     </>
   )

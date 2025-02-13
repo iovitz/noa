@@ -50,6 +50,11 @@ export class FormEditorStore {
       widgetId,
       property,
     })
+    const widget = this.getWidgetById(widgetId)!
+    widget.property = {
+      ...widget.property,
+      ...property,
+    }
     this.batchUpdate()
   }
 

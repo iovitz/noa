@@ -1,28 +1,32 @@
 import { useFormEditorStore } from '@/store/editor/editor.store'
-import { useWidgetStore } from '@/store/widgets/widget.store'
-import { Input } from 'antd'
+import { Input, Typography } from 'antd'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
 
-const TextProperty = observer(() => {
+const { Title } = Typography
+
+const TextProperty = observer(({ widgetId }: { widgetId: string }) => {
   const editorStore = useFormEditorStore()
-  const widgetStore = useWidgetStore()
   const [value, setValue] = useState('')
+  const currentWidgetProperty = editorStore.getWidgetById(widgetId)!.property as {
+    text?: string
+  }
+
   useEffect(() => {
-    const currentWidgetProperty = editorStore.getWidgetById(widgetStore.selectedWidgetId)!.property as {
-      text?: string
-    }
     setValue(currentWidgetProperty.text ?? '')
-  }, [])
+  }, [widgetId])
+
   return (
     <div>
-      文本输入
+      <Title level={5}>内容文本</Title>
+      {currentWidgetProperty.text}
       <Input
         placeholder="请输入内容"
         value={value}
+        size="large"
         onChange={v => setValue(v.target.value)}
         onBlur={(e) => {
-          editorStore.updateWidget(widgetStore.selectedWidgetId, {
+          editorStore.updateWidget(widgetId, {
             text: e.target.value ?? '',
           })
         }}
