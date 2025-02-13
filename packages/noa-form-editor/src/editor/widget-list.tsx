@@ -2,7 +2,7 @@ import { useFormEditorStore } from '@/store/editor/editor.store'
 import { WidgetTypes } from '@/widgets'
 import { Button, Col, Row, Space, Typography } from 'antd'
 import React from 'react'
-import { MdAttachFile, MdCheck, MdDateRange, MdGpsFixed, MdInfoOutline, MdInsertChartOutlined, MdLocalPhone, MdMoney, MdNumbers, MdOutlineCheckBox, MdOutlineCheckCircle, MdOutlineHorizontalRule, MdOutlineImage, MdOutlineInput, MdOutlinePercent, MdOutlineStarOutline, MdOutlineTextFields, MdOutlineVideocam } from 'react-icons/md'
+import { MdAttachFile, MdCheck, MdDateRange, MdFormatColorText, MdGpsFixed, MdInfoOutline, MdInsertChartOutlined, MdLocalPhone, MdMoney, MdNumbers, MdOutlineCheckBox, MdOutlineCheckCircle, MdOutlineHorizontalRule, MdOutlineImage, MdOutlineInput, MdOutlinePercent, MdOutlineStarOutline, MdOutlineTextFields, MdOutlineTitle, MdOutlineVideocam } from 'react-icons/md'
 
 const { Title } = Typography
 
@@ -21,7 +21,39 @@ export default function WidgetList() {
         <Col span={12}>
           <Button
             type="dashed"
+            icon={<MdOutlineTitle />}
+            block
+            onClick={() => store.addWidget<WidgetTypes.Text>({
+              type: WidgetTypes.Text,
+              rank: 0,
+              hidden: false,
+              text: '',
+            })}
+            size="large"
+          >
+            标题
+          </Button>
+        </Col>
+        <Col span={12}>
+          <Button
+            type="dashed"
             icon={<MdOutlineTextFields />}
+            block
+            onClick={() => store.addWidget<WidgetTypes.Title>({
+              type: WidgetTypes.Text,
+              rank: 0,
+              hidden: false,
+              title: '',
+            })}
+            size="large"
+          >
+            文字
+          </Button>
+        </Col>
+        <Col span={12}>
+          <Button
+            type="dashed"
+            icon={<MdFormatColorText />}
             block
             onClick={() => store.addWidget({
               type: WidgetTypes.Input,
@@ -31,7 +63,7 @@ export default function WidgetList() {
             })}
             size="large"
           >
-            文字
+            富文本
           </Button>
         </Col>
         <Col span={12}>

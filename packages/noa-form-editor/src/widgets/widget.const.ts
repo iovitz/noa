@@ -20,6 +20,7 @@ export enum WidgetTypes {
   // 内容
   Title = 'Title', // 文本
   Text = 'Text', // 文本
+  RichText = 'RichText', // 文本
   Image = 'Image', // 图片
   Video = 'Video', // 视频
   Notice = 'Notice', // 提醒
