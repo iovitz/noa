@@ -24,7 +24,7 @@ export class FormPageController {
   @UseGuards(LoginRequiredGuard, FilePermissionGuard)
   async getFormPage(@Param(VerifyPipe) params: FormFileIdParamsDTO) {
     const page = await this.formPageService.formPageRepository.findOneBy({ id: params.fileId })
-    const widgets = await this.formPageService.formWidgetsRepository.findOneBy({ fileId: params.fileId })
+    const widgets = await this.formPageService.formWidgetsRepository.findBy({ fileId: params.fileId })
     return {
       ...page,
       widgets,
@@ -49,22 +49,31 @@ export class FormPageController {
   @FileApiPermission(PermissionTypes.Readable)
   @UseGuards(LoginRequiredGuard, FilePermissionGuard)
   async updateWidget(@Param(VerifyPipe) params: FormWidgetParamsDTO, @Body(VerifyPipe) body: UpdateWidgetPropertyDTO) {
-    const widget = await this.formPageService.formWidgetsRepository.findOneBy({ id: params.widgetId, fileId: params.fileId })
+    const dbWidget = await this.formPageService.formWidgetsRepository.findOneBy({ id: params.widgetId, fileId: params.fileId })
+
+    if (!dbWidget) {
+      throw new UnprocessableEntityException('组件不存在')
+    }
 
     // 传入了Props才变更数据库
     if (body.property) {
       try {
         // 尝试序列化props，避免数据错误
-        JSON.stringify(body.property)
-        widget.props = body.property
+        const property = JSON.parse(body.property)
+        const dbProperty = JSON.parse(dbWidget.property)
+
+        Object.keys(property).forEach((field) => {
+          dbProperty[field] = property[field]
+        })
+        dbWidget.property = JSON.stringify(dbProperty)
+        await this.formPageService.formWidgetsRepository.save(dbWidget)
       }
       catch (err) {
         this.tracer.error('序列化数据异常', err)
         throw new UnprocessableEntityException('组件属性数据有误')
       }
     }
-    await this.formPageService.formWidgetsRepository.save(widget)
-    return widget
+    return dbWidget
   }
 
   @Post(':fileId/widget/:widgetId')
@@ -78,7 +87,16 @@ export class FormPageController {
     if (existsWidget) {
       throw new UnprocessableEntityException('Widget is already exists!')
     }
-    const widget = await this.formPageService.createWidget(params.fileId, params.widgetId, JSON.stringify(body.property ?? {}))
+    try {
+      JSON.parse(body.property)
+    }
+    catch (error) {
+      this.tracer.warn('组件数据有误', {
+        error,
+      })
+      throw new UnprocessableEntityException('组件属性数据有误')
+    }
+    const widget = await this.formPageService.createWidget(params.fileId, params.widgetId, body.property)
     return widget
   }
 

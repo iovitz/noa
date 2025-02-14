@@ -1,5 +1,6 @@
-import TextProperty from './text/text'
+import { WidgetTypes } from '@/widgets'
+import { TextPropertyUI } from './text/text-property-ui'
 
-export const PropsUIMap = {
-  text: TextProperty,
+export const PropsUIMap: Record<string, typeof TextPropertyUI> = {
+  text: TextPropertyUI,
 }

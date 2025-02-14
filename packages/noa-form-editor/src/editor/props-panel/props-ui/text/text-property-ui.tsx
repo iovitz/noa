@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 
 const { Title } = Typography
 
-const TextProperty = observer(({ widgetId }: { widgetId: string }) => {
+export const TextPropertyUI = observer(({ widgetId }: { widgetId: string }) => {
   const editorStore = useFormEditorStore()
   const [value, setValue] = useState('')
   const currentWidgetProperty = editorStore.getWidgetById(widgetId)!.property as {
@@ -19,8 +19,7 @@ const TextProperty = observer(({ widgetId }: { widgetId: string }) => {
   return (
     <div>
       <Title level={5}>内容文本</Title>
-      {currentWidgetProperty.text}
-      <Input
+      <Input.TextArea
         placeholder="请输入内容"
         value={value}
         size="large"
@@ -30,9 +29,10 @@ const TextProperty = observer(({ widgetId }: { widgetId: string }) => {
             text: e.target.value ?? '',
           })
         }}
+        showCount
+        style={{ height: 120, resize: 'none' }}
+        maxLength={1000}
       />
     </div>
   )
 })
-
-export default TextProperty

@@ -25,8 +25,23 @@ export class FormEditorStore {
     this.io = io
   }
 
-  loadPage(id: string) {
-    this.currentFileId = id
+  async loadPage(fileId: string) {
+    this.currentFileId = fileId
+    const data = await this.io.request({
+      url: `/form-page/${fileId}/data`,
+      method: 'get',
+    })
+    this.handleFormPageData(data.data)
+  }
+
+  handleFormPageData(data: any) {
+    data.widgets.forEach((w: any) => {
+      this.widgetMap.set(w.id, {
+        id: w.id,
+        property: JSON.parse(w.property),
+      })
+      console.error('设置', w.id, JSON.parse(w.property))
+    })
   }
 
   async addWidget<T extends keyof WidgetPropertyTypeMap>(property: WidgetPropertyTypeMap[T]) {
@@ -36,6 +51,7 @@ export class FormEditorStore {
       property,
     })
 
+    console.error('编辑设置', widgetId, property)
     this.changeManager.add({
       command: WidgetCommandTypes.Add,
       widgetId,

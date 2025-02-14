@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 
 export class WidgetStore {
-  selectedWidgetId = ''
+  private selectedWidgetId = ''
 
   constructor() {
     makeAutoObservable(this)
@@ -9,6 +9,10 @@ export class WidgetStore {
 
   handleSelectWidget(id: string) {
     this.selectedWidgetId = id
+  }
+
+  getCurrentSelectedId() {
+    return this.selectedWidgetId
   }
 }
 

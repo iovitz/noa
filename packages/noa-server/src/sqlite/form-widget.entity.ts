@@ -20,7 +20,7 @@ export class FormWidgets {
     type: 'json',
     comment: '组件属性',
   })
-  props: string
+  property: string
 
   @Column({
     type: 'boolean',

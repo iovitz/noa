@@ -1,4 +1,3 @@
-import FormTitle from '@/editor/page-canvas/widget-ui/form-title/form-title'
 import { useFormEditorStore } from '@/store/editor/editor.store'
 import { Space, theme } from 'antd'
 import { observer } from 'mobx-react-lite'
@@ -25,6 +24,8 @@ const PageCanvas = observer(() => {
         height: 667,
         overflowY: 'scroll',
         backgroundColor: '#fff',
+        boxSizing: 'border-box',
+        padding: '10px',
       }}
       >
         <Space direction="vertical" size={10} style={{ width: '100%' }}>
@@ -34,7 +35,6 @@ const PageCanvas = observer(() => {
               <WidgetWrapper key={widget.id} id={widget.id} />
             ))
           }
-          <FormTitle>调查问卷哈哈哈</FormTitle>
         </Space>
       </div>
     </div>
