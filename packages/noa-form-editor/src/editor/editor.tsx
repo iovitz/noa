@@ -1,6 +1,6 @@
 import { IOClient } from '@/io'
 import { useFormEditorStore } from '@/store/editor/editor.store'
-import { Spin, theme } from 'antd'
+import { ConfigProvider, Spin, theme } from 'antd'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useRef, useState } from 'react'
 import PageCanvas from './page-canvas/page-canvas'
@@ -29,64 +29,68 @@ export const FormEditor = observer((props: FormEditorProps) => {
   }, [])
 
   return (
-    <div style={{
-      height: '100%',
-      display: 'flex',
-      position: 'relative',
-    }}
+    <ConfigProvider
+      theme={{}}
     >
-      {loading && (
+      <div style={{
+        height: '100%',
+        display: 'flex',
+        position: 'relative',
+      }}
+      >
+        {loading && (
+          <div
+            className="loading"
+            style={{
+              height: '100%',
+              width: '100%',
+              backgroundColor: token.colorBgBase,
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              zIndex: 9999,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+            }}
+          >
+            <Spin />
+            加载中...
+          </div>
+        )}
+        <div>
+          <div
+            ref={editorRef}
+            style={{
+              height: '100%',
+              width: '350px',
+              background: '#fff',
+              boxSizing: 'border-box',
+              padding: '15px',
+            }}
+          >
+            <WidgetList />
+          </div>
+        </div>
         <div
-          className="loading"
           style={{
-            height: '100%',
-            width: '100%',
-            backgroundColor: token.colorBgBase,
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            zIndex: 9999,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'column',
+            flex: 1,
           }}
         >
-          <Spin />
-          加载中...
+          <PageCanvas />
         </div>
-      )}
-      <div>
         <div
-          ref={editorRef}
           style={{
             height: '100%',
-            width: '350px',
-            background: '#fff',
-            boxSizing: 'border-box',
-            padding: '15px',
+            width: '375px',
           }}
         >
-          <WidgetList />
+          <PropsPanel />
         </div>
       </div>
-      <div
-        style={{
-          flex: 1,
-        }}
-      >
-        <PageCanvas />
-      </div>
-      <div
-        style={{
-          height: '100%',
-          width: '375px',
-        }}
-      >
-        <PropsPanel />
-      </div>
-    </div>
+    </ConfigProvider>
   )
 })

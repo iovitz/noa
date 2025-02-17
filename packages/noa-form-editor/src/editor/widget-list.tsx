@@ -23,11 +23,12 @@ export default function WidgetList() {
             type="dashed"
             icon={<MdOutlineTitle />}
             block
-            onClick={() => store.addWidget<WidgetTypes.Text>({
-              type: WidgetTypes.Text,
+            onClick={() => store.addWidget<WidgetTypes.Title>({
+              type: WidgetTypes.Title,
               rank: 0,
               hidden: false,
-              text: '',
+              title: '',
+              titleLevel: 5,
             })}
             size="large"
           >
@@ -39,11 +40,11 @@ export default function WidgetList() {
             type="dashed"
             icon={<MdOutlineTextFields />}
             block
-            onClick={() => store.addWidget<WidgetTypes.Title>({
+            onClick={() => store.addWidget<WidgetTypes.Text>({
               type: WidgetTypes.Text,
               rank: 0,
               hidden: false,
-              title: '',
+              text: '',
             })}
             size="large"
           >
@@ -87,7 +88,6 @@ export default function WidgetList() {
             icon={<MdOutlineImage />}
             block
             onClick={() => store.addWidget({
-
               type: WidgetTypes.Video,
               rank: 0,
               hidden: false,

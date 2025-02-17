@@ -9,8 +9,8 @@ export const FormTextWidget = (props: { id: string }) => {
   const editorStore = useFormEditorStore()
   const widget = editorStore.getWidgetById(props.id) as WidgetProps<TextProperty>
   return (
-    <Paragraph>
-      {widget.property.text || <blockquote>暂未填入文本</blockquote>}
+    <Paragraph style={{ margin: 0 }}>
+      {widget.property.text || '文本内容'}
     </Paragraph>
   )
 }
