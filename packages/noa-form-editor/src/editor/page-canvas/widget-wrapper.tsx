@@ -9,7 +9,7 @@ export const WidgetWrapper = observer((props: { id: string }) => {
   const editorStore = useFormEditorStore()
   const widget = editorStore.getWidgetById(props.id)!
 
-  const WidgetUI = WidgetUIMap[widget.property.type]
+  const WidgetUI = WidgetUIMap[widget.attributes.type]
   if (!WidgetUI) {
     return null
   }

@@ -1,5 +1,5 @@
 import { useFormEditorStore } from '@/store/editor/editor.store'
-import { TitleProperty, WidgetProps } from '@/widgets'
+import { TitleAttributes, WidgetData } from '@/widgets'
 import { Typography } from 'antd'
 import React from 'react'
 
@@ -7,15 +7,15 @@ const { Title } = Typography
 
 export const FormTitleWidget = (props: { id: string }) => {
   const editorStore = useFormEditorStore()
-  const widget = editorStore.getWidgetById(props.id) as WidgetProps<TitleProperty>
+  const widget = editorStore.getWidgetById(props.id) as WidgetData<TitleAttributes>
   return (
     <Title
       style={{
         margin: 0,
       }}
-      level={widget.property.titleLevel as any ?? 3}
+      level={widget.attributes.titleLevel as any ?? 3}
     >
-      {widget.property.title || '一级标题'}
+      {widget.attributes.title || '一级标题'}
     </Title>
   )
 }

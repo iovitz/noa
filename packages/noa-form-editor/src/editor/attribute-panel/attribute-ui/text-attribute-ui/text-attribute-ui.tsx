@@ -5,32 +5,33 @@ import React, { useEffect, useState } from 'react'
 
 const { Title } = Typography
 
-export const TitlePropertyUI = observer(({ widgetId }: { widgetId: string }) => {
+export const TextAttributeUI = observer(({ widgetId }: { widgetId: string }) => {
   const editorStore = useFormEditorStore()
   const [value, setValue] = useState('')
-  const currentWidgetProperty = editorStore.getWidgetById(widgetId)!.property as {
-    title?: string
+  const currentWidgetAttributes = editorStore.getWidgetById(widgetId)!.attributes as {
+    text?: string
   }
 
   useEffect(() => {
-    setValue(currentWidgetProperty.title ?? '')
+    setValue(currentWidgetAttributes.text ?? '')
   }, [widgetId])
 
   return (
     <div>
-      <Title level={5}>标题</Title>
-      <Input
+      <Title level={5}>内容文本</Title>
+      <Input.TextArea
         placeholder="请输入内容"
         value={value}
         size="large"
         onChange={v => setValue(v.target.value)}
         onBlur={(e) => {
           editorStore.updateWidget(widgetId, {
-            title: e.target.value ?? '',
+            text: e.target.value ?? '',
           })
         }}
         showCount
-        maxLength={100}
+        style={{ height: 120, resize: 'none' }}
+        maxLength={1000}
       />
     </div>
   )

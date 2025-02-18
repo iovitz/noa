@@ -1,4 +1,4 @@
-import { WidgetProperty } from '@/widgets'
+import { WidgetAttributes } from '@/widgets'
 import { Method } from 'axios'
 
 export enum WidgetCommandTypes {
@@ -16,13 +16,13 @@ export const WidgetRequestMethod: Record<WidgetCommandTypes, Method> = {
 export interface AddWidgetRecord {
   widgetId: string
   command: WidgetCommandTypes.Add
-  property: Partial<WidgetProperty>
+  attributes: Partial<WidgetAttributes>
 }
 
 export interface EditWidgetRecord {
   widgetId: string
   command: WidgetCommandTypes.Edit
-  property: Partial<WidgetProperty>
+  attributes: Partial<WidgetAttributes>
 }
 export interface DeleteWidgetRecord {
   widgetId: string

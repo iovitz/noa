@@ -4,7 +4,7 @@ import { ConfigProvider, Spin, theme } from 'antd'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useRef, useState } from 'react'
 import PageCanvas from './page-canvas/page-canvas'
-import PropsPanel from './props-panel/props-panel'
+import PropsPanel from './attribute-panel/attribute-panel'
 import WidgetList from './widget-list'
 
 const { useToken } = theme

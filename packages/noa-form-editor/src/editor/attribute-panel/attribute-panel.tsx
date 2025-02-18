@@ -3,7 +3,7 @@ import { useWidgetStore } from '@/store/widgets/widget.store'
 import { Space, Typography } from 'antd'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import PropertyUIWrapper from './property-ui-wrapper'
+import AttributeUIWrapper from './attribute-ui-wrapper'
 
 const { Title } = Typography
 
@@ -11,7 +11,7 @@ const PropsPanel = observer(() => {
   const widgetStore = useWidgetStore()
   const editorStore = useFormEditorStore()
 
-  const widget = editorStore.getWidgetById(widgetStore.selectedWidgetId)!
+  const widget = editorStore.getWidgetById(widgetStore.getCurrentSelectedId())!
 
   if (!widget) {
     return (
@@ -20,7 +20,7 @@ const PropsPanel = observer(() => {
       </>
     )
   }
-  const propsFields = Object.keys(widget.property)
+  const attrFields = Object.keys(widget.attributes)
 
   return (
     <Space
@@ -33,7 +33,7 @@ const PropsPanel = observer(() => {
     >
       <Title level={4}>属性面板</Title>
       {
-        propsFields.map(field => <PropertyUIWrapper key={field} field={field} widgetId={widgetStore.selectedWidgetId} />)
+        attrFields.map(field => <AttributeUIWrapper key={field} field={field} widgetId={widgetStore.getCurrentSelectedId()} />)
       }
     </Space>
   )

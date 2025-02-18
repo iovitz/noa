@@ -30,12 +30,12 @@ export class EditorChangesetManager {
         }
 
         // 合并变更的Props属性
-        const editProps = sameWidgetChanges.map((item: EditWidgetRecord) => item.property)
-        const changeProps: EditWidgetRecord['property'] = mergeWith({}, firstChange.property, ...editProps)
+        const editProps = sameWidgetChanges.map((item: EditWidgetRecord) => item.attributes)
+        const changeProps: EditWidgetRecord['attributes'] = mergeWith({}, firstChange.attributes, ...editProps)
         return {
           widgetId: firstChange.widgetId,
           command: WidgetCommandTypes.Edit,
-          property: changeProps,
+          attributes: changeProps,
         } as EditWidgetRecord
     }
   }

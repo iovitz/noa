@@ -1,6 +1,5 @@
-import { EventContext, EventName } from '@/controller/events.types'
 import { IOClient } from '@/io'
-import { Widget, WidgetProperty, WidgetPropertyTypeMap } from '@/widgets'
+import { Widget, WidgetAttributes, WidgetAttributesTypeMap } from '@/widgets'
 import { makeAutoObservable } from 'mobx'
 import { ulid } from 'ulid'
 import { WidgetCommandTypes, WidgetRequestMethod } from './editor.store.types'
@@ -38,38 +37,36 @@ export class FormEditorStore {
     data.widgets.forEach((w: any) => {
       this.widgetMap.set(w.id, {
         id: w.id,
-        property: JSON.parse(w.property),
+        attributes: w.attributes,
       })
-      console.error('设置', w.id, JSON.parse(w.property))
     })
   }
 
-  async addWidget<T extends keyof WidgetPropertyTypeMap>(property: WidgetPropertyTypeMap[T]) {
+  async addWidget<T extends keyof WidgetAttributesTypeMap>(attributes: WidgetAttributesTypeMap[T]) {
     const widgetId = ulid()
     this.widgetMap.set(widgetId, {
       id: widgetId,
-      property,
+      attributes,
     })
 
-    console.error('编辑设置', widgetId, property)
     this.changeManager.add({
       command: WidgetCommandTypes.Add,
       widgetId,
-      property,
+      attributes,
     })
     this.batchUpdate()
   }
 
-  async updateWidget(widgetId: string, property: Partial<WidgetProperty>) {
+  async updateWidget(widgetId: string, attributes: Partial<WidgetAttributes>) {
     this.changeManager.add({
       command: WidgetCommandTypes.Edit,
       widgetId,
-      property,
+      attributes,
     })
     const widget = this.getWidgetById(widgetId)!
-    widget.property = {
-      ...widget.property,
-      ...property,
+    widget.attributes = {
+      ...widget.attributes,
+      ...attributes,
     }
     this.batchUpdate()
   }
@@ -87,7 +84,7 @@ export class FormEditorStore {
         data: change.command === WidgetCommandTypes.Delete
           ? null
           : {
-              property: JSON.stringify(change.property),
+              attributes: JSON.stringify(change.attributes),
             },
       })
     }
@@ -101,10 +98,6 @@ export class FormEditorStore {
 
   getWidgetById(id: string) {
     return this.widgetMap.get(id)
-  }
-
-  handleWidgetUpdate = (info: EventContext[EventName.WidgetUpdate]) => {
-    console.error('update: ', info)
   }
 
   destroy() {
