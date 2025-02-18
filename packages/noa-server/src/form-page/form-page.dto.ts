@@ -32,5 +32,5 @@ export class UpdateWidgetPropertyDTO {
     example: '{}',
     description: '组件属性JSON字符串',
   })
-  property: string
+  attributes: string
 }

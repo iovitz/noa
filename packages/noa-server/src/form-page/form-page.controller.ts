@@ -5,6 +5,7 @@ import { VerifyPipe } from 'src/aspects/pipes/verify/verify.pipe'
 import { FileApiPermission, FilePermissionGuard } from 'src/permission/guards/file-permission/file-permission.guard'
 import { REQUEST_TRACER, Tracer } from 'src/services/tracer/tracer.service'
 import { PermissionTypes } from 'src/shared/constans/permission'
+import { In } from 'typeorm'
 import { FormFileIdParamsDTO, FormWidgetParamsDTO, UpdateWidgetPropertyDTO } from './form-page.dto'
 import { FormPageService } from './form-page.service'
 
@@ -25,9 +26,14 @@ export class FormPageController {
   async getFormPage(@Param(VerifyPipe) params: FormFileIdParamsDTO) {
     const page = await this.formPageService.formPageRepository.findOneBy({ id: params.fileId })
     const widgets = await this.formPageService.formWidgetsRepository.findBy({ fileId: params.fileId })
+    const widgetAttributes = await this.formPageService.formWidgetAttributesRepository.findBy({
+      widgetId: In(widgets.map(widget => widget.id)),
+    })
+    // 交给客户端解析
     return {
       ...page,
       widgets,
+      widgetAttributes,
     }
   }
 
@@ -56,17 +62,19 @@ export class FormPageController {
     }
 
     // 传入了Props才变更数据库
-    if (body.property) {
+    if (body.attributes) {
       try {
         // 尝试序列化props，避免数据错误
-        const property = JSON.parse(body.property)
-        const dbProperty = JSON.parse(dbWidget.property)
-
-        Object.keys(property).forEach((field) => {
-          dbProperty[field] = property[field]
+        const attributes = JSON.parse(body.attributes)
+        const updateFields = Object.keys(attributes)
+        const dbAttributes = await this.formPageService.formWidgetAttributesRepository.findBy({
+          widgetId: In(updateFields),
         })
-        dbWidget.property = JSON.stringify(dbProperty)
-        await this.formPageService.formWidgetsRepository.save(dbWidget)
+
+        dbAttributes.forEach((attr) => {
+          attr.value = JSON.stringify(attributes[attr.name])
+        })
+        await this.formPageService.formWidgetAttributesRepository.save(dbAttributes)
       }
       catch (err) {
         this.tracer.error('序列化数据异常', err)
@@ -88,7 +96,9 @@ export class FormPageController {
       throw new UnprocessableEntityException('Widget is already exists!')
     }
     try {
-      JSON.parse(body.property)
+      const attributes: Record<string, unknown> = JSON.parse(body.attributes)
+      const widget = await this.formPageService.createWidget(params.fileId, params.widgetId, attributes)
+      return widget
     }
     catch (error) {
       this.tracer.warn('组件数据有误', {
@@ -96,8 +106,6 @@ export class FormPageController {
       })
       throw new UnprocessableEntityException('组件属性数据有误')
     }
-    const widget = await this.formPageService.createWidget(params.fileId, params.widgetId, body.property)
-    return widget
   }
 
   @Delete(':fileId/widget/:widgetId')
@@ -108,11 +116,8 @@ export class FormPageController {
   @UseGuards(LoginRequiredGuard, FilePermissionGuard)
   async deleteWidget(@Param(VerifyPipe) params: FormWidgetParamsDTO) {
     const existsWidget = await this.formPageService.getWidget(params.widgetId, params.fileId)
-    if (existsWidget) {
-      throw new UnprocessableEntityException('Widget is already exists!')
+    if (!existsWidget) {
+      throw new UnprocessableEntityException('Widget is not exist!')
     }
-    existsWidget.deleted = true
-    await this.formPageService.formWidgetsRepository.save(existsWidget)
-    return true
   }
 }

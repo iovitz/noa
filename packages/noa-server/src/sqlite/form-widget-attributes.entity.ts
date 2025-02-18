@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity('form-widget')
-export class FormWidgets {
+@Entity('form-widget-attributes')
+export class FormWidgetAttributes {
   @PrimaryColumn({
     type: 'varchar',
     length: 30,
@@ -13,7 +13,21 @@ export class FormWidgets {
     type: 'varchar',
     length: 30,
   })
-  fileId: string
+  widgetId: string
+
+  @Column({
+    type: 'varchar',
+    length: 255,
+    comment: '属性名称',
+  })
+  name: string
+
+  @Column({
+    type: 'varchar',
+    length: 1000,
+    comment: '属性名称',
+  })
+  value: string
 
   @Column({
     type: 'boolean',
