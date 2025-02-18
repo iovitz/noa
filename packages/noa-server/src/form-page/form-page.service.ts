@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { InjectRepository } from '@nestjs/typeorm'
+import { pick } from 'lodash'
 import { EncryptService } from 'src/services/encrypt/encrypt.service'
 import { FormPages } from 'src/sqlite/form-pages.entity'
 import { FormWidgets } from 'src/sqlite/form-widget.entity'
 import { FormWidgetAttributes } from 'src/sqlite/form-widget-attributes.entity'
-import { Repository } from 'typeorm'
+import { In, Repository } from 'typeorm'
 
 @Injectable()
 export class FormPageService {
@@ -29,6 +30,27 @@ export class FormPageService {
       id,
       fileId,
     })
+  }
+
+  async getFormData(fileId: string) {
+    const page = await this.formPageRepository.findOne({
+      where: { id: fileId },
+      select: { id: true },
+    })
+    const widgets = await this.formWidgetsRepository.findBy({ fileId, deleted: false })
+    const widgetAttributes = await this.formWidgetAttributesRepository.findBy({
+      widgetId: In(widgets.map(widget => widget.id)),
+    })
+    return {
+      ...pick(page, ['id', 'ownerId', 'shared']),
+      widgets: widgets.map(widget => ({
+        id: widget.id,
+        attributes: widgetAttributes.filter(attr => attr.widgetId === widget.id).reduce((result, attr) => {
+          result[attr.name] = JSON.parse(attr.value)
+          return result
+        }, {}),
+      })),
+    }
   }
 
   async delWidget(existsWidget: FormWidgets) {
@@ -103,6 +125,7 @@ export class FormPageService {
     if (templateId) {
       template = await this.formPageRepository.findOneBy({
         id: templateId,
+        ownerId,
       })
     }
 

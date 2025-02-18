@@ -24,17 +24,8 @@ export class FormPageController {
   @FileApiPermission(PermissionTypes.Readable)
   @UseGuards(LoginRequiredGuard, FilePermissionGuard)
   async getFormPage(@Param(VerifyPipe) params: FormFileIdParamsDTO) {
-    const page = await this.formPageService.formPageRepository.findOneBy({ id: params.fileId })
-    const widgets = await this.formPageService.formWidgetsRepository.findBy({ fileId: params.fileId })
-    const widgetAttributes = await this.formPageService.formWidgetAttributesRepository.findBy({
-      widgetId: In(widgets.map(widget => widget.id)),
-    })
-    // 交给客户端解析
-    return {
-      ...page,
-      widgets,
-      widgetAttributes,
-    }
+    const page = await this.formPageService.getFormData(params.fileId)
+    return page
   }
 
   @Get(':fileId/widget/:widgetId')
