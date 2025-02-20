@@ -1,4 +1,5 @@
 import { IOClient } from '@/io'
+import { logger } from '@/logger'
 import { Widget, WidgetAttributes, WidgetAttributesTypeMap } from '@/widgets'
 import { makeAutoObservable } from 'mobx'
 import { ulid } from 'ulid'
@@ -12,12 +13,14 @@ export class FormEditorStore {
 
   io!: IOClient
 
+  logger = logger.getLogger('FormEditorStore')
+
   widgetMap = new Map<string, Widget>()
 
   changeManager = new EditorChangesetManager()
 
   constructor() {
-    makeAutoObservable(this, { setIO: false })
+    makeAutoObservable(this, { setIO: false, logger: false, io: false })
   }
 
   setIO(io: IOClient) {
@@ -44,13 +47,14 @@ export class FormEditorStore {
   }
 
   async addWidget<T extends keyof WidgetAttributesTypeMap>(attributes: Omit<WidgetAttributesTypeMap[T], 'rank' | 'hidden'>) {
-    if (this.widgetMap.size > 200) {
+    if (this.widgetMap.size + 1 > 200) {
+      this.logger.info('addWidget', 'widget数量已达上限')
       return
     }
     const widgetId = ulid()
     // 计算最大的rank
     // TODO rank可以状态化，避免每次都计算
-    const rank = [...this.widgetMap.values()].reduce((acc, cur) => Math.max(acc, cur.attributes.rank), 0) + 1
+    const rank = [...this.widgetMap.values()].reduce((acc, cur) => Math.max(acc, cur.attributes.rank ?? -1), 0) + 1
     this.widgetMap.set(widgetId, {
       id: widgetId,
       attributes: {
@@ -58,6 +62,10 @@ export class FormEditorStore {
         rank,
         hidden: false,
       },
+    })
+
+    this.logger.info('addWidget', widgetId, {
+      ...this.widgetMap.get(widgetId)?.attributes,
     })
 
     this.changeManager.add({
