@@ -108,6 +108,7 @@ export class FormEditorStore {
       })
     }
     catch (e) {
+      this.logger.info('addWidget', 'widget数量已达上限')
       console.error('syncing fail...', e)
     }
     finally {

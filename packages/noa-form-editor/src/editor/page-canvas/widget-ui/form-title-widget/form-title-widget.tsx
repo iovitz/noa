@@ -12,10 +12,11 @@ export const FormTitleWidget = (props: { id: string }) => {
     <Title
       style={{
         margin: 0,
+        padding: '0 10px',
       }}
       level={widget.attributes.titleLevel as any ?? 3}
     >
-      {widget.attributes.title || '一级标题'}
+      {widget.attributes.title || '标题文本'}
     </Title>
   )
 }
