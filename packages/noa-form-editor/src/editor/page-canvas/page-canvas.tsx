@@ -1,4 +1,5 @@
 import { useFormEditorStore } from '@/store/editor/editor.store'
+import { useWidgetStore } from '@/store/widgets/widget.store'
 import { Space, theme } from 'antd'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
@@ -9,15 +10,19 @@ const { useToken } = theme
 const PageCanvas = observer(() => {
   const { token } = useToken()
   const editorStore = useFormEditorStore()
+  const widgetStore = useWidgetStore()
+
   return (
-    <div style={{
-      height: '100%',
-      width: '100%',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: token.colorFillSecondary,
-    }}
+    <div
+      style={{
+        height: '100%',
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: token.colorFillSecondary,
+      }}
+      onClick={() => widgetStore.handleCancelSelectWidget()}
     >
       <div style={{
         width: 375,
@@ -25,17 +30,14 @@ const PageCanvas = observer(() => {
         overflowY: 'scroll',
         backgroundColor: '#fff',
         boxSizing: 'border-box',
-        padding: '10px',
       }}
       >
-        <Space direction="vertical" size={10} style={{ width: '100%' }}>
-          {
-            // TODO 这里可能有性能损耗
-            [...editorStore.widgetMap.values()].sort((a, b) => a.attributes.rank - b.attributes.rank).map(widget => (
-              <WidgetWrapper key={widget.id} id={widget.id} />
-            ))
-          }
-        </Space>
+        {
+          // TODO 这里可能有性能损耗
+          [...editorStore.widgetMap.values()].sort((a, b) => a.attributes.rank - b.attributes.rank).map(widget => (
+            <WidgetWrapper key={widget.id} id={widget.id} />
+          ))
+        }
       </div>
     </div>
   )

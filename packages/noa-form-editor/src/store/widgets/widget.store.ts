@@ -11,6 +11,10 @@ export class WidgetStore {
     this.selectedWidgetId = id
   }
 
+  handleCancelSelectWidget() {
+    this.selectedWidgetId = ''
+  }
+
   getCurrentSelectedId() {
     return this.selectedWidgetId
   }

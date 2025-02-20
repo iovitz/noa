@@ -1,4 +1,3 @@
-import { css } from '@emotion/css'
 import styled from '@emotion/styled'
 import React, { PropsWithChildren } from 'react'
 
@@ -12,10 +11,7 @@ const Container = styled.div`
 
 export function CenterContainer({ children }: PropsWithChildren) {
   return (
-    <div className={css`
-      width: 100%;
-    `}
-    >
+    <div style={{ height: '100%' }}>
       <Container>{children}</Container>
     </div>
   )
