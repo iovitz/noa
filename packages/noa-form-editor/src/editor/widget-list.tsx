@@ -25,8 +25,6 @@ export default function WidgetList() {
             block
             onClick={() => store.addWidget<WidgetTypes.Title>({
               type: WidgetTypes.Title,
-              rank: 0,
-              hidden: false,
               title: '',
               titleLevel: 5,
             })}
@@ -42,8 +40,6 @@ export default function WidgetList() {
             block
             onClick={() => store.addWidget<WidgetTypes.Text>({
               type: WidgetTypes.Text,
-              rank: 0,
-              hidden: false,
               text: '',
             })}
             size="large"
@@ -58,9 +54,6 @@ export default function WidgetList() {
             block
             onClick={() => store.addWidget({
               type: WidgetTypes.Input,
-              rank: 0,
-              hidden: false,
-              text: '牛逼啊兄弟',
             })}
             size="large"
           >
@@ -74,8 +67,6 @@ export default function WidgetList() {
             block
             onClick={() => store.addWidget({
               type: WidgetTypes.Video,
-              rank: 0,
-              hidden: false,
             })}
             size="large"
           >
@@ -89,8 +80,6 @@ export default function WidgetList() {
             block
             onClick={() => store.addWidget({
               type: WidgetTypes.Video,
-              rank: 0,
-              hidden: false,
             })}
             size="large"
           >
@@ -105,8 +94,6 @@ export default function WidgetList() {
             onClick={() => store.addWidget({
 
               type: WidgetTypes.Video,
-              rank: 0,
-              hidden: false,
             })}
             size="large"
           >
@@ -121,8 +108,6 @@ export default function WidgetList() {
             onClick={() => store.addWidget({
 
               type: WidgetTypes.Video,
-              rank: 0,
-              hidden: false,
             })}
             size="large"
           >
@@ -137,8 +122,6 @@ export default function WidgetList() {
             onClick={() => store.addWidget({
 
               type: WidgetTypes.Video,
-              rank: 0,
-              hidden: false,
             })}
             size="large"
           >
@@ -157,8 +140,6 @@ export default function WidgetList() {
             onClick={() => store.addWidget({
 
               type: WidgetTypes.Video,
-              rank: 0,
-              hidden: false,
             })}
             size="large"
           >
@@ -173,8 +154,6 @@ export default function WidgetList() {
             onClick={() => store.addWidget({
 
               type: WidgetTypes.Video,
-              rank: 0,
-              hidden: false,
             })}
             size="large"
           >
@@ -189,8 +168,6 @@ export default function WidgetList() {
             onClick={() => store.addWidget({
 
               type: WidgetTypes.Video,
-              rank: 0,
-              hidden: false,
             })}
             size="large"
           >
@@ -205,8 +182,6 @@ export default function WidgetList() {
             onClick={() => store.addWidget({
 
               type: WidgetTypes.Video,
-              rank: 0,
-              hidden: false,
             })}
             size="large"
           >
@@ -221,8 +196,6 @@ export default function WidgetList() {
             onClick={() => store.addWidget({
 
               type: WidgetTypes.Video,
-              rank: 0,
-              hidden: false,
             })}
             size="large"
           >
@@ -237,8 +210,6 @@ export default function WidgetList() {
             onClick={() => store.addWidget({
 
               type: WidgetTypes.Video,
-              rank: 0,
-              hidden: false,
             })}
             size="large"
           >
@@ -253,8 +224,6 @@ export default function WidgetList() {
             onClick={() => store.addWidget({
 
               type: WidgetTypes.Video,
-              rank: 0,
-              hidden: false,
             })}
             size="large"
           >
@@ -269,8 +238,6 @@ export default function WidgetList() {
             onClick={() => store.addWidget({
 
               type: WidgetTypes.Video,
-              rank: 0,
-              hidden: false,
             })}
             size="large"
           >
@@ -285,8 +252,6 @@ export default function WidgetList() {
             onClick={() => store.addWidget({
 
               type: WidgetTypes.Video,
-              rank: 0,
-              hidden: false,
             })}
             size="large"
           >
@@ -301,8 +266,6 @@ export default function WidgetList() {
             onClick={() => store.addWidget({
 
               type: WidgetTypes.Video,
-              rank: 0,
-              hidden: false,
             })}
             size="large"
           >
@@ -317,8 +280,6 @@ export default function WidgetList() {
             onClick={() => store.addWidget({
 
               type: WidgetTypes.Video,
-              rank: 0,
-              hidden: false,
             })}
             size="large"
           >
@@ -333,8 +294,6 @@ export default function WidgetList() {
             onClick={() => store.addWidget({
 
               type: WidgetTypes.Video,
-              rank: 0,
-              hidden: false,
             })}
             size="large"
           >

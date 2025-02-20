@@ -43,11 +43,21 @@ export class FormEditorStore {
     console.error(this)
   }
 
-  async addWidget<T extends keyof WidgetAttributesTypeMap>(attributes: WidgetAttributesTypeMap[T]) {
+  async addWidget<T extends keyof WidgetAttributesTypeMap>(attributes: Omit<WidgetAttributesTypeMap[T], 'rank' | 'hidden'>) {
+    if (this.widgetMap.size > 200) {
+      return
+    }
     const widgetId = ulid()
+    // 计算最大的rank
+    // TODO rank可以状态化，避免每次都计算
+    const rank = [...this.widgetMap.values()].reduce((acc, cur) => Math.max(acc, cur.attributes.rank), 0) + 1
     this.widgetMap.set(widgetId, {
       id: widgetId,
-      attributes,
+      attributes: {
+        ...attributes,
+        rank,
+        hidden: false,
+      },
     })
 
     this.changeManager.add({
