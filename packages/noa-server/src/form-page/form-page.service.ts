@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { InjectRepository } from '@nestjs/typeorm'
-import { pick } from 'lodash'
+import { isNil, pick } from 'lodash'
 import { EncryptService } from 'src/services/encrypt/encrypt.service'
 import { FormPages } from 'src/sqlite/form-pages.entity'
 import { FormWidgets } from 'src/sqlite/form-widget.entity'
@@ -91,12 +91,12 @@ export class FormPageService {
       fileId,
     })
     const newAttributes = Object.keys(attributes).reduce<FormWidgetAttributes[]>((result, key) => {
-      if (attributes[key]) {
+      if (!isNil(attributes[key])) {
         result.push(this.formWidgetAttributesRepository.create({
           id: this.encryptService.genPrimaryKey('fatt'),
           widgetId,
           name: key,
-          value: JSON.stringify(key),
+          value: JSON.stringify(attributes[key]),
         }))
       }
       return result

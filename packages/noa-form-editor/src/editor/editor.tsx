@@ -3,8 +3,8 @@ import { useFormEditorStore } from '@/store/editor/editor.store'
 import { ConfigProvider, Spin, theme } from 'antd'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useRef, useState } from 'react'
-import PageCanvas from './page-canvas/page-canvas'
 import PropsPanel from './attribute-panel/attribute-panel'
+import PageCanvas from './page-canvas/page-canvas'
 import WidgetList from './widget-list'
 
 const { useToken } = theme

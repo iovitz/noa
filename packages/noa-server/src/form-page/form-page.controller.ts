@@ -59,7 +59,8 @@ export class FormPageController {
         const attributes = JSON.parse(body.attributes)
         const updateFields = Object.keys(attributes)
         const dbAttributes = await this.formPageService.formWidgetAttributesRepository.findBy({
-          widgetId: In(updateFields),
+          widgetId: dbWidget.id,
+          name: In(updateFields),
         })
 
         dbAttributes.forEach((attr) => {

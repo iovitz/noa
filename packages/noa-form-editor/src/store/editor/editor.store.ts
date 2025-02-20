@@ -40,6 +40,7 @@ export class FormEditorStore {
         attributes: w.attributes,
       })
     })
+    console.error(this)
   }
 
   async addWidget<T extends keyof WidgetAttributesTypeMap>(attributes: WidgetAttributesTypeMap[T]) {
