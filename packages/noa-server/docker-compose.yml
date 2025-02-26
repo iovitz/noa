@@ -5,9 +5,9 @@ services:
     image: nginx:latest
     container_name: nginx-container
     ports:
-      - "80:80"
-      - "443:443"
-      - "12100-12103:12100-12103"
+      - '80:80'
+      - '443:443'
+      - '12100-12103:12100-12103'
     volumes:
       - ~/docker-configs/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ~/docker-configs/nginx/html:/usr/share/nginx/html

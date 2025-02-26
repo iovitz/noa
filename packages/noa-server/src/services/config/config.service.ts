@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common'
 import * as config from 'config'
-import { isNil } from 'lodash'
 import { Tracer } from '../tracer/tracer.service'
 
 @Injectable()
