@@ -29,6 +29,7 @@ export const TextAttributeUI = observer(({ widgetId }: { widgetId: string }) => 
             text: e.target.value ?? '',
           })
         }}
+        variant="filled"
         showCount
         style={{ height: 120, resize: 'none' }}
         maxLength={1000}

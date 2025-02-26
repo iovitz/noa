@@ -12,28 +12,44 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 部署到预发环境
-      - name: Deploy To Pre
-        uses: appleboy/ssh-action@v1.1.0
+      # Step 1: Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Step 2: Set up pnpm
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v2
         with:
-          host: '${{ secrets.SERVER_VPS_HOST }}'
-          username: root
-          key: ${{ secrets.SERVER_VPS_KEY }}
+          version: 9.x # 指定 pnpm 版本
+
+      # Step 3: Install dependencies using pnpm
+      - name: Install dependencies
+        run: pnpm install # 使用 pnpm 安装项目依赖
+
+      # Step 4: Build project
+      - name: Build project
+        run: |
+          cd packages/noa-server
+          pnpm build
+
+      # Step 5: Deploy to server
+      - name: Upload dist to FTP server
+        uses: appleboy/ftp-action@v1.1.0
+        with:
+          host: your-ftp-server.com # FTP 服务器地址
+          username: ${{ secrets.SERVER_DEPLOY_USERNAME }} # 从 GitHub Secrets 中提取 FTP 用户名
+          password: ${{ secrets.SERVER_DEPLOY_PASSWORD }} # 从 GitHub Secrets 中提取 FTP 密码
+          port: 21 # 默认 FTP 端口
+          source: './dist/*' # 本地的 dist 目录
+          target: /home/noa/apps/noa # 目标目录，在服务器上是 noa 用户的 ~/apps/noa
+
+      # Step 6: SSH into server and reload with pm2
+      - name: SSH and reload with pm2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_DEPLOY_USERNAME }}
+          password: ${{ secrets.SERVER_DEPLOY_PASSWORD }}
           script: |
-            echo 'Set Environment Variable'
-            export REDIS_CONNECT_URL="${{ secrets.REDIS_CONNECT_URL }}"
-
-            echo 'Update Code'
-            cd ~/apps/noa/packages/noa-server/
-
-            git reset --hard
-            git clean -fd
-
-            git pull
-
-            echo 'Install Dependence & Build'
-            pnpm i
-            pnpm build
-
-            echo 'Reload Server'
-            pm2 startOrReload --wait-ready ecosystem.config.js
+            cd /home/noa/apps/noa
+            pm2 reload ./ecosystem.config.js

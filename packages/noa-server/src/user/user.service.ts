@@ -1,5 +1,5 @@
 import { Inject, Injectable, UnprocessableEntityException } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
+import { ConfigService } from 'src/services/config/config.service'
 import { InjectRepository } from '@nestjs/typeorm'
 import Redis from 'ioredis'
 import stringify from 'safe-stable-stringify'

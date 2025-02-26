@@ -1,5 +1,5 @@
 import { useFormEditorStore } from '@/store/editor/editor.store'
-import { Input, Select, Typography } from 'antd'
+import { Select, Typography } from 'antd'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
 
@@ -7,13 +7,13 @@ const { Title } = Typography
 
 export const TitleLevelAttributeUI = observer(({ widgetId }: { widgetId: string }) => {
   const editorStore = useFormEditorStore()
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState('1')
   const currentWidgetAttributes = editorStore.getWidgetById(widgetId)!.attributes as {
-    titleLevel?: string
+    titleLevel?: number
   }
 
   useEffect(() => {
-    setValue(currentWidgetAttributes.titleLevel ?? '')
+    setValue(currentWidgetAttributes.titleLevel ? `${currentWidgetAttributes.titleLevel}` : '1')
   }, [widgetId])
 
   return (
@@ -27,6 +27,7 @@ export const TitleLevelAttributeUI = observer(({ widgetId }: { widgetId: string 
             titleLevel: Number(v),
           })
         }}
+        variant="filled"
         value={value}
         options={[
           { value: '1', label: <span>一级标题</span> },

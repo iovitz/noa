@@ -1,3 +1,4 @@
+import type ConfigJSONType from '../config/default.json'
 import { Request, Response } from 'express'
 import { Tracer } from './services/tracer/tracer.service'
 
@@ -26,4 +27,6 @@ declare global {
     export interface Request {}
     export interface Response {}
   }
+
+  type ConfigType = ConfigJSONType
 }

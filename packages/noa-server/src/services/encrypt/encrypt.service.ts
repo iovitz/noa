@@ -1,10 +1,10 @@
 import { Buffer } from 'node:buffer'
 import { createHash } from 'node:crypto'
 import { Injectable } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { AES } from 'crypto-js'
 import { gzip, ungzip } from 'pako'
 import { stringify } from 'safe-stable-stringify'
+import { ConfigService } from 'src/services/config/config.service'
 import { ulid } from 'ulid'
 
 @Injectable()

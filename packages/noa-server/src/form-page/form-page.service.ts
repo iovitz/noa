@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { InjectRepository } from '@nestjs/typeorm'
 import { isNil, pick } from 'lodash'
+import { ConfigService } from 'src/services/config/config.service'
 import { EncryptService } from 'src/services/encrypt/encrypt.service'
 import { FormPages } from 'src/sqlite/form-pages.entity'
 import { FormWidgets } from 'src/sqlite/form-widget.entity'
@@ -152,7 +152,7 @@ export class FormPageService {
   }
 
   async isWidgetNumberWillOversize(fileId: string) {
-    const maxWidgetNumber = Number(this.config.get('MAX_WIDGET_NUMBER') ?? 0)
+    const maxWidgetNumber = this.config.get('MAX_WIDGET_NUMBER', 0)
     const existsWidgetsNumber = await this.formWidgetsRepository.countBy({
       fileId,
       deleted: false,

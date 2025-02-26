@@ -29,6 +29,7 @@ export const TitleAttributesUI = observer(({ widgetId }: { widgetId: string }) =
             title: e.target.value ?? '',
           })
         }}
+        variant="filled"
         showCount
         maxLength={100}
       />
