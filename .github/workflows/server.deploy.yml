@@ -34,14 +34,13 @@ jobs:
 
       # Step 5: Deploy to server
       - name: Upload dist to FTP server
-        uses: appleboy/ftp-action@v1.1.0
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          host: your-ftp-server.com # FTP 服务器地址
-          username: ${{ secrets.SERVER_DEPLOY_USERNAME }} # 从 GitHub Secrets 中提取 FTP 用户名
-          password: ${{ secrets.SERVER_DEPLOY_PASSWORD }} # 从 GitHub Secrets 中提取 FTP 密码
-          port: 21 # 默认 FTP 端口
-          source: './dist/*' # 本地的 dist 目录
-          target: /home/noa/apps/noa # 目标目录，在服务器上是 noa 用户的 ~/apps/noa
+          server: ${{ secrets.CLIENT_SERVER_HOST }}
+          username: ${{ secrets.SERVER_DEPLOY_USERNAME }}
+          password: ${{ secrets.SERVER_DEPLOY_PASSWORD }}
+          local-dir: packages/noa-server/dist/
+          server-dir: /home/noa/apps/noa
 
       # Step 6: SSH into server and reload with pm2
       - name: SSH and reload with pm2
