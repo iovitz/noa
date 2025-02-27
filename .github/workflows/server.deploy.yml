@@ -22,33 +22,46 @@ jobs:
         with:
           version: 9.x # 指定 pnpm 版本
 
-      # Step 3: Install dependencies using pnpm
-      - name: Install dependencies
-        run: pnpm install # 使用 pnpm 安装项目依赖
-
-      # Step 4: Build project
-      - name: Build project
+      - name: Install dependencies and Build
         run: |
+          export NOA_CI_TEMP_PATH=$(uuidgen)
+          rm pnpm-workspace.yaml
           cd packages/noa-server
+          pnpm install --no-frozen-lockfile
           pnpm build
+          node ./scripts/update-env.js
+          cp ecosystem.config.js dist/
+          cp config/production.json dist/config/production.json
+          mv dist ../../noa-ci
 
-      # Step 5: Deploy to server
-      - name: Upload dist to FTP server
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_DEPLOY_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Upload files via SCP
+        uses: appleboy/scp-action@v0.1.7
         with:
-          server: ${{ secrets.CLIENT_SERVER_HOST }}
+          host: ${{ secrets.SERVER_DEPLOY_HOST }}
           username: ${{ secrets.SERVER_DEPLOY_USERNAME }}
           password: ${{ secrets.SERVER_DEPLOY_PASSWORD }}
-          local-dir: packages/noa-server/dist/
-          server-dir: /home/noa/apps/noa
+          rm: true
+          strip_components: 1
+          source: 'noa-ci/*'
+          target: /home/noa/tmp/noa-ci
 
       # Step 6: SSH into server and reload with pm2
       - name: SSH and reload with pm2
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.SERVER_HOST }}
+          host: ${{ secrets.SERVER_DEPLOY_HOST }}
           username: ${{ secrets.SERVER_DEPLOY_USERNAME }}
           password: ${{ secrets.SERVER_DEPLOY_PASSWORD }}
           script: |
+            mkdir -p /home/noa/apps/noa
             cd /home/noa/apps/noa
+            find . -maxdepth 1 ! -name 'node_modules' ! -name '.' ! -name '..' -exec rm -rf {} +
+            rsync -av /home/noa/tmp/noa-ci/ ./
+            pnpm install --production --no-frozen-lockfile
             pm2 reload ./ecosystem.config.js

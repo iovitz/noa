@@ -34,7 +34,6 @@ async function bootstrap() {
   app.setBaseViewsDir('views')
   app.setViewEngine('ejs')
 
-  // 允许跨域
   // app.enableCors({});
 
   // swagger

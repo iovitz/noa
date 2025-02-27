@@ -1,6 +1,14 @@
 version: '3.7'
 
 services:
+  noa-redis:
+    image: bitnami/redis:latest
+    container_name: noa-redis
+    restart: always
+    environment:
+      - REDIS_PASSWORD=123123
+    ports:
+      - 6379:6379
   nginx:
     image: nginx:latest
     container_name: nginx-container
@@ -12,11 +20,3 @@ services:
       - ~/docker-configs/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ~/docker-configs/nginx/html:/usr/share/nginx/html
     restart: always
-  nest-app-redis:
-    image: bitnami/redis:latest
-    container_name: noa-redis
-    restart: always
-    environment:
-      - REDIS_PASSWORD=noa
-    ports:
-      - 6379:6379
