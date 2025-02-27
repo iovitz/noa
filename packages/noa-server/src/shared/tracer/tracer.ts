@@ -36,6 +36,13 @@ export function createRootLogger() {
       }),
     ],
   })
+  let instanceId = `${process.pid}`
+  if (process.env.NODE_APP_INSTANCE) {
+    instanceId += `-${process.env.NODE_APP_INSTANCE}`
+  }
+  if (process.env.pm_id) {
+    instanceId += `-${process.env.pm_id}`
+  }
 
   // 开发环境启用控制台日志
   if (!isProd) {
@@ -52,7 +59,7 @@ export function createRootLogger() {
               timestamp,
               level,
               message,
-              pid,
+              instanceId,
               name,
               tracerId,
               scope,
@@ -63,7 +70,7 @@ export function createRootLogger() {
             // 错误日志特别输出
             const restStr = isEmpty(rest) ? '' : stringify(rest)
             const levelChalk = logLevelColors[level as string] ?? chalk.blue
-            return `${levelChalk(level)} ${chalk.gray(timestamp)}${chalk.blue(insertOutput(scope))}${chalk.yellow(insertOutput(tracerId))}${chalk.green(insertOutput(name))}${insertOutput(message)}${insertOutput(payload)}${insertOutput(
+            return `${levelChalk(level)}${insertOutput(instanceId)} ${chalk.gray(timestamp)}${chalk.blue(insertOutput(scope))}${chalk.yellow(insertOutput(tracerId))}${chalk.green(insertOutput(name))}${insertOutput(message)}${insertOutput(payload)}${insertOutput(
               stack,
             )}${insertOutput(restStr)}`.replace(/[\r\n]+/g, '↵')
           }),
@@ -72,7 +79,7 @@ export function createRootLogger() {
     )
   }
   return rootLogger.child({
-    pid: process.pid,
+    instanceId,
   })
 }
 
@@ -116,7 +123,7 @@ function formatOutput(info: LogInfo) {
     level,
     message,
     name,
-    pid,
+    instanceId,
     scope,
     stack,
     tracerId,
@@ -125,7 +132,7 @@ function formatOutput(info: LogInfo) {
   } = omit(info, ERROR, SPLAT, LEVEL, MESSAGE)
   // 错误日志特别输出
   const restStr = isEmpty(rest) ? '' : stringify(rest)
-  return `${[timestamp]}${insertOutput(pid)} ${level}${insertOutput(scope)}${insertOutput(tracerId)}${insertOutput(name)}${insertOutput(message)}${insertOutput(payload)}${insertOutput(
+  return `${[timestamp]}${insertOutput(instanceId)} ${level}${insertOutput(scope)}${insertOutput(tracerId)}${insertOutput(name)}${insertOutput(message)}${insertOutput(payload)}${insertOutput(
     stack,
   )}${insertOutput(restStr)}`.replace(/[\r\n]+/g, '↵')
 }
