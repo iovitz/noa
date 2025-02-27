@@ -95,8 +95,8 @@ function getCommonRotateFileOption(
   return {
     level,
     dirname: path.join(homedir(), 'logs', pkg.name),
-    filename: `${level}-%DATE%.log`,
-    datePattern: 'YYYY-MM-DD',
+    filename: `${level}.log`,
+    datePattern: 'DD-MM-YYYY',
     zippedArchive: true,
     maxSize: '20m',
     maxFiles: '3d',
