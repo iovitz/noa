@@ -1,16 +1,4 @@
-const { writeFileSync } = require('node:fs')
-
 const INSTANCES = 2
-
-// 构建实例配置文件
-for (let i = 0; i < INSTANCES; i++) {
-  const instanceConfigFile = `./config/default-${i}.json`
-  const configContent = {
-    INSTANCE_NAME: `NOA_APP_${i}`,
-    // port: 3000 + i,
-  }
-  writeFileSync(instanceConfigFile, JSON.stringify(configContent, null, 2))
-}
 
 module.exports = {
   apps: [
