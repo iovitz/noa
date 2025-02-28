@@ -5,6 +5,9 @@ import { CookieKeys } from '../../shared/constans/cookie'
 export const ClientIP = createParamDecorator(
   (_: string, ctx: ExecutionContext) => {
     const req = ctx.switchToHttp().getRequest<Req>()
+    if (!req.ip) {
+      return '0.0.0.0'
+    }
     return req.ip.match(/\d+\.\d+\.\d+\.\d+/)?.[0]
   },
 )
