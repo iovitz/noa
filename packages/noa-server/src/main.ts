@@ -4,6 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import * as pkg from '../package.json'
 import { AppModule } from './app.module'
 import { Tracer } from './services/tracer/tracer.service'
+import { RcConfig } from './shared/config'
 import { appLogger, formatLogContext } from './shared/tracer/tracer'
 
 // 防止未捕获异常导致进程退出
@@ -24,6 +25,8 @@ async function bootstrap() {
   appTracer.log('Application Running', {
     version: pkg.version,
   })
+
+  appTracer.log('Environment Vars', JSON.stringify(RcConfig))
 
   app.useStaticAssets('public', {
     // 虚拟路径为 static

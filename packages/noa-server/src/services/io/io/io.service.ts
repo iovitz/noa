@@ -1,6 +1,6 @@
 import { IncomingHttpHeaders } from 'node:http'
 import { Injectable } from '@nestjs/common'
-import * as superagent from 'superagent'
+import superagent from 'superagent'
 
 @Injectable()
 export class IoService {
