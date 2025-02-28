@@ -61,5 +61,5 @@ jobs:
             cd /home/noa/apps/noa
             find . -maxdepth 1 ! -name 'node_modules' ! -name '.' ! -name '..' -exec rm -rf {} +
             rsync -av /home/noa/tmp/noa-ci/ ./
-            pnpm install --production --no-frozen-lockfile
+            pnpm install --no-frozen-lockfile
             pm2 reload ./ecosystem.config.js
