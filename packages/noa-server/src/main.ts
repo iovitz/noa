@@ -9,7 +9,7 @@ import { appLogger, formatLogContext } from './shared/tracer/tracer'
 
 // 防止未捕获异常导致进程退出
 process.on('unhandledRejection', (reason: Error) => {
-  appLogger.error('###Unhandle Rejection Promise', formatLogContext(reason))
+  appLogger.error('### Unhandle Rejection Promise', formatLogContext(reason))
 })
 
 async function bootstrap() {
