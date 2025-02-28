@@ -3,7 +3,7 @@ import rc from 'rc'
 const AppName = process.env.npm_package_name ?? 'nestapp'
 
 const defaultConfig = {
-  APP_PORT: process.env.PORT ?? 3000,
+  APP_PORT: process.env.PORT ?? 19001,
 
   ENCRYPT_AES_ENCRYPT_KEY: '',
 

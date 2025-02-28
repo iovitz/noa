@@ -16,8 +16,14 @@ export class Tracer implements LoggerService {
     this.logger.info(message, formatLogContext(context))
   }
 
-  error(message: string, context?: LogContext) {
-    this.logger.error(message, formatLogContext(context))
+  error(message: string | Error, context?: LogContext) {
+    // Nest内部抛出的异常
+    if (typeof message === 'string') {
+      this.logger.error(message, formatLogContext(context))
+    }
+    else {
+      this.logger.error('System Error', formatLogContext(message))
+    }
   }
 
   warn(message: string, context?: LogContext) {

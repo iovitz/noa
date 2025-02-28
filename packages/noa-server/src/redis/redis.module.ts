@@ -1,4 +1,4 @@
-import { Global, Module } from '@nestjs/common'
+import { Global, Module, OnModuleInit } from '@nestjs/common'
 import Redis from 'ioredis'
 import { ConfigService } from 'src/services/config/config.service'
 import { Tracer } from 'src/services/tracer/tracer.service'
@@ -15,6 +15,7 @@ export const REDIS_CLIENT = Symbol('REDIS_CLIENT')
       const redis = new Redis({
         host: configService.get('REDIS_HOST'),
         password: configService.get('REDIS_PASS'),
+        maxRetriesPerRequest: 3,
       })
       await redis.ping() // ping 方法用于测试连接是否正常
       tracer.log('Redis Ready')
