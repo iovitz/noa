@@ -36,7 +36,11 @@ export function createRootLogger() {
       }),
     ],
   })
-  const instanceId = `${process.pid}(${process.env.NODE_APP_INSTANCE ?? ''},${process.env.pm_id ?? ''})`
+  let instanceId = `${process.pid}`
+  const instanceSymbols = [process.env.NODE_APP_INSTANCE, process.env.pm_id].filter(id => !isNil(id))
+  if (instanceSymbols.length > 0) {
+    instanceId += `(${instanceSymbols.join(',')})`
+  }
 
   // 开发环境启用控制台日志
   if (!isProd) {
