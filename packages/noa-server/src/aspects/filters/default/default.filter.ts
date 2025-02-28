@@ -7,7 +7,7 @@ import {
 import { contentType } from 'mime-types'
 import { Tracer } from 'src/services/tracer/tracer.service'
 import { HeaderKeys } from 'src/shared/constans/header'
-import * as status from 'statuses'
+import status from 'statuses'
 
 @Catch(Error)
 export class DefaultFilter implements ExceptionFilter {

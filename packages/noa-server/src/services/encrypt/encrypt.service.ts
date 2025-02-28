@@ -40,14 +40,14 @@ export class EncryptService {
   aesEncrypt(message) {
     return AES.encrypt(
       message,
-      this.configService.getOrThrow('AES_ENCRYPT_KEY'),
+      this.configService.get('ENCRYPT_AES_ENCRYPT_KEY'),
     ).toString()
   }
 
   aesDecrypt(encrypted) {
     return AES.decrypt(
       encrypted,
-      this.configService.getOrThrow('AES_ENCRYPT_KEY'),
+      this.configService.get('ENCRYPT_AES_ENCRYPT_KEY'),
     ).toString(CryptoJS.enc.Utf8)
   }
 }

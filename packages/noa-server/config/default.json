@@ -1,6 +1,0 @@
-{
-  "REDIS_HOST": "127.0.0.1",
-  "REDIS_PASS": "123123",
-
-  "MAX_WIDGET_NUMBER": 250
-}

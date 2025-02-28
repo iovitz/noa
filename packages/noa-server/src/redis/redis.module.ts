@@ -13,7 +13,7 @@ export const REDIS_CLIENT = Symbol('REDIS_CLIENT')
     useFactory: async (configService: ConfigService) => {
       const tracer = new Tracer(RedisModule.name)
       const redis = new Redis({
-        host: configService.getOrThrow('REDIS_HOST'),
+        host: configService.get('REDIS_HOST'),
         password: configService.get('REDIS_PASS'),
       })
       await redis.ping() // ping 方法用于测试连接是否正常

@@ -152,7 +152,7 @@ export class FormPageService {
   }
 
   async isWidgetNumberWillOversize(fileId: string) {
-    const maxWidgetNumber = this.config.get('MAX_WIDGET_NUMBER', 0)
+    const maxWidgetNumber = this.config.get('BIZ_WIDGET_MAX_NUMBER')
     const existsWidgetsNumber = await this.formWidgetsRepository.countBy({
       fileId,
       deleted: false,

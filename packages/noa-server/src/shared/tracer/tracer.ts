@@ -2,12 +2,13 @@ import type { DailyRotateFileTransportOptions } from 'winston-daily-rotate-file'
 import { homedir } from 'node:os'
 import * as path from 'node:path'
 import * as process from 'node:process'
-import * as chalk from 'chalk'
+import chalk from 'chalk'
 import { isEmpty, isNil, omit } from 'lodash'
 import * as pkg from 'package.json'
 import { stringify } from 'safe-stable-stringify'
 import { LEVEL, MESSAGE, SPLAT } from 'triple-beam'
 import { createLogger, format, transports } from 'winston'
+import { config } from '../config'
 import { ErrorContext, Format, FormatedContext, LogContext, LogInfo } from './tracer.types'
 import 'winston-daily-rotate-file'
 
@@ -23,19 +24,7 @@ const logLevelColors = {
 
 export const appLogger = createRootLogger()
 export function createRootLogger() {
-  const rootLogger = createLogger({
-    transports: [
-      new transports.DailyRotateFile({
-        ...getCommonRotateFileOption('info'),
-      }),
-      new transports.DailyRotateFile({
-        ...getCommonRotateFileOption('warn'),
-      }),
-      new transports.DailyRotateFile({
-        ...getCommonRotateFileOption('error'),
-      }),
-    ],
-  })
+  const rootLogger = createLogger()
   let instanceId = `${process.pid}`
   const instanceSymbols = [process.env.NODE_APP_INSTANCE, process.env.pm_id].filter(id => !isNil(id))
   if (instanceSymbols.length > 0) {
@@ -75,6 +64,20 @@ export function createRootLogger() {
         ),
       }),
     )
+  }
+  else {
+    if (config.get('BIZ_WIDGET_MAX_NUMBER')) {
+      // 生产环境使用环境变量控制是否使用日志轮转
+      rootLogger.add(new transports.DailyRotateFile({
+        ...getCommonRotateFileOption('info'),
+      }))
+      rootLogger.add(new transports.DailyRotateFile({
+        ...getCommonRotateFileOption('warn'),
+      }))
+      rootLogger.add(new transports.DailyRotateFile({
+        ...getCommonRotateFileOption('error'),
+      }))
+    }
   }
   return rootLogger.child({
     instanceId,
