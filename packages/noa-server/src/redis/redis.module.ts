@@ -1,4 +1,4 @@
-import { Global, Module, OnModuleInit } from '@nestjs/common'
+import { Global, Module } from '@nestjs/common'
 import Redis from 'ioredis'
 import { ConfigService } from 'src/services/config/config.service'
 import { Tracer } from 'src/services/tracer/tracer.service'
