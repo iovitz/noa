@@ -1,4 +1,3 @@
-import { get } from 'lodash'
 import rc from 'rc'
 
 const AppName = process.env.npm_package_name ?? 'nestapp'
