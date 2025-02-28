@@ -29,9 +29,7 @@ jobs:
           cd packages/noa-server
           pnpm install --no-frozen-lockfile
           pnpm build
-          node ./scripts/update-env.js
           cp ecosystem.config.js dist/
-          cp config/production.json dist/config/production.json
           mv dist ../../noa-ci
 
       - name: Set up SSH key
