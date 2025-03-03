@@ -10,7 +10,7 @@ module.exports = {
     $shared: {
     },
     dev: {
-      host: 'http://107.175.62.143:19001',
+      host: 'http://localhost:19001',
     },
     prod: {
       host: 'http://localhost:19001',
