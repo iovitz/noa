@@ -10,6 +10,8 @@ const defaultConfig = {
   REDIS_HOST: '127.0.0.1',
   REDIS_PASS: '123123',
 
+  SWAGGER_ENABLE: false,
+
   BIZ_WIDGET_MAX_NUMBER: 250,
 
   LOG_FILE_ROTATE: false,
