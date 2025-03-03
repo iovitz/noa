@@ -99,7 +99,7 @@ function getNoRotateLogOption(
     dirname: path.join('/var/log', pkg.name),
     filename: `${level}.log`,
     maxFiles: 1,
-    maxsize: 200 * 1000 * 1000,
+    maxsize: 1 * 1000 * 1000,
     zippedArchive: true,
     format: format.combine(...getCommonStyleFormat()),
   })
