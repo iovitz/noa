@@ -3,7 +3,6 @@ import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import * as pkg from '../package.json'
 import { AppModule } from './app.module'
-import { Tracer } from './services/tracer/tracer.service'
 import { BootstrapFn, startNestApp } from './shared/bootstrap'
 import { RcConfig } from './shared/config'
 
@@ -22,7 +21,11 @@ const bootstrap: BootstrapFn = async (appTracer) => {
   app.setBaseViewsDir('views')
   app.setViewEngine('ejs')
 
-  // app.enableCors({});
+  // 跨域
+  // app.enableCors({
+  //   origin: (_, callback) => callback(null, true),
+  //   credentials: true,
+  // })
 
   // swagger
   if (RcConfig.SWAGGER_ENABLE) {
