@@ -6,12 +6,17 @@ import { AppModule } from './app.module'
 import { Tracer } from './services/tracer/tracer.service'
 import { RcConfig } from './shared/config'
 
+const nodeEnv = process.env.NODE_ENV
 const appTracer = new Tracer('APP')
 
 appTracer.error('Application Running', {
   version: pkg.version,
   env: JSON.stringify(RcConfig),
+  nodeEnv,
 })
+if (nodeEnv !== 'production') {
+  appTracer.error('App Not Running In Production Mode!!!')
+}
 
 // 防止未捕获异常导致进程退出
 process.on('unhandledRejection', (reason: Error) => {
