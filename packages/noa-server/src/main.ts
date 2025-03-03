@@ -11,7 +11,8 @@ const appTracer = new Tracer('APP')
 
 appTracer.error('Application Running', {
   version: pkg.version,
-  env: JSON.stringify(RcConfig),
+  config: JSON.stringify(RcConfig),
+  env: JSON.stringify(process.env),
   nodeEnv,
 })
 if (nodeEnv !== 'production') {

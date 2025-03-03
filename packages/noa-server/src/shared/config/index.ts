@@ -12,7 +12,7 @@ const defaultConfig = {
 
   BIZ_WIDGET_MAX_NUMBER: 250,
 
-  LOG_FILE_ROTATE: true,
+  LOG_FILE_ROTATE: false,
   LOG_FILE_LOGGING: false,
   LOG_CONSOLE_LOGGING: true,
 

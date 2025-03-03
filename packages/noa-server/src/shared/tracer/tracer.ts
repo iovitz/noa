@@ -7,6 +7,7 @@ import * as pkg from 'package.json'
 import { stringify } from 'safe-stable-stringify'
 import { LEVEL, MESSAGE, SPLAT } from 'triple-beam'
 import { createLogger, format, transports } from 'winston'
+import { FileTransportOptions } from 'winston/lib/winston/transports'
 import { config } from '../config'
 import { ErrorContext, Format, FormatedContext, LogContext, LogInfo } from './tracer.types'
 import 'winston-daily-rotate-file'
@@ -67,19 +68,16 @@ export function createRootLogger() {
   else {
     // 生产环境使用环境变量控制是否使用日志轮转
     if (config.get('LOG_FILE_ROTATE')) {
-      rootLogger.add(new transports.DailyRotateFile({
-        ...getCommonRotateFileOption('info'),
-      }))
-      rootLogger.add(new transports.DailyRotateFile({
-        ...getCommonRotateFileOption('warn'),
-      }))
-      rootLogger.add(new transports.DailyRotateFile({
-        ...getCommonRotateFileOption('error'),
-      }))
+      rootLogger.add(getRotateLogTransport('info'))
+      rootLogger.add(getRotateLogTransport('warn'))
+      rootLogger.add(getRotateLogTransport('error'))
       rootLogger.info('Log with winston rotate!')
     }
     else {
       // 使用linux的logrotate库进行轮转
+      rootLogger.add(getNoRotateLogOption('info'))
+      rootLogger.add(getNoRotateLogOption('warn'))
+      rootLogger.add(getNoRotateLogOption('error'))
       rootLogger.info('Log without rotate!')
     }
   }
@@ -94,10 +92,25 @@ function getCommonStyleFormat(): Format[] {
     format.printf(formatOutput),
   ]
 }
-function getCommonRotateFileOption(
+
+function getNoRotateLogOption(
   level: string,
-): DailyRotateFileTransportOptions {
-  return {
+) {
+  return new transports.File({
+    level,
+    dirname: path.join('/var/log', pkg.name),
+    filename: `${level}.log`,
+    maxFiles: 1,
+    maxsize: 200 * 1000 * 1000,
+    zippedArchive: true,
+    format: format.combine(...getCommonStyleFormat()),
+  })
+}
+
+function getRotateLogTransport(
+  level: string,
+) {
+  return new transports.DailyRotateFile({
     level,
     dirname: path.join('/var/log', pkg.name),
     filename: `${level}.log`,
@@ -106,7 +119,7 @@ function getCommonRotateFileOption(
     maxSize: '20m',
     maxFiles: '3d',
     format: format.combine(...getCommonStyleFormat()),
-  }
+  })
 }
 
 function insertOutput(v: unknown) {
