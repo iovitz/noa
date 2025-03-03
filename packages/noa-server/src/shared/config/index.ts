@@ -5,7 +5,7 @@ const AppName = process.env.npm_package_name ?? 'nestapp'
 const defaultConfig = {
   APP_PORT: process.env.PORT ?? 19001,
 
-  ENCRYPT_AES_ENCRYPT_KEY: '',
+  ENCRYPT_AES_ENCRYPT_KEY: '9QkRaZ',
 
   REDIS_HOST: '127.0.0.1',
   REDIS_PASS: '123123',

@@ -1,5 +1,4 @@
 import type { DailyRotateFileTransportOptions } from 'winston-daily-rotate-file'
-import { homedir } from 'node:os'
 import * as path from 'node:path'
 import * as process from 'node:process'
 import chalk from 'chalk'
@@ -77,9 +76,11 @@ export function createRootLogger() {
       rootLogger.add(new transports.DailyRotateFile({
         ...getCommonRotateFileOption('error'),
       }))
+      rootLogger.info('Log with winston rotate!')
     }
     else {
       // 使用linux的logrotate库进行轮转
+      rootLogger.info('Log without rotate!')
     }
   }
   return rootLogger.child({
