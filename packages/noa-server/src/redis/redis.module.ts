@@ -18,7 +18,7 @@ export const REDIS_CLIENT = Symbol('REDIS_CLIENT')
         maxRetriesPerRequest: 3,
       })
       await redis.ping() // ping 方法用于测试连接是否正常
-      tracer.log('Redis Ready')
+      tracer.info('Redis Ready')
       return redis
     },
   }],

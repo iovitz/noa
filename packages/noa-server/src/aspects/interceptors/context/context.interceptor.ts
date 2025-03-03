@@ -22,7 +22,7 @@ export class ContextInterceptor implements NestInterceptor {
     // 注入PageId
     req.pageId = get(req, 'params.pageId', null)
 
-    this.tracer.log(`+REQ：${method} ${originalUrl}`, {
+    this.tracer.info(`+REQ：${method} ${originalUrl}`, {
       tracerId: req.tracerId,
       body: req.body,
       query: req.query,
@@ -30,7 +30,7 @@ export class ContextInterceptor implements NestInterceptor {
 
     return next.handle().pipe(
       map((data) => {
-        this.tracer.log('-REQ', {
+        this.tracer.info('-REQ', {
           tracerId: req.tracerId,
           cost: req.getCostNs(),
         })

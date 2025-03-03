@@ -6,7 +6,7 @@ import * as pkg from 'package.json'
 import { stringify } from 'safe-stable-stringify'
 import { LEVEL, MESSAGE, SPLAT } from 'triple-beam'
 import { createLogger, format, transports } from 'winston'
-import { config } from '../config'
+import { RcConfig } from '../config'
 import { ErrorContext, Format, FormatedContext, LogContext, LogInfo } from './tracer.types'
 import 'winston-daily-rotate-file'
 
@@ -21,8 +21,11 @@ const logLevelColors = {
 }
 
 export const appLogger = createRootLogger()
+
 export function createRootLogger() {
-  const rootLogger = createLogger()
+  const rootLogger = createLogger({
+    level: RcConfig.LOG_LEVEL,
+  })
   let instanceId = `${process.pid}`
   const instanceSymbols = [process.env.NODE_APP_INSTANCE, process.env.pm_id].filter(id => !isNil(id))
   if (instanceSymbols.length > 0) {
@@ -64,20 +67,11 @@ export function createRootLogger() {
     )
   }
   else {
-    // 生产环境使用环境变量控制是否使用日志轮转
-    if (config.get('LOG_FILE_ROTATE')) {
-      rootLogger.add(getRotateLogTransport('info'))
-      rootLogger.add(getRotateLogTransport('warn'))
-      rootLogger.add(getRotateLogTransport('error'))
-      rootLogger.info('Log with winston rotate!')
-    }
-    else {
-      // 使用linux的logrotate库进行轮转
-      rootLogger.add(getNoRotateLogOption('info'))
-      rootLogger.add(getNoRotateLogOption('warn'))
-      rootLogger.add(getNoRotateLogOption('error'))
-      rootLogger.info('Log without rotate!')
-    }
+    // 生产环境使用日志轮转
+    rootLogger.add(getRotateLogTransport('info'))
+    rootLogger.add(getRotateLogTransport('warn'))
+    rootLogger.add(getRotateLogTransport('error'))
+    rootLogger.info('Log with winston rotate!')
   }
   return rootLogger.child({
     instanceId,
@@ -89,21 +83,6 @@ function getCommonStyleFormat(): Format[] {
     format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }),
     format.printf(formatOutput),
   ]
-}
-
-function getNoRotateLogOption(
-  level: string,
-) {
-  return new transports.File({
-    level,
-    dirname: path.join('/var/log', pkg.name),
-    filename: `${level}.log`,
-    maxFiles: 2,
-    maxsize: 1 * 1000 * 1000,
-    tailable: true,
-    zippedArchive: true,
-    format: format.combine(...getCommonStyleFormat()),
-  })
 }
 
 function getRotateLogTransport(

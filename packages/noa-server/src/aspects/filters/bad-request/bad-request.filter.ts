@@ -22,7 +22,7 @@ export class BadRequestFilter implements ExceptionFilter {
       message: exception.message,
     }
 
-    this.tracer.log('request fail', exception)
+    this.tracer.info('request fail', exception)
 
     res.setHeader(HeaderKeys.ContentType, contentType('json') as string)
     res.status(status)

@@ -14,8 +14,7 @@ const defaultConfig = {
 
   BIZ_WIDGET_MAX_NUMBER: 250,
 
-  LOG_FILE_ROTATE: false,
-  LOG_FILE_LOGGING: false,
+  LOG_LEVEL: 'info',
   LOG_CONSOLE_LOGGING: true,
 
   GITHUB_CLIENT_ID: '',

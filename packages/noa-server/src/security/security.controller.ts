@@ -39,7 +39,7 @@ export class SecurityController {
       Number(query.height),
       Number(query.length ?? 4),
     )
-    this.tracer.log('get verify code', { code: text })
+    this.tracer.info('get verify code', { code: text })
     return data
   }
 }

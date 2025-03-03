@@ -19,7 +19,7 @@
 
       // 监听从服务器发送的消息
       socket.on('message', data => {
-        console.log('Received from server: ' + data);
+        console.info('Received from server: ' + data);
       });
 
       // 发送消息到服务器
@@ -27,7 +27,7 @@
 
       // 监听断开连接事件
       socket.on('disconnect', () => {
-        console.log('Disconnected from server');
+        console.info('Disconnected from server');
       });
     </script>
   </body>

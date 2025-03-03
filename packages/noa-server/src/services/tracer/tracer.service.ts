@@ -12,7 +12,17 @@ export class Tracer implements LoggerService {
     this.logger = scope ? appLogger.child({ scope }) : appLogger
   }
 
+  /**
+   * log接口开给nestjs内部信息输出
+   * @deprecated 使用info方法输出日志
+   * @param message
+   * @param context
+   */
   log(message: string, context?: LogContext) {
+    this.logger.info(message, formatLogContext(context))
+  }
+
+  info(message: string, context?: LogContext) {
     this.logger.info(message, formatLogContext(context))
   }
 

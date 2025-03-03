@@ -30,7 +30,7 @@ export class LoginRequiredGuard implements CanActivate {
       // eslint-disable-next-line no-cond-assign
       && (redisResult = await this.syncManager.add(req, 'GET_USER_INFO', this.redis.get(`session-${session}`)))
     ) {
-      this.tracer.log('Valid Session', { session })
+      this.tracer.info('Valid Session', { session })
       const userInfo = JSON.parse(redisResult)
       req.userId = userInfo.id
       return true

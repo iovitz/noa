@@ -10,7 +10,7 @@ class SyncManager {
       this.tracer.warn('Promise Already Exists', key)
     }
     const newPromise = promise.then((res) => {
-      this.tracer.log('Promise Resolved', key)
+      this.tracer.info('Promise Resolved', key)
       return res
     }).catch((err) => {
       this.tracer.error('Promise Rejected', {

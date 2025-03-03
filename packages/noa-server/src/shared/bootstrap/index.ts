@@ -12,10 +12,10 @@ export async function startNestApp(bootstrapFN: BootstrapFn) {
   checkBootstrapEnv(appTracer)
   try {
     const startNs = process.hrtime.bigint()
-    appTracer.log('APP Running Start', { time: new Date().toLocaleString() })
+    appTracer.info('APP Running Start', { time: new Date().toLocaleString() })
     await bootstrapFN(appTracer)
     const cost = Number(process.hrtime.bigint() - startNs).toLocaleString()
-    appTracer.log('APP Running Success', { cost })
+    appTracer.info('APP Running Success', { cost })
   }
   catch (e) {
     appTracer.error('### APP Exit With Error!!!!', e)
@@ -35,8 +35,8 @@ export function setUpErrorHandler(appTracer: Tracer) {
 }
 
 export function checkBootstrapEnv(appTracer: Tracer) {
-  appTracer.log('Application Environment', { config: stringify(process.env) })
-  appTracer.log('Application Config', { env: stringify(RcConfig) })
+  appTracer.info('Application Environment', { config: stringify(process.env) })
+  appTracer.info('Application Config', { env: stringify(RcConfig) })
   if (process.env.NODE_ENV !== 'production') {
     appTracer.error('App Not Running In Production Mode!!!')
   }

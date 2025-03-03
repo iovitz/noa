@@ -10,7 +10,7 @@ export const typeOrmLogger: Logger = {
     typeormLogger.error(query, error)
   },
   logQuerySlow(time: number, query: string) {
-    typeormLogger.log('Query Slow', { time, query })
+    typeormLogger.info('Query Slow', { time, query })
   },
   logSchemaBuild(message: string) {
     typeormLogger.debug(`Schema Build: ${message}`)

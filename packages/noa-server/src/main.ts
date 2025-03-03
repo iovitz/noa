@@ -45,7 +45,7 @@ const bootstrap: BootstrapFn = async (appTracer) => {
 
   await app.listen(appPort)
 
-  appTracer.log(`Server running in http://127.0.0.1:${appPort}`)
+  appTracer.info(`Server running in http://127.0.0.1:${appPort}`)
 }
 
 startNestApp(bootstrap)

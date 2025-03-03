@@ -42,7 +42,7 @@ export class FilePermissionGuard implements CanActivate {
       return false
     }
 
-    this.tracer.log('info', JSON.stringify(permission))
+    this.tracer.info('info', JSON.stringify(permission))
     return true
   }
 }

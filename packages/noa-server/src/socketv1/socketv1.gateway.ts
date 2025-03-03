@@ -21,21 +21,21 @@ implements OnGatewayConnection<Socket>, OnGatewayDisconnect<Socket> {
 
   async handleConnection(client: Socket) {
     // 鉴权
-    this.tracer.log('Socket Connect', { id: client.id })
+    this.tracer.info('Socket Connect', { id: client.id })
     client.onAny(this.handleAnyEvent)
   }
 
   async handleDisconnect(client: Socket) {
-    this.tracer.log('Socket disconnect', { id: client.id })
+    this.tracer.info('Socket disconnect', { id: client.id })
   }
 
   handleAnyEvent = (event: string, ...args: any[]) => {
-    this.tracer.log(`got event ${event}`, { args })
+    this.tracer.info(`got event ${event}`, { args })
   }
 
   @SubscribeMessage('events')
   async handleEvent(client: Socket, data: string) {
-    this.tracer.log('###', data)
+    this.tracer.info('###', data)
     return data
   }
 
@@ -44,7 +44,7 @@ implements OnGatewayConnection<Socket>, OnGatewayDisconnect<Socket> {
    */
   @SubscribeMessage('NEW_CHANGES')
   async handleMessage(client: Socket, payload: string) {
-    this.tracer.log('socket hello', {
+    this.tracer.info('socket hello', {
       payload,
     })
 
