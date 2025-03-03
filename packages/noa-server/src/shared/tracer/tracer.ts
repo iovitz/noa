@@ -36,7 +36,6 @@ export function createRootLogger() {
   if (!isProd) {
     rootLogger.add(
       new transports.Console({
-        level: 'debug',
         // 使用时间戳和nest样式
         format: format.combine(
           format.timestamp({ format: 'HH:mm:ss.SSS' }),
@@ -92,10 +91,10 @@ function getRotateLogTransport(
     level,
     dirname: path.join('/var/log', pkg.name),
     filename: `${level}.log`,
-    datePattern: 'DD-MM-YYYY',
-    zippedArchive: true,
-    maxSize: '20m',
-    maxFiles: '3d',
+    datePattern: RcConfig.LOG_DATA_PATTERN,
+    zippedArchive: RcConfig.LOG_ZIPPED_ARCHIVE,
+    maxSize: RcConfig.LOG_MAX_SIZE,
+    maxFiles: RcConfig.LOG_MAX_FILES,
     format: format.combine(...getCommonStyleFormat()),
   })
 }

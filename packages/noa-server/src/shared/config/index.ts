@@ -15,7 +15,12 @@ const defaultConfig = {
   BIZ_WIDGET_MAX_NUMBER: 250,
 
   LOG_LEVEL: 'info',
+  // 是否启用压缩
+  LOG_ZIPPED_ARCHIVE: true,
+  LOG_MAX_SIZE: '30M',
+  LOG_MAX_FILES: '3d',
   LOG_CONSOLE_LOGGING: true,
+  LOG_DATA_PATTERN: 'DD-MM-YYYY',
 
   GITHUB_CLIENT_ID: '',
   GITHUB_CLIENT_SECRET: '',
