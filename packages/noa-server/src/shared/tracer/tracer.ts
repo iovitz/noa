@@ -66,8 +66,8 @@ export function createRootLogger() {
     )
   }
   else {
-    if (config.get('BIZ_WIDGET_MAX_NUMBER')) {
-      // 生产环境使用环境变量控制是否使用日志轮转
+    // 生产环境使用环境变量控制是否使用日志轮转
+    if (config.get('LOG_FILE_ROTATE')) {
       rootLogger.add(new transports.DailyRotateFile({
         ...getCommonRotateFileOption('info'),
       }))
@@ -77,6 +77,9 @@ export function createRootLogger() {
       rootLogger.add(new transports.DailyRotateFile({
         ...getCommonRotateFileOption('error'),
       }))
+    }
+    else {
+      // 使用linux的logrotate库进行轮转
     }
   }
   return rootLogger.child({
@@ -95,7 +98,7 @@ function getCommonRotateFileOption(
 ): DailyRotateFileTransportOptions {
   return {
     level,
-    dirname: path.join(homedir(), 'logs', pkg.name),
+    dirname: path.join('/var/log', pkg.name),
     filename: `${level}.log`,
     datePattern: 'DD-MM-YYYY',
     zippedArchive: true,
