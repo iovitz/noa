@@ -2,8 +2,9 @@ import { CanActivate, ExecutionContext, Inject, Injectable, UnauthorizedExceptio
 import Redis from 'ioredis'
 import { REDIS_CLIENT } from 'src/redis/redis.module'
 import { SyncManagerService } from 'src/services/sync-manager/sync-manager.service'
-import { REQUEST_TRACER, Tracer } from 'src/services/tracer/tracer.service'
+import { REQUEST_TRACER } from 'src/services/tracer/tracer.service'
 import { CookieKeys } from 'src/shared/constans/cookie'
+import { Tracer } from 'src/shared/tracer/tracer'
 
 @Injectable()
 export class LoginRequiredGuard implements CanActivate {

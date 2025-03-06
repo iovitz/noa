@@ -5,8 +5,8 @@ import {
   HttpStatus,
 } from '@nestjs/common'
 import { contentType } from 'mime-types'
-import { Tracer } from 'src/services/tracer/tracer.service'
 import { HeaderKeys } from 'src/shared/constans/header'
+import { Tracer } from 'src/shared/tracer/tracer'
 import status from 'statuses'
 
 @Catch(Error)

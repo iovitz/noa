@@ -8,7 +8,7 @@ import { HttpFilter } from './aspects/filters/http/http.filter'
 import { ContextInterceptor } from './aspects/interceptors/context/context.interceptor'
 import { PreparePromiseInterceptor } from './aspects/interceptors/prepare-promise/prepare-promise.interceptor'
 import { ResponseFormatterInterceptor } from './aspects/interceptors/response-formatter/response-formatter.interceptor'
-import { InejctUtilsMiddleware } from './aspects/middlewares/inejct-utils/inejct-utils.middleware'
+import { InjectUtilsMiddleware } from './aspects/middlewares/inejct-utils/inejct-utils.middleware'
 import { FormPageModule } from './form-page/form-page.module'
 import { HomeModule } from './home/home.module'
 import { PermissionModule } from './permission/permission.module'
@@ -70,7 +70,7 @@ export class AppModule implements NestModule {
       .apply(
         cookieParser(),
         // middleware中主要用来注入工具函数
-        InejctUtilsMiddleware,
+        InjectUtilsMiddleware,
       )
       .forRoutes('*')
   }

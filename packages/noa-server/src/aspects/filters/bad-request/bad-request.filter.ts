@@ -1,7 +1,7 @@
 import { ArgumentsHost, BadRequestException, Catch, ExceptionFilter } from '@nestjs/common'
 import { contentType } from 'mime-types'
-import { Tracer } from 'src/services/tracer/tracer.service'
 import { HeaderKeys } from 'src/shared/constans/header'
+import { Tracer } from 'src/shared/tracer/tracer'
 
 @Catch(BadRequestException)
 export class BadRequestFilter implements ExceptionFilter {

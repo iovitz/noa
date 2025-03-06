@@ -8,9 +8,9 @@ import {
 } from '@nestjs/common'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { Tracer } from 'src/services/tracer/tracer.service'
 import { HeaderKeys } from 'src/shared/constans/header'
 import { SKIP_RESPONSE_FORMAT_KEY } from 'src/shared/constans/meta-keys'
+import { Tracer } from 'src/shared/tracer/tracer'
 
 @Injectable()
 export class ResponseFormatterInterceptor implements NestInterceptor {

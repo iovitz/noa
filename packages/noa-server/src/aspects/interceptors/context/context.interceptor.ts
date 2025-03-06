@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common'
 import { get } from 'lodash'
 import { map, Observable } from 'rxjs'
-import { Tracer } from 'src/services/tracer/tracer.service'
+import { Tracer } from 'src/shared/tracer/tracer'
 
 @Injectable()
 export class ContextInterceptor implements NestInterceptor {

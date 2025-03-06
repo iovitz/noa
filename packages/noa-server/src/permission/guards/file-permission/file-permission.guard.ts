@@ -3,9 +3,10 @@ import { Reflector } from '@nestjs/core'
 import { get } from 'lodash'
 import { PermissionService } from 'src/permission/permission.service'
 import { SyncManagerService } from 'src/services/sync-manager/sync-manager.service'
-import { REQUEST_TRACER, Tracer } from 'src/services/tracer/tracer.service'
+import { REQUEST_TRACER } from 'src/services/tracer/tracer.service'
 import { FILE_PERMISSION_KEY } from 'src/shared/constans/meta-keys'
 import { PermissionTypes } from 'src/shared/constans/permission'
+import { Tracer } from 'src/shared/tracer/tracer'
 
 export function FileApiPermission(permission: PermissionTypes) {
   return SetMetadata(FILE_PERMISSION_KEY, permission)

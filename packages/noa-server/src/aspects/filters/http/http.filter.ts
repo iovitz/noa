@@ -7,8 +7,8 @@ import {
   HttpException,
 } from '@nestjs/common'
 import { contentType } from 'mime-types'
-import { Tracer } from 'src/services/tracer/tracer.service'
 import { HeaderKeys } from 'src/shared/constans/header'
+import { Tracer } from 'src/shared/tracer/tracer'
 
 @Catch(HttpException)
 export class HttpFilter implements ExceptionFilter {

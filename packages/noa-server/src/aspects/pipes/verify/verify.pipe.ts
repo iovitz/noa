@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common'
 import { plainToClass } from 'class-transformer'
 import { validate, ValidationError } from 'class-validator'
-import { Tracer } from 'src/services/tracer/tracer.service'
+import { Tracer } from 'src/shared/tracer/tracer'
 
 @Injectable()
 export class VerifyPipe implements PipeTransform {

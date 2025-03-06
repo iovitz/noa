@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { Tracer } from '../tracer/tracer.service'
+import { Tracer } from 'src/shared/tracer/tracer'
 
 class SyncManager {
   private tracer = new Tracer(SyncManager.name)
