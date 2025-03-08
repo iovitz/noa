@@ -1,11 +1,13 @@
-import { TextAttributeUI } from './text-attribute-ui/text-attribute-ui'
-import { TitleAttributesUI } from './title-attribute-ui/title-attribute-ui'
-import { TitleLevelAttributeUI } from './title-level-attribute-ui'
-import { UrlAttributeUI } from './url-attribute-ui/url-attribute-ui'
+import { NotificationTypeAttribute } from './nitification-type-attribute'
+import { TextAttribute } from './text-attribute'
+import { TitleAttributes } from './title-attribute'
+import { TitleLevelAttribute } from './title-level-attribute'
+import { UrlAttribute } from './url-attribute/url-attribute-ui'
 
-export const AttributesUIMap: Record<string, typeof TextAttributeUI> = {
-  text: TextAttributeUI,
-  title: TitleAttributesUI,
-  titleLevel: TitleLevelAttributeUI,
-  imageUrl: UrlAttributeUI,
+export const AttributesUIMap: Record<string, typeof TextAttribute> = {
+  text: TextAttribute,
+  title: TitleAttributes,
+  titleLevel: TitleLevelAttribute,
+  imageUrl: UrlAttribute,
+  noticeType: NotificationTypeAttribute,
 }

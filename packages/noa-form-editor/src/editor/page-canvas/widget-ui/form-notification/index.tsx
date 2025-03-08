@@ -1,6 +1,6 @@
 import { useFormEditorStore } from '@/store/editor/editor.store'
 import { NotificationAttributes, WidgetData } from '@/widgets'
-import { Alert, AlertProps } from 'antd'
+import { Alert } from 'antd'
 import React from 'react'
 
 export const FormNotificationWidget = (props: { id: string }) => {

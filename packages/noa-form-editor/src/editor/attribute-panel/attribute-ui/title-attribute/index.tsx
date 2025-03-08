@@ -5,20 +5,20 @@ import React, { useEffect, useState } from 'react'
 
 const { Title } = Typography
 
-export const UrlAttributeUI = observer(({ widgetId }: { widgetId: string }) => {
+export const TitleAttributes = observer(({ widgetId }: { widgetId: string }) => {
   const editorStore = useFormEditorStore()
   const [value, setValue] = useState('')
   const currentWidgetAttributes = editorStore.getWidgetById(widgetId)!.attributes as {
-    imageUrl?: string
+    title?: string
   }
 
   useEffect(() => {
-    setValue(currentWidgetAttributes.imageUrl ?? '')
+    setValue(currentWidgetAttributes.title ?? '')
   }, [widgetId])
 
   return (
     <div>
-      <Title level={5}>地址</Title>
+      <Title level={5}>标题</Title>
       <Input
         placeholder="请输入内容"
         value={value}
@@ -26,7 +26,7 @@ export const UrlAttributeUI = observer(({ widgetId }: { widgetId: string }) => {
         onChange={v => setValue(v.target.value)}
         onBlur={(e) => {
           editorStore.updateWidget(widgetId, {
-            imageUrl: e.target.value ?? '',
+            title: e.target.value ?? '',
           })
         }}
         variant="filled"

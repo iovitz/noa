@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 
 const { Title } = Typography
 
-export const TitleLevelAttributeUI = observer(({ widgetId }: { widgetId: string }) => {
+export const TitleLevelAttribute = observer(({ widgetId }: { widgetId: string }) => {
   const editorStore = useFormEditorStore()
   const [value, setValue] = useState('1')
   const currentWidgetAttributes = editorStore.getWidgetById(widgetId)!.attributes as {
