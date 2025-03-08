@@ -64,6 +64,11 @@ export class FormPageController {
           name: In(updateFields),
         })
 
+        if (typeof attributes.deleted === 'boolean') {
+          dbWidget.deleted = attributes.deleted
+          await this.formPageService.formWidgetsRepository.save(dbWidget)
+        }
+
         dbAttributes.forEach((attr) => {
           attr.value = JSON.stringify(attributes[attr.name])
         })

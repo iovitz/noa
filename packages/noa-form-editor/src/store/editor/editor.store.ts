@@ -65,6 +65,7 @@ export class FormEditorStore {
         ...attributes,
         rank,
         hidden: false,
+        deleted: false,
       },
     })
 

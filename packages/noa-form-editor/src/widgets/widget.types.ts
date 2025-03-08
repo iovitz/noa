@@ -11,6 +11,7 @@ export interface WidgetCommonAttributes {
   description?: string
   rank: number
   hidden: boolean
+  deleted: boolean
 }
 
 export interface TextAttributes extends WidgetCommonAttributes {

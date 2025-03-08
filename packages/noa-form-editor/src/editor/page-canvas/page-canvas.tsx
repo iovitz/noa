@@ -35,7 +35,7 @@ const PageCanvas = observer(() => {
         {
           // TODO 这里可能有性能损耗
           [...editorStore.widgetMap.values()].sort((a, b) => a.attributes.rank - b.attributes.rank).map(widget => (
-            <WidgetWrapper key={widget.id} id={widget.id} />
+            widget.attributes.deleted ? null : <WidgetWrapper key={widget.id} id={widget.id} />
           ))
         }
       </div>

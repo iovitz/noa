@@ -19,7 +19,9 @@ const WidgetWrapperDiv = styled.div`
 export const WidgetOperator = observer((props: { id: string }) => {
   const store = useFormEditorStore()
   const handleDelWidget = () => {
-    store.delWidget(props.id)
+    store.updateWidget(props.id, {
+      deleted: true,
+    })
   }
   return (
     <WidgetWrapperDiv>
