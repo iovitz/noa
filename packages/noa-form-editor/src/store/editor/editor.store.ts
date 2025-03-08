@@ -46,6 +46,10 @@ export class FormEditorStore {
     console.error(this)
   }
 
+  async delWidget(widgetId: string) {
+    this.logger.info('delWidget', widgetId)
+  }
+
   async addWidget<T extends keyof WidgetAttributesTypeMap>(attributes: Omit<WidgetAttributesTypeMap[T], 'rank' | 'hidden'>) {
     if (this.widgetMap.size + 1 > 200) {
       this.logger.info('addWidget', 'widget数量已达上限')

@@ -6,12 +6,26 @@ import React from 'react'
 import { WidgetUIMap } from './widget-ui'
 
 const WidgetWrapperDiv = styled.div`
-  border: 1px dashed transparent;
+  border: 1px dashed red;
+  box-sizing: border-box;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
 `
 
-const WidgetWrapperSelectedDiv = styled(WidgetWrapperDiv)`
-  border-color: red;
-`
+export const WidgetOperator = observer((props: { id: string }) => {
+  const store = useFormEditorStore()
+  const handleDelWidget = () => {
+    store.delWidget(props.id)
+  }
+  return (
+    <WidgetWrapperDiv>
+      <button onClick={handleDelWidget}>Del</button>
+    </WidgetWrapperDiv>
+  )
+})
 
 export const WidgetWrapper = observer((props: { id: string }) => {
   const widgetStore = useWidgetStore()
@@ -29,13 +43,15 @@ export const WidgetWrapper = observer((props: { id: string }) => {
   }
   const isSelected = widgetStore.getCurrentSelectedId() === props.id
 
-  const Wrapper = isSelected ? WidgetWrapperSelectedDiv : WidgetWrapperDiv
-
   return (
-    <div onClick={handleSelectWidget}>
-      <Wrapper>
-        <WidgetUI id={props.id} />
-      </Wrapper>
+    <div
+      onClick={handleSelectWidget}
+      style={{
+        position: 'relative',
+      }}
+    >
+      <WidgetUI id={props.id} />
+      {isSelected ? <WidgetOperator id={props.id} /> : null}
     </div>
   )
 })

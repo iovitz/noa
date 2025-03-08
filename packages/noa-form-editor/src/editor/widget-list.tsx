@@ -1,5 +1,5 @@
 import { useFormEditorStore } from '@/store/editor/editor.store'
-import { WidgetTypes } from '@/widgets'
+import { Widget, WidgetTypes } from '@/widgets'
 import { Button, Col, Row, Space, Typography } from 'antd'
 import React from 'react'
 import { MdAttachFile, MdCheck, MdDateRange, MdFormatColorText, MdGpsFixed, MdInfoOutline, MdInsertChartOutlined, MdLocalPhone, MdMoney, MdNumbers, MdOutlineCheckBox, MdOutlineCheckCircle, MdOutlineHorizontalRule, MdOutlineImage, MdOutlineInput, MdOutlinePercent, MdOutlineStarOutline, MdOutlineTextFields, MdOutlineTitle, MdOutlineVideocam } from 'react-icons/md'
@@ -78,8 +78,11 @@ export default function WidgetList() {
             type="dashed"
             icon={<MdOutlineImage />}
             block
-            onClick={() => store.addWidget({
-              type: WidgetTypes.Video,
+            onClick={() => store.addWidget<WidgetTypes.Image>({
+              type: WidgetTypes.Image,
+              name: '',
+              imageUrl: '',
+              banner: false,
             })}
             size="large"
           >

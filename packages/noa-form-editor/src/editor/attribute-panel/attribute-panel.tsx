@@ -20,6 +20,7 @@ const PropsPanel = observer(() => {
       </>
     )
   }
+
   const attrFields = Object.keys(widget.attributes)
 
   return (

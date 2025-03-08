@@ -30,7 +30,6 @@ export class HttpFilter implements ExceptionFilter {
       status,
       tracerId: req.tracerId,
       code: errorResponse.code,
-      cost: res.getCostNs(),
       cid: req.clientId,
       path: req.path,
     })

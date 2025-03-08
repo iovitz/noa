@@ -30,10 +30,6 @@ export class ContextInterceptor implements NestInterceptor {
 
     return next.handle().pipe(
       map((data) => {
-        this.tracer.info('-REQ', {
-          tracerId: req.tracerId,
-          cost: req.getCostNs(),
-        })
         return data
       }),
     )
