@@ -23,7 +23,7 @@ export enum WidgetTypes {
   RichText = 'RichText', // 文本
   Image = 'Image', // 图片
   Video = 'Video', // 视频
-  Notice = 'Notice', // 提醒
+  Notification = 'Notification', // 提醒
   List = 'List', // 列表
   Chart = 'Chart', // 图表
   Line = 'Line', // 横线

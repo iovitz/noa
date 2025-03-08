@@ -24,9 +24,10 @@ export interface TitleAttributes extends WidgetCommonAttributes {
   titleLevel?: number // 标题等级（1~5）
   textColor?: string // 文本颜色
 }
-export interface NoticeAttributes extends WidgetCommonAttributes {
+export interface NotificationAttributes extends WidgetCommonAttributes {
   text?: string // 段落内容
   noticeType?: string // 提醒类型
+  title?: string // 提示标题
 }
 
 export interface ImageAttributes extends WidgetCommonAttributes {

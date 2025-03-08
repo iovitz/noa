@@ -1,5 +1,6 @@
 import { useFormEditorStore } from '@/store/editor/editor.store'
 import { useWidgetStore } from '@/store/widgets/widget.store'
+import { WidgetTypes } from '@/widgets'
 import styled from '@emotion/styled'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
@@ -22,7 +23,7 @@ export const WidgetOperator = observer((props: { id: string }) => {
   }
   return (
     <WidgetWrapperDiv>
-      <button onClick={handleDelWidget}>Del</button>
+      <button type="button" onClick={handleDelWidget}>Del</button>
     </WidgetWrapperDiv>
   )
 })
@@ -32,7 +33,7 @@ export const WidgetWrapper = observer((props: { id: string }) => {
   const editorStore = useFormEditorStore()
   const widget = editorStore.getWidgetById(props.id)!
 
-  const WidgetUI = WidgetUIMap[widget.attributes.type]
+  const WidgetUI = WidgetUIMap[widget.attributes.type as WidgetTypes]
   if (!WidgetUI) {
     return null
   }

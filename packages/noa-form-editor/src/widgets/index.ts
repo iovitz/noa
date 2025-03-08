@@ -1,6 +1,6 @@
 import { ulid } from 'ulid'
 import { WidgetTypes } from './widget.const'
-import { ImageAttributes, LineAttributes, MultiSelectAttributes, NoticeAttributes, SingleSelectAttributes, TextAttributes, TitleAttributes, WidgetData } from './widget.types'
+import { ImageAttributes, LineAttributes, MultiSelectAttributes, NotificationAttributes, SingleSelectAttributes, TextAttributes, TitleAttributes, WidgetData } from './widget.types'
 
 export * from './widget.const'
 export * from './widget.types'
@@ -9,7 +9,7 @@ export interface WidgetAttributesTypeMap {
   // 内容组件
   [WidgetTypes.Text]: TextAttributes
   [WidgetTypes.Title]: TitleAttributes
-  [WidgetTypes.Notice]: NoticeAttributes
+  [WidgetTypes.Notification]: NotificationAttributes
   [WidgetTypes.Image]: ImageAttributes
   [WidgetTypes.Video]: TextAttributes
   [WidgetTypes.Line]: LineAttributes

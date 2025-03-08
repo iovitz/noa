@@ -1,27 +1,26 @@
+import { useFormEditorStore } from '@/store/editor/editor.store'
+import { VideoAttributes, WidgetData } from '@/widgets'
 import { Image } from 'antd'
 import React from 'react'
 
-interface FormVideoProps {
-  poster: string
-  src: string
-}
-
-export default function FormVideo(props: FormVideoProps) {
+export default function FormVideo(props: { id: string }) {
+  const editorStore = useFormEditorStore()
+  const widget = editorStore.getWidgetById(props.id) as WidgetData<VideoAttributes>
   return (
     <Image
       preview={{
         destroyOnClose: true,
-        imageRender: () => (
-          <video
-            muted
-            width="100%"
-            controls
-            src={props.src}
-          />
-        ),
+        // imageRender: () => (
+        //   <video
+        //     muted
+        //     width="100%"
+        //     controls
+        //     src={widget.attributes.videoUrl}
+        //   />
+        // ),
         toolbarRender: () => null,
       }}
-      src={props.poster}
+      src={widget.attributes.videoUrl}
     />
   )
 }
