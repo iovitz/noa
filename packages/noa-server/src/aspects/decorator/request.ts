@@ -5,10 +5,11 @@ import { CookieKeys } from '../../shared/constans/cookie'
 export const ClientIP = createParamDecorator(
   (_: string, ctx: ExecutionContext) => {
     const req = ctx.switchToHttp().getRequest<Req>()
-    if (!req.ip) {
+    const clientIp = req.header('x-forward-for') ?? req.ip
+    if (!clientIp) {
       return '0.0.0.0'
     }
-    return req.ip.match(/\d+\.\d+\.\d+\.\d+/)?.[0]
+    return clientIp.match(/\d+\.\d+\.\d+\.\d+/)?.[0]
   },
 )
 
